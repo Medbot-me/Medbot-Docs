@@ -10,15 +10,12 @@ export const metadata: Metadata = {
   description: 'Project documentation'
 }
 
-const banner: React.ReactNode = <Banner storageKey="some-key">Nextra 4.0 is released 🎉</Banner>
 const navbar: React.ReactNode = (
   <Navbar
-    logo={<b>Medbot</b>}
-    // ... Your additional navbar options
+    logo={<b>Medbot Docs</b>}
   />
 )
-const footer: React.ReactNode = <Footer>MIT {new Date().getFullYear()} © Nextra.</Footer>
-
+const footer: React.ReactNode = <Footer>{new Date().getFullYear()} © Medbot.</Footer>
 export default async function RootLayout({
   children
 }: {
@@ -42,11 +39,11 @@ export default async function RootLayout({
       </Head>
       <body>
         <Layout
-          banner={banner}
           navbar={navbar}
           pageMap={pageMap}
           docsRepositoryBase="https://github.com/shuding/nextra/tree/main/docs"
           footer={footer}
+          sidebar={{ autoCollapse: false }}
           // ... Your additional layout options
         >
           {children}
