@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 const banner: React.ReactNode = <Banner storageKey="some-key">Nextra 4.0 is released 🎉</Banner>
 const navbar: React.ReactNode = (
   <Navbar
-    logo={<b>Nextra</b>}
+    logo={<b>Medbot</b>}
     // ... Your additional navbar options
   />
 )
