@@ -2,4 +2,80 @@
 
 ## Introduction
 
-## Walkthrough
+The DeepResearch feature is an end-to-end research automation system designed to help users generate high-quality, structured, and verifiable research outputs. Instead of manually searching, filtering, reading, and organizing information, this feature guides users through a complete research workflow, from defining a research question to reviewing final evaluated results.
+
+## Workflow Diagram
+
+The diagram below shows the high-level workflow for the deepresearch feature of the application.
+
+![DeepResearch Workflow](/images/deepsearch_workflow.png)
+
+
+## Create a Research question
+
+A research question is the foundation of your DeepResearch workflow. It defines the scope, purpose, and direction of the research process.
+It guides the generation of inclusion exclusion criteria and hence helps to filter out irrelevant data. Make sure to be specific and avoid broad topics while
+creating a research question.
+
+To Create a research question
+
+- Navigate to home and click on "Deep Research" from the sidebar.
+
+- Click "Add new research Question"
+
+- Enter your primary research question in the input field.
+
+- Click Save.
+
+Optional: Add additional context (e.g. sub-questions )
+
+## Create inclusion-exclusion criteria
+
+The next step in the workflow is the creation of inclusion exclusion criteria. Inclusion and exclusion criteria helps the system determine which information is relavant to your research question and which information should be filtered out.
+This step ensures that only high-quality and relevant results move forward in the deep research pipeline.You can define your own inclusion exclusion criteria or generate 
+one based on the research question.
+
+To generate the criteria
+
+- Click "Edit criteria"
+- Click "Generate Inclusion Exclusion Criteria"
+- Edit if you want to make any changes and click "Save"
+
+## Create search strategies
+
+Search strategies are search strings used to gather research papers for a specific research question. Each strategy has a strategy name, a search database (currently we only support pubmed), and a search query string
+which is generated based on the research question, search database, search start date and end date.
+
+In order to generate a search strategy:
+- Click "New Search Strategy"
+- Enter a name
+- Select search database
+- Select search start and end date
+- Click Generate Search Strategy
+- Click Save
+
+
+## Run search strategies
+
+After you have created the search strategies, simply run them using "Run Search Strategies" button. You are asked to enter a limit for the number of articles you want, enter you limit and click "Run Search".
+
+## Use Inclusion Exclusion agents
+
+Inclusion exclusion agents are the AI agents which help you filter your search results based on the inclusion and exclusion criteria you generated.
+This agent analyses each search result, checks if it fits the inclusion criteria, and takes a decision (include or exclude) along with a justification for its decision.
+You can define your own inclusion exclusion agents from the "Agents" tab or use a default one. You can select multiple inclusion exclusion agents and use them to filter your search results.
+You will then be navigated to evaluation page where you can evaluate the results.To revisit your results, you can click on "View Agents Results" button.
+
+To use inclusion exclusion agents:
+- Click on the "Select Agents" button
+- Select one or multiple agents to filter your results and click "Confirm".
+
+You will be navigated to the agents' evaluation page.
+
+
+## Evaluate agents' results
+
+The agent evaluation page allows you to review each article independently. You can see the title of the research paper, the decision of the agent (which is found using majority voting if you used multiple agents to process your articles),
+along with the justifications for the decision. If you donot agree with the agents' decision, you can toggle the decision and enter your comments on it. This step allows the results to be verified by the user.
+Users can search the results by the title and can also download the results if they prefer using the "Download Results" button. In addition you can define more agents and process the final results further based on what u need.
+
