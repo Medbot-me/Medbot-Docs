@@ -1,5 +1,33 @@
-# Agents
+# Introduction
 
-## Introduction
+Agents are a central component of the Medbot AI features. They facilitate quick processing of notes, and can be used for a variety of purposes such as filling out forms and detecting inconsistencies in diagnosis/treatment recommendations.
 
-## Walkthrough
+### Creating agents
+To create agents, fill out the form at [medbot.me/agents/new](https://www.medbot.me/agents/new). The table below describes each field in the agent creation form.
+
+| Field                            | Description                                                                     | Affects agent behavior |
+| -------------------------------- | ------------------------------------------------------------------------------- | ---------------------- | 
+| Agent Name                       | The name of the agent to be created.                                            | No                     |
+| Description                      | A descriptive text describing the agent's purpose.                              | No                     |
+| System Instructions              | General instructions the agent must follow while executing a task.              | Yes                    |
+| Define your algorithm<sup>1</sup>| Step-by-step instructions the agent must follow to determine its response.      | Yes                    |
+| Agent Category                   | Type of the agent to be created.                                                | Yes                    |
+| Select Model                     | LLM Model to be used for the agent.                                             | Yes                    |
+| Define fields used by your agent | Fields to be returned by the agent in its JSON response.                        | Yes                    |
+| Process whole note content       | Whether to process all contents of the open note in the workspace.              | Yes                    |
+| Use Database tools               | Whether to use database tools.                                                  | Yes                    |
+| Make this agent public           | Whether to make the agent available to the other members of your organization. | No                     |
+| Process forms                    | Whether the agent is meant to process forms.                                   | Yes                    |
+
+1. See [this](#) section on how to define an agent algorithm.
+
+### Agent Types
+Agents on Medbot can be used for any of the many agentic features available. However, agents can broadly be categorized into the following types.
+1. [Form Agents](/docs/agents/types/form)
+2. [Non-Form Agents](/docs/agents/types/non-form)
+3. [Deep Research Agents](/docs/agents/types/deep-research)
+
+Please visit their respective pages to learn more about them.
+
+### Background runs
+Each agent you create can be used to process notes in bulk as a background process that continues working even when you leave the app. You can learn more about it [here](/docs/agents/background-runs).
