@@ -5,4 +5,5 @@ export default {
   workspace: "Workspace",
   "deep-research": "Deep Research",
   "use-cases": "Use Cases",
+  "clinical_resources": "Clinical Resources",
 };
