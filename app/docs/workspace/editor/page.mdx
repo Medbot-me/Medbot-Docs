@@ -1,0 +1,92 @@
+import { ImageZoom } from "nextra/components";
+
+# Editor
+
+## Introduction
+
+The Medbot workspace featuers a rich text editor with various features to assist your writing. The primary features are autocomplete, command palette, and bubble menu.
+
+## Editor Features
+
+### Autocomplete
+
+The autocomplete feature assists in your clinical note writing by providing suggested continuations of the text you write. You can accept an autocomplete suggestion by pressing the `Tab` key on your keyboard, and you can dismiss a suggestion by pressing the `Escape` key.
+
+![Medbot Editor Autocomplete](/images/autocomplete.png)
+_Editor Autocomplete_
+
+You can customize the behavior of autocomplete in settings. Visit [medbot.me/settings](https://www.medbot.me/settings) to see what customization options are available.
+
+### Command Palette
+
+The Command Palette provides quick access to text Editing tools, Agents, Templates, and Continue with AI features. Activate the Command Palette by pressing the `/` key when prompted on a new line.
+
+<br />
+<div
+  style={{
+    display: "flex",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  }}
+>
+  <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
+    <ImageZoom
+      src="/images/command-palette.png"
+      alt="Medbot Editor Command Palette"
+      height="400"
+      width="400"
+    />
+    <span>*Editor Command Palette*</span>
+  </div>
+</div>
+
+### Bubble Menu
+
+The Bubble Menu gives you access to editing tools, text refining features, ask AI feature, and [selection agents](/docs/agents/types/non-form#from-the-workspace) to process selected text in the editor.
+
+![Medbot Editor Bubble Menu](/images/bubble-menu.png)
+_Editor Bubble Menu_
+
+#### Text Refining
+
+The Bubble Menu provides text refining features for selected text in the editor. You can use text refining in two ways:
+
+1. Quick Refine to use default settings to quickly refine selected text.
+2. Prompt Refine to instruct the text refining AI on how to proceed.
+
+![Medbot Text Refining](/images/bubble-menu-refine.png)
+_Editor Text Refining_
+
+You can customize text refining behavior in [settings](https://www.medbot.me/settings).
+
+#### Ask AI
+
+The Ask AI feature lets you ask the chat AI about text in your editor. To use it, simply select some text in the editor and click `Ask AI` in the bubble menu. This will open up the chat window in the sidebar with your selected text attached as context. You can write a prompt and ask the AI about the selected text.
+
+<br />
+<div
+  style={{
+    display: "flex",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  }}
+>
+  <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
+    <ImageZoom
+      src="/images/bubble-menu-ask-ai.png"
+      alt="Medbot Ask AI"
+      height="150"
+      width="150"
+    />
+    <span>*Editor Ask AI*</span>
+  </div>
+</div>
+
+#### Selection Agents
+
+You can use the Bubble Menu to invoke selection agents in the editor. These agents will process your selected text and stream their outputs into the editor itself. The final output from selection agents will be highlighted once the agents have finished streaming.
+
+![Medbot Selection Agents](/images/bubble-menu-agents.png)
+_Editor Selection Agents_
