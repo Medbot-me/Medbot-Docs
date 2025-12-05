@@ -1,3 +1,26 @@
 # Advanced
 
 ## Custom settings
+You can customize the behavior of the [autocomplete](/docs/workspace/editor#autocomplete) feature and the [text refining](/docs/workspace/editor#text-refining) feature by visiting [medbot.me/settings](https://www.medbot.me/settings).
+
+### Autocomplete settings
+
+The following table describes each autocomplete setting.
+
+| Setting                            | Description                                                                                                  |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Enabled                            | Whether to enable autocomplete.                                                                              |
+| Previous Word Length               | The number of words immediately before the cursor that autocomplete AI will process to suggest continuation. |
+| Suggestion Debounce Length (ms)    | The amount of inactivity time, in milliseconds, before the autocomplete displays suggestions.                |
+| Autocomplete Length (words)        | Number of words that autocomplete will suggest as continuation.                                              |
+| Model                              | The LLM model to use for autocomplete.                                                                       |
+| Temperature (0-1)                  | Temperature parameter for the LLM model.                                                                     |
+| Create Embeddings for Autocomplete | Whether to create embeddings for autocomplete.                                                               |
+
+### Text Refining settings
+These settings apply to the [Quick Refine](/docs/workspace/editor#text-refining) feature in the workspace bubble menu. Following is a description of each available setting.
+
+| Setting        | Description                                         |
+| -------------- | --------------------------------------------------- |
+| Default Prompt | The prompt to be used for the Quick Refine feature. |                                                                              |
+| Default Model  | The model to be used for the Quick Refine feature.  |

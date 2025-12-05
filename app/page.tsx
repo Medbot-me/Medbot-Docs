@@ -1,6 +1,6 @@
 "use client";
 
-import HomePageCard from "./components/HomePageCard";
+import HomePageCard from "../components/HomePageCard";
 import { NotebookText } from "lucide-react";
 import { RobotIcon } from "@phosphor-icons/react";
 
