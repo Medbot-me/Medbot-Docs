@@ -1,6 +1,6 @@
 "use client";
 
-import HomePageCard from "./components/HomePageCard";
+import HomePageCard from "@/components/HomePageCard";
 import { MonitorPlayIcon, NotebookTextIcon, BotIcon, MicroscopeIcon } from "lucide-react";
 
 export default function Page() {
