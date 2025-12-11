@@ -4,6 +4,6 @@ export default {
   agents: "Agents",
   workspace: "Workspace",
   "deep-research": "Deep Research",
-  "use-cases": "Use Cases",
   "clinical_resources": "Clinical Resources",
+   "use-cases": "Use Cases",
 };
