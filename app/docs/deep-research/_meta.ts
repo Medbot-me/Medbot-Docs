@@ -6,5 +6,6 @@ export default {
   "run-search-strategy": "Run Search Strategy",
   "use-inclusion-exclusion-agents": "Use Inclusion Exclusion Agents",
   "evaluate-results": "Evaluate Results",
+  "default_agents": "Default Agents",
   
 };
