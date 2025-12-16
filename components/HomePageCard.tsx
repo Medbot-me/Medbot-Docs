@@ -19,7 +19,7 @@ export default function HomePageCard({
     <div>
       <a
         type="button"
-        className="group flex flex-col border border-slate-300 dark:border-slate-500 p-5 items-center justify-center gap-4 hover:bg-white/2 hover:border-slate-400 rounded-lg cursor-pointer"
+        className="group h-full flex flex-col border border-slate-300 dark:border-slate-500 p-5 items-center justify-center gap-4 hover:bg-white/2 hover:border-slate-400 rounded-lg cursor-pointer"
         href={href}
       >
         {icon && (
