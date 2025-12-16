@@ -1,0 +1,48 @@
+## Create Tools
+
+Tools are specialized components designed to perform specific tasks that large language models cannot reliably handle on their own, such as precise calculations or interacting with external systems.
+While LLMs excel at generating language, tools act as executable actions that an agent can invoke to get accurate results from the outside world.
+In Medbot, admin users can create default tools and expose them to agents, enabling consistent, efficient task completion across workflows.
+
+In order to create a tool:
+
+1. Goto home and navigate to "Settings" from the sidebar.
+
+![Settings page](/images/tools/image00.png)
+
+2. If you are an admin user, click "Admin Panel" on the top of your settings page to goto the admin panel.
+
+![Admin panel](/images/tools/image0.png)
+
+3. Click "Edit Tools" to go to tools page.
+
+![Tools Page](/images/tools/toolspage.png)
+
+4. To load the default tools, click the "Seed Default Tools" button. You will see the default tools we have.
+
+![Admin panel](/images/tools/defaultTools.png)
+
+5. Click "Add New Tool".
+
+6. Enter all the fields in the form. Each field is described below:
+
+| Field                            | Description                                                                     | Affects tool behavior |
+| -------------------------------- | ------------------------------------------------------------------------------- | ---------------------- | 
+| Tool Name                        | The name of the tool to be created.                                             | No                     |
+| Description                      | A descriptive text describing the tool's purpose.                               | No                     |
+| System Instructions              | General instructions the tool must follow while executing a task.               | Yes                    |
+| Select Model                     | LLM Model to be used for the agent.                                             | Yes                    |
+| Define input schema for the tool | This schema defines the input parameters taken by your tool                     | Yes                    |
+| Define input schema for the tool | This schema defines the output given your tool                                  | Yes                    |
+
+Visit [here](/docs/agents/tools/sample-tools) for a sample tool definition.
+
+7. Click "Create Tool" 
+
+8. You will see the tools listed.You've succesfully created the tool.
+
+![Admin panel](/images/tools/toollist.png)
+
+9. You will now see your tools listed in the create agent form on clicking the usetools checkbox as below. Use this tool when creating an agent.
+
+![Admin panel](/images/tools/toolsinform.png)

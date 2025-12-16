@@ -1,0 +1,47 @@
+# ASCVD Risk Calculator Tool
+
+Here is a sample tool definition for your reference:
+
+### Tool Name
+
+ASCVD Risk Calculator
+
+### Description
+A clinical decision-support tool that calculates the 10-year risk of atherosclerotic cardiovascular disease (ASCVD) in adults using established ACC/AHA risk factors. This tool assists healthcare professionals in estimating cardiovascular risk to support preventive care decisions.
+
+### System Instructions
+You are a medical risk calculation tool.  
+
+Your task is to calculate the **10-year ASCVD risk percentage** using validated clinical inputs from the patient note. After calculating the risk, categorize it into one of the following four groups:
+Low (`< 5%`), Borderline (`5–7.4%`) ,Intermediate (`7.5–19.9%`),High (`≥ 20%`). Do **not** provide any diagnoses, treatment advice, or recommendations.
+
+### Model Selection
+gpt-4o-mini
+
+### Input Schema
+
+The tool accepts the following input parameters:
+
+| Field Name | Type | Description |
+|----------|------|------------|
+| age | Text | Patient age in years (40–79) |
+| sex | Text | sex (Male or Female) |
+| race | Text | Race category (White, African American, Other) |
+| total_cholesterol | Text | Total cholesterol level in mg/dL |
+| hdl_cholesterol | Text | HDL cholesterol level in mg/dL |
+| systolic_bp | Text | Systolic blood pressure in mmHg |
+| on_bp_medication | Text | Whether the patient is on blood pressure medication (Yes/No) |
+| diabetes | Text | Presence of diabetes (Yes/No) |
+| smoker | Text | Current smoking status (Yes/No) |
+
+### Output Schema
+
+The tool returns the following outputs:
+
+| Field Name | Type | Description |
+|----------|------|------------|
+| ascvd_risk_percentage | Text | Calculated 10-year ASCVD risk percentage |
+| risk_category | Text | Risk category (Low, Borderline, Intermediate, High) |
+| interpretation | Text | Plain-language explanation of the calculated risk |
+
+
