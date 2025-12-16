@@ -5,7 +5,7 @@ import { MonitorPlayIcon, NotebookTextIcon, BotIcon, MicroscopeIcon } from "luci
 
 export default function Page() {
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto p-4">
       <h1 className="text-3xl font-medium mt-4">Medbot Documentation</h1>
       <div className="mt-4">
         Medbot is an AI agent platform built to automate manual, 
@@ -14,7 +14,7 @@ export default function Page() {
         healthcare administrators.
       </div>
       <h1 className="text-3xl font-medium mt-4">Features</h1>
-      <div className="grid grid-cols-4 gap-4 my-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 my-4">
         <HomePageCard
           icon={MonitorPlayIcon}
           title="Getting Started"
