@@ -1,5 +1,6 @@
 export default {
   types: "Types",
   "background-runs": "Background Runs",
-  tools: "Tools",
+  "agent-demo": "Agent Demo",
+  "agent-evaluation": "Agent Evaluation",
 };
