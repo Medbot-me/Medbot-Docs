@@ -32,7 +32,7 @@ export default function HomePageCard({
             })()}
           </div>
         )}
-        <p className="font-bold text-2xl">{title}</p>
+        <p className="font-bold text-2xl text-center">{title}</p>
         <p className="text-center text-slate-400">{description}</p>
       </a>
     </div>
