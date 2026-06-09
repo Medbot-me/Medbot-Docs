@@ -1,3 +1,5 @@
+import { ImageZoom } from "nextra/components";
+
 # Introduction
 
 Agents are a central component of the Medbot AI features. They facilitate quick processing of notes, and can be used for a variety of purposes such as filling out forms and detecting inconsistencies in diagnosis/treatment recommendations.
@@ -15,7 +17,7 @@ To create agents, fill out the form at [medbot.me/agents/new](https://www.medbot
 | Select Model                     | LLM Model to be used for the agent.                                             | Yes                    |
 | Define fields used by your agent | Fields to be returned by the agent in its JSON response.                        | Yes                    |
 | Process whole note content       | Whether to process all contents of the open note in the workspace.              | Yes                    |
-| Use Database tools               | Whether to use database tools.                                                  | Yes                    |
+| Use Database tools               | Whether to use database tools. To view the details about Database tools [Click Here](#database-tools) | Yes |
 | Make this agent public           | Whether to make the agent available to the other members of your organization. | No                     |
 | Process forms                    | Whether the agent is meant to process forms.                                   | Yes                    |
 
@@ -66,6 +68,73 @@ Each agent you create can be used to process notes in bulk as a background proce
 
 ### Agent Demo
 The Agent Demo feature allows you to generate a sample note, use your own note, or browse your directory of notes to select a number of notes to be processed by the agent. This allows you to verify your agent's behavior in a temporary environment.
+
+### Database Tools
+
+Database Tools allow agents to access external tools while processing notes and executing tasks.
+
+
+#### Tool Selection under Database Tools
+
+Select the tools that your agent is allowed to use.
+
+<div style={{ display: "flex", gap: "24px", marginTop: "16px" }}>
+  <div style={{ flex: 1 }}>
+    <ImageZoom
+      src="/images/tools/toolSelection.png"
+      alt="Tool Selection"
+    />
+    <p align="center">
+      <em>Enable the tools available to the agent.</em>
+    </p>
+  </div>
+
+  <div style={{ flex: 1 }}>
+    <ImageZoom
+      src="/images/tools/toolTemplateSelection.png"
+      alt="Template Selection"
+    />
+    <p align="center">
+      <em>Select templates for the enabled tools.</em>
+    </p>
+  </div>
+</div>
+
+#### Email Tool
+
+The **Email Tool** allows agents to send emails during execution.
+
+
+##### Email Tool Behavior
+
+| Configuration | Result |
+| --- | --- |
+| Email Tool disabled | No email is sent, even if the agent is instructed to send one. |
+| Email Tool enabled, no template selected | A raw email is sent to the recipient. |
+| Email Tool enabled with a template selected | A formatted email is generated using the selected template. |
+
+
+<div style={{ display: "flex", gap: "24px", marginTop: "16px" }}>
+  <div style={{ flex: 1 }}>
+    <ImageZoom
+      src="/images/tools/rawEmail.png"
+      alt="Raw Email"
+    />
+    <p align="center">
+      <em>Email generated without a template.</em>
+    </p>
+  </div>
+
+  <div style={{ flex: 1 }}>
+    <ImageZoom
+      src="/images/tools/emailWithTemplate.png"
+      alt="Email With Template"
+    />
+    <p align="center">
+      <em>Email generated using a template.</em>
+    </p>
+  </div>
+</div>
 
 You can see a demo run of each agent you create by clicking the `View Agent` button in the [agents](https://www.medbot.me/agents) page.
 
