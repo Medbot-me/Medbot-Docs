@@ -1,0 +1,33 @@
+# Care Team
+
+The **Care team** tab on a program's page (`/programs/[programId]`, tab "Care team") brings together roles, participants, coverage, and availability.
+
+## Roles
+
+Every new program is seeded with six default roles: **Consultant, Clinic nurse, PSA, Dietitian, Care coordinator, Pharmacist**. A seventh role, **Patient**, always exists platform-wide but is reserved for the patient-facing agent — it never appears in the "add participant" or "add coverage" pickers, since no person is ever rostered into it.
+
+Only the **program owner** can manage roles (rename, delete, or add a custom one), from the Care team tab's Roles card or from the setup wizard's Roles step. This is enforced server-side, not just hidden in the UI.
+
+## Participants
+
+Add someone to the care team with **first name, last name, email, and a care role**. The list on the Care team tab shows everyone currently on the roster: `First Last (email) — role`.
+
+## Coverage / rota
+
+Coverage resolves a **care role** to a **specific person at a point in time**. This matters because several platform behaviors (escalation notifications, task assignment) address "whoever is covering Care coordinator right now," not a named individual — without coverage set up, a team member's day off would otherwise leave notifications with nowhere to go. Add coverage entries from the **Coverage / rota** card on the Care team tab.
+
+## Availability
+
+The **Availability** card (`Care team member`, role, day of week, start/end time in UTC, slot length, active toggle) defines each care team member's **recurring weekly booking windows** — the same data both staff's manual booking flow and the patient agent's own booking tool read to compute open slots. See [Appointments](/docs/care-programs/appointments) for how availability turns into bookable slots.
+
+To add availability:
+
+1. Click **Add availability**.
+2. Pick a **care team member** (only people already on the roster, under a specific role, are selectable — a member covering two roles gets two separate options).
+3. Pick a **day of week** (times are in UTC).
+4. Set a **start** and **end** time, and a **slot length** in minutes (e.g. 30).
+5. Click **Add**.
+
+Toggle the **Active** switch to temporarily take a window offline (e.g. leave) without losing the definition — past appointments booked against it keep their context either way. Delete a row outright with the trash icon.
+
+If no care team member has any availability defined yet, patients (and staff) can't book an appointment at all — the Availability card shows "No availability set yet" as a reminder.

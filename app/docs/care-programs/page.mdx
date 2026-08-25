@@ -1,0 +1,41 @@
+# Introduction
+
+## What is a Care Program?
+
+A **Care Program** is a named care pathway — the container for everything needed to run one: a **care team** (people covering defined roles), a **cohort** of patients, one or more **AI agents** scoped to the program, and, optionally, a **patient-facing conversational agent** that patients text over SMS or WhatsApp.
+
+Examples of a care program: "Colorectal SOC — Referral to Discharge", "Post-op Cardiac Rehab", "Diabetes Management — Primary Care".
+
+Find Care Programs from the sidebar under **Programs → All Programs**, or by navigating to `/programs`.
+
+## Key concepts
+
+| Concept | What it is |
+| --- | --- |
+| **Program** | The top-level container — name, specialty, setting, status (`draft` or `published`). |
+| **Care role** | A function on the care team: Consultant, Clinic nurse, PSA, Dietitian, Care coordinator, Pharmacist. A program starts with these defaults but you can rename, delete, or add your own. `Patient` is a special role reserved for the patient-facing agent — no person is ever rostered into it. |
+| **Care team / Participants** | The people staffing the program, each assigned to a care role. |
+| **Coverage** | Resolves a care role to the specific person covering it right now (e.g. for a rota with leave) — used whenever the platform needs to notify "whoever is the Care coordinator today" rather than a named individual. |
+| **Cohort** | The patients enrolled in this specific program. A patient lives in one shared, platform-wide directory and can be in more than one program's cohort at once. |
+| **Program agent** | An AI agent scoped to this program and one care role, with its own instructions (markdown) and tool access. Stands in for, or assists, whoever is covering that role. Can be run on demand, scheduled once, or scheduled to repeat daily. |
+| **Patient agent** | A special `Patient`-care-role agent that a patient can actually talk to — over SMS/WhatsApp, asynchronously, about appointments, health education, and symptom triage. |
+| **Workflow text** | A free-text, plain-language description of how the program should run, given to every program agent run as context. |
+| **Care team availability** | Each care team member's recurring weekly booking windows — what both staff and the patient agent book appointments against. |
+
+## What you can do with a Care Program
+
+1. **Set up the program** — define roles, add the care team, add patients to the cohort, describe the workflow, author agents, and configure settings, all through a guided setup wizard.
+2. **Manage a cohort of patients** — add patients from the shared directory, track pending tasks/notes/messages per patient at a glance, and open any patient's own page for full detail.
+3. **Author and run AI agents** — give each agent a care role, a set of tools (MCP skills), and markdown instructions; run them against the whole cohort or hand-picked patients, immediately or on a schedule.
+4. **Turn on a patient-facing conversational agent** — bind a `Patient`-role agent so patients can text in about appointments, ask health-education questions, and report symptoms, with deterministic red-flag safety screening and a review-before-send mode for a cautious rollout.
+5. **Run a lightweight appointment book** — care team members publish weekly availability; staff and the patient agent both book, move, and cancel appointments against the same live slots.
+6. **Keep a running clinical record per patient** — encounter notes accumulate into an AI-maintained "agent context" briefing that every agent (program and patient-facing) is given.
+
+## Where to go next
+
+- New to Care Programs? Start with [Creating a Program](/docs/care-programs/getting-started).
+- Setting up who's on the team and when they're available: [Care Team](/docs/care-programs/care-team).
+- Managing your patient list: [Patients & Cohort](/docs/care-programs/patients).
+- Building staff-facing AI agents: [Program Agents](/docs/care-programs/agents).
+- Turning on patient SMS/WhatsApp chat: [Patient Agent](/docs/care-programs/patient-agent).
+- How the appointment book works: [Appointments](/docs/care-programs/appointments).
