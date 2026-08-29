@@ -1,0 +1,19 @@
+# Attendance
+
+`/roster/attendance` shows what actually happened against each [published](/docs/medbot-cms/rostering#publishing-admin-only) shift. It's `admin`-only to manage — the same team that owns publishing.
+
+## How attendance is derived
+
+There is no clock-in button. Attendance is derived from staff activity in the app during a published shift, so a shift with no recorded activity reads as **absent** — this is deliberate: presence is inferred from real work (checking in a patient, opening a chart, recording an observation, and so on), not self-reported.
+
+## Reviewing a week
+
+The page opens on the current week showing **Needs a look** — the partial and absent days, i.e. the ones most likely to need a correction. Switch to **All** to see every record in the range instead.
+
+## Finalizing and correcting
+
+Set the date at the top and select **Finalize** to lock a day, or **Reopen** to unlock one that needs a late fix. Select **Correct** on a row to amend the clock-in, clock-out, or status — a reason is required, and a finalized record must be reopened before it will accept a correction. Admins can't reopen or correct their own record; another admin has to do it.
+
+## Exporting a timesheet
+
+**Export CSV** produces a timesheet for the selected range. Records that aren't finalized are left out of the export, and the export tells you how many were skipped — so an export is only ever as complete as the finalization work behind it.
