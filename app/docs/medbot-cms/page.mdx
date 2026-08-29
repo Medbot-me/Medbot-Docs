@@ -1,0 +1,35 @@
+# Introduction
+
+## What is Medbot CMS?
+
+**Medbot CMS** is the clinic-operations app: the day-to-day system a clinic's front desk, nurses, doctors, and administrators use to run a physical location — registering patients, booking and running appointments, managing a walk-in queue, rostering staff, recording clinical care, filing results, and billing. It sits alongside the patient-facing portal, where a clinic's own patients sign in to request appointments, read visit summaries, message the clinic, and manage their contact details.
+
+Medbot CMS uses [Medplum](https://www.medplum.com) as its clinical data store — patients, practitioners, appointments, encounters, observations, immunizations, and documents are all FHIR resources in Medplum. A local Postgres database holds only the operational state Medplum doesn't model: queue tickets, clinic sessions, rosters and attendance, display-device tokens, and similar day-to-day scheduling detail.
+
+## Key concepts
+
+| Concept | What it is |
+| --- | --- |
+| **Clinic role** | The four staff roles the app is built around: `admin`, `receptionist`, `doctor`, `nurse`. Every server action re-checks the signed-in user's role before reading or writing clinic data — see [Roles & Access](/docs/medbot-cms/roles-and-access). |
+| **Clinic location** | A physical site. Sessions, rooms, staff assignments, and the queue are all scoped to one location at a time. |
+| **Clinic session** | A location's "today" — which staff and rooms are active, opened from [Session Setup](/docs/medbot-cms/session-setup). |
+| **Reception queue** | The live, location-scoped list of today's checked-in and booked patients — see [Reception Queue](/docs/medbot-cms/reception-queue). |
+| **Roster** | The staff schedule — draft shifts, recurring patterns, and a publish step that seeds each day's session and starts attendance tracking. See [Rostering](/docs/medbot-cms/rostering). |
+| **Patient portal** | The separate, patient-facing side of the same app, where a clinic's patients sign in to manage their own care. See [Patient Portal](/docs/medbot-cms/patient-portal). |
+
+## What you can do with Medbot CMS
+
+1. **Run the front desk** — register patients, book and manage appointments, operate the reception queue, and reply to portal messages.
+2. **Roster and track staff** — plan shifts (including recurring patterns), publish the week, and let attendance derive automatically from what staff actually do in the app.
+3. **Deliver clinical care** — start encounters, record vitals and vaccinations, place orders, review diagnostic results, and issue documents and medical certificates.
+4. **Run the clinic's back office** — manage staff accounts and licences, configure locations/rooms/public displays, maintain the medication formulary, and manage inventory and billing.
+5. **Give patients self-service access** — the patient portal lets patients request appointments, read visit summaries and invoices, message the clinic, and keep their own contact details current.
+
+## Where to go next
+
+- New to the app? Start with [Getting Started](/docs/medbot-cms/getting-started) to set up Medplum, Clerk, and the database.
+- Understand who can do what: [Roles & Access](/docs/medbot-cms/roles-and-access).
+- Running a clinic day: [Session Setup](/docs/medbot-cms/session-setup), [Reception Queue](/docs/medbot-cms/reception-queue), [Appointments](/docs/medbot-cms/appointments).
+- Staffing: [Rostering](/docs/medbot-cms/rostering) and [Attendance](/docs/medbot-cms/attendance).
+- Clinical workflows: [Documents & Certificates](/docs/medbot-cms/documents-and-certificates), [Diagnostic Results](/docs/medbot-cms/diagnostic-results), [Vitals](/docs/medbot-cms/vitals), [Vaccinations](/docs/medbot-cms/vaccinations).
+- The patient-facing side: [Patient Portal](/docs/medbot-cms/patient-portal).
