@@ -1,0 +1,13 @@
+# Patient Records & Consent
+
+## Contact details
+
+Patient registration can capture an optional phone number, email address, and preferred contact channel; staff can update these from the patient chart. Phone and email live in the patient's FHIR `Patient.telecom`, with the preferred populated channel at `ContactPoint.rank` 1. The patient list and chart flag records with no phone or email on file.
+
+## Communication consent
+
+Admins and receptionists can record communication consent at registration; admins, receptionists, nurses, and doctors can update it from the patient chart for each purpose and channel. Consent is **deny-by-default** — a patient may be contacted only for explicitly selected purpose-and-channel combinations. Purposes: appointment reminders, clinical recalls, clinical updates, documents sent to the patient, documents sent to a third party, and health promotion. Channels: email, SMS, and WhatsApp — SMS and WhatsApp consent can be recorded even before those delivery channels are configured.
+
+Consent is stored as one active FHIR `Consent` resource per patient in Medplum, not in the local database: a deny-by-default root provision plus one permit provision per selected purpose-and-channel combination. Treat a missing, inactive, or unselected combination as **not permitted** — there's no other default to fall back on.
+
+Each staff-recorded consent identifies the linked Practitioner as its FHIR performer. New staff created from `/staff` receive a linked Medplum Practitioner automatically; a legacy staff row without that link can't record or update consent. Concurrent contact or consent edits use Medplum version checks — when a record has changed since it was loaded, refresh the patient chart before trying again.
