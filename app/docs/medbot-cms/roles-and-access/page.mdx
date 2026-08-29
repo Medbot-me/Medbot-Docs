@@ -1,0 +1,19 @@
+# Roles & Access
+
+Medbot CMS is built around four clinic roles, plus one internal account that isn't a real clinic role at all. Every server action re-checks the signed-in user's role before reading or writing clinic data — page-level checks only control what's visible, so a role's real boundary is enforced at the action, not the UI.
+
+## The four clinic roles
+
+**`admin`** manages staff, registers patients, updates patient contact details and communication consent, books/edits/cancels appointments, manages clinic locations and session setup, manages display devices, operates the reception queue, records and corrects vitals, records/edits/voids vaccinations, manages the formulary and catalog, composes documents, issues medical certificates, uploads and reviews diagnostic results (including reassigning or withdrawing outstanding ones), manages the results-review duty rota, publishes the roster, and manages attendance. Clinic Admin is effectively a per-tenant superuser for operational purposes — it can act as backstop for most workflows a receptionist, nurse, or doctor primarily owns.
+
+**`receptionist`** registers patients, updates patient contact details and communication consent, books/edits/cancels appointments, manages today's session setup, operates the reception queue, views (but doesn't publish) vaccination records, and views/prints/emails existing patient documents. Receptionists can also upload and view diagnostic results, and build/adjust roster drafts — but only an admin can publish a week.
+
+**`doctor`** and **`nurse`** read patient, practitioner, and appointment data through authorized clinical workflows; update patient contact details and communication consent; record and correct vitals; record/edit/void vaccinations; view the formulary; and view/print/email patient documents. Both can compose letters and memos, and upload/view diagnostic results. Doctors can additionally compose referrals, issue medical certificates, and acknowledge, reassign, or withdraw results — nurses cannot. Neither can register patients, book/edit/cancel appointments, or manage staff, sessions, the queue, formulary entries, the results-duty rota, or roster publishing.
+
+## The `superuser` role
+
+`superuser` is not a real clinic role — it's an internal/testing account that passes every role gate in the app, meant to exercise every role's capabilities from one login rather than swapping accounts to verify a workflow end to end. It isn't offered as an option on the staff form; it's set directly on an account. Because it bypasses the role allowlist rather than being granted the union of every role's capabilities, some write controls that check for a *specific* role rather than for general access still stay hidden to it — Acknowledge on Results, Compose on a patient's Documents, and the Displays panel on Session setup all require signing in as the role that actually owns them.
+
+## Where role gating shows up
+
+Nearly every page in this section notes which role a workflow belongs to — see [Session Setup](/docs/medbot-cms/session-setup), [Rostering](/docs/medbot-cms/rostering) and [Attendance](/docs/medbot-cms/attendance) (both admin-only to publish/manage, though reception can draft a roster), and [Documents & Certificates](/docs/medbot-cms/documents-and-certificates) (referrals and medical certificates require a doctor or admin).

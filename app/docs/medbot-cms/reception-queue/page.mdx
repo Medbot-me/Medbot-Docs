@@ -1,0 +1,19 @@
+# Reception Queue
+
+`/queue` projects today's Medplum appointments into a location-scoped operational queue. Use the location picker (or `?locationId=...`) to switch branches — appointments without a clinic-location extension stay on the default location so legacy bookings remain visible. Medplum stays authoritative for appointment status, patients, practitioners, and linked encounters; Postgres holds only the local operational fields Medplum doesn't model: the clinic session, public queue ticket, manual queue position, arrival timestamp, route stage, payment flag, assignment source, latest called room/timestamp, and the assignment audit trail.
+
+## Checking a patient in
+
+`receptionist` and `admin` can check in scheduled patients, cancel or mark no-show, reopen a cancelled/no-show row, assign doctors, route active patients through `nurse` → `doctor` → `dispensary` → `completed`, and toggle payment between `unpaid`/`paid`. They can also call a checked-in patient to an active room — the latest called room and timestamp drive the public display boards until the patient's route stage changes.
+
+Check-in stamps the first physical arrival time without overwriting it on retries, issues a queue ticket from the location's open session, and assigns the next active session doctor by round-robin. A duplicate check-in reuses the existing ticket rather than advancing the rotation. Reopening a cancelled or no-show appointment runs the same location-aware check-in path: it stamps a fresh arrival time, clears any old manual queue position, issues a valid session ticket, and returns the patient to the active queue at the correct place.
+
+The staff queue polls for updates every four seconds while its tab is visible, so changes made by other staff show up without a manual reload.
+
+## Queue ordering
+
+Ordering is explicit: manual `queue_position` pins sort first, then physically present patients sort ahead of booked patients, and completed/cancelled rows sort last. Present patients order by `arrived_at`; booked patients use their scheduled start time. An active encounter linked to an appointment surfaces as `in-progress` in the queue projection and sets `hasEncounter`, so doctor/nurse actions can continue (or disable) already-started clinical work.
+
+## Doctor and nurse view
+
+Doctors and nurses get a read-only **Today's Patients** view scoped to the patients assigned to them — it refreshes automatically as reception checks people in, and links straight into that patient's encounters. Reassigning a patient or changing their room stays reception's job, not something a doctor or nurse can do from this view.
