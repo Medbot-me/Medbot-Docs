@@ -1,0 +1,15 @@
+# Staff Management
+
+`/staff` is where admins create staff accounts, keep role and licence details current, and deactivate access — `admin`-only.
+
+## Adding a staff member
+
+**Add staff** captures a person's email, name, role (`admin`, `receptionist`, `doctor`, or `nurse` — `superuser` isn't offered here, see [Roles & Access](/docs/medbot-cms/roles-and-access#the-superuser-role)), and, for roles that need one, a licence number. The staff table lists everyone's name, email, role, licence number, and whether the account is active or deactivated.
+
+## Editing and deactivating
+
+A row's actions edit the role or licence details, or deactivate the account when someone leaves. Deactivating keeps the account's history intact but blocks sign-in — reactivate a returning staff member's existing account rather than creating a second one for them.
+
+## Why the role matters
+
+The role set here decides which pages and controls that person sees everywhere else in the app — see [Roles & Access](/docs/medbot-cms/roles-and-access) for what each role can do. A new staff account also gets a linked Medplum `Practitioner` record automatically, which [communication consent](/docs/medbot-cms/patient-records#communication-consent) recording depends on.

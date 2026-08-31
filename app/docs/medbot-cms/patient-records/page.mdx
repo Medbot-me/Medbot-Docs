@@ -1,5 +1,9 @@
 # Patient Records & Consent
 
+## Registering a patient
+
+`receptionist` and `admin` can register a patient two ways from `/patients`. **Add Patient** creates the record at the desk directly — search for the person first, since a duplicate record is far harder to undo than a search is to run. **Invite to self-register** instead sends the patient a link, by email or SMS, that they fill in themselves; pending invitations stay listed on the page until used. A self-registered patient's own details land marked unverified until staff check them against ID at the desk.
+
 ## Contact details
 
 Patient registration can capture an optional phone number, email address, and preferred contact channel; staff can update these from the patient chart. Phone and email live in the patient's FHIR `Patient.telecom`, with the preferred populated channel at `ContactPoint.rank` 1. The patient list and chart flag records with no phone or email on file.
