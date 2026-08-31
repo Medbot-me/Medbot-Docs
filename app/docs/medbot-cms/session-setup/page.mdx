@@ -1,0 +1,25 @@
+# Session Setup
+
+`/session` is where reception and admin prepare a clinic location for the day — who's working, which rooms are available, and which public displays are live. It's available to `receptionist` and `admin`.
+
+## 1. Pick the location and open today's session
+
+Choose the clinic location for the day. The page header shows whether today's session is **Open** or **Closed**; **Create session** opens one if none exists yet. Admins can also add new locations from **Session setup** (**Add location**) — name, code, and address.
+
+## 2. Mark who's working today
+
+Under **Who is working today**, tick each doctor, nurse, and receptionist on duty and save. Only doctors ticked here join the round-robin pool the reception queue uses to auto-assign a doctor at check-in — if no doctor is marked active, check-in still issues a queue ticket, just without an auto-assigned doctor.
+
+## 3. Assign rooms
+
+Add or update rooms for the location, set each room's assigned staff, and untick **Available** for a room that's temporarily out of use.
+
+## 4. Manage patient-facing displays (admin only)
+
+The **Displays** panel registers and manages public queue boards for the location — see [Patient-Facing Displays](/docs/medbot-cms/display-boards) for how the boards themselves work. This panel is admin-only; reception uses the rest of the page.
+
+## How eligibility rules apply elsewhere
+
+Staff without explicit location assignments are eligible at every active location; an explicit `staff_location_assignments` row restricts a staff member to specific locations. When booking or editing an appointment, the practitioner dropdown lists only **doctors** eligible for the selected location — the same eligibility rule the server enforces at booking time. Nurses, receptionists, and out-of-location staff never appear in that dropdown.
+
+Appointment times and slots always use the clinic's Singapore timezone, regardless of the browser's or server's own timezone. Patient birth dates in FHIR remain literal calendar dates; displayed ages use the clinic's current calendar day.

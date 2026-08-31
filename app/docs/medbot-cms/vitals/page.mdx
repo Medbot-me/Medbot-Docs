@@ -1,0 +1,15 @@
+# Vitals
+
+A patient's detail page shows clinic vitals to admins, receptionists, doctors, and nurses; only admins, doctors, and nurses can record them.
+
+## Recording a reading
+
+Vitals — blood pressure, heart rate, temperature, oxygen saturation, respiratory rate, pain score, weight, and height — are recorded against a planned, arrived, triaged, or in-progress encounter. Blood pressure includes cuff site and patient position, defaulting to right arm and sitting. When weight and height are entered together, the app stores a BMI calculated from that submission; it never combines a new measurement with an older one to compute BMI.
+
+## Thresholds and trends
+
+The latest values use age-banded screening thresholds, including pediatric heart rate, respiratory rate, and blood pressure screens — these are clinical prompts, not diagnoses or percentile-based pediatric assessments. When fever and heart rate are captured together, the panel also compares the heart rate against the expected fever-related increase, using prior afebrile readings when available. Trend sparklines use up to 20 valid readings.
+
+## Correcting a reading
+
+Correcting a reading marks the original FHIR `Observation` `entered-in-error` and creates a replacement linked through `derivedFrom`. The current view and trends exclude corrected originals; **View history** retains them with a Corrected label, so the audit trail stays visible even though the active view doesn't show it.

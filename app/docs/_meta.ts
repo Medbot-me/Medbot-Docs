@@ -7,4 +7,5 @@ export default {
   "clinical_resources": "Clinical Resources",
   "care-programs": "Care Programs",
    "use-cases": "Use Cases",
+  "medbot-cms": "Medbot CMS",
 };

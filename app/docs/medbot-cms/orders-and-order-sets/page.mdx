@@ -1,0 +1,11 @@
+# Orders & Order Sets
+
+An encounter's Orders panel is where `admin`, `doctor`, and `nurse` place, review, and cancel service, consumable, and medication orders against a patient's active encounter; `receptionist` has read-only access to the same list.
+
+## Placing an order
+
+Open a patient's chart, start or resume a visit from **Encounters**, then use the Orders panel to add an order — drawing on the [services and consumables catalog](/docs/medbot-cms/catalog-and-inventory#clinical-services-and-consumables-services) and the [formulary](/docs/medbot-cms/formulary) — or cancel one already placed.
+
+## Order sets
+
+`/order-sets` lets `admin`, `doctor`, and `nurse` save a reusable bundle of services, consumables, or medications under **New order set**, then drop the whole bundle onto an open encounter in one step with **Apply order set** in the Orders panel. You can edit, retire, or delete a set you own; only `admin` can change or remove one owned by someone else.

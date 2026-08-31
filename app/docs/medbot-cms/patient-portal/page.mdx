@@ -1,0 +1,23 @@
+# Patient Portal
+
+The patient portal is the self-service, patient-facing side of Medbot CMS — a clinic's own patients sign in to request appointments, review past visits, message the clinic, and keep their own details current. It isn't an emergency service: portal messaging is explicitly for non-urgent contact only.
+
+## Signing in
+
+Patients sign in at `/portal/login` either with the email address registered with the clinic, or with **First time / recovery** access using their NRIC, FIN, or passport number plus date of birth. Either path finishes with a six-digit code sent to the patient; an expired code means starting the sign-in again.
+
+## Requesting an appointment
+
+From `/portal/appointments`, **New request** lets a patient give a preferred clinic location, date, time, and reason for the visit. Submitting a request doesn't confirm an appointment — it goes to staff, who review it from [Appointments → Booking requests](/docs/medbot-cms/appointments#responding-to-portal-booking-requests). The request card shows its status as one of: **Awaiting review**, **Accepted**, **Rejected**, or **Your response needed** — the last one means staff proposed a different time, and the patient chooses **Accept proposed time** or **Decline proposed time** on that same card.
+
+## Visit summaries and invoices
+
+`/portal/visits` lists completed visits. Opening one shows the diagnosis, medication name, dose, and instructions where available, plus a **Download invoice PDF** action when an invoice exists. If something on a visit looks wrong, the intended path is to message the clinic rather than try to change it from the portal.
+
+## Messaging the clinic
+
+`/portal/messages` is a threaded, non-urgent channel to the clinic — read the existing thread before adding to it, and keep each message focused on one request with useful context (an appointment or visit date). This is explicitly not for medical emergencies or urgent care; the portal directs patients to local emergency services or the clinic directly for those. Staff manage the other side of this thread from [Clinic Messaging](/docs/medbot-cms/messaging).
+
+## Profile and preferences
+
+From `/portal/profile`, changing a contact detail is a two-step verification: **Change contact detail** first re-verifies the patient's identity with a code to their *current* registered email, then a second code confirms the *new* email or phone before it takes effect. Home address and communication preferences are separate, simpler edits with their own save actions. Verifying a new email or phone signs the patient out — they sign back in afterward, using the new email if that's what changed.

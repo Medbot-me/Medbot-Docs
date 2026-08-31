@@ -1,0 +1,11 @@
+# Formulary
+
+`/formulary` stores the clinic's medication catalog as FHIR `MedicationKnowledge` resources in Medplum.
+
+## Adding medications
+
+Admins can search [RxNav](https://mor.nlm.nih.gov/RxNav/) for generic drugs, brand-name drugs, and packs, then add a result with its dose form, manufacturer reference, synonyms, catalog slug, and dispensable unit. A coded RxNorm concept can be added only once — no duplicate entries for the same code.
+
+## Managing entries
+
+Admins can edit medication details without changing the RxNorm code or lifecycle status. Row actions activate or retire an entry, mark it entered-in-error, or permanently delete it after confirmation. Doctors and nurses have read-only access. The table supports medication text search, status filtering, and pagination.

@@ -1,0 +1,21 @@
+# Diagnostic Results
+
+The `/results` inbox and the diagnostic-results card on a patient's chart let staff file, find, and review laboratory and imaging reports. Receptionists, nurses, doctors, and admins can all view and file reports.
+
+## Filing a report
+
+A filing may be a scanned report alone, or may also include discrete values for later display and trending. The uploaded scan must be a PDF, PNG, or JPEG no larger than 8 MB — the server identifies its type from the file bytes rather than trusting its name or browser MIME type. Attachments are served only through the authenticated results endpoint, never a public Medplum URL.
+
+Each filing creates a FHIR `DiagnosticReport`, optional `Observation` values, and an outstanding review `Task` in Medplum. The report is tagged with the clinic location, and names either an eligible local ordering doctor or a free-text external orderer.
+
+## The inbox
+
+The inbox defaults to unreviewed reports, and can also show the current viewer's assigned work, reports they ordered, acknowledged reports, or all reports. Filters cover report category, performing facility, abnormality, patient name, and received-date range. Unreviewed reports are ordered critical first, then abnormal, then oldest.
+
+## Acknowledging and routing
+
+Only doctors acknowledge reports — recording either no action or a follow-up disposition. A follow-up creates a separate FHIR task for the later recall or patient-engagement workflow. Admins and doctors can reassign an outstanding review to another eligible doctor at the report's clinic location, or withdraw a misfiled report with a reason: the report and values are marked entered-in-error and its outstanding review/follow-up tasks are cancelled, but the audit trail stays on the original patient's chart.
+
+## The review rota
+
+`/results/roster` is location-specific. All result viewers can see who covers each day; only admins can change it. A report is shown to its ordering doctor and to doctors rostered for both the report's clinic location and its Singapore receipt date. Routing determines the default inbox view, not sign-off authority — any doctor may acknowledge an outstanding report regardless of who it was routed to.
