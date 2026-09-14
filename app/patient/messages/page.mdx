@@ -1,0 +1,38 @@
+# Messages
+
+The **Messages** tab is a hub of threads. Three kinds live side by side, each with its own identity, and each thread opens into the same conversation view.
+
+## Thread kinds
+
+### The clinic front desk
+
+One thread per connected clinic. With a single clinic connected it is simply "The clinic"; once there is more than one, each thread is named for its clinic.
+
+This is the non-urgent channel to the clinic's staff — the same conversation staff see and answer from the CMS's [Clinic Messaging](/docs/medbot-cms/messaging) screen. Read the existing thread before adding to it, and keep each message to one request with enough context (an appointment or visit date) for staff to act on it.
+
+Staff identity is deliberately not exposed on the patient's side of the thread.
+
+### Care-team threads
+
+One thread per care program the patient is enrolled in, talking to that program's agent. Threads are named by the program itself — the name staff gave it — rather than by an agent persona.
+
+A care-team thread may contain individual **check-in** conversations (encounters) reached from the thread.
+
+### Guided care sessions
+
+One thread per [guided care session](/patient/ask-medbot#guided-care-sessions) the patient has consented to, carrying the matching agent's name and icon for its kind.
+
+A session thread that has **ended** is read-only and shows a badge on the hub instead of inviting more reading. In place of the composer it offers either:
+
+- a link to the session's [summary](/patient/health-records), when the session completed; or
+- a **Start a new session** form for the same kind, with the same consent copy shown before the first one started, when the session was cancelled or swept away as abandoned.
+
+An abandoned session writes no summary.
+
+## Escalations
+
+A red flag raised by Ask Medbot or inside a guided session lands in the clinic front-desk thread. With several clinics connected, it is sent to every one of them rather than guessing which should see it.
+
+## What Messages is not
+
+Messaging the clinic is for non-urgent contact. The portal points patients to local emergency services or to the clinic directly for anything urgent.

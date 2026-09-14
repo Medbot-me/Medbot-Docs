@@ -1,0 +1,26 @@
+# Switching Organisations
+
+A doctor who covers two clinics, or an administrator who runs a group, belongs to several organisations with one account. The CMS renders exactly one of them at a time — the **current organisation**.
+
+## The sidebar switcher
+
+The organisation picker sits in the sidebar header.
+
+- A user who belongs to **one** organisation sees its name as plain text. There is nothing to switch to, so there is no picker.
+- A user who belongs to **several** sees a dropdown listing them all.
+
+Choosing a different organisation re-renders the entire app under it: the queue, the patient list, the schedule, the results, inventory — everything. The choice is remembered across sessions, so the next sign-in opens the same organisation.
+
+## From the organisations screen
+
+`/organisations` lists every organisation the user belongs to with their role in each, a **Current** badge on the active one, a **Switch** action on the others, and a **Settings** link on any they administer. It is reachable from the switcher's own "Manage organisations" entry.
+
+## Roles are per organisation
+
+A person's role is a property of their membership, not of their account. The same user can be an `admin` at one clinic and a `nurse` at another; switching organisations switches which role they are acting under. Every permission check runs against the role in the organisation currently selected.
+
+## What switching does not do
+
+Switching does not widen anyone's access. The stored choice only decides *which* of the user's own organisations a page renders — it is never treated as authorisation on its own. Every request the CMS makes re-derives the caller's membership and role for that organisation server-side, so a tampered-with choice yields nothing: an organisation the user does not belong to answers as if it does not exist.
+
+Administering an organisation you are not currently in is fine, too. The settings page works on the organisation named in its own URL, not the current one, so an admin of several can manage any of them without switching first.

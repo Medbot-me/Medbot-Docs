@@ -1,0 +1,46 @@
+# Results & Records
+
+The **Results** tab is the patient's view of their clinical record: laboratory and imaging reports first, the other record kinds behind them, and an export of the whole thing.
+
+## Results list
+
+Reports appear newest first with an **All / Laboratory / Imaging** filter. Any follow-ups the clinic has asked for sit above the list so they are not buried under history.
+
+Each report carries a conclusion badge: **Normal**, **Abnormal**, or **Critical**.
+
+## What is released, and when
+
+The portal never shows a patient a verdict the clinic has not released.
+
+- Nothing that reads as a conclusion is shown before a doctor has signed the result off.
+- A **critical** flag is withheld while the clinic is still trying to recall the patient — so the patient hears it from a clinician, not from a badge.
+- **"What this means"** is the clinician's own patient-facing note. It is never staff shorthand repurposed for the patient.
+
+## Result detail
+
+Opening a report shows the badge, "What this means", the report details (including which clinic issued it), the follow-up banner where one applies, the individual analytes once the result has been reviewed, and clear exits — back to the list, to the clinic thread, or to an appointment request.
+
+## The other record kinds
+
+Beyond reports, the record covers:
+
+| Kind | What it holds |
+| --- | --- |
+| **Lab & imaging reports** | Reports issued by the lab or imaging centre |
+| **Results & measurements** | Individual results, vitals and readings |
+| **Immunisations** | Vaccines recorded by the clinic |
+| **Documents** | Letters, referrals and uploaded files |
+
+Every row notes which clinic it came from and whether that clinic is still syncing, so a patient can tell a current record from a historical one.
+
+Guided-session summaries are kept out of this list and shown separately under [Health Records](/patient/health-records) — they are the patient's own notes, not a clinic's chart.
+
+## Download my summary
+
+**Download my summary** exports the whole health record as an **International Patient Summary (IPS)** — a standard, portable document a patient can hand to another clinician.
+
+The export is assembled from the patient's problems, immunisations, results and procedures, plus two reconciled lists:
+
+- **Medications** and **allergies**, deduplicated across every connected clinic so the same drug recorded at two clinics appears once. The reconciled lists are regenerated after each clinic's sync run, and the patient can mark an entry **verified** or **disputed**.
+
+There is no separate reconciliation screen today; the export is where reconciled medications and allergies surface to the patient.

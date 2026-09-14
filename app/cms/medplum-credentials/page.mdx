@@ -1,0 +1,39 @@
+# Medplum Credentials
+
+Each organisation has **its own Medplum server**, and its own OAuth client on it. That is what keeps one clinic's clinical data separate from another's: not a filter over a shared store, but a different store.
+
+Credentials are managed from the **Medplum credentials** section of [Organisation Settings](/cms/settings), by an admin of that organisation.
+
+## What the section shows
+
+- The **current client ID** in plain text.
+- When the credentials were **last verified**.
+- The **last verification error**, as an alert, if the most recent check failed.
+- "No credentials configured yet", if none have been set.
+
+The client **secret is never shown back** — not on this page, not anywhere. It can only be replaced.
+
+## Rotating credentials
+
+Enter a new **client ID** and **client secret**, optionally a new **base URL**, and **Save credentials**.
+
+The new credentials are validated against Medplum before they are stored, so a typo fails the save instead of silently breaking every clinical screen in the organisation. Once stored, the connection is rebuilt immediately — there is no restart or cache to wait out.
+
+## Verifying
+
+**Verify current credentials** checks the stored credentials against Medplum right now and reports either "credentials are valid as of &lt;time&gt;" or the error Medplum returned. The outcome is recorded, so the last-verified timestamp and last error on this page stay meaningful.
+
+Use it when clinical screens start failing and you want to know whether the cause is the credentials or something else.
+
+## Where credentials live
+
+The client secret is stored **encrypted**, and only the backend ever holds the key. The CMS app itself has no Medplum credentials at all:
+
+- The CMS's clinical reads and writes go through a per-organisation FHIR proxy on the backend, which attaches that organisation's own Medplum credentials on the way out.
+- The browser never sees a Medplum token, and no Medplum client id or secret exists in any CMS environment variable.
+
+This is also why a stale or revoked Medplum client shows up as clinical screens failing across the whole organisation at once, rather than as one broken feature — see [How Scoping Works](/cms/scoping).
+
+## Where credentials come from
+
+An organisation's first credentials are entered when it is [created](/cms/create-organisation). Rotating them later is this page's job. Either way the source is an OAuth client created in the clinic's own Medplum project.

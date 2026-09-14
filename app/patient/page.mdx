@@ -1,0 +1,48 @@
+# Introduction
+
+## What is the patient portal?
+
+The **patient portal** is Medbot's patient-facing app — the place a patient signs in to their own account to ask questions about their health record, message their clinic, request appointments, read visit summaries and results, and manage their own contact details and consent.
+
+It is a separate app from [Medbot CMS](/cms), the clinic-operations app staff use. The two meet through the patient's **health record**: the portal reads a patient-owned record that one or more clinics sync into, rather than logging the patient into any single clinic's system.
+
+> The portal replaced the CMS's older OTP-based `/portal` section. Everything that section did — booking requests, visit summaries, clinic messaging, profile and consent — now lives here, alongside features the old section never had: Ask Medbot, care-team threads, guided care sessions, results review, and multi-clinic record sync.
+
+## Key concepts
+
+| Concept | What it is |
+| --- | --- |
+| **Medbot account** | The patient's own sign-in, held in Clerk. Creating an account is not the same as being connected to a clinic. |
+| **Account link** | The binding between a Medbot account and a patient record at one clinic. A patient with no link cannot see any clinical data — see [Getting Started](/patient/getting-started). |
+| **Connected clinic** | A clinic whose records sync into the patient's health record, each with its own consent and sync status. A patient can connect several — see [Connected Clinics](/patient/connected-clinics). |
+| **Patient Health Record (PHR)** | The patient-owned record every portal screen reads. Records from every connected clinic land here, each tagged with the clinic it came from (its *provenance*) and whether that clinic is still syncing. |
+| **Guided care session** | A short, structured conversation (history taking, health education, financial counselling) offered by Ask Medbot with the patient's consent. Its summary is saved to the patient's own record, never to a clinic's chart. |
+
+## The five tabs
+
+The portal is organised around a persistent five-tab bar. Chat is one of the five, not a bolted-on widget.
+
+| Tab | What it is for |
+| --- | --- |
+| [**Chat**](/patient/ask-medbot) | Ask Medbot about your own visits and results, with cited sources and a hand-off to the clinic when a question needs a human. |
+| [**Messages**](/patient/messages) | One thread per connected clinic's front desk, one per enrolled care program, and one per guided care session. |
+| [**Visits**](/patient/visits) | Past visit summaries and invoices, plus appointment requests and the request form. |
+| [**Results**](/patient/results) | Laboratory and imaging reports, the other record kinds, and the "Download my summary" export. |
+| [**Profile**](/patient/profile) | Identity, contact details, connected clinics, and how the clinic may contact you. |
+
+Two more screens sit outside the tab bar on purpose, because they are reached before an account exists: [self-registration and teleconsult join links](/patient/invites).
+
+## What the portal is not
+
+The portal is **not an emergency service**. Ask Medbot screens every message for red flags before it answers anything and will escalate to the clinic instead; clinic messaging is explicitly for non-urgent contact. For anything urgent the portal directs the patient to local emergency services or to the clinic directly.
+
+Nothing in the portal changes a clinical record. A patient who sees something wrong on a visit, a result, or their chart's contact details is directed to message the clinic rather than to edit it.
+
+## Where to go next
+
+- Signing in for the first time: [Getting Started](/patient/getting-started).
+- Connecting one clinic, or several: [Connected Clinics](/patient/connected-clinics).
+- Day-to-day use: [Ask Medbot](/patient/ask-medbot), [Messages](/patient/messages), [Visits & Appointments](/patient/visits), [Results & Records](/patient/results).
+- The patient's own session summaries: [Health Records](/patient/health-records).
+- Contact details and consent: [Profile & Preferences](/patient/profile).
+- The staff side of all of this: [Medbot CMS](/cms) and [Patient Portal in the CMS](/docs/medbot-cms/patient-portal).

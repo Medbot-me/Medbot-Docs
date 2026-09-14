@@ -1,0 +1,29 @@
+# Ask Medbot
+
+**Chat** is the portal's landing tab, and the Ask Medbot box is the whole page: a search-first screen ("Ask Medbot about your health…") with a few try-asking suggestions under it.
+
+## What it can answer
+
+Ask Medbot answers against the patient's **own record only** — a bounded read of their recent visits and results. It is a record-search assistant, not a general medical chatbot and not a second opinion.
+
+Every answer carries its **sources** as chips, so a patient can see which visit or report an answer came from, and a **limits card** stating plainly what Ask Medbot cannot do. Each answer also offers a hand-off to the clinic for anything that needs a person.
+
+Questions are answered one at a time, synchronously — the question goes into the address bar and the answer comes back as a whole. No conversation is stored on the server between questions.
+
+## Red-flag screening
+
+Before any model call, every message passes a deterministic red-flag screen. A message that trips it is **not** answered as a normal question: the limits card is replaced by an emergency banner, the hand-off to the clinic is always offered, and the escalation is sent to the clinic thread. When several clinics are connected, the escalation goes to all of them rather than guessing which one should see it.
+
+This is why the portal is not an emergency service — the screen exists to get the patient to a human quickly, not to triage them.
+
+## Guided care sessions
+
+Alongside answering, Ask Medbot classifies the question for whether a **guided care session** would help. When one would, a consent card appears below the answer offering it. The three kinds are:
+
+- **History taking**
+- **Health education**
+- **Financial counselling**
+
+A session is only ever offered this way, with consent — there is no separate picker to start one from. Accepting creates a thread in [Messages](/patient/messages) with the session's own identity. A red-flagged message never triggers a session offer.
+
+A session does not require the patient to be enrolled in any care program. When it completes, its summary is saved to the patient's own [Health Records](/patient/health-records), kept separate from any clinic's chart.

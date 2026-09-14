@@ -1,0 +1,48 @@
+# Members & Roles
+
+Staff belong to an organisation through a **membership**. The membership carries the person's name, email, role, licence number where the role requires one, their Practitioner record on that organisation's Medplum, and whether they are active.
+
+Members are managed from `/staff`, which lists the current organisation's members and — for admins — the [pending access requests](/cms/join-an-organisation#resolving-requests-admins) above them.
+
+## Roles
+
+An organisation uses four clinic roles. Each membership has exactly one.
+
+| Role | Broadly |
+| --- | --- |
+| `admin` | Full clinic administration: staff, patients, appointments, locations and sessions, displays, queue, clinical records, formulary, documents, results and the review rota. |
+| `receptionist` | Front desk: registering patients, appointments, today's session setup, the queue, patient documents, diagnostic result upload and viewing. |
+| `doctor` | Clinical work: patient and appointment reads, vitals, vaccinations, formulary, documents, referrals, medical certificates, and acknowledging, reassigning or withdrawing results. |
+| `nurse` | As `doctor`, minus referrals, medical certificates and results acknowledgement. |
+
+The full matrix of what each role can do lives in [Roles & Access](/docs/medbot-cms/roles-and-access).
+
+A fifth role, `superuser`, exists for internal and testing accounts. It passes every role check, and is not a clinic role anyone should be given in normal use.
+
+## Adding a member
+
+An admin adds a member with:
+
+- **Email** — the address they will sign in with
+- **First name** and **Last name**
+- **Role**
+- **Licence number**, where the chosen role requires one (a doctor does)
+
+Adding a member creates their Practitioner record on the organisation's own Medplum alongside their membership row, so they can act clinically from their first sign-in. A duplicate email in the same organisation is rejected. If any step fails, the ones before it are undone rather than leaving a half-created member.
+
+If the person already has a Medbot account under that email they are linked immediately; otherwise the membership waits for them to sign up — see [Join an Organisation](/cms/join-an-organisation).
+
+## Changing a role or deactivating
+
+An admin can change a member's role, update their profile, or deactivate them. Two rules are enforced:
+
+- **An organisation always keeps at least one active admin.** Deactivating or demoting the last one is refused.
+- **Nobody deactivates themselves.**
+
+Deactivating a member ends their access to that organisation. Their account is only locked out entirely if they have no active membership anywhere else — a doctor who covers two clinics and leaves one keeps working at the other.
+
+A licence number change is synced to the member's Practitioner record.
+
+## One person, several organisations
+
+Memberships are independent. The same email can be a member of several organisations with a different role in each, and an email is unique *within* an organisation rather than globally. Every actor recorded on a clinical or operational write — who performed a stock movement, who acted on a queue ticket, who owns an order set — is the member, resolved server-side from the caller's own session, never something a client supplies.

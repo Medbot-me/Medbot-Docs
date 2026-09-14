@@ -1,0 +1,34 @@
+# Connected Clinics
+
+The portal does not sign a patient into one clinic's system. It reads a patient-owned **health record**, and each clinic the patient connects syncs its own records into it. That is what lets one account carry a patient's care across several clinics.
+
+Connected clinics are managed from **Profile → Connected clinics**.
+
+## What a connection does
+
+Connecting a clinic creates a link between the patient's health record and that clinic. Once the link is active, the clinic's records for that patient — lab and imaging reports, results and measurements, immunisations, documents, visit summaries — flow into the health record and appear on the portal's own screens, each tagged with the clinic it came from.
+
+Every record row and every visit notes its originating clinic as soon as more than one clinic is connected, so a result is never ambiguous about which clinic issued it.
+
+## Connection status
+
+Each row on the Connected clinics list shows one of four states:
+
+| Status | What it means |
+| --- | --- |
+| **Awaiting confirmation** | The link exists but the patient has not consented yet. Nothing syncs until they do. |
+| **Syncing** | The link is active and that clinic's records are flowing into the health record. |
+| **No longer syncing** | The clinic discharged the patient; historical records stay in the health record. |
+| **Syncing stopped** | The patient stopped the sync themselves. |
+
+## Consent
+
+A link created by a self-service connection or a clinic invite starts as **Awaiting confirmation**. The portal shows a consent card above the list explaining what the patient is agreeing to; confirming it moves the link to **Syncing**.
+
+An active link can be stopped at any time with **Stop syncing**. Stopping a sync ends future flow from that clinic; it does not delete records already in the health record.
+
+## Connecting another clinic
+
+**Connect another clinic** on the profile screen runs the same flow as first-time linking — pick the clinic, enter the identifier and date of birth held on that clinic's chart, then the six-digit code — and returns to the profile when the code verifies.
+
+Connections matter beyond Results: the Messages hub grows one front-desk thread per connected clinic, and an appointment request asks which clinic before it asks for a location. A clinic with no active link is not offered anywhere in the portal.

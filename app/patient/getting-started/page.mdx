@@ -1,0 +1,43 @@
+# Getting Started
+
+Three things have to happen before a patient sees any clinical data: a Medbot account, a one-time onboarding step, and at least one **account link** to a clinic. They happen in that order.
+
+## 1. Create an account or sign in
+
+The portal uses an ordinary email-and-password (or social) sign-in. Signing up creates a **Medbot account** and nothing more — a brand-new account has no clinical data behind it and is not yet known to any clinic.
+
+## 2. Onboarding
+
+Every account passes through a one-time onboarding screen that asks for three fields:
+
+- First / given name
+- Last / family name
+- Date of birth
+
+For a self-registered patient every field starts blank. For a patient whose account arrived through a clinic invite, the fields are pre-filled from the clinic's chart — which may be out of date, so confirming or correcting them is the point either way.
+
+## 3. Connect a clinic
+
+A signed-in account with no link is sent to the connect screen automatically; no portal tab will open until a link exists. There are two ways to get one.
+
+### Self-service: identifier, date of birth, and a code
+
+1. Pick the clinic from the list of clinics available to connect to.
+2. Enter the identifier that clinic holds on the patient's chart (NRIC, FIN, or passport number) together with the date of birth.
+3. Enter the six-digit code sent to the contact detail on that clinic's chart.
+
+The first step answers the same way whether or not a record matched, so the form cannot be used to probe whether someone is a patient of a given clinic. An expired code means starting the step again.
+
+### Clinic-issued invite
+
+Staff can issue an invite from the CMS ("Send portal invite" on a patient's record). The invite is a link the patient opens while signed in; opening it consumes the token and links the account immediately. If the token has already been used or has expired, the self-service form above is offered as the fallback.
+
+A patient who signs up from the invite link is brought back to it automatically once the account exists, so the link completes in one pass.
+
+## After linking
+
+Once one link exists, every tab has real data behind it. The link itself still needs the patient's **consent** before that clinic's records start syncing — see [Connected Clinics](/patient/connected-clinics), which also covers adding a second and third clinic.
+
+## No chart yet?
+
+A patient who has never been seen at the clinic does not have a chart to link to. Staff issue a **self-registration** invite instead, which collects the patient's details first and creates the chart. See [Invites & Join Links](/patient/invites).

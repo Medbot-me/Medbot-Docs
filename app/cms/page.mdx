@@ -1,0 +1,41 @@
+# Introduction
+
+## What is an organisation?
+
+An **organisation** is a clinic as a tenant of Medbot CMS: its own staff, its own locations, its own patients, and — crucially — **its own Medplum server**. Everything the CMS does happens inside exactly one organisation at a time.
+
+Medbot CMS is multi-organisation. Any signed-in user can create an organisation, add staff to it with roles, and run every clinic workflow — patients, queue, sessions, results, documents, rostering, inventory, billing — scoped to the organisation they currently have selected. A user who belongs to more than one switches between them.
+
+> This is a change from the single-tenant CMS. There is no "first admin" bootstrap step and no Medplum credentials in environment variables any more: the first admin is whoever creates the organisation, and each organisation's Medplum credentials are entered through the app and stored encrypted.
+
+## Key concepts
+
+| Concept | What it is |
+| --- | --- |
+| **Organisation** | The tenant. Carries a name, a slug, an active flag, a join code, and its own Medplum server details. |
+| **Membership** | A person's place in one organisation, with exactly one [role](/cms/members-and-roles) there. The same person can be a member of several organisations, with a different role in each. |
+| **Current organisation** | The one the CMS is rendering right now. Remembered per user and changed from the sidebar — see [Switching Organisations](/cms/switching). |
+| **Join code** | A short code an admin hands to a new hire so they can request access from the app — see [Join an Organisation](/cms/join-an-organisation). |
+| **Access request** | A pending request to join, filed by join code and resolved by an admin from the staff screen. |
+| **Medplum credentials** | The client id, client secret and base URL of the organisation's own Medplum server. Held encrypted by the backend; never exposed to the browser — see [Medplum Credentials](/cms/medplum-credentials). |
+
+## What you can do
+
+1. **Create an organisation** and become its first administrator: [Create an Organisation](/cms/create-organisation).
+2. **Join an existing one** with a join code, or have an admin invite you by email: [Join an Organisation](/cms/join-an-organisation).
+3. **Belong to several** and switch between them without signing out: [Switching Organisations](/cms/switching).
+4. **Manage staff** — add members, set roles, deactivate leavers: [Members & Roles](/cms/members-and-roles).
+5. **Administer the organisation** — rename it, rotate its join code, rotate and verify its Medplum credentials: [Organisation Settings](/cms/settings).
+
+## The organisations screen
+
+`/organisations` lists every organisation the signed-in user belongs to, with their role in each and a **Current** badge on the active one. From it they can switch to another, open **Settings** on any they administer, or **Create organisation**.
+
+Unlike every other staff page, this one does not require an existing organisation: a brand-new user with no memberships still needs to reach the "create an organisation" link. A user with no memberships at all sees an empty state pointing them at creating one or asking an administrator for a join code.
+
+## Where to go next
+
+- Setting up a clinic for the first time: [Create an Organisation](/cms/create-organisation).
+- Getting a new hire in: [Join an Organisation](/cms/join-an-organisation) and [Members & Roles](/cms/members-and-roles).
+- Understanding what "scoped to an organisation" actually means: [How Scoping Works](/cms/scoping).
+- The day-to-day clinic workflows inside an organisation: [Medbot CMS](/docs/medbot-cms).
