@@ -1,0 +1,24 @@
+# Invites & Join Links
+
+Two portal screens sit outside the five-tab bar, because both are reached *before* the person has a linked account. In both cases the link itself is the whole credential.
+
+## Self-registration
+
+For a patient the clinic has never seen — no chart, so nothing to link to.
+
+1. Staff issue a self-registration invite from the CMS.
+2. The patient opens the link. It is public: no sign-in is required, and none exists yet.
+3. The patient fills in the registration form, which creates their chart at that clinic.
+4. On success the portal sends them straight into sign-up, and the new account links itself to the chart the moment it exists — so the patient lands on their own record in one pass rather than having to find the connect screen afterwards.
+
+The self-registration route is rate-limited, since it is reachable without any account.
+
+## Teleconsult join links
+
+For a video consultation, where the person joining may have no Medbot account at all — a family member attending with the patient, for instance.
+
+Staff issue a join link from the appointment in the CMS. Opening it resolves the consultation room directly from the token; no sign-in step stands between the attendee and the room. Once the room is ready, the patient's arrival is reported back to the clinic so staff see them waiting.
+
+## Why these are not tabs
+
+Every other portal screen answers "what does a linked patient see". These two exist for people who are not linked yet — a not-yet-registered patient, or a video-consult attendee who never will be. They are one-time utility flows, not part of the portal's own navigation, and they expire once used.

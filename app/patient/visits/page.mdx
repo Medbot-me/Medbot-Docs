@@ -1,0 +1,49 @@
+# Visits & Appointments
+
+The **Visits** tab holds two related things: the record of visits that have already happened, and requests for visits that have not.
+
+## Visit list and summaries
+
+The visit list shows completed visits, newest first. Once more than one clinic is connected, each visit notes which clinic it was at.
+
+Opening a visit shows its summary:
+
+- the **diagnosis** recorded for the visit
+- **medications** — name, dose, and instructions where available
+- **billing**, including a downloadable invoice where one exists
+
+Nothing here is editable. If something on a visit looks wrong, the intended path is to [message the clinic](/patient/messages) rather than to try to correct it from the portal.
+
+## Appointment requests
+
+Appointment requests sit on top of the visit list, with the request form one step further in.
+
+### Making a request
+
+**New request** asks for:
+
+1. **Clinic** — which of the patient's connected clinics
+2. **Location** — a location belonging to that clinic
+3. **Preferred date**
+4. **Time of day**
+5. **Reason for the visit** — briefly, so the clinic can allow enough time
+
+Only clinics with an active link are offered, and a location belonging to a clinic the patient is not linked to cannot be requested.
+
+### A request is not a booking
+
+Submitting a request does not confirm an appointment. It goes to staff, who review it from the CMS's [Appointments → Booking requests](/docs/medbot-cms/appointments#responding-to-portal-booking-requests) screen. The request card shows where it stands:
+
+| Status | What it means |
+| --- | --- |
+| **Awaiting the clinic** | Submitted; staff have not reviewed it yet. |
+| **Clinic proposed a new time** | Staff countered with a different time — the patient's response is needed. |
+| **Confirmed** | Accepted, and a real appointment now exists. |
+| **Declined** | Staff rejected the request. |
+| **You declined the proposed time** | The patient turned down the clinic's counter-proposal. |
+| **Expired** | The request lapsed without being resolved. |
+| **Cancelled** | The request was cancelled. |
+
+### Responding to a counter-proposal
+
+When staff propose a different time, the request card itself carries the two actions — accept the proposed time or decline it. Accepting creates the appointment on that clinic's own system; declining leaves the request closed without one.

@@ -1,0 +1,45 @@
+# Create an Organisation
+
+Any signed-in user can create an organisation, at any time — whether it is their first or their fifth. The creator becomes its first **administrator** automatically.
+
+Reach the form from `/organisations/new`, from the **Create organisation** button on the [organisations screen](/cms), or from the link under the join-code form on the onboarding screen.
+
+## Before you start
+
+You need an OAuth client on the Medplum server this clinic will use:
+
+1. Sign up at [Medplum](https://app.medplum.com/signin) if the clinic has no project yet.
+2. Create an OAuth client in Medplum.
+3. Copy its **Client ID** and **Client Secret**.
+
+These go into the form below, not into an environment variable. The CMS holds no Medplum credentials of its own.
+
+## The form
+
+| Field | Required | Notes |
+| --- | --- | --- |
+| **Organisation name** | Yes | The clinic's name, e.g. "Orchard Clinic". |
+| **Medplum base URL** | No | Defaults to `https://api.medplum.com`. Set it for a self-hosted Medplum. |
+| **Medplum client ID** | Yes | From step 2 above. |
+| **Medplum client secret** | Yes | From step 2 above. Write-only — it is never shown back to you. |
+
+## What happens on submit
+
+The credentials are **validated against Medplum before anything is created** — a bad client id or secret fails the form rather than leaving a half-built organisation behind. Once they check out, the backend creates, in one transaction:
+
+- the **organisation** itself, with a generated slug and join code
+- the creator's **membership** as `admin`, with their name and email
+- the **encrypted Medplum credentials**
+- a default **clinic location**, "Main Clinic"
+
+It then creates the admin's own Practitioner record on that organisation's Medplum and stores its id. If that step fails, the organisation is deactivated and the error surfaced rather than leaving an admin who cannot act clinically.
+
+## After creating
+
+The new organisation becomes the current one and you land on the CMS home screen with it selected. From there:
+
+- add the rest of the staff from `/staff` — see [Members & Roles](/cms/members-and-roles)
+- hand out the join code to new hires — see [Join an Organisation](/cms/join-an-organisation)
+- configure locations, rooms and everything else exactly as [Getting Started](/docs/medbot-cms/getting-started) describes
+
+There is no manual role edit anywhere in the app and no separate "make me an admin" step. The first admin is whoever created the organisation; every admin after that is one an existing admin added.

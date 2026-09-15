@@ -1,0 +1,42 @@
+# How Scoping Works
+
+"Scoped to an organisation" is not a UI filter. It runs through every layer of the CMS, and it is worth understanding when something is unexpectedly missing — or unexpectedly present.
+
+## Two stores, two kinds of separation
+
+| Store | Holds | How organisations are separated |
+| --- | --- | --- |
+| **Medplum** (per organisation) | The clinical record: patients, practitioners, appointments, encounters, observations, immunisations, documents | A different Medplum server per organisation. Not a shared store with a filter on it. |
+| **Postgres** (shared) | Operational state Medplum does not model: queue tickets, clinic sessions, visits, rosters and attendance, locations and rooms, displays, inventory, order sets, booking requests, clinic-inbox threads | One database, every row carrying the organisation it belongs to — directly, or through its location or parent row |
+
+## Clinical data: the FHIR proxy
+
+The CMS never talks to Medplum directly. Every clinical read and write goes to the backend, which forwards it to **that organisation's** Medplum using credentials only it holds.
+
+What this means in practice:
+
+- No Medplum client id or secret exists in any CMS environment variable, and the browser never sees a Medplum token.
+- Rotating an organisation's [credentials](/cms/medplum-credentials) takes effect immediately across every clinical screen.
+- A request for an organisation you are not an active member of does not reach Medplum at all.
+- Bulk data export (`$export`) is refused through the proxy.
+
+Every active clinic role may pass the proxy. The per-feature role rules — who may issue a medical certificate, who may acknowledge a result — are enforced by the CMS's own checks before the request ever gets there, not by the proxy.
+
+## Operational data: the organisation column
+
+Operational tables carry the organisation directly (visits, clinic-inbox threads, order sets, catalog prices, staff pings, access requests, and others), or derive it from their clinic location (sessions, rooms, displays, booking requests, shifts, attendance, review duties, stock), or from their parent row.
+
+Consequences worth knowing:
+
+- **A location belongs to one organisation.** Naming a location from another organisation is rejected rather than quietly accepted.
+- **"Clinic-wide" means this clinic.** Listing clinic-wide order sets is filtered to the caller's organisation — a bare visibility check on a shared table would otherwise leak one clinic's sets into another's.
+- **Doctor eligibility in the queue** means an active `doctor` member *of this organisation*.
+- **Scheduled jobs**, like end-of-day attendance finalisation, run per organisation over each one's own locations and its own Medplum.
+
+## Denials look like absence
+
+When you are not a member of an organisation, or your membership is inactive, requests for it answer **not found** rather than **forbidden**. The app deliberately does not confirm that an organisation exists to someone who cannot see it. A page that shows "not found" where you expected settings usually means the membership, not the URL.
+
+## What is still single-organisation
+
+The [patient portal](/patient) is a separate app with its own patient accounts, and a patient's relationship to a clinic is a [connected-clinic link](/patient/connected-clinics) rather than a CMS membership. Patient-facing screens are organised around the patient's own health record, which can span several clinics — the mirror image of the CMS's one-organisation-at-a-time model.

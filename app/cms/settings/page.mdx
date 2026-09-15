@@ -1,0 +1,31 @@
+# Organisation Settings
+
+Settings for one organisation live at `/organisations/[id]/settings`, reachable from the **Settings** link beside any organisation you administer on the [organisations screen](/cms).
+
+Only an **administrator of that organisation** can open it. A non-admin member sees a message saying so; a non-member gets a plain "not found" — the app does not distinguish an organisation you cannot see from one that does not exist.
+
+The page works on the organisation named in its own URL rather than the one you currently have selected, so an admin of several can manage any of them without [switching](/cms/switching) first.
+
+## General
+
+- **Name** — the clinic's display name, shown in the switcher, on the organisations list, and anywhere the organisation is named.
+- **Slug** — its short identifier, unique across Medbot.
+- **Active / Inactive** — shown as a badge. An inactive organisation is not selectable and its members cannot act in it.
+
+**Save changes** applies both fields together and is disabled until something actually changes.
+
+## Join code
+
+The short code an admin hands to a new hire so they can request access before being invited by email. The section shows the current code with a **Copy** button.
+
+**Regenerate join code** issues a new one. The previous code stops working immediately — use it if a code has been shared too widely or has leaked. Regenerating does not affect anyone who has already joined.
+
+The full flow around this code is described in [Join an Organisation](/cms/join-an-organisation).
+
+## Medplum credentials
+
+Rotating and verifying the organisation's connection to its own Medplum server. This section has its own page: [Medplum Credentials](/cms/medplum-credentials).
+
+## A note on enforcement
+
+Every action on this page is re-checked server-side against your membership and role **in that specific organisation**, independently of anything the page itself decided. The page's gating is there to show you a helpful message, not to be the security boundary.

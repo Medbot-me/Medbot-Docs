@@ -1,23 +1,64 @@
 # Patient Portal
 
-The patient portal is the self-service, patient-facing side of Medbot CMS — a clinic's own patients sign in to request appointments, review past visits, message the clinic, and keep their own details current. It isn't an emergency service: portal messaging is explicitly for non-urgent contact only.
+The patient portal is the patient-facing side of Medbot: a clinic's patients sign in to their own Medbot account to ask questions about their record, message the clinic, request appointments, read visit summaries and results, and keep their own details current. It isn't an emergency service — portal messaging is explicitly for non-urgent contact only.
 
-## Signing in
+The portal is a **separate app** from Medbot CMS, with its own sign-in. It is documented in full, from the patient's point of view, under the [Patient](/patient) tab. This page covers only the CMS side: what staff do to connect a patient to it, and where each portal action surfaces for staff.
 
-Patients sign in at `/portal/login` either with the email address registered with the clinic, or with **First time / recovery** access using their NRIC, FIN, or passport number plus date of birth. Either path finishes with a six-digit code sent to the patient; an expired code means starting the sign-in again.
+> **If you knew the old portal:** the CMS used to serve patients itself at `/portal`, with its own OTP sign-in and its own two-step verification for contact changes. That section has been retired. Everything it did was carried over into the patient app, which also does things the old section never could — see [What changed](#what-changed) below.
 
-## Requesting an appointment
+## Connecting a patient to the portal
 
-From `/portal/appointments`, **New request** lets a patient give a preferred clinic location, date, time, and reason for the visit. Submitting a request doesn't confirm an appointment — it goes to staff, who review it from [Appointments → Booking requests](/docs/medbot-cms/appointments#responding-to-portal-booking-requests). The request card shows its status as one of: **Awaiting review**, **Accepted**, **Rejected**, or **Your response needed** — the last one means staff proposed a different time, and the patient chooses **Accept proposed time** or **Decline proposed time** on that same card.
+### A patient who already has a chart
 
-## Visit summaries and invoices
+Open the patient's record and use **Portal invite**. It mints a link the patient opens after signing in to the patient app, which binds their Medbot account to this record.
 
-`/portal/visits` lists completed visits. Opening one shows the diagnosis, medication name, dose, and instructions where available, plus a **Download invoice PDF** action when an invoice exists. If something on a visit looks wrong, the intended path is to message the clinic rather than try to change it from the portal.
+- The link is shown **once** and is copy-to-clipboard. The raw token is never stored, so a lost link means minting another rather than looking the old one up.
+- It works once, and expires after a week.
+- `admin`, `receptionist`, `doctor` and `nurse` can mint one — the same roles that may edit a patient's contact details.
 
-## Messaging the clinic
+A patient can also connect themselves without any invite, by naming the clinic and entering the identifier and date of birth on their chart, then a code sent to the contact the clinic holds. Staff do not need to do anything for that path, but it is worth knowing it exists when a patient says they are already connected.
 
-`/portal/messages` is a threaded, non-urgent channel to the clinic — read the existing thread before adding to it, and keep each message focused on one request with useful context (an appointment or visit date). This is explicitly not for medical emergencies or urgent care; the portal directs patients to local emergency services or the clinic directly for those. Staff manage the other side of this thread from [Clinic Messaging](/docs/medbot-cms/messaging).
+### A patient with no chart yet
 
-## Profile and preferences
+Use **Invite to self-register** from `/patients` instead — the patient fills in their own details, which creates the chart, and their account links itself as soon as it exists. See [Patient Records & Consent](/docs/medbot-cms/patient-records).
 
-From `/portal/profile`, changing a contact detail is a two-step verification: **Change contact detail** first re-verifies the patient's identity with a code to their *current* registered email, then a second code confirms the *new* email or phone before it takes effect. Home address and communication preferences are separate, simpler edits with their own save actions. Verifying a new email or phone signs the patient out — they sign back in afterward, using the new email if that's what changed.
+### A video-consult attendee
+
+A teleconsult **join link** needs no account at all: it is issued from the appointment, gated on the patient's consent to be seen by video, and lets whoever holds it into the consultation room.
+
+## Where portal activity reaches staff
+
+| The patient does this | Staff see it here |
+| --- | --- |
+| Requests an appointment | [Appointments → Booking requests](/docs/medbot-cms/appointments#responding-to-portal-booking-requests) — accept, reject, or propose another time; the patient answers a counter-proposal from their own request card |
+| Messages the clinic | [Clinic Messaging](/docs/medbot-cms/messaging) — one thread per patient, answered by `admin` and `receptionist` |
+| Raises a red flag through Ask Medbot | The same clinic inbox. Medbot escalates to staff rather than answering; when the patient has several clinics connected, every one of them gets it |
+| Reads a result | Nothing to do — but note that what the portal releases depends on your sign-off, see below |
+| Updates contact details or consent | The patient's own chart and consent record |
+
+### Results reach patients on your terms
+
+The portal never shows a patient a verdict the clinic has not released:
+
+- nothing that reads as a conclusion appears before a doctor signs the result off;
+- a **critical** flag is withheld while the clinic is still recalling the patient, so they hear it from a clinician rather than from a badge;
+- **"What this means"** is the clinician's own patient-facing note — staff shorthand is never shown to the patient.
+
+See [Diagnostic Results](/docs/medbot-cms/diagnostic-results) for the staff side of sign-off and recall.
+
+## What changed
+
+Three differences matter for staff who knew the old `/portal`:
+
+**Patients sign in to Medbot, not to your clinic.** A patient holds one Medbot account. Instead of a clinic-issued portal login, they hold a **link** to your clinic — which they consented to, and can stop at any time. The invite above creates that link; it does not create a password.
+
+**A portal patient may not be only your patient.** A patient can connect several clinics to one account, and their record then carries entries from all of them, each tagged with the clinic it came from. What *your* clinic sees in the CMS is unchanged: your own chart, your own records. What the patient sees is wider than that.
+
+**Contact changes no longer run through the CMS.** The old two-step code-to-old-address, code-to-new-address flow is gone. A patient's contact details follow the verified contacts on their own Medbot account, so there is nothing for staff to re-verify in the CMS when a patient changes an email or phone number.
+
+## Further reading
+
+- The patient's own view, screen by screen: [Patient](/patient)
+- Getting connected, from the patient's side: [Getting Started](/patient/getting-started) and [Connected Clinics](/patient/connected-clinics)
+- The staff side of portal conversations: [Clinic Messaging](/docs/medbot-cms/messaging)
+- The staff side of portal booking: [Appointments](/docs/medbot-cms/appointments)
