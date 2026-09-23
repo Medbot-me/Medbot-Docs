@@ -1,0 +1,208 @@
+# Gateway (Developers)
+
+This page is for engineers working on the Medbot API. It describes how `apps/api` talks to SmartCMS: configuration, authentication, envelopes, outcomes, sequencing, the evidence log, entitlements, and the mock gateway used in development and tests.
+
+> Everything here is built and tested, but **no clinic workflow calls it yet**. The first consumer planned is the CHAS balance enquiry (S/N 1) at check-in.
+
+## Where the code lives
+
+| Path | What it holds |
+| --- | --- |
+| `packages/smartcms-contract` (`@repo/smartcms-contract`) | The shared contract: the [service registry](/cms/smartcms/service-registry), envelope schemas, SCG status codes, module definitions, vocabularies, code sets and DTOs. |
+| `apps/api/src/smartcms/config/` | Environment configuration. |
+| `apps/api/src/smartcms/transport/` | JWT signer, headers, envelope codecs, the gateway client, outcome classification, sequencing and `SmartcmsGatewayService`. |
+| `apps/api/src/smartcms/evidence/` | The encrypted message log. |
+| `apps/api/src/smartcms/entitlements/` | Per-location entitlements, the module guard and the entitlement sync. |
+| `apps/api/test/smartcms-mock/` | The mock CAG/SCG gateway. |
+| `docs/plans/smartcms-foundations.md` | The build record, decisions and open questions. |
+
+Singapore-only code is fenced by an ESLint `no-restricted-imports` rule in both `apps/api` and `apps/medbot-cms`. In the API only `src/smartcms/**`, `src/inngest/functions/smartcms-*.ts` and `app.module.ts` may import it; in the CMS the only seams are the sidebar, the create-organisation wizard and organisation settings.
+
+## Configuration
+
+SmartCMS is **off** unless `SMARTCMS_ENABLED=true`. When it is on, every variable below is validated at start-up and the API refuses to boot, naming each bad key, if any is wrong. The configuration is per deployment, not per clinic.
+
+| Variable | Required | Notes |
+| --- | --- | --- |
+| `SMARTCMS_ENABLED` | | `true` to turn the gateway on. Anything else leaves it off. |
+| `SMARTCMS_ENV` | Yes | `uat` or `prod`. Calls are only made for locations entitled in this environment. |
+| `SMARTCMS_BASE_URL` | Yes | The CAG base URL. |
+| `SMARTCMS_API_KEY` | Yes | Sent as `x-api-key`. |
+| `SMARTCMS_JWT_KID` | Yes | JWT header `kid`. |
+| `SMARTCMS_JWT_ISS` | Yes | JWT `iss`. |
+| `SMARTCMS_JWT_SUB` | Yes | JWT `sub`. |
+| `SMARTCMS_JWT_PRIVATE_KEY_PEM` | Yes | PKCS#8 RSA key, at least 2048 bits. `\n` escapes are accepted. |
+| `SMARTCMS_SRC_APPLICATION` | Yes | `controlHeader.srcApplication`, up to 50 characters. |
+| `SMARTCMS_DOMAIN_SOURCE_ID` | Yes | Becomes `NC_<id>` in the legacy envelope. |
+| `SMARTCMS_JWT_TTL_SECONDS` | No | 30 to 180, default 120. |
+| `SMARTCMS_HTTP_TIMEOUT_MS` | No | Default 20000. |
+| `SMARTCMS_ENVELOPE_OVERRIDES` | No | JSON map of route to `scg-json`, `scg-xml` or `legacy-isb-xml`, overriding the registry default. |
+
+The evidence log also uses the organisation secrets key: `ORGANISATION_SECRETS_KEY`, `ORGANISATION_SECRETS_KEY_VERSION` and `ORGANISATION_SECRETS_KEY_PREVIOUS`.
+
+## Authentication
+
+Every request to CAG carries:
+
+- `x-api-key`: the API key.
+- `Authorization: Bearer <jwt>`: an **RS256** JWT with `kid`, `iss`, `sub`, `iat`, `exp` and a fresh UUID `jti` for every attempt. The signer (`transport/jwt-signer.ts`) is behind a `JwtSigner` interface so a KMS-backed signer can replace the PEM one.
+- `ServiceType`: equal to the envelope's `controlHeader.serviceType`.
+
+## Envelopes
+
+A SmartCMS message is an `SCG_RequestInfo` with a **control header** and a string `messageContent`; the reply is an `SCG_ResponseInfo` that adds a `status`.
+
+| Control header field | Notes |
+| --- | --- |
+| `srcInstitution` | The location's **HE code**. |
+| `srcApplication` | `SMARTCMS_SRC_APPLICATION`. |
+| `msgID` | A new UUID per attempt. |
+| `msgSequenceID` | From the sequence allocator, at most 15 digits. |
+| `msgDateTime` | Singapore time, `YYYY-MM-DDThh:mm:ss.sss+08:00`. |
+| `serviceType` | The registry's wire service type. |
+
+Three codecs encode requests and decode replies (`transport/envelope/`):
+
+| Variant | Shape |
+| --- | --- |
+| `scg-json` | The SCG envelope as JSON. Default for JSON services. |
+| `scg-xml` | The same envelope inside a SOAP 1.1 body. Default for XML services. Screen for Life uses `SCG_SFL_RequestInfo`. |
+| `legacy-isb-xml` | The older AP481 `Operation_1` envelope, a candidate for S/N 1 to 15. |
+
+Which envelope CAG expects per route is still an open question with Synapxe, which is why `SMARTCMS_ENVELOPE_OVERRIDES` exists.
+
+### SCG status codes
+
+| Code | Meaning |
+| --- | --- |
+| `SCG_00` | OK |
+| `SCG_01` | Technical error |
+| `SCG_02` | Invalid service type |
+| `SCG_03` | Duplicate message |
+| `SCG_04` | Invalid application |
+| `SCG_05` | Invalid institution |
+| `SCG_06` | Not allowed |
+| `SCG_07` | `messageContent` issue |
+| `SCG_08` | No email configured for PHI |
+| `SCG_09` | Invalid format (HTTP 400) |
+| `SCG_99` | Missing headers (HTTP 400) |
+
+## Making a call
+
+The rest of the API calls SmartCMS only through `SmartcmsGatewayService.call(...)`, passing the organisation, the clinic location, the service and the message content (plus optional submission id, attempt, acting member and patient reference). In order, it:
+
+1. Checks the kill switch (`SMARTCMS_ENABLED`).
+2. Checks the location's **entitlement** for the configured environment. A refusal throws `SmartcmsNotEntitledError` and nothing is sent.
+3. Allocates one **sequence number**.
+4. Writes the **request** to the evidence log. If that write fails, nothing is sent.
+5. Sends one attempt through `SmartcmsGatewayClient`.
+6. Writes the **response** (or timeout, or transport error) to the evidence log. A failure here is logged, and the result is still returned.
+
+Services whose group has no subscribable module (NEHR, LEGACY, PSS, ALPS, CHAS_DENTAL) cannot pass step 2, so they cannot be called.
+
+### Outcomes, not exceptions
+
+The client throws only for local problems: SmartCMS is disabled, or the service has no route. Anything that happens remotely comes back as a `GatewayOutcome`, with the raw request and response bodies:
+
+| Outcome | Meaning |
+| --- | --- |
+| `accepted` | SCG accepted the message. |
+| `rejected_before_backend` | Rejected by CAG/SCG before reaching the back-end. `fix` says whether the cause is `config`, `code` or `data`. |
+| `rejected_unknown_reach` | Rejected, and it is unknown whether the back-end saw it. |
+| `not_authorised` | Authentication or entitlement refused. |
+| `rejected_legacy` | A legacy-envelope rejection. |
+| `timeout` | No reply within the timeout. |
+| `transport_error` | Connection-level failure. |
+
+`outcomePolicy()` (`transport/classify.ts`) maps each outcome to whether an enquiry may retry once, the resulting submission state, and whether to alert (`no`, `yes` or `if_repeated`).
+
+### Retries and idempotency
+
+- **The client never retries.** Each retry needs a new `msgID`, so retries belong to the submission outbox, which is planned.
+- Only **enquiries** are safe to retry.
+- A **submission** that times out, or returns `SCG_01` or `SCG_03`, becomes `outcome_unknown` and is **never retried automatically**: the back-end may already have processed it.
+- `SCG_03` is the gateway's duplicate detection on the control header. Medbot never reuses a control header.
+
+Submission states are `prepared`, `pending`, `dispatching`, `acknowledged`, `completed`, `failed_retryable`, `failed_terminal`, `outcome_unknown` and `cancelled`. Only the vocabulary exists so far.
+
+## Sequencing
+
+`smartcms_sequences` keeps one counter per **HE code**, **wire service type** and **environment**. Each allocation is a single upsert starting at 1. Gaps are allowed; repeats are not. Allocation fails past 15 digits.
+
+## Evidence log
+
+`smartcms_messages` records **one row per attempt**, written before sending and completed afterwards.
+
+- Request and response **bodies are encrypted** with the organisation secrets key and bound to the organisation.
+- `x-api-key` and `Authorization` headers are **never stored**.
+- Plaintext columns support lookup and audit: service type, route, environment, envelope variant, `msg_id`, sequence, `msg_date_time`, JWT `jti` and key id, attempt, HTTP status, SCG status, business status code, outcome (`success`, `business_rejection`, `gateway_error`, `transport_error`, `timeout`), latency, the acting member, and `patient_ref` as a `Patient/<id>` reference, **never an NRIC**.
+
+There is no viewer, export or retention policy yet; an audit and certification (SIT) evidence export is planned.
+
+## Entitlements
+
+`smartcms_entitlements` holds one row per **clinic location** and **service group**, with an `environment` (`off`, `uat`, `prod`), a Synapxe reference, an optional agent-policy override, a MOM organisation code (for migrant worker health), and who last changed it.
+
+- **Sync.** When an organisation is updated, the API publishes `medbot/organisation.updated`. The Inngest function `smartcms-entitlements-sync` creates `off` rows for every location and every group of every subscribed module (Screen for Life creates both SFL and CHAS rows), and turns rows for dropped modules `off`. Rows are never deleted.
+- **Check.** `requireEntitled` refuses, in order, with `unknown_location`, `not_singapore`, `not_subscribed`, `not_entitled`, `wrong_environment` or `no_he_code`.
+- **Route guard.** `@RequireSmartcmsModule(...)` with `SmartcmsModuleGuard` fails closed with 403 outside Singapore or without the module. When the route names a location, via a `:locationId` parameter or the `X-Clinic-Location-Id` header, it checks that location's entitlement too. No controller uses it yet.
+
+There is no way to set an entitlement to `uat` or `prod` from the product yet.
+
+## The mock gateway
+
+`apps/api/test/smartcms-mock/` is a plain `node:http` server that plays CAG, SCG and fake back-ends, for local development and tests.
+
+### Running it
+
+```bash
+pnpm --filter medbot-api smartcms-mock
+```
+
+| Variable | Default |
+| --- | --- |
+| `SMARTCMS_MOCK_PORT` | `4455` |
+| `SMARTCMS_MOCK_PUBLIC_KEY` | Path to a PEM public key. Without it, the mock generates a key pair and prints the private key's path. |
+| `SMARTCMS_MOCK_KID` | `MEDBOT-01` |
+| `SMARTCMS_MOCK_ISSUER` | `MEDBOT` |
+| `SMARTCMS_MOCK_SUBJECT` | `MEDBOT` |
+
+It prints the API key to use (`smartcms-mock-api-key`). The expected `srcApplication` is `MEDBOT`. Two HE codes are seeded: `9400001` (entitled) and `9400002` (no service groups).
+
+To point a local API at it, set `SMARTCMS_ENABLED=true`, `SMARTCMS_ENV=uat`, `SMARTCMS_BASE_URL=http://localhost:4455`, the printed API key and private key, and matching `kid`/`iss`/`sub`.
+
+In tests, start it in-process with `startSmartcmsMock({ consumers })`.
+
+### What it checks
+
+- **CAG:** the API key; the JWT's `kid`, `iss` and `sub`; `iat` within 60 seconds; `exp - iat` at most 180 seconds; a `jti` of at least 36 characters that has not been seen before. Failures answer 401 with a reason. CAG times out at 15 seconds (504) while the back-end keeps running, as the real one does.
+- **SCG:** the envelope and every status code from `SCG_01` to `SCG_99`.
+- **Back-ends:** CHAS/MHCP S/N 1, 2, 3 and 7, and migrant worker health S/N 19. Any other service answers `SCG_01`.
+
+### Control API
+
+Loopback only:
+
+| Endpoint | Purpose |
+| --- | --- |
+| `POST /__mock/faults` | Arm faults: `cag_timeout`, `latency_ms`, `scg_01`, `scg_07`, `http_500_after_processing`, `connection_reset_after_send`, `mwh_forbidden`. |
+| `POST /__mock/reset` | Restore the seed; clear claims, records, faults and the received log. |
+| `POST /__mock/patients` | Add or replace CHAS (MHCP) cardholders. |
+| `POST /__mock/clinics` | Add or replace clinics. |
+| `POST /__mock/mhcp/claims/:claimNo/advance` | Move a claim: `{status, errorCode?, paidAmount?, paidDate?}`. |
+| `POST /__mock/mhcp/legacy-statuses` | `{enabled}`: answer status queries with pre-2019 codes. |
+| `GET /__mock/received` | Every request received, in order. |
+| `GET /__mock/mhcp/claims` | Claims accepted. |
+| `GET /__mock/mwh/records` | Migrant worker health records accepted. |
+
+Fixtures, all with synthetic identifiers, are in `apps/api/test/fixtures/smartcms/`.
+
+## Open questions with Synapxe
+
+These are tracked in the plan and cited in the code:
+
+- which envelope each route expects, and the exact CAG error status
+- the route for S/N 25 (NIR vaccination record update), which has none yet, so the client refuses it
+- the exact HE code and Hospital Code formats
+- how SmartCMS relays MOM's answer for migrant worker health
+- how long the evidence log must be kept

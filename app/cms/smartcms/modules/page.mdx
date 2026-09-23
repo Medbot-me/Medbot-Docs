@@ -1,0 +1,80 @@
+# Modules & Gating
+
+A clinic does not switch on "SmartCMS" as a whole. It subscribes to **modules**, each a group of SmartCMS services for one national scheme. The modules an organisation subscribes to decide which SmartCMS screens its staff see.
+
+## Who can choose modules
+
+Only an **admin** of the organisation, and only for an organisation whose **country is Singapore (`SG`)**. Any other country gets no SmartCMS modules at all.
+
+Modules can be chosen in two places:
+
+- **When creating the organisation.** With the country set to Singapore, the [create-organisation wizard](/cms/create-organisation) shows a **Singapore integrations** step. It can be skipped with **Skip for now**.
+- **Later, in settings.** The **Singapore integrations** card on [Organisation Settings](/cms/settings#integrations), saved with **Save integrations**.
+
+Either way the choice is **what the clinic intends to use**. It is not an approval. Each module still needs Synapxe's approval for each location before anything connects (see [Entitlements](#entitlements-per-location-approval)).
+
+## The module picker
+
+Modules are shown as cards grouped under the certification badge they belong to. Each card shows its name, a one-line description, and chips for what the clinic needs before it can connect. **Use GP starter** selects the typical set for a general practice: CHAS, Medisave (CDMP), National Immunisation Registry and Disease notification.
+
+### CHAS Badge
+
+| Module | What it is for | Needs |
+| --- | --- | --- |
+| **CHAS and MOH subsidy claims** (`CHAS`) | Verify CHAS cards at check-in and submit CHAS, PHPC, vaccination and screening subsidy claims. | HE code per location, CHAS accreditation |
+| **Medisave (CDMP) claims** (`CDMP`) | Check Medisave balances, capture consent and submit Chronic Disease Management Programme claims. | HE code and Hospital Code per location, CDMP accreditation |
+| **Screen for Life** (`SFL`) | Check screening eligibility and claim Screen for Life screenings. | HE code per location |
+| **National Immunisation Registry** (`NIR`) | Notify the National Immunisation Registry of every vaccination given. | HE code per location, SDD vaccine codes |
+| **Disease notification** (`DEROM`) | Notify MOH of notifiable diseases, confirmed by the diagnosing doctor. | HE code per location, practitioner MCR numbers |
+| **Chronic disease indicators** (`CIDC`) | Report chronic disease clinical indicators prepared from chronic visits. | HE code per location, coded chronic diagnoses |
+| **Medical alerts and allergies** (`CMIS`) · *Planned* | Share and look up drug allergies and medical alerts with the national system. | CMIS codeset, clinician-recorded allergies |
+
+### Migrant Worker Health Badge
+
+| Module | What it is for | Needs |
+| --- | --- | --- |
+| **Migrant worker health reporting (MOM)** (`MW_HEALTH`) | Report consultations for migrant workers under MOM's primary care scheme. | HE code per location, MOM organisation code |
+
+### Healthier SG bundle
+
+| Module | What it is for | Needs |
+| --- | --- | --- |
+| **Healthier SG** (`HSG_BUNDLE`) · *Planned* | Enrolment, health plans, care reports and referrals for Healthier SG. | CHAS Badge certified first |
+
+A **Planned** module can be selected, so the clinic's onboarding record with Synapxe is complete, but it adds no screens yet.
+
+## What the modules unlock
+
+A Singapore organisation with at least one matching module gets a **SmartCMS** group in the sidebar:
+
+| Screen | Route | Shown when the organisation subscribes to | Roles |
+| --- | --- | --- | --- |
+| **Claims**: "Subsidy and Medisave claims" | `/claims` | CHAS, CDMP or SFL | `admin`, `receptionist`, `doctor` |
+| **Reports**: "National registry notifications and reports" | `/reports` | NIR, DEROM, CIDC or MW_HEALTH | `admin`, `doctor` |
+
+Both screens currently show an empty state: "No claims yet: claims appear here once they are prepared from issued invoices" and "No reports yet: reports appear here once they are prepared from vaccinations, diagnoses and visits." They fill up as the claim and report workflows ship.
+
+### How gating is enforced
+
+- **Sidebar.** A SmartCMS item shows only when the organisation is in Singapore, subscribes to a matching module, **and** the user's role is allowed. `superuser` does not bypass the module check.
+- **Pages.** Opening `/claims` or `/reports` for an organisation that is not subscribed answers **not found**, the same way the CMS treats any organisation you cannot see. The module is checked before the role.
+- **API.** SmartCMS endpoints refuse (403) any organisation outside Singapore or without the module, whatever the page decided.
+
+## Changing modules or country
+
+- **Removing a module** hides its screens once no other subscribed module needs them. Anything already recorded for that module is kept.
+- **Changing the country away from Singapore** is blocked while any module is subscribed. The settings page says "Clear the SmartCMS modules under Integrations before changing the country", and the API refuses the change with the same message.
+- **Modules on a non-Singapore organisation** are refused outright: "SmartCMS modules are only available for organisations in Singapore."
+
+## Entitlements: per-location approval
+
+Subscribing to a module is the clinic's choice. **Entitlement** is Synapxe's approval. Medbot keeps one entitlement per **clinic location** and **service group**, each set to `off`, `uat` or `prod`.
+
+- When a module is subscribed, Medbot creates `off` entitlements for every location automatically. Dropping a module turns its entitlements back `off` and deletes nothing.
+- Before any SmartCMS call, Medbot checks that the location belongs to the organisation, the organisation is in Singapore and subscribes to the group, the location's entitlement is on for the environment Medbot is running in, and the location has an HE code. If any check fails, **nothing is sent**.
+
+> There is no screen to turn an entitlement on yet. A dedicated SmartCMS tab for approvals, connection tests and onboarding export is planned. Until then every location stays `off`.
+
+## Agent policy
+
+An organisation also has a SmartCMS **agent policy**: `off`, `prepare_only` or `auto_submit`. It will decide whether AI agents may only prepare claims for staff to submit, or submit them too. A policy other than `off` needs the CHAS or CDMP module. It is stored and validated by the API but has no control in the CMS yet, and defaults to `off`.

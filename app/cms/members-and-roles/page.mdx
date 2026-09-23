@@ -1,48 +1,67 @@
 # Members & Roles
 
-Staff belong to an organisation through a **membership**. The membership carries the person's name, email, role, licence number where the role requires one, their Practitioner record on that organisation's Medplum, and whether they are active.
+Staff belong to an organisation through a **membership**. The membership carries the person's name, email, role, professional registration number where the role has one, their Practitioner record on that organisation's Medplum, and whether they are active. In Singapore organisations, a doctor's membership can also hold their NRIC or FIN.
 
-Members are managed from `/staff`, which lists the current organisation's members and — for admins — the [pending access requests](/cms/join-an-organisation#resolving-requests-admins) above them.
+Members are managed from `/staff`, which lists the current organisation's members and, for admins, the [pending access requests](/cms/join-an-organisation#resolving-requests-admins) above them.
 
 ## Roles
 
 An organisation uses four clinic roles. Each membership has exactly one.
 
-| Role | Broadly |
-| --- | --- |
-| `admin` | Full clinic administration: staff, patients, appointments, locations and sessions, displays, queue, clinical records, formulary, documents, results and the review rota. |
-| `receptionist` | Front desk: registering patients, appointments, today's session setup, the queue, patient documents, diagnostic result upload and viewing. |
-| `doctor` | Clinical work: patient and appointment reads, vitals, vaccinations, formulary, documents, referrals, medical certificates, and acknowledging, reassigning or withdrawing results. |
-| `nurse` | As `doctor`, minus referrals, medical certificates and results acknowledgement. |
+| Role | Shown as | Broadly |
+| --- | --- | --- |
+| `admin` | Clinic Admin | Full clinic administration: staff, patients, appointments, locations and sessions, displays, queue, clinical records, formulary, documents, results and the review rota. |
+| `receptionist` | Receptionist | Front desk: registering patients, appointments, today's session setup, the queue, patient documents, diagnostic result upload and viewing. |
+| `doctor` | Doctor | Clinical work: patient and appointment reads, vitals, vaccinations, formulary, documents, referrals, medical certificates, and acknowledging, reassigning or withdrawing results. |
+| `nurse` | Nurse | As `doctor`, minus referrals, medical certificates and results acknowledgement. |
 
 The full matrix of what each role can do lives in [Roles & Access](/docs/medbot-cms/roles-and-access).
 
-A fifth role, `superuser`, exists for internal and testing accounts. It passes every role check, and is not a clinic role anyone should be given in normal use.
+The same four roles are used across Medbot. In the web app, a person's role on a [Service](/docs/services) care team is their role in the organisation, not a separate service role.
+
+A fifth role, `superuser`, exists for internal and testing accounts. It passes every role check. It is not a clinic role anyone should be given in normal use; on staging it can be created by [CSV seeding](/cms/seed-data) for test accounts.
+
+Separately, a **platform superadmin** is a Medbot-wide role on the user account, not a membership, used to run [Medbot-hosted organisations](/cms/hosted-organisations#for-medbot-platform-administrators). It gives no access to any clinic's data by itself.
 
 ## Adding a member
 
-An admin adds a member with:
+An admin clicks **Add Staff** and, in the **Add staff member** dialog, enters:
 
-- **Email** — the address they will sign in with
+- **Email**: the address they will sign in with
 - **First name** and **Last name**
 - **Role**
-- **Licence number**, where the chosen role requires one (a doctor does)
+- **Registration number**, depending on the role:
 
-Adding a member creates their Practitioner record on the organisation's own Medplum alongside their membership row, so they can act clinically from their first sign-in. A duplicate email in the same organisation is rejected. If any step fails, the ones before it are undone rather than leaving a half-created member.
+| Role | Field | Format |
+| --- | --- | --- |
+| `doctor` | **Medical License Number** (MCR number) | `M` + 4 or 5 digits + a letter, e.g. `M12345A` |
+| `nurse` | **Nursing Registration Number** (SNB number) | 4 to 15 letters or digits, e.g. `N123456` |
+| `admin`, `receptionist` | None | |
 
-If the person already has a Medbot account under that email they are linked immediately; otherwise the membership waits for them to sign up — see [Join an Organisation](/cms/join-an-organisation).
+The number is checked as it is typed ("MCR number must look like M12345A."), and stored upper-case without spaces.
 
-## Changing a role or deactivating
+- **NRIC or FIN (optional)**: doctors in **Singapore** organisations only. It is needed before that doctor's SmartCMS claims can be submitted. It is checksum-validated, and only ever shown masked (`*****567D`) once saved.
 
-An admin can change a member's role, update their profile, or deactivate them. Two rules are enforced:
+Adding a member creates their Practitioner record on the organisation's own Medplum alongside their membership row, with the registration number (and NRIC, if given) as identifiers, so they can act clinically from their first sign-in. A duplicate email in the same organisation is rejected. If any step fails, the ones before it are undone rather than leaving a half-created member.
+
+If the person already has a Medbot account under that email they are linked immediately; otherwise the membership waits for them to sign up. See [Join an Organisation](/cms/join-an-organisation). To add many people at once, use [Seeding Staff & Patients](/cms/seed-data).
+
+## Changing a role, registration or status
+
+From each member's row, an admin can change their role, update their profile, correct their registration, or deactivate them.
+
+- **Edit registration** opens "Edit registration: &lt;name&gt;" to correct the MCR or SNB number and, for a Singapore doctor, add or replace the NRIC or FIN ("On file: *****567D. Enter a new one to replace it."). The change is written to the member's Practitioner record.
+- Changing someone's role **to doctor** requires a medical license number.
+
+Two rules are always enforced:
 
 - **An organisation always keeps at least one active admin.** Deactivating or demoting the last one is refused.
 - **Nobody deactivates themselves.**
 
-Deactivating a member ends their access to that organisation. Their account is only locked out entirely if they have no active membership anywhere else — a doctor who covers two clinics and leaves one keeps working at the other.
+Deactivating a member ends their access to that organisation. Their account is only locked out entirely if they have no active membership anywhere else: a doctor who covers two clinics and leaves one keeps working at the other.
 
-A licence number change is synced to the member's Practitioner record.
+The details of the Singapore registration fields are on [Singapore Registration](/cms/smartcms/registration).
 
 ## One person, several organisations
 
-Memberships are independent. The same email can be a member of several organisations with a different role in each, and an email is unique *within* an organisation rather than globally. Every actor recorded on a clinical or operational write — who performed a stock movement, who acted on a queue ticket, who owns an order set — is the member, resolved server-side from the caller's own session, never something a client supplies.
+Memberships are independent. The same email can be a member of several organisations with a different role in each, and an email is unique *within* an organisation rather than globally. Every actor recorded on a clinical or operational write (who performed a stock movement, who acted on a queue ticket, who owns an order set) is the member, resolved server-side from the caller's own session, never something a client supplies.

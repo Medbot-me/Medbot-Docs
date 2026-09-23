@@ -1,0 +1,52 @@
+# SmartCMS (Singapore)
+
+**SmartCMS** is the national gateway, run by **Synapxe**, that Singapore clinic management systems call to reach MOH and agency back-ends: CHAS and MOH subsidy claims, Medisave (CDMP) claims, the National Immunisation Registry, disease notification, migrant worker health reporting, Healthier SG and more.
+
+Medbot CMS is building its SmartCMS integration so a Singapore clinic can run these national workflows from the same screens it already uses for patients, visits, vaccinations and billing.
+
+> **Status: foundations only.** Today an organisation can pick the SmartCMS services it will use, record the regulatory identity SmartCMS needs, and see the **Claims** and **Reports** screens that those services unlock. Medbot does not send anything to SmartCMS from any clinic workflow yet, and both screens are still empty. See [What works today](#what-works-today).
+
+## How it fits together
+
+Two layers sit between Medbot and the national back-ends:
+
+| Layer | What it does |
+| --- | --- |
+| **CAG** (the API gateway) | Authenticates the caller with an API key and a short-lived signed JWT. |
+| **SCG** (the SmartCMS Gateway) | Checks the message envelope, routes it to the right back-end, and checks that the clinic is entitled to that service. |
+
+Every call names the clinic by its **MOH HE code**, so each clinic location needs one before it can connect.
+
+SmartCMS is enabled **per organisation** and only for organisations whose country is **Singapore (`SG`)**. Everywhere else, none of it appears.
+
+## Key concepts
+
+| Concept | What it is |
+| --- | --- |
+| **Module** | A group of SmartCMS services a clinic subscribes to, e.g. "CHAS and MOH subsidy claims" or "National Immunisation Registry". An admin chooses them when [creating the organisation](/cms/create-organisation) or later in [Organisation Settings](/cms/settings#integrations). See [Modules & Gating](/cms/smartcms/modules). |
+| **Badge** | Synapxe's grouping of modules for certification: **CHAS Badge**, **Migrant Worker Health Badge**, **Healthier SG bundle**. |
+| **HE code** | The MOH Health Establishment code of one clinic location. SmartCMS identifies the clinic on every call by this code. See [Singapore Registration](/cms/smartcms/registration). |
+| **Regulatory identity** | The organisation's UEN and GST details, each location's HE code and Hospital Code, and each practitioner's MCR or SNB number and NRIC. |
+| **Entitlement** | Synapxe's approval for **one location** to use **one service group** in **one environment** (UAT or production). Nothing is sent for a location that is not approved. |
+| **Evidence log** | An encrypted record of every message Medbot sends to SmartCMS and every reply, kept for audit and certification. |
+
+## What works today
+
+| Area | State |
+| --- | --- |
+| Country and time zone on every organisation | Live |
+| Choosing SmartCMS modules (wizard and settings) | Live |
+| **Singapore registration**: UEN, GST, HE code, Hospital Code | Live |
+| Practitioner MCR / SNB numbers and doctor NRIC on staff records | Live |
+| **SmartCMS** sidebar group with **Claims** and **Reports** | Live, but both screens show an empty state |
+| Gateway client, sequencing, evidence log, per-location entitlements (backend) | Built and tested against a mock gateway, not yet called by any workflow |
+| Setting a location's entitlement to UAT or production, connection test | Not yet available. Every location starts **off** |
+| CHAS balance enquiry at check-in, claims queue, registry and disease reports | Planned |
+| Viewing or exporting the evidence log | Planned |
+
+## Where to go next
+
+- Choosing what the clinic subscribes to, and what appears in the app as a result: [Modules & Gating](/cms/smartcms/modules).
+- Entering the UEN, HE codes and practitioner numbers SmartCMS needs: [Singapore Registration](/cms/smartcms/registration).
+- For developers, how the backend talks to SmartCMS and how to run the mock gateway: [Gateway](/cms/smartcms/gateway).
+- For developers, every SmartCMS service Medbot knows about: [Service Registry](/cms/smartcms/service-registry).

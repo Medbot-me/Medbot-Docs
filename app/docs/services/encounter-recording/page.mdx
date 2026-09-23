@@ -1,0 +1,52 @@
+# Encounter Recording
+
+A clinician can **record a consultation for up to an hour** and have AI draft a structured clinical note from it, then review the draft section by section before anything goes into the note.
+
+Recording is available wherever Medbot's notes editor is used: the web app's notes workspace, the [Workstation](/docs/services/workstation) consult screen, and the patient notes editor in Medbot CMS. Quick dictation is still available next to it.
+
+## Recording
+
+1. In the editor, click **Record encounter** ("Record the consultation and draft a clinical note from it"). Allow microphone access if the browser asks.
+2. An **AI is listening** pill shows the elapsed time and progress. Use **Pause** and **Resume** as needed.
+3. Click **Stop** when the consultation ends. The pill shows **Finishing the recording…**, then **Writing the summary…**.
+
+| Limit | Value |
+| --- | --- |
+| Maximum length | 60 minutes. The timer warns in the last 5 minutes, and recording stops by itself at the limit. |
+| Transcription | In segments as you go: every 5 minutes, or every 45 seconds on the Workstation consult screen for a near-live transcript. |
+
+**No audio is kept.** Each segment is transcribed and then discarded; only the transcript is stored. If a segment fails to upload or transcribe, you can **Retry** it or **Continue without** it, and the gap is marked in the transcript.
+
+Writing the summary runs in the background, so closing the tab does not lose the recording. Earlier recordings for the note are listed under **Previous sessions**.
+
+## Reviewing the summary
+
+When the summary is ready, **Encounter summary** opens with the **Recorded session** transcript on one side and the **Proposed clinical note** on the other.
+
+The note is drafted under these headings:
+
+- Presenting complaint
+- History of presenting complaint
+- Past medical / surgical history
+- Medications
+- Allergies
+- Family history
+- Social history
+- Patient concerns
+- Examination
+- Assessment
+- Plan
+- To clarify: shown as **Confirm before signing**, for anything the AI was unsure of
+
+Edit any section, then:
+
+- **Add to note** on a section inserts just that section into the note, as headings and bullets.
+- **Add all** (or **Add remaining N**) inserts everything not yet added.
+- **Regenerate** drafts the summary again from the same transcript.
+- **Discard** drops the draft.
+
+A recording belongs to the note it was made in. If you switch to a different note, inserting is blocked ("This recording was made for a different note") until you switch back.
+
+## For administrators
+
+Transcription uses the **default audio model**, managed by an administrator under **Audio Models** (`/admin/audio-models`), where one model is marked with **Set as default**. The summary is written by the platform's default language model.

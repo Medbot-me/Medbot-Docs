@@ -4,6 +4,10 @@ Each organisation has **its own Medplum server**, and its own OAuth client on it
 
 Credentials are managed from the **Medplum credentials** section of [Organisation Settings](/cms/settings), by an admin of that organisation.
 
+> **Medbot-hosted organisations** are different: Medbot created the Medplum project and manages its credentials. The section says "This organisation's Medplum server is managed by Medbot. Contact Medbot to rotate its credentials," shows the base URL, and offers only **Verify connection**. The organisation's admins cannot read or replace the credentials, even through the API. See [Medbot-Hosted Organisations](/cms/hosted-organisations).
+
+The rest of this page describes a **self-managed** organisation.
+
 ## What the section shows
 
 - The **current client ID** in plain text.
@@ -36,4 +40,6 @@ This is also why a stale or revoked Medplum client shows up as clinical screens 
 
 ## Where credentials come from
 
-An organisation's first credentials are entered when it is [created](/cms/create-organisation). Rotating them later is this page's job. Either way the source is an OAuth client created in the clinic's own Medplum project.
+A self-managed organisation's first credentials are entered when it is [created](/cms/create-organisation). Rotating them later is this page's job. Either way the source is an OAuth client created in the clinic's own Medplum project.
+
+A hosted organisation's credentials are entered by a Medbot platform administrator when [fulfilling its request](/cms/hosted-organisations#for-medbot-platform-administrators), and rotated from the platform admin panel.

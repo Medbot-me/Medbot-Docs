@@ -1,0 +1,87 @@
+# Patient Agent
+
+The patient agent is a patient-facing, asynchronous conversational agent that a patient talks to in their own time, over the channel they already use (SMS or WhatsApp via Twilio). It only ever **replies** to a message the patient sent — it never starts a conversation on its own.
+
+## What it can do
+
+| Capability | What the patient can do | What the agent may do on its own |
+| --- | --- | --- |
+| **Appointments** | Ask for a new appointment, move an existing one, cancel one, ask when their next one is | Read the patient's own appointments; book or move one directly into an open slot on a care team member's published availability; cancel outright |
+| **Health education** | Ask questions about their condition, an upcoming procedure, pre-procedure preparation, or medication they were given | Answer from the service's own content library and the patient's own context only; hand off anything outside that scope |
+| **Symptom triage** | Report a new or changed symptom between consults | Classify urgency; on a red flag, immediately redirect to emergency services and escalate to whoever covers the escalation role |
+| **Education & counselling** | Go through a counselling or education protocol, step by step | Take consent, walk through the protocol from the content library, and record what the patient understood or agreed (with the **Education & counselling sessions** tool) |
+| **Full encounter** | Need a longer conversation than SMS allows | Send a link to a full [AI encounter](/docs/services/encounters) on the patient portal (with the **Hand over for a full encounter** tool) |
+
+## Do you need one?
+
+The **patient portal's own assistant** already answers patients' questions. Turn on a service's patient agent only if the service needs its own conversational agent over **SMS or WhatsApp**. It is off by default.
+
+## Setting it up
+
+### 1. Author the agent
+
+Create a service agent with **Audience = Patient** on the [Agents tab](/docs/services/agents#audiences). It gets the patient tool set, and the platform safety preamble is always added on top of your instructions.
+
+### 2. Bind it in Settings
+
+On the service's **Settings** tab, the **Patient agent** card:
+
+- **Let patients chat with this service's patient agent**: the on switch.
+- **Patient agent**: a dropdown of this service's active Patient-audience agents. If there are none, it points you to the Agents tab.
+- **Delivery mode**:
+  - **Review before sending (recommended)**: every drafted reply waits on the patient's page for a staff member to approve, edit or discard.
+  - **Send automatically**: replies go straight out. A red-flag emergency reply always sends immediately, in either mode.
+- **Escalation role**: which organisation role (Admin, Doctor, Nurse or Receptionist) is notified on a red flag, a failed turn or a hand-off. It is resolved through [Coverage](/docs/services/care-team#coverage--rota) to whoever is covering that role right now.
+- **Emergency number**: e.g. `995`.
+- **Emergency message**: a template, seeded with a platform default, that must keep the `{emergencyNumber}` placeholder. Sent immediately and unedited whenever the red-flag screen fires.
+- **Stay quiet after a staff reply** (minutes): when someone on the care team messages the patient from the Messages tab, the agent stays out of the conversation for this long, so it never talks over a person who has taken over. `0` turns the hold off. An emergency reply is never held.
+- **Offer education & counselling sessions proactively**: lets a staff service agent message patients to ask whether they would like to go through a counselling protocol from the Content tab, based on where they are in their care. The patient agent still never starts a conversation; it handles the reply.
+  - **Agent that sends the offer**: a staff agent with the Twilio message tool.
+  - **Also check right after an encounter note is saved**: otherwise offers are only considered on scheduled agent runs.
+- **Hold routine replies overnight**: a **From**/**To** time and **Timezone**. A routine reply drafted in this window waits until it closes; an emergency reply is never held.
+
+Click **Save**.
+
+## Safety design
+
+A few things are true regardless of settings, and are not configurable away:
+
+- **Red-flag screening runs before the model does**, on the raw message text — deterministic keyword/pattern matching (chest pain, can't breathe, stroke symptoms, heavy bleeding, anaphylaxis, self-harm/suicidal ideation, and more). A hit sends the fixed emergency message and opens an escalation without ever calling the LLM. False positives are accepted; false negatives are the thing this is built to avoid.
+- **It never invents an appointment, clinician name, result, or clinical fact.** Appointments only ever come from the appointment tools; anything the agent doesn't know, it hands off to the care team rather than answering.
+- **It never diagnoses, changes a prescription, or interprets an unreleased result.**
+- **It discloses that it's an automated assistant**, not a clinician, at the start of every new conversation and on request.
+- **Structured yes/no replies to an existing scheduled message still go through the normal automated flow** — the patient agent only picks up free text and anything not already correlated to an open message, so existing automated confirmations stay deterministic.
+
+## Reviewing drafts (review mode)
+
+When the service is in review mode, a **"Draft(s) awaiting review"** card appears at the top of the patient's page (above the tabs, so it's never missed) whenever a reply is waiting:
+
+1. Read the drafted reply, along with its detected **intent** and **triage band** badges.
+2. Either:
+   - Click **Approve & send** to deliver it exactly as drafted, or
+   - Edit the text in place, which changes the button to **Send edited reply**, or
+   - Click **Discard** to drop the draft entirely (nothing is sent).
+
+Approving goes through the same delivery path an auto-mode send would — the patient sees exactly what they'd have gotten in auto mode.
+
+## Escalations
+
+An **Escalations** card on the patient's page (General tab) lists everything the patient agent has flagged: a **Red flag**, an **Agent-flagged triage**, a failed turn (**Agent turn failed**), an **Out of scope hand-off**, or something **Staff flagged** manually. Each shows its severity, status, and timestamp.
+
+- Click **Acknowledge** to mark an open escalation as seen.
+- Click **Resolve** once it's been handled.
+
+If no one was actively covering the configured escalation role at the time, the card notes that the service owner was notified instead as a fallback — a visible signal that the rota needs attention.
+
+## Preview chat
+
+Before turning the agent loose on real patients (or after editing an already-bound agent), use **Preview chat** from that agent's row on the Agents tab:
+
+1. Pick a real cohort patient to test against. The preview uses their actual context in this service.
+2. Type messages as if you were that patient and see the agent's replies in a sandbox chat window.
+
+**Nothing in a preview is sent to the patient or saved to their message history** — appointment bookings and escalations run in a simulated dry-run mode only. This is the recommended way to walk through appointment, education, red-flag, and out-of-scope scenarios end to end before enabling the binding for real, or before switching a service from review to automatic sending.
+
+## Recommended rollout
+
+Start a new patient agent in **review mode** on a single pilot service, with staff approving every reply for a defined window. Only switch to **auto** mode after you've reviewed the draft/edit rate and are comfortable with what it's producing.

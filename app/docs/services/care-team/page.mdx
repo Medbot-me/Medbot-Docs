@@ -1,0 +1,46 @@
+# Care Team
+
+The **Care team** tab on a service's page brings together its members, coverage, and availability.
+
+## Roles come from the organisation
+
+A service has no roles of its own. Each care team member acts under **the role they hold in the organisation**:
+
+| Role | Label |
+| --- | --- |
+| `admin` | Admin |
+| `doctor` | Doctor |
+| `nurse` | Nurse |
+| `receptionist` | Receptionist |
+
+If someone's organisation role changes, their role on every service changes with it. The same four roles appear wherever a service asks for a role: coverage, the patient agent's escalation role, and the appointment role filter. Roles are managed in the organisation, not the service; see [Members & Roles](/cms/members-and-roles).
+
+## Members
+
+Click **Add care team member**:
+
+1. Pick an **Organisation member**. Only people who are already members of the service's organisation can be added. The dialog shows the role they will join with: "Joins this care team as &lt;Role&gt;, their role at the organisation."
+2. Optionally add **Additional information on user preferences**, such as how they like to be contacted or what they handle. AI turns it into that member's **agent context**, which service agents are given when they work with or for this person.
+3. Click **Add &lt;name&gt; to care team**.
+
+Each member's card shows their agent context, which can be edited, and a **Remove from care team** action.
+
+Staff are not invited to a service by email: add them to the organisation first, then to the care team.
+
+## Coverage / rota
+
+Coverage says **who is covering a role at a point in time**. Several platform behaviours, such as patient agent escalations, address "whoever is covering the Nurse role right now" rather than a named person, so a day off does not leave notifications with nowhere to go.
+
+Add an entry from the **Coverage / rota** card: **Organisation member**, **Role**, **Starts**, and optionally **Ends**, then **Add coverage**.
+
+## Availability
+
+The **Availability** card defines each care team member's **recurring weekly booking windows**. Both the staff booking flow and the patient agent read these to work out open slots. See [Appointments](/docs/services/appointments).
+
+1. Click **Add availability**.
+2. Pick a **Care team member**.
+3. Pick a **Day of week**, and set **Start** and **End** (all in UTC).
+4. Set a **slot length** in minutes, e.g. 30.
+5. Click **Add**.
+
+Toggle a window's **Active** switch to take it offline temporarily (for leave) without losing it, or delete it with the trash icon. If nobody has any availability, nothing can be booked, and the card says "No availability set yet".

@@ -1,0 +1,44 @@
+# Appointments
+
+Each service has its own lightweight appointment book. Care team members publish recurring weekly availability, and staff, the patient agent and encounter notes all book, move and cancel appointments against the same open slots. What shows as free is always what can actually be booked, for a person and the agent alike.
+
+## 1. Publish availability
+
+Nothing can be booked until at least one care team member has an availability window. See [Care Team → Availability](/docs/services/care-team#availability).
+
+## 2. Booking for a patient (staff)
+
+On the patient's page, **Appointments** tab, click **Book for this patient**. In **Book an appointment**:
+
+1. Optionally filter by **Role** (Admin, Doctor, Nurse or Receptionist), or leave it at **Any role**.
+2. Pick an open slot. Each shows the date and time, the care team member and their role. Slots are worked out live from availability for the next 14 days, minus anything already booked.
+3. Optionally add a **Reason (optional)**.
+4. Click **Book**.
+
+The appointment appears straight away under **Upcoming**.
+
+## 3. Booking through the patient agent
+
+If the [patient agent](/docs/services/patient-agent) is on, a patient can ask it for a new appointment, to move one, or to cancel one. It reads the same open slots as the staff flow and books directly; a confirmed booking is immediate, not a request. These appointments are labelled **booked by patient agent**.
+
+Appointments arranged from a clinician's encounter note are labelled **booked from an encounter note**.
+
+## 4. Managing appointments
+
+- **Upcoming** appointments can be **Cancel**led from the patient's Appointments tab.
+- **Past** appointments show their final status: confirmed, **Completed**, **Cancelled** or **No show**.
+
+## Reminders
+
+On the service's **Settings** tab, the **Channel** card:
+
+- **Send appointment reminders**: turn reminders on.
+- **Hours before the appointment**: up to three, comma-separated, e.g. `24, 2`.
+
+Reminders go out on the service's **Default channel** (WhatsApp or SMS, falling back to SMS). Each reminder includes a link the patient can use to change the appointment.
+
+## How it works
+
+- Availability windows are **recurring and weekly**, in UTC (e.g. "Tuesdays 09:00–17:00, 30-minute slots"). There are no per-date overrides for holidays or leave yet: switch the window's **Active** toggle off and on again, or cancel the affected appointments.
+- A slot is open when no confirmed appointment holds it for that care team member. This is checked again at the moment of booking, so a slot that looked free a few seconds ago is still booked safely.
+- This booking system belongs to the service and is independent of the clinic's appointments in Medbot CMS.

@@ -5,7 +5,7 @@ export default {
   workspace: "Workspace",
   "deep-research": "Deep Research",
   "clinical_resources": "Clinical Resources",
-  "care-programs": "Care Programs",
+  services: "Services",
    "use-cases": "Use Cases",
   "medbot-cms": "Medbot CMS",
 };

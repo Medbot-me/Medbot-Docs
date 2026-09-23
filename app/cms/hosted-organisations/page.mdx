@@ -1,0 +1,54 @@
+# Medbot-Hosted Organisations
+
+A clinic that has no Medplum server of its own can ask Medbot to host one. Medbot creates the Medplum project, sets up the organisation, and hands it over with the requester as its first **administrator**. From then on it works exactly like any other organisation, except that Medbot manages its Medplum credentials.
+
+## Requesting one
+
+Open **Request a Medbot-hosted organisation** at `/organisations/request`. It is linked from:
+
+- under the [create-organisation form](/cms/create-organisation): "Don't have a Medplum server? Request a Medbot-hosted one"
+- the join-code form on `/onboarding`
+- the empty state of the [organisations screen](/cms)
+
+| Field | Required | Notes |
+| --- | --- | --- |
+| **Organisation name** | Yes | e.g. "Orchard Clinic". |
+| **Country** | No | Prefilled from your browser. |
+| **Time zone** | No | Prefilled from your browser. |
+| **Anything else?** | No | Number of staff, expected go-live date, anything that helps Medbot set it up. |
+
+Click **Submit request**. You go back to `/organisations`, where the request appears in a **Requests** section.
+
+## Following a request
+
+| Status | What you see |
+| --- | --- |
+| Pending or in progress | "Waiting for a Medbot administrator to set this up", with **Cancel**. |
+| Rejected | "Not approved", with the reason and **Request again**. |
+| Fulfilled | The new organisation, in your list of organisations. |
+
+When the organisation is ready you get an email. Its link opens `/organisations?select=<organisation>`, which switches you straight into the new organisation, even if you belong to others. You arrive as its `admin`, with a default "Main Clinic" location and only yourself on the staff list.
+
+## How a hosted organisation differs
+
+Only in its Medplum connection. On [Organisation Settings](/cms/settings), the **Medplum credentials** card says "This organisation's Medplum server is managed by Medbot. Contact Medbot to rotate its credentials." It shows the base URL and a **Verify connection** button, and no credential fields. The organisation's own admins cannot read or change the credentials, even through the API.
+
+Everything else (staff, join code, patients, every clinic workflow) behaves exactly as for a self-managed organisation.
+
+## For Medbot platform administrators
+
+Requests are handled in the CMS's **Platform** sidebar group, which appears only for a **platform superadmin**. That is a Medbot-wide role on the user account, separate from any organisation role, and granted by an existing superadmin (or bootstrapped from the API's `ADMIN_EMAIL`). For anyone else, `/admin/*` answers **not found**.
+
+| Screen | Route | What it does |
+| --- | --- | --- |
+| **Provisioning requests** | `/admin/provisioning` | Requests by status (Pending, In progress, Fulfilled, Rejected, Cancelled). Open one to **Claim** or **Release** it, add a note, **Reject** it with a reason, or **Fulfil** it. |
+| **Hosted organisations** | `/admin/organisations` | Every Medbot-hosted organisation: rotate its Medplum credentials, activate or deactivate it, and grant the platform superadmin role to someone by email. |
+
+To fulfil a request:
+
+1. In Medbot's own Medplum account, create a **Project** for the clinic, e.g. `medbot-orchard-clinic`. Never share one project between organisations.
+2. In that project, create a **ClientApplication** (e.g. `medbot-api`) with the default project-admin access policy, and note its client id and secret.
+3. In the request, click **Fulfil** and paste the base URL (prefilled), client id and client secret. The organisation name and slug are prefilled from the request and can be corrected.
+4. The credentials are validated against Medplum before anything is created. On success the requester is emailed, and the toast shows the new organisation's join code.
+
+The full runbook is in the Medbot repository at `docs/plans/hosted-medplum-provisioning.md`.
