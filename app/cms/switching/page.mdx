@@ -1,26 +1,52 @@
-# Switching Organisations
+# Choosing & Switching Organisations
 
-A doctor who covers two clinics, or an administrator who runs a group, belongs to several organisations with one account. The CMS renders exactly one of them at a time — the **current organisation**.
+A doctor who covers two clinics, or an administrator who runs a group, belongs to several organisations with one account. The CMS renders exactly one of them at a time: the **current organisation**.
+
+## The welcome screen
+
+Every fresh sign-in starts at **Welcome back** (`/welcome`): "Choose the organisation and role to continue as." This happens even for someone who belongs to only one organisation.
+
+- There is one card per membership, showing the organisation's name and your role there.
+- The organisation you used last carries a **Last used** badge.
+- Click **Enter as &lt;Role&gt;** (for example, **Enter as Clinic Admin**) to continue. You go to the page you were trying to reach, or to the queue by default.
+- Links at the bottom: **Join with code**, **Create organisation**, **Manage organisations**, and **Sign out**.
+
+Until you choose, any staff page redirects to the welcome screen and then returns you to that page. The organisations screen, onboarding, sign-in, patient-facing displays and public pages do not need a choice.
+
+A signed-in user with **no memberships** at all is sent to the [organisations screen](/cms) instead, to create an organisation, request a Medbot-hosted one, or join with a code.
+
+### Why you choose every time
+
+The choice is tied to **this sign-in session**. Signing out and back in, a second person on a shared computer, or an expired session all mean choosing again. The "last used" organisation is only a hint for the badge, never a grant of access. That way nobody lands in a clinic they did not mean to open, or inherits someone else's context on a shared front-desk machine.
 
 ## The sidebar switcher
 
-The organisation picker sits in the sidebar header.
+The organisation switcher sits in the sidebar header for everyone, including people with a single organisation. It shows the current organisation's name and your role in it; with the sidebar collapsed, only its initials show.
 
-- A user who belongs to **one** organisation sees its name as plain text. There is nothing to switch to, so there is no picker.
-- A user who belongs to **several** sees a dropdown listing them all.
+Opening it lists your **Organisations**, each with your role and a check mark on the current one, followed by:
 
-Choosing a different organisation re-renders the entire app under it: the queue, the patient list, the schedule, the results, inventory — everything. The choice is remembered across sessions, so the next sign-in opens the same organisation.
+- **Manage organisations**: the organisations screen
+- **Create organisation**: see [Create an Organisation](/cms/create-organisation)
+- **Join with code**: see [Join an Organisation](/cms/join-an-organisation)
+
+Choosing a different organisation re-renders the entire app under it: the queue, the patient list, the schedule, the results, inventory, everything.
 
 ## From the organisations screen
 
-`/organisations` lists every organisation the user belongs to with their role in each, a **Current** badge on the active one, a **Switch** action on the others, and a **Settings** link on any they administer. It is reachable from the switcher's own "Manage organisations" entry.
+`/organisations` lists every organisation the user belongs to with their role in each, a **Current** badge on the active one, a switch action on the others, and a **Settings** link on any they administer. It also shows any pending [Medbot-hosted organisation requests](/cms/hosted-organisations).
+
+A link to `/organisations?select=<organisation>`, such as the one in a hosted organisation's "ready" email, switches straight into that organisation if you are a member.
 
 ## Roles are per organisation
 
-A person's role is a property of their membership, not of their account. The same user can be an `admin` at one clinic and a `nurse` at another; switching organisations switches which role they are acting under. Every permission check runs against the role in the organisation currently selected.
+A person's role is a property of their membership, not of their account. The same user can be a Clinic Admin at one clinic and a Nurse at another; switching organisations switches which role they are acting under. Every permission check runs against the role in the organisation currently selected.
 
 ## What switching does not do
 
-Switching does not widen anyone's access. The stored choice only decides *which* of the user's own organisations a page renders — it is never treated as authorisation on its own. Every request the CMS makes re-derives the caller's membership and role for that organisation server-side, so a tampered-with choice yields nothing: an organisation the user does not belong to answers as if it does not exist.
+Switching does not widen anyone's access. The stored choice only decides *which* of the user's own organisations a page renders; it is never treated as authorisation on its own. Every request the CMS makes re-derives the caller's membership and role for that organisation server-side, so a tampered-with choice yields nothing: an organisation the user does not belong to answers as if it does not exist.
 
 Administering an organisation you are not currently in is fine, too. The settings page works on the organisation named in its own URL, not the current one, so an admin of several can manage any of them without switching first.
+
+## The CMS and the web app
+
+The Medbot web app has its own organisation switcher (plus a personal scope the CMS does not have). Each app keeps its own choice, so choose the organisation in each app you use.

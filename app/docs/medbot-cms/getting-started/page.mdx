@@ -4,14 +4,13 @@ Medbot CMS needs three external services configured before it will run: [Medplum
 
 ## 1. Create a Medplum account
 
+Each clinic (organisation) uses its own Medplum project, and its credentials are entered in the app, not in environment variables. The CMS itself holds no Medplum credentials.
+
 1. Sign up for a free account at [app.medplum.com/signin](https://app.medplum.com/signin).
 2. Create an OAuth client in Medplum.
-3. Copy your **Client ID** and **Client Secret** into:
+3. Keep its **Client ID** and **Client Secret** for step 6, when you [create the organisation](/cms/create-organisation).
 
-```bash
-MEDPLUM_CLIENT_ID=your_client_id
-MEDPLUM_CLIENT_SECRET=your_client_secret
-```
+No Medplum project? Ask Medbot to host one: see [Medbot-Hosted Organisations](/cms/hosted-organisations).
 
 ## 2. Configure Clerk authentication
 
@@ -50,15 +49,9 @@ This applies the Drizzle schema to Postgres. Postgres holds only the operational
 pnpm run dev
 ```
 
-## 6. Create an admin user
+## 6. Create your organisation
 
-Admin privileges aren't assigned automatically:
-
-1. Sign in to the application using Clerk.
-2. Locate the newly created user record in your database.
-3. Update the user's role to `admin`.
-
-Once updated, that account has access to administrative features. See [Roles & Access](/docs/medbot-cms/roles-and-access) for what each role can do.
+There is no manual admin bootstrap. Sign in, then [create an organisation](/cms/create-organisation) with your Medplum client ID and secret: you become its first `admin`. From there, add staff one at a time from `/staff` or in bulk from a [CSV file](/cms/seed-data). See [Roles & Access](/docs/medbot-cms/roles-and-access) for what each role can do.
 
 ## Configure the Clerk webhook
 
@@ -70,7 +63,7 @@ The Clerk webhook synchronizes newly created users after they accept an invitati
 
 ## Verify setup
 
-- Sign in with the user whose role is set to `admin`.
+- Sign in as the organisation's `admin` and choose the organisation on the [welcome screen](/cms/switching#the-welcome-screen).
 - Navigate to [`/staff`](/docs/medbot-cms/staff-management) to register practitioners, `/patients` to register patients.
 - Confirm registration records optional contact details and communication-consent combinations; open the patient chart to update either as admin, doctor, and nurse (billing panels stay unavailable to doctor/nurse).
 - Navigate to `/appointments`: view, book, edit, and cancel a booking; confirm a closed appointment can't be edited or cancelled.

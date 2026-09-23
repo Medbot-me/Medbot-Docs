@@ -1,0 +1,46 @@
+# Service Context & Content
+
+Two things tell a service's AI what it needs to know: **service context**, a plain-language description of how the service runs, and the **content library**, the documents agents and AI encounters can draw on.
+
+## Service context
+
+The **Service context** tab (the **Agent context** step in the setup wizard) holds free text that is **given to every service agent run**. Describe:
+
+- how the service runs and the steps patients and staff go through
+- who does what, and when
+- when to escalate, and to whom
+- how to use the content library, e.g. "Answer dietary questions from the 'Post-op nutrition' handout in the content library"
+
+There is no graph or builder: it is saved as text with **Save agent context**. It replaces the old program **Workflow** text.
+
+### Drafting it with AI
+
+Paste anything unstructured into **Notes on how this service runs** (a workflow write-up, an SOP, handover notes, escalation rules) and click **Generate context with AI**. Review and edit the draft before saving.
+
+### Other context agents receive
+
+Service context is one layer. Agents also receive:
+
+- each **care team member's** agent context, built from their preferences (see [Care Team](/docs/services/care-team#members))
+- each **patient's** context, built from their encounter notes (see [Patients & Cohort](/docs/services/patients#encounter-notes))
+
+## Content library
+
+The **Content** tab (the wizard's **Content library** step) holds the clinical resources this service's agents and AI encounters can use.
+
+### Adding a document
+
+- **Upload a document**: choose a PDF, give it a **Title** and an optional **Description**, and pick its type:
+  - **Reference material**: background the assistant can quote from, such as a handout or guideline.
+  - **Counselling protocol**: a structured script for a counselling or education session.
+
+  Click **Upload & add to library**.
+- **Attach an existing resource**: pick a document you have already uploaded elsewhere in Medbot.
+
+A new document is processed before it can be used; until then it shows as pending or processing. **Remove** takes a document out of this service's library.
+
+### Where the library is used
+
+- **AI encounters** can have documents attached by default, attach the best matches automatically, and let the assistant search the library. See [AI Encounters & Kiosk](/docs/services/encounters#settings).
+- **Service agents** with the **Clinical resources** tool can look things up in it.
+- The **patient agent** answers health-education questions from it.

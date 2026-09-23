@@ -1,5 +1,7 @@
 # Roles & Access
 
+> Roles are **per organisation**: a person can be Clinic Admin at one clinic and Nurse at another, and every check below runs against their role in the organisation they have currently chosen. See [Members & Roles](/cms/members-and-roles). The same roles apply to [Services](/docs/services) in the web app.
+
 Medbot CMS is built around four clinic roles, plus one internal account that isn't a real clinic role at all. Every server action re-checks the signed-in user's role before reading or writing clinic data — page-level checks only control what's visible, so a role's real boundary is enforced at the action, not the UI.
 
 ## The four clinic roles
@@ -17,3 +19,10 @@ Medbot CMS is built around four clinic roles, plus one internal account that isn
 ## Where role gating shows up
 
 Nearly every page in this section notes which role a workflow belongs to — see [Staff Management](/docs/medbot-cms/staff-management) (admin-only), [Session Setup](/docs/medbot-cms/session-setup), [Rostering](/docs/medbot-cms/rostering) and [Attendance](/docs/medbot-cms/attendance) (both admin-only to publish/manage, though reception can draft a roster), and [Documents & Certificates](/docs/medbot-cms/documents-and-certificates) (referrals and medical certificates require a doctor or admin).
+
+## SmartCMS screens (Singapore)
+
+Organisations in Singapore that subscribe to [SmartCMS modules](/cms/smartcms/modules) get two more screens, gated by module as well as role:
+
+- **Claims** (`/claims`): `admin`, `receptionist`, `doctor`.
+- **Reports** (`/reports`): `admin`, `doctor`.

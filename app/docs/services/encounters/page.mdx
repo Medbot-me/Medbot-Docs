@@ -1,0 +1,97 @@
+# AI Encounters & Kiosk
+
+An **AI encounter** is a structured conversation between a patient and an AI assistant, set up by the service. There are three kinds:
+
+| Kind | What it is for |
+| --- | --- |
+| **History taking** | Collecting the patient's history before they see a clinician. |
+| **Health education** | Explaining a condition, procedure or preparation from the service's content. |
+| **Financial counselling** | Walking through costs, schemes and payment options. |
+
+A patient completes an encounter either **remotely on the patient portal**, from a link the service sends, or **in the clinic** on a device a staff member hands them (the **kiosk**), by text or by voice.
+
+## Settings
+
+On the service's **Settings** tab, the **AI encounters** card sets up each kind the service offers. For each kind:
+
+- **Enabled**: whether the service offers this kind.
+- **Instructions**: anything specific to add to this encounter's conversation.
+- **References & protocols**: documents from the [content library](/docs/services/context-and-content#content-library) attached by default. Only processed documents can be chosen.
+- **Share the care team's latest note with the assistant**: folded into the assistant's context when the patient opens the encounter.
+- **Auto-attach relevant library documents**: searches the library when the encounter starts and attaches the best matches (up to three) alongside the defaults.
+- **Let the assistant search the service library** during the conversation.
+
+Encounters no longer need an agent bound to them: the assistant is set up from these settings, the service context and the patient's own context.
+
+## Sending an encounter to a patient
+
+On the patient's page, **General** tab, the **AI encounters** card:
+
+1. Click **Start encounter**.
+2. In **Start an AI encounter**, choose the **Kind**, optionally say **Why this encounter** (it "gives the assistant a head start instead of asking the patient to explain from scratch"), and adjust the **References & protocols** (pre-ticked from Settings).
+3. Click **Send link**.
+
+The link goes out on the service's default channel (see [Channel](#channel-settings)). If sending fails, **Encounter started — link not sent** shows the link with a **Copy** button so you can pass it on yourself.
+
+The patient can also be sent an encounter by the [patient agent](/docs/services/patient-agent) with the **Hand over for a full encounter** tool.
+
+## Following an encounter
+
+The card lists every encounter with its status (**Pending**, **Active**, **Completed**, **Abandoned**, **Cancelled** or **Expired**), who started it, whether it was **Shared by patient**, and its summary. On each row:
+
+- the transcript icon opens the full conversation
+- **Cancel** stops an encounter that has not finished
+- **Resume on this device** reopens an in-clinic encounter on the current device
+
+### What the assistant was told
+
+The transcript dialog has a **What the assistant was told** panel, so staff can check exactly what the assistant knew:
+
+- when the context snapshot was built
+- each reference, badged **Chosen** (picked when starting), **Default** (from Settings) or **Auto** (auto-attached)
+- the **Service context**
+- the **Care team plan for this patient**
+
+### The care plan context
+
+When the patient opens an encounter, Medbot builds a short care-plan briefing for the assistant from the service and the patient's record:
+
+- why the care team started this
+- where the patient is in the service
+- the care team's briefing
+- the latest note from the care team (if enabled in Settings)
+- upcoming appointments
+- open care-team actions
+- who is on the care team
+
+It is kept to about 5,000 characters so the assistant stays focused.
+
+## In the clinic: the kiosk
+
+For a patient who is in the clinic, a staff member can run the encounter on a clinic device such as a tablet.
+
+1. On the patient's AI encounters card, click **Start here on this device**.
+2. In **Start an in-clinic encounter**, choose:
+   - **Kind**
+   - **Conversation mode**: **Text** or **Voice**
+   - **Assistant look** (voice only): **Let the patient choose**, **Orb** or **Face**
+   - **Why this encounter** (optional), and the **References & protocols**
+3. Click **Hand over the device**.
+
+The device switches to a full-screen kiosk (`/kiosk/...`) with no staff app around it.
+
+- The patient is first asked for **consent**: **Yes, start** or **Not now**.
+- In **text** mode they type; in **voice** mode they talk, with captions showing **Listening…**, **Thinking…**, **Speaking…** and "Ready — go ahead and speak." In voice mode the patient can switch between the **Orb** and the animated **Face**, and can fall back to text.
+- **End session** finishes the encounter.
+- **Staff: exit** returns the device to the staff app ("Leave this encounter?"). The patient's progress is saved, and the encounter can be resumed on this or another device from the patient's page.
+
+### Requirements for voice
+
+Voice mode needs a default **realtime model** (set by an administrator under **Realtime Models**, `/admin/realtime-models`) and the AI Gateway to be configured. If either is missing, the dialog says why voice is unavailable and text still works.
+
+## Channel settings
+
+On **Settings**, the **Channel** card sets how this service reaches patients:
+
+- **Default channel**: WhatsApp or SMS, for AI-encounter invites and appointment reminders. SMS is used automatically if WhatsApp is not configured or a send fails.
+- **Send appointment reminders** and **Hours before the appointment** (e.g. `24`). See [Appointments](/docs/services/appointments#reminders).

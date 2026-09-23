@@ -1,0 +1,199 @@
+# Service Registry (Developers)
+
+`@repo/smartcms-contract` (`packages/smartcms-contract/src/service-types.ts`) lists all **56** SmartCMS service types from section 4 of the SmartCMS Interface Specification v1.8.8. Every other part of the integration looks services up here.
+
+```ts
+import { serviceBySn, serviceByRoute, serviceByWireType } from '@repo/smartcms-contract';
+
+const balance = serviceBySn(1); // chasAnnualBalanceEnquiry
+```
+
+## What each entry carries
+
+| Field | Meaning |
+| --- | --- |
+| `sn` | The specification's serial number, 1 to 56. |
+| `serviceType` | The catalog name, exactly as the specification spells it. |
+| `wireServiceType` | The value actually sent in the control header and the `ServiceType` header. Equal to `serviceType` except for S/N 54 and 55. |
+| `route` | The path under the gateway base URL. `null` only for S/N 25, whose route the specification leaves blank; the client refuses to call it. |
+| `format` | `xml` or `json`. |
+| `envelope` | The default wrapper: `scg-json` for JSON services, `scg-xml` for XML ones. It can be overridden per route with `SMARTCMS_ENVELOPE_OVERRIDES`. |
+| `legacyEnvelopeCandidate` | True for S/N 1 to 15, which also have an older AP481 envelope form. |
+| `group` | The entitlement group. Where a module exists, the group has the module's name. |
+| `phase` | Delivery phase: **P0** platform, **P1** CHAS and MHCP subsidies, **P2** CDMP, **P3** registries and NEHR contribution, **P4** Healthier SG, **PM** an opt-in module outside the CHAS Badge, **X** out of scope, **L** legacy or retired. |
+| `kind` | `enquiry` when the call changes no remote state, otherwise `submission`. |
+| `safeToRetry` | True exactly for enquiries. |
+
+> **Do not correct the spelling.** Names and routes are copied exactly, misspellings included (`submisssion/hsg/iquitjourney`, `putReconcillationFile`, `getPaginatedReferralByInstituion`). The gateway routes on these strings, and a test compares the list against a transcription of the specification.
+
+A service can only be called when its group belongs to a module the organisation subscribes to and the location is entitled to it (see [Gateway](/cms/smartcms/gateway#entitlements)). Groups with no module (NEHR, CHAS_DENTAL, ALPS, PSS, LEGACY) cannot be called at all today. S/N 7, the clinic accreditation status query, is the one planned for a location's connection test.
+
+## Services by group
+
+### CHAS: CHAS and MOH subsidy claims
+
+Module: `CHAS`
+
+| S/N | Service type | Route | Format | Kind | Phase |
+| --- | --- | --- | --- | --- | --- |
+| 1 | `chasAnnualBalanceEnquiry` | `enquiry/chasannualbalance` | XML | Enquiry | P1 |
+| 2 | `chasBillClaimSubmission` | `claims/submission/chas` | XML | Submission | P1 |
+| 3 | `chasBillClaimSubmissionStatusEnquiry` | `claims/enquiry/chas` | XML | Enquiry | P1 |
+| 4 | `CHASAppealSubmission` | `submission/appeal` | XML | Submission | P1 |
+| 7 | `ClinicAccreditationStatusquery` | `accreditation/clinicstatus` | XML | Enquiry | P0 |
+| 8 | `VaccinationClaimHistory` | `enquiry/vaccinationclaim` | XML | Enquiry | P1 |
+| 9 | `CDSClaimHistory` | `enquiry/cdsclaim` | XML | Enquiry | P1 |
+
+### SFL: Screen for Life
+
+Module: `SFL`. Screen for Life claims are submitted with S/N 2, so subscribing to SFL also creates CHAS entitlements.
+
+| S/N | Service type | Route | Format | Kind | Phase |
+| --- | --- | --- | --- | --- | --- |
+| 10 | `CHASClaimHistoryQuery` | `claims/enquiry/claimhistory` | XML | Enquiry | P1 |
+| 11 | `SFLEligibilityQuery` | `claims/enquiry/sfl` | XML | Enquiry | P1 |
+
+### CDMP: Medisave (Chronic Disease Management Programme)
+
+Module: `CDMP`
+
+| S/N | Service type | Route | Format | Kind | Phase |
+| --- | --- | --- | --- | --- | --- |
+| 12 | `cdmpClaimSubmission` | `claims/submission/cdmp` | XML | Submission | P2 |
+| 13 | `CdmpClaimStatus` | `claims/enquiry/cdmp` | XML | Enquiry | P2 |
+| 14 | `CdmpPaymentReconn` | `claims/enquiry/cdmprecon` | XML | Enquiry | P2 |
+| 15 | `cdmpPayerBalanceEnquiry` | `enquiry/payerbalance` | XML | Enquiry | P2 |
+
+### CIDC: Chronic disease clinical indicators
+
+Module: `CIDC`
+
+| S/N | Service type | Route | Format | Kind | Phase |
+| --- | --- | --- | --- | --- | --- |
+| 16 | `cidcReportSubmission` | `submission/cidc` | XML | Submission | P3 |
+
+### DEROM: Disease notification
+
+Module: `DEROM`
+
+| S/N | Service type | Route | Format | Kind | Phase |
+| --- | --- | --- | --- | --- | --- |
+| 47 | `putDiseaseNotification` | `submission/diseasenotification` | JSON | Submission | P3 |
+
+### NIR: National Immunisation Registry
+
+Module: `NIR`
+
+| S/N | Service type | Route | Format | Kind | Phase |
+| --- | --- | --- | --- | --- | --- |
+| 24 | `NIRsubmitNotificationOfVaccination` | `submission/nirimmunization` | XML | Submission | P3 |
+| 25 | `NIRsubmitVaccinationRecordUpdate` | None | XML | Submission | P3 |
+
+### CMIS: Medical alerts and allergies
+
+Module: `CMIS` (planned)
+
+| S/N | Service type | Route | Format | Kind | Phase |
+| --- | --- | --- | --- | --- | --- |
+| 20 | `cmisSubmissionADR` | `submission/allergies` | XML | Submission | P3 |
+| 21 | `cmisSubmissionMA` | `submission/medicalalert` | XML | Submission | P3 |
+| 22 | `CMISReportEnquiryADR` | `enquiry/allergies` | XML | Enquiry | P3 |
+| 23 | `CMISReportEnquiryMA` | `enquiry/medicalalert` | XML | Enquiry | P3 |
+
+### MW_HEALTH: Migrant worker health (MOM)
+
+Module: `MW_HEALTH`
+
+| S/N | Service type | Route | Format | Kind | Phase |
+| --- | --- | --- | --- | --- | --- |
+| 19 | `PutHealthRecordsMWH` | `submission/mwh` | JSON | Submission | PM |
+
+### HSG_BUNDLE: Healthier SG
+
+Module: `HSG_BUNDLE` (planned)
+
+| S/N | Service type | Route | Format | Kind | Phase |
+| --- | --- | --- | --- | --- | --- |
+| 26 | `getEnrolledResidentList` | `enquiry/hsg/enrolledresidents` | JSON | Enquiry | P4 |
+| 27 | `getEnrolledResidentToPCP` | `enquiry/hsg/enrolledresidentpcp` | JSON | Enquiry | P4 |
+| 28 | `getHealthPlan` | `enquiry/hsg/healthplan` | JSON | Enquiry | P4 |
+| 29 | `getHealthPlanList` | `enquiry/hsg/healthplanlist` | JSON | Enquiry | P4 |
+| 30 | `putHealthPlan` | `submission/hsg/healthplan` | JSON | Submission | P4 |
+| 31 | `getQuestionnaireResponse` | `enquiry/hsg/questionnaireresponse` | JSON | Enquiry | P4 |
+| 32 | `putCareReport` | `submission/hsg/carereport` | JSON | Submission | P4 |
+| 33 | `getCareReportSummaryList` | `enquiry/hsg/carereportsummarylist` | JSON | Enquiry | P4 |
+| 34 | `getCareReport` | `enquiry/hsg/carereport` | JSON | Enquiry | P4 |
+| 35 | `getHealthPlanSummaryList` | `enquiry/hsg/healthplansummarylist` | JSON | Enquiry | P4 |
+| 36 | `getiQuitJourney` | `submisssion/hsg/iquitjourney` | JSON | Enquiry | P4 |
+| 37 | `getImmunizationHistory` | `enquiry/hsg/Immunization` | JSON | Enquiry | P4 |
+| 40 | `putReferral` | `submission/hsg/referral` | JSON | Submission | P4 |
+| 41 | `putCEGAppeal` | `submission/hsg/secureemail` | JSON | Submission | P4 |
+| 42 | `getWhitelistedDrugCatalog` | `enquiry/drugcatalogue` | JSON | Enquiry | P4 |
+| 43 | `getWhitelistedDrugClaimCalculator` | `enquiry/claimcalculator` | JSON | Enquiry | P4 |
+| 48 | `getPaginatedReferralByInstituion` | `enquiry/paginatedreferral` | JSON | Enquiry | P4 |
+| 49 | `putNewReferralLink` | `submission/newreferrallink` | JSON | Submission | P4 |
+| 50 | `getFullReferralDetails` | `enquiry/fullreferraldetails` | JSON | Enquiry | P4 |
+| 51 | `deleteDraftReferral` | `submission/draftreferral` | JSON | Submission | P4 |
+| 52 | `cancelReferral` | `submission/cancelreferral` | JSON | Submission | P4 |
+| 53 | `getReferralActionLink` | `enquiry/referralactionlink` | JSON | Enquiry | P4 |
+| 56 | `getPatientCareSummaryToken` | `enquiry/hsg/patientcaresummarytoken` | JSON | Enquiry | P4 |
+
+### NEHR: National Electronic Health Record contribution
+
+Module: None
+
+| S/N | Service type | Route | Format | Kind | Phase |
+| --- | --- | --- | --- | --- | --- |
+| 38 | `putComposition` | `submission/hsg/composition` | JSON | Submission | P3 |
+| 39 | `putReconcillationFile` | `submission/hsg/nehrreconcillation` | JSON | Submission | P3 |
+
+### CHAS_DENTAL: CHAS dental
+
+Module: None (out of scope)
+
+| S/N | Service type | Route | Format | Kind | Phase |
+| --- | --- | --- | --- | --- | --- |
+| 5 | `CHASDentalBalanceQuery` | `enquiry/dental` | XML | Enquiry | X |
+| 6 | `CHASDentalSubmission` | `submission/dental` | XML | Submission | X |
+
+### ALPS: Home medication delivery
+
+Module: None (out of scope)
+
+| S/N | Service type | Route | Format | Kind | Phase |
+| --- | --- | --- | --- | --- | --- |
+| 44 | `putHomeDeliveryMedication` | `submission/hsg/homedeliverymedication` | JSON | Submission | X |
+| 45 | `getMedicationDeliverystatus` | `enquiry/hsg/medicationdeliverystatus` | JSON | Enquiry | X |
+
+### PSS: Screening
+
+Module: None (out of scope)
+
+| S/N | Service type | Route | Format | Kind | Phase |
+| --- | --- | --- | --- | --- | --- |
+| 54 | `getPSSEligibility` (sent as `get-screening-eligibility`) | `enquiry/getPSSEligibility` | JSON | Enquiry | X |
+| 55 | `putPSSInfo` (sent as `put-screening`) | `submission/putPSSInfo` | JSON | Submission | X |
+
+### LEGACY: Legacy or retired
+
+Module: None
+
+| S/N | Service type | Route | Format | Kind | Phase |
+| --- | --- | --- | --- | --- | --- |
+| 17 | `IRISMD131Notification` | `submission/md131` | XML | Submission | L |
+| 18 | `putMD532` | `submission/md532` | JSON | Submission | L |
+| 46 | `getPatientCareSummary` | `enquiry/hsg/patientcaresummary` | JSON | Enquiry | L |
+
+## Other contract exports
+
+| Module | What it provides |
+| --- | --- |
+| `envelope.ts` | Zod schemas for the control header, `SCG_RequestInfo` and `SCG_ResponseInfo` (strict on documented fields, passing unknown keys through); `SCG_STATUS_CODES` with HTTP status, error type and retry flag; `formatMsgDateTime` / `parseMsgDateTime` for Singapore-time timestamps. |
+| `modules.ts` | `SMARTCMS_MODULES` (label, description, badge, status, service groups, "needs" chips, presets), `modulesForPreset('gp-starter')` and `SMARTCMS_BADGE_LABELS`. See [Modules & Gating](/cms/smartcms/modules). |
+| `vocab.ts` | Submission states, actor kinds (member, agent, job), gateway outcome kinds, business-error categories and entitlement environments (`off`, `uat`, `prod`). |
+| `codesets/` | 18 MHCP code tables and 6 HSAR ValueSet 7.3 sets, with date-aware `lookup(setId, code, onDate)` and `activeEntries(setId, onDate)`. |
+| `fhir-urls.ts` | `urn:gov:sg:nric` and Medbot's `http://medbot.me/fhir/.../smartcms-*` StructureDefinition, CodeSystem and NamingSystem URLs. |
+| `schema-version.ts` | `SCHEMA_VERSION`, the version of the knowledge base the contract was transcribed from (`kb-2026-09`). |
+| `dto/` | Request and response shapes for upcoming endpoints (CHAS verification, the claims queue, location settings). Skeletons only. |
+
+Run the package's tests with `pnpm --filter @repo/smartcms-contract test`.

@@ -17,3 +17,16 @@ Ordering is explicit: manual `queue_position` pins sort first, then physically p
 ## Doctor and nurse view
 
 Doctors and nurses get a read-only **Today's Patients** view scoped to the patients assigned to them — it refreshes automatically as reception checks people in, and links straight into that patient's encounters. Reassigning a patient or changing their room stays reception's job, not something a doctor or nurse can do from this view.
+
+## Self check-in and the patient's visit journey
+
+Patients can check themselves in from the [patient portal](/patient/visits) instead of queuing at the counter: either by location, when their phone shows they are at the clinic, or by entering the **arrival code**, the 6-digit code shown on the queue page for today's location. Self check-in follows the same path as a staff check-in: it stamps the arrival time and issues a queue ticket. The patient then sees their queue number and where to go next, live, on the portal.
+
+Patients can also be routed through an **Investigations** stage, alongside nurse, doctor and dispensary.
+
+Two actions on the queue table carry the visit through to the patient's portal. Both are for `admin` and `doctor`:
+
+- **Arrange session** offers the patient an AI session for this visit (**Financial counselling** or **Health education**), with a reason that gives the assistant a head start, e.g. "Newly diagnosed hypertension: walk through the medicine and what to watch for." The patient does not need to be enrolled in a Service; the session appears on their portal under the sessions their clinician arranged.
+- **Complete visit** finishes the visit and sends the outcome to the patient: **Findings** (written for the patient to read), **Medicines started** (name, dose and instructions) and **Next steps** (such as a follow-up appointment, a test result, advice or an AI session). The form is pre-drafted by AI from the visit, for the doctor to check and edit.
+
+A Service in the web app can follow the same queue from its [Workstation](/docs/services/workstation).

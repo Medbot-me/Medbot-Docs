@@ -1,0 +1,54 @@
+# Seeding Staff & Patients
+
+An admin can bring a clinic's staff and patients into an organisation **in bulk from one CSV file**, instead of adding them one at a time.
+
+## Where to find it
+
+- **Right after creating an organisation.** The second step of setup, **Add your team and patients** (`/organisations/<id>/seed?setup=1`), is this page. **Skip for now** goes to the CMS home screen.
+- **Any time later.** The **Seed data** card on [Organisation Settings](/cms/settings), with **Seed staff & patients**, opens the same page, along with the history of earlier runs.
+
+Only an **admin** of the organisation can use it.
+
+## Steps
+
+1. **Download template** to get a CSV with the expected header (and, on staging, sample rows).
+2. Fill it in, then **Choose CSV file**.
+3. Check the **preview**. Every row is validated by the server before anything is created, and problems are shown per row.
+4. Confirm, then click **Seed N people**.
+5. Watch progress row by row. When it finishes, the result table shows what was created, invited, skipped or failed, and can be downloaded. **Seed another file** starts again.
+
+**Re-running is safe.** People who already exist are skipped, and an existing account that seeding did not create is never touched.
+
+## The CSV file
+
+```csv
+record_type,role,first_name,last_name,email,phone,medical_license_number,gender,date_of_birth,identifier_type,identifier_value,address_line,postal_code
+staff,doctor,Marcus,Lim,marcus.lim@clinic.example,91110002,M90001A,,,,,,
+patient,,Jane,Tan,jane.tan@mail.example,91234567,,female,1980-04-12,NRIC,S1234567D,1 Orchard Road,238823
+```
+
+| Column | Notes |
+| --- | --- |
+| `record_type` | `staff` or `patient`. |
+| `role` | Staff only: a [clinic role](/cms/members-and-roles#roles). |
+| `first_name`, `last_name`, `email`, `phone` | Validated like the rest of the app. An email may appear only once in a file. |
+| `medical_license_number` | Required for doctors. |
+| `gender`, `date_of_birth` | Patients. |
+| `identifier_type`, `identifier_value` | Patients: `NRIC`, `FIN` or `PPN` (passport). NRIC and FIN are checksum-validated. |
+| `address_line`, `postal_code` | Patients. |
+
+A file can hold at most **200** rows. NRICs, dates of birth and licence numbers are kept only until each row is processed, then discarded from the seed records.
+
+## Staging and production behave differently
+
+The mode depends on the deployment the organisation lives on. Staging shows an amber **STAGING** banner.
+
+| | Staging ("mock") | Production ("invite") |
+| --- | --- | --- |
+| Accounts | Created straight away with a **shared password** you choose (at least 8 characters). It is shown once at the end. | Each person gets an **invitation email** and sets their own password. Nothing is created for anyone until they accept. |
+| Email addresses | Must be test addresses (`+clerk_test@example.com`), as in the template. | Test addresses are rejected. |
+| Confirmation | None. | Tick "I understand invitation emails will be sent to N real people." |
+| `superuser` rows | Allowed, for test accounts. | Skipped. |
+| Undoing a run | **Tear down** deletes every account, staff record and patient that run created. | Not available. |
+
+Patients are linked to the organisation through the same invitation flow as the [patient portal](/patient/invites), so a seeded patient on production receives a portal invitation.

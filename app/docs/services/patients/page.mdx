@@ -1,0 +1,58 @@
+# Patients & Cohort
+
+## The organisation's patient directory
+
+A service's patients come from **the organisation's own Medplum patient directory**, the same patients the clinic sees in the CMS. They are not owned by any one service, and the same patient can be in several services' cohorts.
+
+New patients are added to the organisation, not to a service. An organisation **admin** does this from `/patients` with **Add a patient** (first and last name, email, phone, date of birth, gender, ID type such as NRIC or passport, address and postal code), or in bulk by [seeding from a CSV file](/cms/seed-data).
+
+## Adding a patient to the cohort
+
+From the service's **Patients** tab (or the wizard's last step, or `/services/[serviceId]/board`), click **Add patient to cohort**:
+
+1. **Search by name** among the organisation's Medplum patients. Patients already in this cohort are not offered.
+2. Optionally add **Clinical notes**: referral letters, consult notes, discharge summaries. They are saved as the patient's **first encounter note** for this service, and their **patient context** is generated from it.
+3. Click **Add to cohort**.
+
+To take a patient out of the cohort, use the **X** on their row and confirm. They stay in the organisation's directory and in any other service.
+
+### What happens when a patient is added
+
+Configured on **Settings → On patient added**:
+
+- **Patient portal invite.** If the patient has no patient-portal account yet, Medbot creates a 7-day invite link for them. The link is **sent as part of the welcome message** ("You can also view your care plan and message your care team here: …"), so turn the welcome message on if new patients should receive it.
+- **Welcome message** ("Send a welcome message when a patient is added to the cohort"). Type the **Message** inline, with `{{variables}}` such as `{{firstName}}`, and choose the **Channel**: SMS, WhatsApp or **Patient portal**.
+- **Onboarding agent** ("Assess the patient with the onboarding agent"). Runs the chosen onboarding agent against the new patient. The default one raises a task only when the patient clearly does not belong in the service. See [Service Agents](/docs/services/agents#the-onboarding-agent).
+
+A toast confirms what happened.
+
+## The cohort roster
+
+The roster shows, per patient: **Pending tasks**, **Notes**, **Messages** and **Last message**, so you can see who needs attention without leaving the page. Click a name (or the eye icon) to open the patient's page.
+
+## A patient's page
+
+Each patient has a page per service, `/services/[serviceId]/patients/[patientId]`:
+
+- **Header**: name, gender, phone, age and address.
+- **Draft awaiting review**: pinned above the tabs when the [patient agent](/docs/services/patient-agent) has a reply waiting for approval.
+
+| Tab | What it holds |
+| --- | --- |
+| **General** | **Escalations** from the patient agent, **AI encounters** (see [AI Encounters & Kiosk](/docs/services/encounters)), and **Encounter notes**. |
+| **Patient Context** | The AI-maintained **agent context** for this patient, which can be edited or regenerated. |
+| **Messages** | The SMS/WhatsApp thread, and a box to send a message. |
+| **Appointments** | Upcoming and past bookings, and **Book for this patient**. See [Appointments](/docs/services/appointments). |
+| **Settings** | **Messaging settings**: who shares this patient's phone number and how their replies are routed. |
+
+### Encounter notes
+
+Encounter notes are the patient's running clinical record in this service. Click **New encounter note**, write it, and **Save note** (or **Update note** when editing). Every save **folds the note into the patient context**. Notes can be deleted individually.
+
+### Messages
+
+Type in "Send a message to this patient…", choose WhatsApp or SMS, and send. Each message in the thread is badged by who or what sent it: **Staff**, **Agent** (the patient agent), **Service agent**, **Emergency escalation**, **Encounter link** or **Encounter summary**.
+
+### Messaging settings
+
+Several patients can share one phone number, for example a parent messaging for two children. **Messaging settings** shows everyone reachable on this patient's number, which service their replies are currently routed to, and the recent routing changes. Staff can **Pin to this service** so replies from that number come here, or **Reset context** to let routing start afresh.

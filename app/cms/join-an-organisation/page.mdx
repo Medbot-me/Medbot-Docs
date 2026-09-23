@@ -4,39 +4,39 @@ A new hire who is not creating a clinic needs to get into an existing one. There
 
 ## Route 1: the admin invites you by email
 
-An admin adds the person from `/staff` with their email, name, role, and licence number where the role needs one. That files a membership waiting on that email address.
+An admin adds the person from `/staff` with their email, name, role, and, for clinical roles, their registration number. (Admins can also invite many people at once by [seeding from a CSV file](/cms/seed-data).) That files a membership waiting on that email address.
 
-When the person signs up with the same email, their account is linked to the waiting membership automatically and they land straight in the organisation. Nothing further is needed from either side.
+When the person signs up with the same email, their account is linked to the waiting membership automatically. Nothing further is needed from either side.
 
 ## Route 2: you request access with a join code
 
-For a hire who signs up before anyone invites them, or whose invite has not arrived yet.
+For a hire who signs up before anyone invites them, or whose invite has not arrived yet. It also works for someone who already belongs to one organisation and needs to join another.
 
-1. An admin gives them the organisation's **join code** — a short code from the [organisation's settings](/cms/settings#join-code).
-2. The new user signs in. With no membership anywhere, they land on the onboarding screen's **Request access to an organisation** form.
+1. An admin gives them the organisation's **join code**, a short code from the [organisation's settings](/cms/settings#join-code).
+2. The new user signs in and opens the **Request access to an organisation** form at `/onboarding`. It is linked from the [organisations screen](/cms) (where a user with no memberships lands), and from **Join with code** on the [welcome screen](/cms/switching#the-welcome-screen) and in the sidebar's organisation switcher.
 3. They enter the join code and submit.
 
 What happens next depends on what the backend finds:
 
 | Outcome | What the user sees |
 | --- | --- |
-| An invite for their email already exists at that organisation | **Access granted** — they are linked immediately and sent to the CMS home screen. |
-| They are already a member | Same — they are simply let in. |
-| A request from them is already pending | **Request already pending** — an administrator still needs to review it. |
-| Nothing matches | **Request submitted** — an administrator will review it. |
+| An invite for their email already exists at that organisation | **Access granted**: they are linked immediately and can enter the organisation. |
+| They are already a member | Same: they are simply let in. |
+| A request from them is already pending | **Request already pending**: an administrator still needs to review it. |
+| Nothing matches | **Request submitted**: an administrator will review it. |
 
 **Filing a request never grants access on its own.** It queues work for an admin.
 
 ### Why a join code is required
 
-Naming the organisation up front is deliberate. Blindly searching every organisation an email was ever invited to would silently link an account to a clinic the person never meant to reach — harmless when there was only ever one tenant, not harmless now.
+Naming the organisation up front is deliberate. Blindly searching every organisation an email was ever invited to would silently link an account to a clinic the person never meant to reach: harmless when there was only ever one tenant, not harmless now.
 
 ## Resolving requests (admins)
 
 Pending access requests appear above the staff table on `/staff`, each showing the requester's name, email, and any message they sent. An admin has two actions:
 
-- **Add as staff** — opens the add-staff dialog pre-filled from the request. Once the member is created, the request is cleared automatically.
-- **Deny** — dismisses the request without adding anyone.
+- **Add as staff** opens the add-staff dialog pre-filled from the request. Once the member is created, the request is cleared automatically.
+- **Deny** dismisses the request without adding anyone.
 
 Either way the request stops appearing in the pending list. Denying is not a block: the person can request again if it was a mistake.
 

@@ -1,0 +1,72 @@
+# Singapore Registration
+
+SmartCMS identifies the clinic, the business behind it, and the practitioner on every claim and notification. Medbot keeps that **regulatory identity** in three places: the organisation, each clinic location, and each staff member.
+
+All of it is entered by an organisation **admin**. The organisation and location fields appear only for organisations whose country is **Singapore**.
+
+## Organisation and locations
+
+On [Organisation Settings](/cms/settings), the **Singapore registration** card (`#registration`) holds "your ACRA and IRAS registration, and the MOH codes of each clinic location."
+
+### Organisation
+
+| Field | Format | Notes |
+| --- | --- | --- |
+| **UEN** | An ACRA Unique Entity Number: `53012345D`, `201912345K` or `T09LL0001B` | Otherwise refused with "uen must be an ACRA UEN, e.g. 201912345K." |
+| **GST-registered** | Checkbox | Ticking it reveals the next two fields. |
+| **GST registration number** | The UEN form, or IRAS's `M..-.......-.` form such as `MR-8500123-4` | Required while **GST-registered** is ticked: "A GST-registered organisation needs its GST registration number." |
+| **Registered from** | A date | When GST registration took effect. |
+
+Save with **Save registration**.
+
+### Clinic locations
+
+Under **Clinic locations**, each location has its own row and its own **Save**:
+
+| Field | Format | Notes |
+| --- | --- | --- |
+| **HE code** | 4 to 15 letters or digits, e.g. `9400001` | The MOH **Health Establishment** code. SmartCMS names the clinic by this code on every call, so a location without one cannot connect. It must be **unique across all of Medbot**: "Another clinic location already has this HE code." |
+| **Hospital Code** | 1 to 15 letters or digits | Only needed for **Medisave (CDMP)** claims. |
+
+All codes are stored without spaces and in upper case. Clearing a field removes the code.
+
+## Practitioners
+
+A staff member's registration number is part of their membership and is written to their Practitioner record in the organisation's Medplum. It is set in the **Add staff** dialog and corrected later with the **Edit registration** row action on `/staff`. Both are admin-only. See [Members & Roles](/cms/members-and-roles).
+
+| Role | Field label | Helper | Format | Example |
+| --- | --- | --- | --- | --- |
+| `doctor` | **Medical License Number** | MCR number | `M` + 4 or 5 digits + a letter | `M12345A` |
+| `nurse` | **Nursing Registration Number** | SNB number | 4 to 15 letters or digits | `N123456` |
+| `admin`, `receptionist` | None | | | |
+
+- The number is checked as you type: "MCR number must look like M12345A." / "SNB number must look like N123456."
+- Values are stored upper-case without spaces.
+- On the Practitioner record the number is written under `https://www.healthprofessionals.gov.sg/mcr` (doctors) or `https://www.healthprofessionals.gov.sg/snb` (nurses).
+
+### NRIC or FIN (doctors, Singapore only)
+
+For a doctor in a Singapore organisation, the **Add staff** dialog also asks for **NRIC or FIN (optional)**: "Needed before this doctor's SmartCMS claims can be submitted." SmartCMS uses it as the attending doctor's identifier on CHAS claims.
+
+- It is checksum-validated: "Enter a valid NRIC or FIN, e.g. S1234567D."
+- Once saved it is only ever shown **masked**, e.g. `*****567D`. **Edit registration** shows "On file: *****567D. Enter a new one to replace it."
+- It is written to the Practitioner record under `urn:gov:sg:nric`.
+
+## For administrators upgrading an existing deployment
+
+Before this change, every staff licence number was written to Medplum under a placeholder system, `http://hospital.org/mcr`, whatever the role. Medbot still reads the old system as an alias, but it should be migrated once per environment, from `apps/api`:
+
+```bash
+# dry run over every organisation: lists what would change
+pnpm db:migrate-practitioner-registrations:prod
+
+# one organisation only
+pnpm db:migrate-practitioner-registrations:prod --organisation <uuid>
+
+# write the changes
+pnpm db:migrate-practitioner-registrations:prod --apply
+```
+
+Use the `:dev` variant against a development database. The script needs `ORGANISATION_SECRETS_KEY` and the database settings, exactly like booting the API.
+
+It rewrites each Practitioner's identifier to the MCR or SNB system that matches the member's role. Stored numbers that fail the new format rules are **reported, never changed**; an admin corrects them with **Edit registration**.

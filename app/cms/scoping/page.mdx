@@ -7,7 +7,11 @@
 | Store | Holds | How organisations are separated |
 | --- | --- | --- |
 | **Medplum** (per organisation) | The clinical record: patients, practitioners, appointments, encounters, observations, immunisations, documents | A different Medplum server per organisation. Not a shared store with a filter on it. |
-| **Postgres** (shared) | Operational state Medplum does not model: queue tickets, clinic sessions, visits, rosters and attendance, locations and rooms, displays, inventory, order sets, booking requests, clinic-inbox threads | One database, every row carrying the organisation it belongs to — directly, or through its location or parent row |
+| **Postgres** (shared) | Operational state Medplum does not model: queue tickets, clinic sessions, visits, rosters and attendance, locations and rooms, displays, inventory, order sets, booking requests, clinic-inbox threads, notes claimed onto a patient chart, SMS/WhatsApp channel links, SmartCMS entitlements and message logs | One database, every row carrying the organisation it belongs to — directly, or through its location or parent row |
+
+## Which organisation a request is for
+
+The organisation a page renders is the one chosen on the [welcome screen](/cms/switching#the-welcome-screen) **for the current sign-in session**. The choice is bound to that session, so a second tab, a stale cookie from an earlier sign-in, or another person on the same browser cannot carry an organisation over. Whatever the choice, the server re-checks an active membership in that organisation on every request.
 
 ## Clinical data: the FHIR proxy
 
@@ -32,10 +36,22 @@ Consequences worth knowing:
 - **"Clinic-wide" means this clinic.** Listing clinic-wide order sets is filtered to the caller's organisation — a bare visibility check on a shared table would otherwise leak one clinic's sets into another's.
 - **Doctor eligibility in the queue** means an active `doctor` member *of this organisation*.
 - **Scheduled jobs**, like end-of-day attendance finalisation, run per organisation over each one's own locations and its own Medplum.
+- **Rosters and sessions check the organisation on every write.** A shift, a session's staff, or a room can only be created or changed at a location of your own organisation, with your own organisation's members.
+- **Stock, lots, and medication and vaccination movements** carry the organisation directly, and a request body can never set a record's organisation or its acting member.
+- **A note claimed onto a patient chart** belongs to the organisation that claimed it.
+- **SMS and WhatsApp channel links**, conversation context and message preferences can only be read or changed by staff of the organisation they belong to.
+
+## Country and module gating
+
+Some surfaces depend on the organisation's **country** and the national-service **modules** it subscribes to, on top of the user's role. Today that means the [SmartCMS](/cms/smartcms/modules) screens, **Claims** and **Reports**, which exist only for organisations in Singapore that subscribe to a matching module. An organisation without them gets **not found** for those pages, exactly as for any organisation you cannot see, and the API refuses the matching endpoints.
 
 ## Denials look like absence
 
 When you are not a member of an organisation, or your membership is inactive, requests for it answer **not found** rather than **forbidden**. The app deliberately does not confirm that an organisation exists to someone who cannot see it. A page that shows "not found" where you expected settings usually means the membership, not the URL.
+
+## Across the Medbot apps
+
+The web app's [Services](/docs/services) live in the same organisations: a Service belongs to one organisation, its care team is drawn from that organisation's members, and each member's role on a Service is their role in the organisation.
 
 ## What is still single-organisation
 

@@ -1,0 +1,76 @@
+# Introduction
+
+## What is a Service?
+
+A **Service** is a named care pathway run by an organisation in the Medbot web app. It is the container for everything needed to run one: a **care team** drawn from the organisation's members, a **cohort** of patients, **service context** and a **content library** that every AI agent draws on, **service agents**, AI **encounters** patients complete on the patient portal, and a **Workstation** for running the service's clinic day.
+
+Examples of a service: "Colorectal SOC: Referral to Discharge", "Post-op Cardiac Rehab", "Diabetes Management: Primary Care".
+
+> **Services were called Care Programs.** The feature was renamed and reworked: services now use the organisation's own roles instead of care roles, patients come from the organisation's Medplum, and old `/programs/...` links no longer work. See [What changed](#what-changed-from-care-programs).
+
+Services belong to an organisation. With an organisation selected in the web app, find them under **Services** in the sidebar, or go to `/services`.
+
+## Key concepts
+
+| Concept | What it is |
+| --- | --- |
+| **Service** | The top-level container: name, specialty, setting, and status (`draft` or `published`). |
+| **Care team** | The organisation members who staff the service. Each joins with the **role they already hold in the organisation** (Admin, Doctor, Nurse or Receptionist). There are no service-specific roles. |
+| **Coverage** | Who is covering a role right now (for a rota with leave), so the platform can notify "whoever is the covering Nurse today" rather than a named person. |
+| **Cohort** | The patients enrolled in this service, taken from the organisation's Medplum patient directory. A patient can be in several services' cohorts. |
+| **Service context** | Plain-language description of how the service runs, who does what and when to escalate. Given to every agent run. |
+| **Content library** | Reference material and counselling protocols the service's agents and AI encounters can draw on. |
+| **Service agent** | An AI agent scoped to this service, with an **audience** (Staff, Patient or Onboarding), tools and markdown instructions. |
+| **Onboarding agent** | Created with every service. Runs automatically when a patient is added to the cohort and flags patients who look out of scope. |
+| **Patient agent** | An optional Patient-audience agent that patients can text over SMS or WhatsApp about appointments, education and symptoms. |
+| **AI encounter** | A structured conversation (history taking, health education or financial counselling) that the patient completes on the patient portal, or on a clinic device in the in-clinic **kiosk**. |
+| **Patient context** | An AI-maintained briefing per patient, kept current from encounter notes, that every agent is given. |
+| **Workstation** | The service's view of today's clinic queue: who has arrived, where each patient is in their visit journey, and the clinical consult screen. |
+
+## What you can do with a Service
+
+1. **Set it up** through a guided wizard: care team, agent context, agents, settings, content library, patients.
+2. **Manage a cohort**: add patients from the organisation's directory (they get a patient-portal invite), track tasks, notes and messages per patient, and open any patient's page.
+3. **Author and run service agents** for staff, for patients, or for onboarding, on demand or on a schedule.
+4. **Send AI encounters** to patients (history taking, health education, financial counselling), or hand a clinic device to the patient for an in-clinic text or voice encounter.
+5. **Record a consult** for up to an hour and review an AI-drafted clinical note section by section before adding it.
+6. **Run the clinic day** from the Workstation: see who has arrived, move patients through their visit journey, and run the consult.
+7. **Turn on a patient-facing SMS/WhatsApp agent** with safety screening and a review-before-send mode.
+8. **Run a lightweight appointment book** against the care team's published availability, with optional reminders.
+
+## Who can see a service
+
+Every member of the organisation can see the list of its services, and **any member can create one**. Opening a service is limited to:
+
+- its **owner** (the person who created it)
+- active members of its **care team**
+- the organisation's **admins** (and `superuser` accounts)
+- Medbot platform administrators
+
+Anyone else gets "not found". The owner edits the service's details, finishes its setup, and can delete it.
+
+## What changed from Care Programs
+
+| Before | Now |
+| --- | --- |
+| Care Programs at `/programs` | Services at `/services`. Old `/programs` links do not redirect. |
+| Six default care roles (Consultant, Clinic nurse, PSA, Dietitian, Care coordinator, Pharmacist) and a special `Patient` role, managed per program | No service roles. Each care team member's role is their organisation role. |
+| Agents scoped to a care role | Agents have an **audience**: Staff, Patient or Onboarding. |
+| **Workflow** tab and wizard step | **Service context** tab (the **Agent context** wizard step). |
+| Platform-wide patient directory with add/edit/delete | The organisation's Medplum patients, managed from `/patients` by admins. |
+| Welcome message authored in the Content Library | Welcome message typed inline, with `{{variables}}`. |
+| Freeform "Other skills" on agents | Removed. Old tags show as **Legacy tag** badges. |
+| Sandbox page | Removed. Use **Preview chat** on a patient agent. |
+| | New: content library, AI encounters and kiosk, encounter recording, onboarding agent, channel and reminder settings, Workstation. |
+
+## Where to go next
+
+- New to Services? Start with [Creating a Service](/docs/services/getting-started).
+- Staffing it: [Care Team](/docs/services/care-team).
+- Managing patients: [Patients & Cohort](/docs/services/patients).
+- Telling agents how the service runs: [Service Context & Content](/docs/services/context-and-content).
+- Building AI agents: [Service Agents](/docs/services/agents) and [Patient Agent](/docs/services/patient-agent).
+- Structured conversations with patients: [AI Encounters & Kiosk](/docs/services/encounters).
+- Recording consults: [Encounter Recording](/docs/services/encounter-recording).
+- Running the clinic day: [Workstation](/docs/services/workstation).
+- Booking: [Appointments](/docs/services/appointments).

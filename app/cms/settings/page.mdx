@@ -2,30 +2,53 @@
 
 Settings for one organisation live at `/organisations/[id]/settings`, reachable from the **Settings** link beside any organisation you administer on the [organisations screen](/cms).
 
-Only an **administrator of that organisation** can open it. A non-admin member sees a message saying so; a non-member gets a plain "not found" — the app does not distinguish an organisation you cannot see from one that does not exist.
+Only an **administrator of that organisation** can open it. A non-admin member sees "Only an administrator of &lt;name&gt; can manage its settings"; a non-member gets a plain "not found". The app does not distinguish an organisation you cannot see from one that does not exist.
 
 The page works on the organisation named in its own URL rather than the one you currently have selected, so an admin of several can manage any of them without [switching](/cms/switching) first.
 
+The page has these sections, in order:
+
 ## General
 
-- **Name** — the clinic's display name, shown in the switcher, on the organisations list, and anywhere the organisation is named.
-- **Slug** — its short identifier, unique across Medbot.
-- **Active / Inactive** — shown as a badge. An inactive organisation is not selectable and its members cannot act in it.
+- **Name**: the clinic's display name, shown in the switcher, on the organisations list, and anywhere the organisation is named.
+- **Slug**: its short identifier, unique across Medbot.
+- **Country**: decides which [integrations](#integrations) are available.
+- **Time zone**: the organisation's local time zone.
+- **Active / Inactive**: shown as a badge. An inactive organisation is not selectable and its members cannot act in it.
 
-**Save changes** applies both fields together and is disabled until something actually changes.
+**Save changes** applies all four fields together and is disabled until something actually changes.
+
+A Singapore organisation with SmartCMS modules cannot change its country until the modules are cleared: "Clear the SmartCMS modules under Integrations before changing the country."
+
+## Integrations
+
+Country-specific national services, at `#integrations`.
+
+- **Singapore:** the card is titled **Singapore integrations**: "The SmartCMS services this clinic uses. Each one also needs Synapxe's approval for every location before it connects." Pick modules in the module picker (or **Use GP starter**) and click **Save integrations**. See [Modules & Gating](/cms/smartcms/modules).
+- **Anywhere else:** "No country-specific integrations are available for &lt;country&gt;."
+
+## Singapore registration
+
+Singapore organisations only, at `#registration`: the organisation's **UEN** and **GST** registration, saved with **Save registration**, and for each clinic location its **HE code** and **Hospital Code**, each saved with its own **Save**. See [Singapore Registration](/cms/smartcms/registration) for the formats.
 
 ## Join code
 
 The short code an admin hands to a new hire so they can request access before being invited by email. The section shows the current code with a **Copy** button.
 
-**Regenerate join code** issues a new one. The previous code stops working immediately — use it if a code has been shared too widely or has leaked. Regenerating does not affect anyone who has already joined.
+**Regenerate join code** issues a new one. The previous code stops working immediately; use it if a code has been shared too widely or has leaked. Regenerating does not affect anyone who has already joined.
 
 The full flow around this code is described in [Join an Organisation](/cms/join-an-organisation).
 
+## Seed data
+
+"Add staff and patients in bulk from a CSV file. Safe to repeat: people who already exist are skipped." **Seed staff & patients** opens the seeding page. See [Seeding Staff & Patients](/cms/seed-data).
+
 ## Medplum credentials
 
-Rotating and verifying the organisation's connection to its own Medplum server. This section has its own page: [Medplum Credentials](/cms/medplum-credentials).
+Managing the organisation's connection to its own Medplum server. This section has its own page: [Medplum Credentials](/cms/medplum-credentials). For a [Medbot-hosted organisation](/cms/hosted-organisations) it only shows the base URL and a **Verify connection** button, because Medbot manages the credentials.
 
 ## A note on enforcement
 
 Every action on this page is re-checked server-side against your membership and role **in that specific organisation**, independently of anything the page itself decided. The page's gating is there to show you a helpful message, not to be the security boundary.
+
+The API also accepts only the fields each action declares. A request that tries to slip in anything else, such as a join code on a general update or a role on a user profile, is rejected outright rather than silently applied.

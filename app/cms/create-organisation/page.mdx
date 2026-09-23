@@ -1,8 +1,10 @@
 # Create an Organisation
 
-Any signed-in user can create an organisation, at any time — whether it is their first or their fifth. The creator becomes its first **administrator** automatically.
+Any signed-in user can create an organisation at any time, whether it is their first or their fifth. The creator becomes its first **administrator** automatically.
 
-Reach the form from `/organisations/new`, from the **Create organisation** button on the [organisations screen](/cms), or from the link under the join-code form on the onboarding screen.
+Reach the form from `/organisations/new`, from **Create organisation** on the [organisations screen](/cms), on the [welcome screen](/cms/switching#the-welcome-screen) or in the sidebar's organisation switcher.
+
+> **No Medplum server?** Use the link under the form, "Don't have a Medplum server? Request a Medbot-hosted one", and Medbot will set one up for you. See [Medbot-Hosted Organisations](/cms/hosted-organisations).
 
 ## Before you start
 
@@ -14,32 +16,59 @@ You need an OAuth client on the Medplum server this clinic will use:
 
 These go into the form below, not into an environment variable. The CMS holds no Medplum credentials of its own.
 
-## The form
+## The wizard
+
+The form is a short wizard, headed "Step N of M" with the step's name. The number of steps depends on the country.
+
+### Step 1: Organisation
 
 | Field | Required | Notes |
 | --- | --- | --- |
 | **Organisation name** | Yes | The clinic's name, e.g. "Orchard Clinic". |
+| **Country** | Yes | Guessed from your browser, falling back to Singapore. Decides which [country-specific integrations](/cms/settings#integrations) are offered. |
+| **Time zone** | No | Guessed from your browser. |
+
+**Next** stays disabled until the name and country are set.
+
+### Step 2: Singapore integrations (Singapore only)
+
+Shown only when the country is Singapore. Choose the [SmartCMS modules](/cms/smartcms/modules) the clinic intends to use, or click **Use GP starter** for the usual general-practice set (CHAS, Medisave, National Immunisation Registry, Disease notification). **Skip for now** leaves them empty; they can be chosen later in settings.
+
+Choosing a module does not connect anything by itself: each clinic location still needs its HE code and Synapxe's approval.
+
+### Step 3: Medplum server
+
+| Field | Required | Notes |
+| --- | --- | --- |
 | **Medplum base URL** | No | Defaults to `https://api.medplum.com`. Set it for a self-hosted Medplum. |
-| **Medplum client ID** | Yes | From step 2 above. |
-| **Medplum client secret** | Yes | From step 2 above. Write-only — it is never shown back to you. |
+| **Medplum client ID** | Yes | From step 2 of "Before you start". |
+| **Medplum client secret** | Yes | Write-only: it is never shown back to you. |
+
+Click **Create organisation**.
 
 ## What happens on submit
 
-The credentials are **validated against Medplum before anything is created** — a bad client id or secret fails the form rather than leaving a half-built organisation behind. Once they check out, the backend creates, in one transaction:
+The credentials are **validated against Medplum before anything is created**, so a bad client id or secret fails the form rather than leaving a half-built organisation behind. Once they check out, the backend creates, in one transaction:
 
-- the **organisation** itself, with a generated slug and join code
+- the **organisation** itself, with a generated slug and join code, its country, time zone and any SmartCMS modules
 - the creator's **membership** as `admin`, with their name and email
 - the **encrypted Medplum credentials**
 - a default **clinic location**, "Main Clinic"
 
 It then creates the admin's own Practitioner record on that organisation's Medplum and stores its id. If that step fails, the organisation is deactivated and the error surfaced rather than leaving an admin who cannot act clinically.
 
+The API refuses SmartCMS modules for any country other than Singapore.
+
 ## After creating
 
-The new organisation becomes the current one and you land on the CMS home screen with it selected. From there:
+The new organisation becomes the current one and you land on **Add your team and patients** (`/organisations/<id>/seed?setup=1`), where you can bring in staff and patients from a CSV file. See [Seeding Staff & Patients](/cms/seed-data). **Skip for now** takes you to the CMS home screen instead.
 
-- add the rest of the staff from `/staff` — see [Members & Roles](/cms/members-and-roles)
-- hand out the join code to new hires — see [Join an Organisation](/cms/join-an-organisation)
+If you chose any Singapore integrations, the same page shows a **Connect SmartCMS** card with a **Review integrations** link: each location needs its HE code and Synapxe's approval before it connects. See [Singapore Registration](/cms/smartcms/registration).
+
+From there:
+
+- add the rest of the staff from `/staff`: see [Members & Roles](/cms/members-and-roles)
+- hand out the join code to new hires: see [Join an Organisation](/cms/join-an-organisation)
 - configure locations, rooms and everything else exactly as [Getting Started](/docs/medbot-cms/getting-started) describes
 
 There is no manual role edit anywhere in the app and no separate "make me an admin" step. The first admin is whoever created the organisation; every admin after that is one an existing admin added.
