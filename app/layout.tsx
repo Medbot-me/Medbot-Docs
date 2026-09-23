@@ -42,7 +42,7 @@ export default async function RootLayout({
         <Layout
           navbar={navbar}
           pageMap={pageMap}
-          docsRepositoryBase="https://github.com/shuding/nextra/tree/main/docs"
+          docsRepositoryBase="https://github.com/Medbot-me/Medbot-Docs/tree/main"
           footer={footer}
           sidebar={{ autoCollapse: false }}
           // ... Your additional layout options
