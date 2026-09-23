@@ -20,7 +20,7 @@ A patient can also connect themselves without any invite, by naming the clinic a
 
 ### A patient with no chart yet
 
-Use **Invite to self-register** from `/patients` instead — the patient fills in their own details, which creates the chart, and their account links itself as soon as it exists. See [Patient Records & Consent](/docs/medbot-cms/patient-records).
+Use **Invite to self-register** from `/patients` instead — the patient fills in their own details, which creates the chart, and their account links itself as soon as it exists. See [Patient Records & Consent](/cms/patient-records).
 
 ### A video-consult attendee
 
@@ -30,8 +30,8 @@ A teleconsult **join link** needs no account at all: it is issued from the appoi
 
 | The patient does this | Staff see it here |
 | --- | --- |
-| Requests an appointment | [Appointments → Booking requests](/docs/medbot-cms/appointments#responding-to-portal-booking-requests) — accept, reject, or propose another time; the patient answers a counter-proposal from their own request card |
-| Messages the clinic | [Clinic Messaging](/docs/medbot-cms/messaging) — one thread per patient, answered by `admin` and `receptionist` |
+| Requests an appointment | [Appointments → Booking requests](/cms/appointments#responding-to-portal-booking-requests) — accept, reject, or propose another time; the patient answers a counter-proposal from their own request card |
+| Messages the clinic | [Clinic Messaging](/cms/messaging) — one thread per patient, answered by `admin` and `receptionist` |
 | Raises a red flag through Ask Medbot | The same clinic inbox. Medbot escalates to staff rather than answering; when the patient has several clinics connected, every one of them gets it |
 | Reads a result | Nothing to do — but note that what the portal releases depends on your sign-off, see below |
 | Updates contact details or consent | The patient's own chart and consent record |
@@ -44,7 +44,7 @@ The portal never shows a patient a verdict the clinic has not released:
 - a **critical** flag is withheld while the clinic is still recalling the patient, so they hear it from a clinician rather than from a badge;
 - **"What this means"** is the clinician's own patient-facing note — staff shorthand is never shown to the patient.
 
-See [Diagnostic Results](/docs/medbot-cms/diagnostic-results) for the staff side of sign-off and recall.
+See [Diagnostic Results](/cms/diagnostic-results) for the staff side of sign-off and recall.
 
 ## What changed
 
@@ -60,5 +60,5 @@ Three differences matter for staff who knew the old `/portal`:
 
 - The patient's own view, screen by screen: [Patient](/patient)
 - Getting connected, from the patient's side: [Getting Started](/patient/getting-started) and [Connected Clinics](/patient/connected-clinics)
-- The staff side of portal conversations: [Clinic Messaging](/docs/medbot-cms/messaging)
-- The staff side of portal booking: [Appointments](/docs/medbot-cms/appointments)
+- The staff side of portal conversations: [Clinic Messaging](/cms/messaging)
+- The staff side of portal booking: [Appointments](/cms/appointments)

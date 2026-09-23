@@ -4,7 +4,7 @@ The unauthenticated `/display/{token}` route is built for wall-mounted lobby and
 
 ## Creating a display
 
-Admins manage display devices from the **Displays** panel on [Session Setup](/docs/medbot-cms/session-setup). A display is scoped to one clinic location and is either a **waiting-room board** or a **room-door screen** — room-door displays must be assigned to one active room.
+Admins manage display devices from the **Displays** panel on [Session Setup](/cms/session-setup). A display is scoped to one clinic location and is either a **waiting-room board** or a **room-door screen** — room-door displays must be assigned to one active room.
 
 Creating a display issues its `/display/{token}` URL exactly once; only a SHA-256 hash of the token is stored server-side, so a lost URL can't be recovered — revoke it and create a new device instead.
 

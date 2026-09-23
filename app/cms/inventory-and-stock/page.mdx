@@ -4,11 +4,11 @@ Three admin-managed catalogs back the clinic's clinical and billing workflows, p
 
 ## Billable catalog (`/catalog`)
 
-`ChargeItemDefinition` records are the clinic's billable line items, used when [billing](/docs/medbot-cms/billing) a visit. `admin` and `receptionist` can browse the catalog; only `admin` can create, edit, or delete a definition. The same page also lists the vaccination services that reference these charge items — see [Vaccinations](/docs/medbot-cms/vaccinations#recording-a-vaccination).
+`ChargeItemDefinition` records are the clinic's billable line items, used when [billing](/cms/billing) a visit. `admin` and `receptionist` can browse the catalog; only `admin` can create, edit, or delete a definition. The same page also lists the vaccination services that reference these charge items — see [Vaccinations](/cms/vaccinations#recording-a-vaccination).
 
 ## Clinical services and consumables (`/services`)
 
-Clinical service definitions and non-medication consumables — devices and substances — are visible to `admin`, `doctor`, and `nurse`; only `admin` can create, edit, or retire an entry. Doctors and nurses reference these when placing [orders](/docs/medbot-cms/orders-and-order-sets), but can't change the catalog itself.
+Clinical service definitions and non-medication consumables — devices and substances — are visible to `admin`, `doctor`, and `nurse`; only `admin` can create, edit, or retire an entry. Doctors and nurses reference these when placing [orders](/cms/orders-and-order-sets), but can't change the catalog itself.
 
 ## Inventory (`/inventory`)
 

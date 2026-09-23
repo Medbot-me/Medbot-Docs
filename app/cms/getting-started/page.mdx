@@ -51,7 +51,7 @@ pnpm run dev
 
 ## 6. Create your organisation
 
-There is no manual admin bootstrap. Sign in, then [create an organisation](/cms/create-organisation) with your Medplum client ID and secret: you become its first `admin`. From there, add staff one at a time from `/staff` or in bulk from a [CSV file](/cms/seed-data). See [Roles & Access](/docs/medbot-cms/roles-and-access) for what each role can do.
+There is no manual admin bootstrap. Sign in, then [create an organisation](/cms/create-organisation) with your Medplum client ID and secret: you become its first `admin`. From there, add staff one at a time from `/staff` or in bulk from a [CSV file](/cms/seed-data). See [Roles & Access](/cms/roles-and-permissions) for what each role can do.
 
 ## Configure the Clerk webhook
 
@@ -64,7 +64,7 @@ The Clerk webhook synchronizes newly created users after they accept an invitati
 ## Verify setup
 
 - Sign in as the organisation's `admin` and choose the organisation on the [welcome screen](/cms/switching#the-welcome-screen).
-- Navigate to [`/staff`](/docs/medbot-cms/staff-management) to register practitioners, `/patients` to register patients.
+- Navigate to [`/staff`](/cms/staff) to register practitioners, `/patients` to register patients.
 - Confirm registration records optional contact details and communication-consent combinations; open the patient chart to update either as admin, doctor, and nurse (billing panels stay unavailable to doctor/nurse).
 - Navigate to `/appointments`: view, book, edit, and cancel a booking; confirm a closed appointment can't be edited or cancelled.
 - Navigate to `/session`: select a location, mark today's active staff, and configure rooms and display devices.
