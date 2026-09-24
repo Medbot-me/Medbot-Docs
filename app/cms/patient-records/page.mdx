@@ -40,7 +40,7 @@ _The Register patient form_
 Rules the form enforces:
 
 - The identifier must match the selected type. A wrong check digit shows "Identifier doesn't match the selected type (NRIC)." and keeps **Register patient** disabled.
-- A patient with the same identifier can exist only once per clinic. Otherwise you see "A patient with this identifier already exists in this clinic." Names are not compared. Search by name first to avoid a second record for the same person.
+- A patient with the same identifier can exist only once per clinic. Otherwise you see "A patient with this identifier already exists in this clinic," and the message notes that the patient may be archived and points you to the clinic's medical record system to view or restore them. Names are not compared. Search by name first (including the **Inactive** filter) to avoid a second record for the same person. If a matching patient is inactive, restore the existing record rather than registering a new one.
 - A Singapore mobile number has 8 digits and starts with 8 or 9. Other numbers start with a plus sign and have 8 to 15 digits. A number with seven or more zeros in a row is refused.
 - If consent could not be saved, the patient is still registered. A warning tells you to record consent again from the chart.
 
@@ -115,7 +115,7 @@ _The Patient-reported intake card_
 1. On the Patients page, select the actions menu (three dots) on the patient's row.
 2. Select **Deactivate patient**, then **Deactivate**.
 
-The patient's history stays intact and the status becomes **Inactive**. An inactive patient can no longer be selected for care: **Start Encounter** is disabled. Use the **Inactive** filter to find them. The app has no control to reactivate a patient.
+The patient's history stays intact and the status becomes **Inactive**. An inactive patient can no longer be selected for care: **Start Encounter** is disabled. Use the **Inactive** filter to find them. The CMS has no button to reactivate a patient; if someone was deactivated in error, restore the record in the clinic's medical record system rather than registering them again (which the app refuses as a duplicate).
 
 <ImageZoom src="/images/cms/patient-records/06-deactivate-patient.png" alt="The Deactivate patient record confirmation dialog" />
 _The deactivate confirmation_
