@@ -1,15 +1,58 @@
-# Catalog & Inventory
+# Inventory & Stock
 
-Three admin-managed catalogs back the clinic's clinical and billing workflows, plus the physical stock records that track what's actually on hand.
+Inventory tracks what is physically on hand: each lot's batch, quantity, location, and expiry. Stock gives a one-page overview of every stocked item. Find them at **Pharmacy → Inventory** (`/inventory`) and **Pharmacy → Stock** (`/stock`). Stocked items are medications from the [Formulary](/cms/formulary) and devices and substances from [Services & Consumables](/cms/services-and-consumables).
 
-## Billable catalog (`/catalog`)
+## Who can do this
 
-`ChargeItemDefinition` records are the clinic's billable line items, used when [billing](/cms/billing) a visit. `admin` and `receptionist` can browse the catalog; only `admin` can create, edit, or delete a definition. The same page also lists the vaccination services that reference these charge items — see [Vaccinations](/cms/vaccinations#recording-a-vaccination).
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| See inventory lots and the stock overview | Yes | No | Yes | Yes |
+| Receive stock (log a delivery) | Yes | No | No | Yes |
+| Adjust a lot's quantity | Yes | No | No | Yes |
+| Create, edit, delete, or import lots | Yes | No | No | No |
+| Set a reorder threshold | Yes | No | No | No |
 
-## Clinical services and consumables (`/services`)
+Doctors see the lots and filters only. Nurses also see **Receive stock** and can use **Adjust quantity** from a row's menu. Receptionists cannot open either page.
 
-Clinical service definitions and non-medication consumables — devices and substances — are visible to `admin`, `doctor`, and `nurse`; only `admin` can create, edit, or retire an entry. Doctors and nurses reference these when placing [orders](/cms/orders-and-order-sets), but can't change the catalog itself.
+## Receiving stock
 
-## Inventory (`/inventory`)
+1. Select **Receive stock**.
+2. For each item in the delivery, enter the **Catalog slug**, choose the **Location**, and enter the **Lot #**. Add the **Batch**, **Expiry** date, and **Qty**.
+3. Select **Add line** for more items.
+4. Select **Receive** followed by the number of lines. Each line becomes a new lot, or adds to an existing lot, at that location, and is recorded as a received movement.
 
-Inventory tracks physical stock — lot, batch, quantity, location, and expiry — as records distinct from the catalogs above. `admin`, `doctor`, and `nurse` can view stock; only `admin` can create or edit an inventory record; `admin` and `nurse` can adjust an existing record's quantity (receiving a delivery, or correcting a count) with a reason, and every adjustment is kept in the record's history. Setting or changing a reorder policy is `admin`-only.
+## Adjusting a quantity
+
+1. Open the lot's menu (**Open menu**) and select **Adjust quantity**. The dialog shows the lot number and how many are in stock.
+2. Enter the **Change** (positive to add, negative to remove).
+3. Choose a **Reason**: **Stock-take correction**, **Received (manual correction)**, **Returned**, or **Expired / write-off**.
+4. Select **Save adjustment**.
+
+An adjustment cannot take a lot below zero. For example removing 200 from 100 shows "Only 100 unit(s) in stock; this adjustment would take the lot negative." Every adjustment is recorded in the lot's movement history with its reason.
+
+## Creating, editing, and importing lots
+
+Clinic Admins can select **New Inventory** to add one lot by hand (medication, location, lot number, batch, expiry, quantity, and package details), use **Edit** or **Delete** on a lot's menu, or select **Import CSV** to load many lots. Import matches rows to existing stock by stock item, location, and lot number. To change a quantity on an existing lot, use **Adjust quantity** so the history stays correct.
+
+## Finding lots
+
+Select **Filters** to narrow by catalog item, slug, location, lot or batch number, quantity range, or expiry dates, and to change the sort order. Then select **Search**, or **Reset** to clear.
+
+## Stock overview
+
+**Stock overview** lists every stocked item across all locations, with items that need attention first. Each row shows the **Type**, **Total qty**, **Soonest expiry**, and **Price**, with badges:
+
+| Badge | What it means |
+| --- | --- |
+| **Low Stock** | The total quantity is at or below the item's reorder threshold. |
+| **Expired** | The soonest expiry date has passed. |
+| **Expiring** | The soonest expiry is within the next 30 days. |
+| **Unpriced** | The item has no price in the catalog yet. |
+
+A Clinic Admin can select **Set reorder threshold for** an item and enter a number. The item is flagged low stock whenever its total across every location falls to or below that number. The row then reads, for example, "95 / reorder at 200". Select **Rebuild price cache** after changing prices to refresh the **Price** column.
+
+## Related
+
+- [Formulary](/cms/formulary)
+- [Billable Catalog](/cms/billable-catalog): prices for stocked items.
+- [Vaccinations](/cms/vaccinations): vaccine doses draw from stock.

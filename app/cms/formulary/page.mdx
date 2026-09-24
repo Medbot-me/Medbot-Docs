@@ -1,11 +1,39 @@
 # Formulary
 
-`/formulary` stores the clinic's medication catalog as FHIR `MedicationKnowledge` resources in Medplum.
+The formulary is the clinic's list of medications. Find it at **Pharmacy → Formulary** (`/formulary`). Each entry is a medication from RxNorm, the standard US drug naming system, so prescribing and stock use the same names and codes.
 
-## Adding medications
+## Who can do this
 
-Admins can search [RxNav](https://mor.nlm.nih.gov/RxNav/) for generic drugs, brand-name drugs, and packs, then add a result with its dose form, manufacturer reference, synonyms, catalog slug, and dispensable unit. A coded RxNorm concept can be added only once — no duplicate entries for the same code.
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| Search and view medications | Yes | No | View only | View only |
+| Add, edit, retire, or delete a medication | Yes | No | No | No |
 
-## Managing entries
+Doctors and nurses see the search box and the status filter only. Receptionists cannot open the page.
 
-Admins can edit medication details without changing the RxNorm code or lifecycle status. Row actions activate or retire an entry, mark it entered-in-error, or permanently delete it after confirmation. Doctors and nurses have read-only access. The table supports medication text search, status filtering, and pagination.
+## Finding a medication
+
+Type in **Search medications…** or use the status list (**All statuses**, **Active**, **Inactive**, **Entered in error**). The table shows **Medication**, **Code** (the RxNorm code), **Dose form**, and **Status**. Select a row to open its detail page with the name, code, status, dose form, manufacturer, and synonyms.
+
+## Adding a medication
+
+1. Select **Add medication**.
+2. Type at least three characters of a generic or brand name, for example lisinopril. Results come from the National Library of Medicine's RxNav service and show the code as **RxCUI**.
+3. Select a result.
+4. Under **Medication details**, check the **Name** and **Catalog Slug** (the lookup key, filled in for you) and enter the **Dispensable Unit** (for example tablet, capsule, or mL), which is required. Optionally set **Status**, **Dose form**, **Manufacturer reference**, and **Synonyms** (one per line).
+5. Select **Create medication**.
+
+A coded medication can be added only once. Adding it again is refused with a message that a medication with that code already exists.
+
+## Changing a medication
+
+Open the row's actions menu.
+
+- **Edit** changes details such as the name or dose form. The code cannot be changed.
+- **Retire** marks the medication inactive so it is no longer offered. **Set Active** brings it back.
+- **Delete** removes it after you confirm **Delete item?** ("This action cannot be undone."). A medication with inventory lots on record cannot be deleted: "Retire it instead to keep movement history readable."
+
+## Related
+
+- [Inventory & Stock](/cms/inventory-and-stock): the physical stock of each medication.
+- [Orders & Order Sets](/cms/orders-and-order-sets): where clinicians choose from the formulary.

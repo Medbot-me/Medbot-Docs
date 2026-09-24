@@ -1,0 +1,41 @@
+# Services & Consumables
+
+Services are the clinical procedures the clinic offers. Devices and substances are the non-medication supplies it stocks. Find them at **Billing → Services** (`/services`) and **Billing → Devices & substances** (`/consumables`). Doctors and nurses pick from these lists when they place [orders](/cms/orders-and-order-sets).
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| See services, devices, and substances | Yes | No | Yes | Yes |
+| Add, edit, price, retire, or delete an entry | Yes | No | No | No |
+
+Doctors and nurses see the lists without any buttons. Receptionists cannot open either page.
+
+## Services
+
+The **Services** table shows **Service**, **Slug**, **Status**, and **Price**. A service with no price shows **Unpriced**.
+
+1. Select **Add service**.
+2. Enter a **Name** and a **Catalog slug** (lowercase letters, numbers, and hyphens; it fills in from the name). Add a SNOMED code, a description, and an expected consumable if you want. SNOMED is a standard clinical coding system.
+3. Select **Create service**.
+
+Use the row's actions menu (**Actions for** the service) to choose:
+
+- **Edit** to change the name, description, or expected consumable.
+- **Set price** (or **Update price** once priced) to open the billable definition for that service with its slug filled in. See [Billable Catalog](/cms/billable-catalog).
+- **Retire** to take a service out of use. A retired service shows **Set Active** in the same menu.
+
+## Devices and substances
+
+The **Devices & substances** table shows **Item**, **Slug**, **Type**, **Status**, and **Price**. Use **Search devices and substances…** to filter.
+
+1. Select **Add device** or **Add substance**.
+2. Enter a **Name**, a **Catalog slug**, and the **Dispensable unit** (for example pack, unit, or box). A SNOMED code is optional, as is a model number for a device or a description for a substance.
+3. Select **Create device** or **Create substance**.
+
+The actions menu offers **Edit**, **Retire** (**Set Active** to restore), and **Delete**. An item that has inventory lots on record cannot be deleted. The message reads "This device has inventory lots on record and cannot be deleted. Retire it instead to keep movement history readable." The same rule applies to substances. Stock levels and receiving are on [Inventory & Stock](/cms/inventory-and-stock).
+
+## Related
+
+- [Inventory & Stock](/cms/inventory-and-stock): stock for devices and substances.
+- [Formulary](/cms/formulary): medications, which have their own list.

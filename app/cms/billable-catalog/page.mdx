@@ -1,0 +1,44 @@
+# Billable Catalog
+
+The billable catalog is the list of everything the clinic can charge for, with its price. Find it at **Billing → Catalog** (`/catalog`). Each entry is a charge item definition. Billing draws its line items from this list.
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| See the catalog | Yes | Yes | No | No |
+| Create, import, or delete a charge item definition | Yes | No | No | No |
+| Manage vaccination services | Yes | No | No | No |
+
+Receptionists see the tables without the **New definition** and **Import CSV** buttons. Doctors and nurses cannot open the page.
+
+## Reading the table
+
+The table shows **Title**, **Identifier**, **Status**, **Code**, **Price**, **Version**, and **Last Updated**. Use the search box to find an entry by title. Prices read like "80.00 USD (base)". A definition that is not **Active** is not offered when adding charge items to an account.
+
+## Adding a definition
+
+1. Select **New definition**.
+2. Fill in **Title** and **Billing Code**. The **Slug** fills in from the code or title. It is the lookup key other parts of the CMS use to find the price, it must be unique, and it never changes once assigned. Select **Edit manually** to type your own (lowercase letters, numbers, and hyphens).
+3. Choose a **Status**: **draft**, **active**, **retired**, or **unknown**. New definitions start as draft. Choose **active** to make one billable.
+4. Under **Pricing**, choose the **Type** (the default is **base**, which sets the price), enter the **Amount**, and choose the **Currency** (the default is **USD**).
+5. Select **Create**. If the slug is already used you see a message that the slug already exists.
+
+The optional fields are **Version**, **Publisher**, **Identifier**, **Code System**, and **Description**. To base a definition on a vaccination service, pick it in **Vaccination service**.
+
+## Importing many definitions
+
+Select **Import CSV**, then **Download template** for the format. The file needs a **status** column and either a **slug** or a **url** for each row. Rows whose slug or URL already exists are skipped, and the dialog lists problems by row before you import.
+
+## Deleting a definition
+
+Open the row's actions menu and select **Delete**. A definition cannot be deleted while a billable or planned charge item still uses it. The message tells you to bill or retire those items first.
+
+## Vaccination services
+
+Below the table, **Vaccination services** lists the billable vaccination items. **New service** adds one. Vaccination services can be ordered during an encounter or attached to a charge definition. See [Vaccinations](/cms/vaccinations).
+
+## Related
+
+- [Billing](/cms/billing): billing an account with these items.
+- [Services & Consumables](/cms/services-and-consumables): prices for clinical services and stocked items.
