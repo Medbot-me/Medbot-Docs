@@ -1,0 +1,45 @@
+# Patient Notes Workspace
+
+The notes workspace is a full-page writing area attached to a patient's chart. It lists the notes filed for one patient and lets clinicians claim an existing note into the chart. Open it with **Notes** under the patient's name in the sidebar, or from **Notes** at `/notes`, where you first search for the patient.
+
+> **Note:** The notes workspace is available only when your Medbot deployment has turned it on. If it is off, the **Notes** entry is missing and the page shows "not found".
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| Open a patient's notes and read the list | Yes | Yes | Yes | Yes |
+| Claim an existing note into the chart | Yes | No | Yes | Yes |
+| Start a new note | Yes | No | Yes | Yes |
+| Remove or delete a note | Yes | No | Yes | Yes |
+
+A Receptionist opens the workspace in read-only mode and does not see the buttons for changing notes.
+
+## Finding a patient's notes
+
+1. Select **Notes** in the sidebar. This opens a page that says "Search for a patient to view the notes claimed into their chart."
+2. Type in **Search patients by name...** and select the patient. From a patient's chart, select **Notes** under their name to go straight there.
+
+The workspace has a list of notes on the left, headed by **Search notes**, and tabs named **Notes**, **Chat**, **Agents**, **Templates**, and **Resources**. An empty chart says "No notes in this patient's chart yet." Type in **Search notes** to filter the list by title. Each row shows the title and when it was last updated.
+
+## Claiming an existing note
+
+A note you wrote elsewhere in Medbot can be filed into a patient's chart.
+
+1. Select the link icon (**Claim an existing note**).
+2. In **Claim a note into this patient's chart**, search under **Note** ("Search your notes by title...") and pick one of your own notes.
+3. Optionally, fill in **Encounter id (optional)** to link the note to a visit. Leave it blank to link to the patient only.
+4. Select **Claim**.
+
+If claiming fails, the window shows the reason.
+
+## Starting and removing notes
+
+Select **New** to start a note. It is available only while the patient has an open encounter. Otherwise the button is disabled and its tooltip says "This patient has no open encounter to note against." See [Encounters & Clinical Notes](/cms/encounters).
+
+Use the three-dot **Note actions** menu on a row to choose **Remove from chart** (for a claimed note, which keeps the note itself) or **Delete note**.
+
+## Related
+
+- [Encounters & Clinical Notes](/cms/encounters): consultation notes and progress notes on the chart.
+- [Roles & Permissions](/cms/roles-and-permissions): what each role can do.
