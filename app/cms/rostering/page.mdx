@@ -1,23 +1,59 @@
+import { ImageZoom } from "nextra/components";
+
 # Rostering
 
-`/roster` is the clinic's staff schedule: a week grid, one column per day and one row per role (Doctors, Nurses, Reception), that `receptionist` and `admin` can both build and adjust. Only `admin` can publish a week — publishing is the step that makes a roster mean something operationally.
+The roster is the clinic's staff schedule. Find it at **Scheduling → Roster** (`/roster`). It is a week grid with one column for each day and one row for each role: **Doctors**, **Nurses**, and **Reception**. Receptionists and Clinic Admins build and change the week. Only a Clinic Admin can publish it.
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| See the roster | Yes | Yes | View only | View only |
+| Add, edit, or cancel a shift | Yes | Yes | No | No |
+| Assign or replace the staff member on a shift | Yes | Yes | No | No |
+| Create a recurring pattern of shifts | Yes | Yes | No | No |
+| Publish a week | Yes | No | No | No |
+
+Every role can open the roster. Doctors and nurses see the grid without any buttons for changing it.
 
 ## Building a week of shifts
 
-Move to the week you're planning with the arrows or **Today**. Select **Shift** in a day's cell to add one; the pencil icon edits or cancels an existing shift; the swap icon assigns a staff member to a shift or replaces the one already on it.
+Use the arrows to move between weeks, or select **Today**. Weeks start on Monday.
+
+1. In a day's cell, select **Shift**.
+2. Check the **Date** and **Role**. Set the **Start time** and **End time**.
+3. Choose the **Session**: **Morning**, **Afternoon**, **Evening**, or **Full day**. You can add a **Label**, for example "Cover for Dr Tan".
+4. Select **Save**. A message says "Shift created".
+
+The shift appears in the grid with its times, its session, and **Unassigned**. To put someone on it, select the swap icon (**Assign staff**), choose a **Staff member**, add a **Reason** if you like, and select **Assign**. The list only offers staff of the right role, so a Doctor shift lists only doctors. A person cannot be put on two shifts that overlap. Once a shift has someone on it, the same icon reads **Replace staff**, and the earlier names stay on the shift as a history.
+
+The pencil icon (**Edit shift**) changes a shift or cancels it.
+
+<ImageZoom src="/images/cms/rostering/01-week-grid.png" alt="The Roster week grid with Doctors, Nurses, and Reception rows, shifts on Wednesday and Thursday each with a staff name, and the buttons New recurrence, Publish week, and Attendance at the top" />
+_A week of shifts with staff assigned_
 
 ## Recurring shift patterns
 
-**New recurrence** creates a repeating pattern in one step: weekdays, times, role, session, start date, and number of weeks. Running the same recurrence rule again is safe — it skips any dates it already created, so it's fine to re-run after adjusting a downstream week.
+Select **New recurrence** to make a repeating pattern in one step. Tick the **Days of week**, set the **Start time**, **End time**, **Role**, and **Session**, and choose **Starting from** and **For how many weeks**. You can choose who to **Assign to** and add a **Label**. Select **Generate shifts**. Running the same pattern again is safe, because it skips the dates that already have shifts.
 
-## The natural-language roster assistant
+## The roster assistant
 
-Where the **Roster assistant** panel is shown, describe the change you want in plain English (e.g. "give Dr. Tan Tuesday off and move her Wednesday shift to Thursday") and select **Preview**. The assistant shows the operations it would perform — with anything destructive flagged — before you commit to anything; select **Apply** to run them or **Discard** to back out.
+Some Medbot deployments show a **Roster assistant** box above the grid. It is not shown when the deployment has no assistant turned on. Type the change you want in plain words, for example "Dr Tan is working Thursdays 12 to 5pm for the next 4 weeks", and select **Preview**. The assistant lists what it would do and marks anything that deletes or cancels. Select **Apply** to run the changes, or **Discard** to drop them. Nothing changes until you select **Apply**.
 
-## Publishing (admin only)
+## Publishing a week (Clinic Admin only)
 
-Select **Publish week** once a week is settled. Publishing does three things at once: it moves that week's shifts from draft to published, it seeds the day's clinic session if the published week covers today, and it starts [attendance](/cms/attendance) tracking for those shifts. Until a week is published, its shifts stay drafts — they don't seed a session and don't count toward attendance. Reception can build and adjust drafts freely; only an admin can take the publish step.
+Select **Publish week** when the week is settled. A message says how many shifts were published, for example "Published 3 shifts". Publishing does two things:
+
+- It turns the week's draft shifts into published shifts. Published shifts can start counting toward [Attendance](/cms/attendance).
+- If the week includes today and a session is open, it marks the rostered staff as working in that session.
+
+Draft shifts do nothing until they are published. Publishing again publishes only the drafts added since.
 
 ## How it fits together
 
-A published shift is what [Attendance](/cms/attendance) measures against, and a published week covering today is what seeds that day's [Session Setup](/cms/session-setup) staff list. There's no separate step to "start the day" once a roster is published for it.
+When today's session is opened in [Session Setup](/cms/session-setup), the doctors, nurses, and receptionists rostered for today are marked as working. There is no separate step to start the day. Attendance is checked against published shifts.
+
+## Related
+
+- [Attendance](/cms/attendance): what happened against each published shift.
+- [Session Setup](/cms/session-setup): who is working today.

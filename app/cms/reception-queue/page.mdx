@@ -1,32 +1,113 @@
+import { ImageZoom } from "nextra/components";
+
 # Reception Queue
 
-`/queue` projects today's Medplum appointments into a location-scoped operational queue. Use the location picker (or `?locationId=...`) to switch branches — appointments without a clinic-location extension stay on the default location so legacy bookings remain visible. Medplum stays authoritative for appointment status, patients, practitioners, and linked encounters; Postgres holds only the local operational fields Medplum doesn't model: the clinic session, public queue ticket, manual queue position, arrival timestamp, route stage, payment flag, assignment source, latest called room/timestamp, and the assignment audit trail.
+The reception queue is today's list of booked and checked-in patients at one clinic location. Find it at **Scheduling → Queue** (`/queue`). Receptionists and Clinic Admins run it. Doctors and nurses see a shorter view of their own work.
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| See today's queue | Yes | Yes | View only | View only |
+| Check a patient in | Yes | Yes | No | No |
+| Call a patient to a room | Yes | Yes | No | No |
+| Route a patient to a stage, or mark payment | Yes | Yes | No | No |
+| Assign or change the doctor | Yes | Yes | No | No |
+| Cancel an appointment, mark a no-show, or reopen | Yes | Yes | No | No |
+| Arrange a session for the patient | No | No | Yes | No |
+| Complete the visit and send the outcome | No | No | Yes | No |
+
+Doctors see only the patients assigned to them. Nurses see every patient at the location and open the vitals form from their own view. The **Arrange session** and **Complete visit** buttons appear on a doctor's row only after a consultation has been started for that appointment.
+
+## Reading the queue
+
+The page header shows the location, today's session with an **Open** or **Closed** badge, how many doctors are on duty, and a **Self check-in code**. If nobody has opened a session yet, it says **No session yet today**. Select **Create session** to open one, or see [Session Setup](/cms/session-setup).
+
+The table lists patients in this order:
+
+1. Patients reception has moved to a fixed place in the queue.
+2. Patients who have arrived, earliest arrival first.
+3. Patients who are booked but have not arrived, by appointment time.
+4. Completed and cancelled visits, at the bottom.
+
+Each row shows the ticket, the time, the patient, the reason, the doctor, the workflow controls, and the status.
+
+| Status | What it means |
+| --- | --- |
+| **Scheduled** | Booked, not yet checked in. |
+| **Waiting** | Checked in and waiting. |
+| **Consultation** | A consultation has been started for this appointment. |
+| **Done** | The visit is finished. |
+| **Cancelled** | Cancelled or marked as a no-show. |
+
+The page updates itself about every four seconds, and the line under the title shows when it last updated. Nobody needs to reload it. Select **Refresh** to update it at once.
+
+Four filters narrow the list: the location, the doctor (**All doctors**, **Unassigned**, or one doctor), the stage (**All stages**, **Not yet routed**, or one stage), and the status (**Active (hide Done)**, **Waiting only**, **Show cancelled**, or **All**).
 
 ## Checking a patient in
 
-`receptionist` and `admin` can check in scheduled patients, cancel or mark no-show, reopen a cancelled/no-show row, assign doctors, route active patients through `nurse` → `doctor` → `dispensary` → `completed`, and toggle payment between `unpaid`/`paid`. They can also call a checked-in patient to an active room — the latest called room and timestamp drive the public display boards until the patient's route stage changes.
+1. Choose the location at the top of the page.
+2. Find the patient's row and select **Check in**.
 
-Check-in stamps the first physical arrival time without overwriting it on retries, issues a queue ticket from the location's open session, and assigns the next active session doctor by round-robin. A duplicate check-in reuses the existing ticket rather than advancing the rotation. Reopening a cancelled or no-show appointment runs the same location-aware check-in path: it stamps a fresh arrival time, clears any old manual queue position, issues a valid session ticket, and returns the patient to the active queue at the correct place.
+A message such as "Kamala Perera checked in" appears, with the ticket number and the doctor, for example "Ticket #1 · Marcus Lim". The row now shows the ticket and the status **Waiting**.
 
-The staff queue polls for updates every four seconds while its tab is visible, so changes made by other staff show up without a manual reload.
+Check-in records the arrival time, gives the patient a queue ticket from the location's open session, and assigns the next doctor marked active in [Session Setup](/cms/session-setup). Doctors take turns in the order they were marked active. If no doctor is marked active, the patient still gets a ticket but no doctor. Checking in a patient who already has a ticket keeps the same ticket and does not move the rotation on.
 
-## Queue ordering
+Check-in has no time window. A patient booked for later in the day can be checked in as soon as they arrive.
 
-Ordering is explicit: manual `queue_position` pins sort first, then physically present patients sort ahead of booked patients, and completed/cancelled rows sort last. Present patients order by `arrived_at`; booked patients use their scheduled start time. An active encounter linked to an appointment surfaces as `in-progress` in the queue projection and sets `hasEncounter`, so doctor/nurse actions can continue (or disable) already-started clinical work.
+Patients can also check themselves in from the [patient portal](/patient/visits). They either share their location or type the six digit **Self check-in code** shown in the page header. A self check-in works like a staff check-in, and the row appears in the queue with a ticket.
 
-## Doctor and nurse view
+## Calling a patient to a room
 
-Doctors and nurses get a read-only **Today's Patients** view scoped to the patients assigned to them — it refreshes automatically as reception checks people in, and links straight into that patient's encounters. Reassigning a patient or changing their room stays reception's job, not something a doctor or nurse can do from this view.
+1. On a checked-in row, select **Call**.
+2. Choose a room in **Choose a room**, then select **Call**.
 
-## Self check-in and the patient's visit journey
+A message such as "Called MAIN001 to Consult 1" appears, and the row shows **Called → Consult 1**. Only rooms set up for today's session are listed. The waiting room display shows the ticket and the room, and a room door screen shows the ticket for its own room. See [Patient-Facing Displays](/cms/display-boards). The room label stays until you route the patient to another stage.
 
-Patients can check themselves in from the [patient portal](/patient/visits) instead of queuing at the counter: either by location, when their phone shows they are at the clinic, or by entering the **arrival code**, the 6-digit code shown on the queue page for today's location. Self check-in follows the same path as a staff check-in: it stamps the arrival time and issues a queue ticket. The patient then sees their queue number and where to go next, live, on the portal.
+## Assigning the doctor
 
-Patients can also be routed through an **Investigations** stage, alongside nurse, doctor and dispensary.
+Use the doctor menu on the row to change the doctor. A doctor chosen by hand shows **Manual**. A doctor chosen by the rotation shows **Auto-rotated**.
 
-Two actions on the queue table carry the visit through to the patient's portal. Both are for `admin` and `doctor`:
+## Routing a patient and marking payment
 
-- **Arrange session** offers the patient an AI session for this visit (**Financial counselling** or **Health education**), with a reason that gives the assistant a head start, e.g. "Newly diagnosed hypertension: walk through the medicine and what to watch for." The patient does not need to be enrolled in a Service; the session appears on their portal under the sessions their clinician arranged.
-- **Complete visit** finishes the visit and sends the outcome to the patient: **Findings** (written for the patient to read), **Medicines started** (name, dose and instructions) and **Next steps** (such as a follow-up appointment, a test result, advice or an AI session). The form is pre-drafted by AI from the visit, for the doctor to check and edit.
+The **Route…** menu on a checked-in row moves the patient through the clinic: **Nurse**, **Doctor**, **Investigations**, **Dispensary**, **Completed**. Use it to show where the patient is. The nurse's own view shows a patient routed to the nurse as **Vitals now**, and a patient routed on to the doctor as **Ready for doctor**.
 
-A Service in the web app can follow the same queue from its [Workstation](/docs/services/workstation).
+Select **Mark paid** to record that the patient has paid. The button then reads **✓ Paid**. Select it again to undo it.
+
+## Cancelling, marking a no-show, and reopening
+
+1. Select the ellipsis button on the row.
+2. Choose **Cancel appointment** or **Mark no-show**, then confirm.
+
+The patient leaves the active queue. To find the row again, set the status filter to **Show cancelled**. Select **Reopen** to put the patient back. A reopened patient gets a new ticket and a new place in the queue.
+
+## What the doctor and nurse see
+
+A doctor opens **Today's Patients**. Each row has **Start consultation**, which opens the patient's chart at **Encounters**, or **Continue consultation** once one has started. See [Encounters & Clinical Notes](/cms/encounters). A nurse opens **Today's Queue**, and the **Vitals** button on each row opens the vitals form. See [Vitals](/cms/vitals). Neither role can check patients in, change the doctor, or call a room.
+
+## Arranging a session and completing the visit
+
+Once a doctor has started a consultation for an appointment, two buttons appear on that row.
+
+**Arrange session** offers the patient an assistant session for this visit. Choose **Financial counselling** or **Health education**, add a **Reason (shown to the patient)**, and select **Arrange session**. The row then shows a badge with the session type. The patient starts the session from the portal, and does not need to be enrolled in a service. See [Patient Portal](/cms/patient-portal).
+
+**Complete visit** finishes the visit and sends the outcome to the patient.
+
+1. Select **Complete visit**.
+2. Optionally select **Generate draft** to have the assistant propose the text from the visit. Check and edit everything it writes.
+3. Write the **Findings** in words the patient can read.
+4. Under **Medicines started**, select **Add** and enter the medicine name and the dose and instructions.
+5. Under **Next steps**, select **Add**, then choose **Follow-up appointment**, **Advice**, or **Test result** and describe what the patient should do. Any session you arranged already appears as an **AI session** step.
+6. Turn on **Also notify the patient by SMS** if you want a text message as well.
+7. Select **Send to patient**.
+
+<ImageZoom src="/images/cms/reception-queue/06-complete-visit.png" alt="The Complete visit panel with findings, one medicine, and two next steps filled in, and the Send to patient button at the bottom" />
+_The Complete visit panel_
+
+The outcome goes to the patient's portal, and the row leaves the active list. Sending the outcome cannot be undone from the queue, so read it through first.
+
+## Related
+
+- [Session Setup](/cms/session-setup): open the session and choose which doctors take patients.
+- [Patient-Facing Displays](/cms/display-boards): what the waiting room board shows.
+- [Appointments](/cms/appointments): book the visits that appear here.
