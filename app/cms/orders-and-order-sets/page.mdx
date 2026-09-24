@@ -1,11 +1,105 @@
+import { ImageZoom } from "nextra/components";
+
 # Orders & Order Sets
 
-An encounter's Orders panel is where `admin`, `doctor`, and `nurse` place, review, and cancel service, consumable, and medication orders against a patient's active encounter; `receptionist` has read-only access to the same list.
+Orders record the services, consumables and medications requested for a patient during a visit. Order sets are saved bundles you apply to an encounter in one step. Orders live in the **Orders** card on a patient's **Encounters** page. Order sets live at **Pharmacy → Order sets** (`/order-sets`).
 
-## Placing an order
+## Who can do this
 
-Open a patient's chart, start or resume a visit from **Encounters**, then use the Orders panel to add an order — drawing on the [services and consumables catalog](/cms/inventory-and-stock#clinical-services-and-consumables-services) and the [formulary](/cms/formulary) — or cancel one already placed.
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| See an encounter's orders | Yes | Yes | Yes | Yes |
+| Apply an order set to an encounter | Yes | No | Yes | Yes |
+| Cancel an order | Yes | No | Yes | Yes |
+| Open the Order sets page and build your own sets | Yes | No | Yes | Yes |
+| Edit, share, retire or delete a set someone else owns | Yes | No | No | No |
+
+A Receptionist who opens `/order-sets` sees "This action requires one of the following roles: admin, doctor, nurse." Receptionists can read the **Orders** card but have no **Apply order set** or **Cancel** buttons.
+
+## The Orders card
+
+The **Orders** card lists the orders of the patient's current encounter. See [Encounters & Clinical Notes](/cms/encounters) for what current means. Each row shows the type (**Service**, **Consumable** or **Medication**), the item and its status. Without a current encounter the card says "Start an encounter to place or apply orders."
+
+<ImageZoom src="/images/cms/orders-and-order-sets/01-encounter-orders-panel.png" alt="The Orders card with a service order that is Active and the Apply order set button" />
+_The Orders card_
+
+Orders come from three places:
+
+- **Apply order set** adds one order for each item in a set.
+- **Order service** on the [Vaccinations](/cms/vaccinations) page orders a vaccination service.
+- Medication orders for the encounter also appear in the list.
+
+The Orders card has no button to add a single service or consumable by hand.
+
+### Cancelling an order
+
+Select **Cancel** on a row. You can cancel a service or medication order while it is a draft, active or on hold. You can cancel a consumable order while it is a draft, active or suspended. You see "Order cancelled." and the status becomes **Cancelled**. Completed and cancelled orders cannot be cancelled. The app says the order "can no longer be cancelled."
+
+Each row also has a radio icon (**Ping about** the item) that sends a staff ping about that order. See [Tasks & Staff Pings](/cms/tasks).
 
 ## Order sets
 
-`/order-sets` lets `admin`, `doctor`, and `nurse` save a reusable bundle of services, consumables, or medications under **New order set**, then drop the whole bundle onto an open encounter in one step with **Apply order set** in the Orders panel. You can edit, retire, or delete a set you own; only `admin` can change or remove one owned by someone else.
+The **Order sets** page has three lists:
+
+| List | What it shows |
+| --- | --- |
+| **Mine** | Sets you created |
+| **Shared with me** | Sets a colleague shared with you |
+| **Clinic-wide** | Sets shared with every practitioner who can place orders |
+
+<ImageZoom src="/images/cms/orders-and-order-sets/03-order-sets-page.png" alt="The Order sets page with the Mine list containing an active set" />
+_The Order sets page_
+
+Each set shows its title, a status of **draft**, **active** or **retired**, a visibility label (**Private**, **Shared** or **Clinic-wide**, for your own sets), its description and its number of items.
+
+### Building a set
+
+1. Select **New order set**.
+2. Enter a **Title** and optionally a **Description (optional)**.
+3. Under **Items**, search "Search services and consumables…" and select each item. Set a quantity for each consumable. Remove an item with the X beside it.
+4. Tick **Publish now** to make the set usable immediately. Publishing needs at least one item. Otherwise the set is saved as a draft you can keep editing.
+5. Select **Save**.
+
+<ImageZoom src="/images/cms/orders-and-order-sets/02-new-order-set-dialog.png" alt="The New order set dialog with a title, description and two items" />
+_The New order set dialog_
+
+Only active services and consumables can be added. Vaccination services cannot. Saving a set that contains one shows "is a vaccination service and can't be added to an order set -- use the vaccination workflow instead." Remove that item first.
+
+Editing or deleting a set later never changes orders already placed from it.
+
+### Sharing a set
+
+Select **Share** on a set. Choose **Private** (only you), **Shared** (you and the practitioners you pick) or **Clinic-wide** (every practitioner who can place orders). For **Shared**, tick the practitioners. Only Clinic Admins, Doctors and Nurses are listed. Select **Save sharing**.
+
+<ImageZoom src="/images/cms/orders-and-order-sets/04-share-order-set-dialog.png" alt="The Share dialog with Private, Shared and Clinic-wide options and a list of practitioners" />
+_The Share dialog_
+
+Sharing lets others apply a set to their own patients. It never lets them edit it. Only the owner or a Clinic Admin can edit, share, retire, publish or delete a set. Other people see the set without those buttons.
+
+### Publishing, retiring and deleting
+
+**Publish** makes a draft or retired set active. **Retire** stops people applying it. Only active sets can be applied. A draft or retired set is not offered, even to its owner. **Delete** removes a set for good after you confirm.
+
+## Applying a set to an encounter
+
+1. Open the patient's chart, select **Encounters** and make sure an encounter is **In Progress**.
+2. In the **Orders** card, select **Apply order set**.
+3. Choose a set. Its description and item count appear.
+4. Select **Apply**.
+
+<ImageZoom src="/images/cms/orders-and-order-sets/05-apply-order-set-dialog.png" alt="The Apply order set dialog with a set chosen and its item count" />
+_Applying a set_
+
+You see "Applied" with the set's name. The dialog then lists each item with a tick when its order was created, or the reason it failed. If some items fail you see how many. The others are still ordered. Each item becomes its own order and can be cancelled on its own.
+
+<ImageZoom src="/images/cms/orders-and-order-sets/06-order-set-applied.png" alt="The result of applying an order set listing each item that was ordered" />
+_The result of applying a set_
+
+You can apply sets that are active and either yours, shared with you or clinic-wide. If a set is not available you see "This order set is not available to apply."
+
+## Related
+
+- [Encounters & Clinical Notes](/cms/encounters): the encounter the orders belong to.
+- [Billable Catalog](/cms/billable-catalog): where services are defined.
+- [Services & Consumables](/cms/services-and-consumables): the items you can add to a set.
+- [Formulary](/cms/formulary): medications.

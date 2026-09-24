@@ -1,17 +1,127 @@
+import { ImageZoom } from "nextra/components";
+
 # Patient Records & Consent
+
+Patient records are the list of everyone registered at your clinic and each person's chart. Find them at **Patients → Patients** (`/patients`). All four roles can open a chart. Front desk staff register patients.
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| See the patient list and open a chart | Yes | Yes | Yes | Yes |
+| Register a patient | Yes | Yes | No | No |
+| Invite a patient to self-register | Yes | Yes | No | No |
+| Deactivate a patient | Yes | Yes | No | No |
+| Edit contact details | Yes | Yes | Yes | Yes |
+| Record or change communication consent | Yes | Yes | Yes | Yes |
+
+Doctors and nurses who open `/patients/new` or `/patients/invite` see the message "This action requires one of the following roles: admin, receptionist."
+
+## Finding a patient
+
+The list shows each patient's name, contact details, birth date, gender, address and status. Search by name only. Phone, email and identifier numbers are not searched. Use the status filter to show **Active**, **Inactive** or **Deceased** patients. The newest updates appear first, 20 patients per page.
+
+<ImageZoom src="/images/cms/patient-records/01-patients-list.png" alt="The Patients page with the name search box, the status filter and a table of patients" />
+_The Patients page_
+
+Patients with no phone or email on file carry a **No contact on file** badge.
 
 ## Registering a patient
 
-`receptionist` and `admin` can register a patient two ways from `/patients`. **Add Patient** creates the record at the desk directly — search for the person first, since a duplicate record is far harder to undo than a search is to run. **Invite to self-register** instead sends the patient a link, by email or SMS, that they fill in themselves; pending invitations stay listed on the page until used. A self-registered patient's own details land marked unverified until staff check them against ID at the desk.
+1. Select **Add Patient**.
+2. Choose the **Identifier type**: **NRIC**, **FIN** or **Passport**, then enter the number. The form says **Valid** when the number is acceptable, or explains why not.
+3. Enter **Given name**, **Family name** and **Date of birth**. These are required. **Sex** defaults to **Unknown**.
+4. Optionally add a phone number, an email address, the **Preferred contact channel** (**Phone** or **Email**), communication consent and an address.
+5. Select **Register patient**. The new patient's chart opens.
 
-## Contact details
+<ImageZoom src="/images/cms/patient-records/02-register-patient-form.png" alt="The Register patient form with identifier type, names, date of birth, contact details, consent grid and address" />
+_The Register patient form_
 
-Patient registration can capture an optional phone number, email address, and preferred contact channel; staff can update these from the patient chart. Phone and email live in the patient's FHIR `Patient.telecom`, with the preferred populated channel at `ContactPoint.rank` 1. The patient list and chart flag records with no phone or email on file.
+Rules the form enforces:
+
+- The identifier must match the selected type. A wrong check digit shows "Identifier doesn't match the selected type (NRIC)." and keeps **Register patient** disabled.
+- A patient with the same identifier can exist only once per clinic. Otherwise you see "A patient with this identifier already exists in this clinic." Names are not compared. Search by name first to avoid a second record for the same person.
+- A Singapore mobile number has 8 digits and starts with 8 or 9. Other numbers start with a plus sign and have 8 to 15 digits. A number with seven or more zeros in a row is refused.
+- If consent could not be saved, the patient is still registered. A warning tells you to record consent again from the chart.
+
+<ImageZoom src="/images/cms/patient-records/03-duplicate-identifier.png" alt="The Register patient form showing the message that a patient with this identifier already exists" />
+_The duplicate identifier message_
+
+## The patient chart
+
+The chart opens on **Overview**. Cards on the overview:
+
+| Card | What it shows |
+| --- | --- |
+| **Patient-reported intake** | Answers from a self-registration, only for patients who registered themselves |
+| **Demographics** | Birth date, gender, and marital status, preferred language and date of death when recorded |
+| **Contact** | Phone and email with a **Preferred** badge, plus **Portal invite** and **Edit contact** |
+| **Address** | Addresses on file |
+| **Identifiers** | Identifier type and number |
+| **Communication consent** | Consent by purpose and channel, plus **Edit consent** |
+| **Vitals** | See [Vitals](/cms/vitals) |
+| **Clinical notes** | See [Encounters & Clinical Notes](/cms/encounters) |
+
+The sidebar lists the other chart sections under the patient's name: **Accounts**, **Encounters**, **Notes**, **Results**, **Vaccinations**, **Documents** and **Messages**. **Accounts** is visible to Clinic Admins and Receptionists only. **Ping staff** at the top of every chart sends a staff ping.
+
+<ImageZoom src="/images/cms/patient-records/04-chart-overview.png" alt="A patient chart overview with demographics, contact, address, identifiers, consent, vitals and clinical notes cards" />
+_A patient chart overview_
+
+## Editing contact details
+
+1. On **Overview**, select **Edit contact**.
+2. Change **Phone**, **Email** or **Preferred channel**. Clearing a field removes that entry.
+3. Select **Save contact**.
+
+Invalid numbers are refused with "Invalid phone number." or "Invalid email address." If a colleague saved the chart after you opened it, you see "This record changed since you opened it. Please refresh and try again." Refresh the chart and repeat the change.
 
 ## Communication consent
 
-Admins and receptionists can record communication consent at registration; admins, receptionists, nurses, and doctors can update it from the patient chart for each purpose and channel. Consent is **deny-by-default** — a patient may be contacted only for explicitly selected purpose-and-channel combinations. Purposes: appointment reminders, clinical recalls, clinical updates, documents sent to the patient, documents sent to a third party, and health promotion. Channels: email, SMS, and WhatsApp — SMS and WhatsApp consent can be recorded even before those delivery channels are configured.
+Consent controls how the clinic may contact a patient. It is deny by default: the clinic may contact a patient only for the purpose and channel combinations ticked. Purposes are **Appointment reminders**, **Clinical recalls**, **Clinical updates**, **Documents sent to the patient**, **Documents sent to a third party** and **Health promotion**. Channels are **Email**, **SMS** and **WhatsApp**. You can record SMS and WhatsApp consent even when the clinic does not send on those channels yet.
 
-Consent is stored as one active FHIR `Consent` resource per patient in Medplum, not in the local database: a deny-by-default root provision plus one permit provision per selected purpose-and-channel combination. Treat a missing, inactive, or unselected combination as **not permitted** — there's no other default to fall back on.
+1. On **Overview**, select **Edit consent**.
+2. Tick the purpose and channel combinations the patient agreed to.
+3. Select **Save consent**. Saving replaces the whole set, so untick anything the patient withdrew.
 
-Each staff-recorded consent identifies the linked Practitioner as its FHIR performer. New staff created from `/staff` receive a linked Medplum Practitioner automatically; a legacy staff row without that link can't record or update consent. Concurrent contact or consent edits use Medplum version checks — when a record has changed since it was loaded, refresh the patient chart before trying again.
+A purpose with nothing ticked shows **No consent**. Treat any combination not shown as not permitted.
+
+<ImageZoom src="/images/cms/patient-records/05-edit-consent-dialog.png" alt="The Communication consent dialog with a grid of purposes and channels" />
+_The consent grid_
+
+Saving needs your account to be linked to a clinical profile. Otherwise you see "Your account is not linked to a practitioner profile. Contact an administrator." Ask a Clinic Admin for help. If the consent changed after you opened the chart, you see the same "record changed" message as for contact details.
+
+## Inviting a patient to register themselves
+
+Use this for a person who asked for an appointment but is not registered yet.
+
+1. Select **Invite to self-register** on the Patients page. The **Invite to self-register** page opens.
+2. Select **Invite to self-register** again, optionally enter a given and family name, choose **SMS** or **Email**, and enter the phone number or email address.
+3. Select **Send link**.
+
+The patient receives a one-time link that expires after 7 days. The **Sent registration links** table shows each invite as pending, completed, expired or revoked, and a **View patient** link once completed. If the clinic's text message or email service is not set up, the dialog shows an error and the patient does not receive the link.
+
+<ImageZoom src="/images/cms/patient-records/07-invite-to-self-register.png" alt="The Send a self-registration link dialog with name fields, SMS or email choice and a phone number field" />
+_Sending a registration link_
+
+What the patient sees: a registration form on the patient app. See [Patient Portal](/cms/patient-portal).
+
+When the patient submits the form, their chart shows the **Patient-reported intake** card labeled **Unverified**. It lists drug allergies, reported health conditions, current treatment and medications, and hospitalization history. These answers are patient-reported and not checked against clinical records. Confirm allergies, conditions and medications with the patient before you rely on them.
+
+<ImageZoom src="/images/cms/patient-records/08-patient-reported-intake.png" alt="The Patient-reported intake card on a chart with an Unverified badge, allergies and conditions" />
+_The Patient-reported intake card_
+
+## Deactivating a patient
+
+1. On the Patients page, select the actions menu (three dots) on the patient's row.
+2. Select **Deactivate patient**, then **Deactivate**.
+
+The patient's history stays intact and the status becomes **Inactive**. An inactive patient can no longer be selected for care: **Start Encounter** is disabled. Use the **Inactive** filter to find them. The app has no control to reactivate a patient.
+
+<ImageZoom src="/images/cms/patient-records/06-deactivate-patient.png" alt="The Deactivate patient record confirmation dialog" />
+_The deactivate confirmation_
+
+## Related
+
+- [Encounters & Clinical Notes](/cms/encounters): start a visit and write notes.
+- [Vitals](/cms/vitals): record and correct readings.
+- [Patient Portal](/cms/patient-portal): how patients connect to their record.

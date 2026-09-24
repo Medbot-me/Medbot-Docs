@@ -1,25 +1,76 @@
+import { ImageZoom } from "nextra/components";
+
 # Vaccinations
 
-A patient's detail page shows vaccination history to admins, receptionists, doctors, and nurses. Admins, doctors, and nurses can record, edit, and void records — stored as FHIR `Immunization` resources — receptionists have view-only access.
+The vaccination record lists every vaccine a patient has received, whether given at your clinic or reported from elsewhere. Find it in a patient's chart under **Vaccinations** (`/patients/[id]/vaccinations`).
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| See a patient's vaccinations | Yes | Yes | Yes | Yes |
+| Record, edit or void a vaccination | Yes | No | Yes | Yes |
+| Order a vaccination service | Yes | No | Yes | Yes |
+| Register a vaccination service in the catalog | Yes | No | No | No |
+
+Receptionists see the list but no buttons.
 
 ## Recording a vaccination
 
-Recording a vaccination doesn't require an in-progress encounter — clinics record a same-day vaccine and backfill a patient's prior history alike — but an optional encounter link is verified to belong to the same patient.
+You do not need an open encounter. Clinics record a vaccine given today and also enter a patient's earlier history. When the patient has a current encounter, the record attaches to it. See [Encounters & Clinical Notes](/cms/encounters).
 
-Admins can register a vaccination administration service in the catalog as a FHIR `ActivityDefinition` with a stable Medbot catalog slug. During an active encounter, clinical staff can order one of these services, producing a `ServiceRequest`. Selecting that active order while recording the vaccination performs it atomically: the `Immunization` is created, the order is completed, and a FHIR `Task` records the order-to-fulfilment trace. Historical entries can still be recorded without an order.
+1. Select **Record vaccination**.
+2. Choose the **Information source**: **Administered here**, **Patient-reported** or **Transcribed from record**.
+3. Choose the **Vaccine** and enter the **Date given**. These two are required. Choose **Other (not listed)** and enter a **Vaccine name** for a vaccine that is not in the list.
+4. Optionally enter the **Dose number (in series)**, **Route**, **Site**, **Dose volume (mL)**, **Lot number**, **Vial expiry** and a **Note (optional)**.
+5. Select **Save vaccination**.
 
-Vaccine stock allocation, lot-derived expiry, and charge capture require the stock-item and billing foundations and aren't represented as complete in this workflow yet.
+<ImageZoom src="/images/cms/vaccinations/01-record-vaccination-dialog.png" alt="The Record vaccination dialog with source, vaccine, date, dose, route, site, lot and note fields" />
+_The Record vaccination dialog_
 
-## Coding
+The vaccine list covers influenza, COVID-19, hepatitis A and B, MMR, varicella, DTaP, Tdap, Td, tetanus, polio, Hib, pneumococcal (PCV13 and PPSV23), shingles, HPV, rotavirus, meningococcal ACWY and BCG. Vaccines are coded to CVX, the US CDC list of vaccine codes.
 
-The vaccine product is coded to CVX, the CDC "Vaccine Administered" code set — a curated catalog of commonly-given vaccines covers the common case, with a free-text "Other" option for anything not listed. Route of administration and anatomical site use the HL7 v3 RouteOfAdministration and ActSite code systems; dose volume is recorded in millilitres (UCUM).
+| Field | Options and limits |
+| --- | --- |
+| **Route** | **Intramuscular**, **Subcutaneous**, **Intradermal**, **Oral**, **Nasal** or **Not specified** |
+| **Site** | **Left arm**, **Right arm**, **Left thigh**, **Right thigh** or **Not specified** |
+| **Dose volume (mL)** | 0.05 to 5 |
+| **Dose number (in series)** | Whole number, 1 to 20 |
+| **Date given** | Not in the future, and not before 1900 |
+
+If you leave a required field out, or enter a date in the future, you see "Select a vaccine." or "The administration date cannot be in the future."
+
+<ImageZoom src="/images/cms/vaccinations/02-vaccinations-list.png" alt="The Vaccinations list with a recorded influenza vaccination and a voided record" />
+_The Vaccinations list_
+
+### Drawing the dose from clinic stock
+
+Tick **Draw this dose from clinic stock** to take the dose from your stock. Then choose the **Stocked product** and the location in **Draw from location**. The lot number and vial expiry are then filled from the stock instead of typed. The app takes the dose from the lot that expires first and skips expired lots. Two messages can stop the draw:
+
+- "Not enough stock at the selected location to record this dose."
+- "This vaccine is not an active stock item and cannot be drawn from stock."
+
+See [Inventory & Stock](/cms/inventory-and-stock).
+
+### Vaccination services and orders
+
+A Clinic Admin can register a vaccination service in the catalog so clinical staff can order it during a visit. See [Billable Catalog](/cms/billable-catalog). During an open encounter, select **Order service** on the Vaccinations page and choose the service. The order appears in the encounter's **Orders** card as **Active**.
+
+When you record the vaccination, choose that order in **Service order**. The default is **Record as clinical history**. Saving with an order chosen completes the order in one step, and its status becomes **Completed**. Vaccination services cannot be added to an order set. See [Orders & Order Sets](/cms/orders-and-order-sets).
 
 ## Editing and voiding
 
-Editing a record is a true FHIR update (HTTP PUT) with optimistic concurrency (`If-Match` on the current version) that rejects a blind overwrite if the record changed since it was loaded. The original performer and recorded timestamp are preserved, so an edit corrects the record without re-attributing who gave the vaccine or when it was first entered.
+Select **Edit** on a row to correct any field and select **Save changes**. Corrections are versioned and the earlier values are kept for audit. The original giver and the time it was first recorded stay unchanged. If a colleague changed the record after you opened it, you see "This record was changed by someone else. Please reload and try again."
 
-Voiding never deletes the resource — it sets `status` to `entered-in-error` with an audit note recording who voided it, when, and why, keeping the record and its version history for audit while it drops out of the active list.
+To void a record, select **Edit**, then **Void record**, optionally enter a **Reason (optional)**, and select **Void record** again. Voiding cannot be undone. The record stays in the chart for audit. It disappears from the main list and appears under **Show voided** with a **Voided** label.
 
-## Date rules
+<ImageZoom src="/images/cms/vaccinations/03-void-confirmation.png" alt="The void confirmation with a reason field and the Void record button" />
+_Voiding a vaccination_
 
-The administration date can't be in the future: the date picker caps at the browser's local date, and the server independently accepts dates up to one day past the UTC date, since a clinic in a timezone ahead of UTC (e.g. Singapore, UTC+8) can be a full calendar day ahead of the server's UTC clock during early-morning local hours.
+Voiding a dose that was drawn from stock does not return it to stock. Adjust the stock item yourself if the dose was not given.
+
+## Related
+
+- [Encounters & Clinical Notes](/cms/encounters)
+- [Inventory & Stock](/cms/inventory-and-stock)
+- [Billable Catalog](/cms/billable-catalog)
