@@ -1,28 +1,162 @@
-# Roles & Access
+# Roles & Permissions
 
-> Roles are **per organisation**: a person can be Clinic Admin at one clinic and Nurse at another, and every check below runs against their role in the organisation they have currently chosen. See [Members & Roles](/cms/members-and-roles). The same roles apply to [Services](/docs/services) in the web app.
+> **Note:** Roles are set per organization. A person can be a Clinic Admin at one clinic and a Nurse at another, and every check below runs against their role in the organization they have currently chosen.
 
-Medbot CMS is built around four clinic roles, plus one internal account that isn't a real clinic role at all. Every server action re-checks the signed-in user's role before reading or writing clinic data — page-level checks only control what's visible, so a role's real boundary is enforced at the action, not the UI.
+Medbot CMS is built around four clinic roles, plus one internal account that is not a real clinic role. Every action re-checks the signed-in user's role before it reads or writes clinic data. What you see on a page only controls what is visible, so a role's real boundary is enforced at the action, not on the screen. When a role cannot do something, the control is hidden or disabled, and an action attempted anyway is refused.
+
+This page is the master list. Every **Who can do this** table on a feature page agrees with the matrix below.
 
 ## The four clinic roles
 
-**`admin`** manages staff, registers patients, updates patient contact details and communication consent, books/edits/cancels appointments, manages clinic locations and session setup, manages display devices, operates the reception queue, records and corrects vitals, records/edits/voids vaccinations, manages the formulary and catalog, composes documents, issues medical certificates, uploads and reviews diagnostic results (including reassigning or withdrawing outstanding ones), manages the results-review duty rota, publishes the roster, and manages attendance. Clinic Admin is effectively a per-tenant superuser for operational purposes — it can act as backstop for most workflows a receptionist, nurse, or doctor primarily owns.
+**Clinic Admin** is the clinic's operational lead. A Clinic Admin manages staff, registers patients, books and edits appointments, manages locations and session setup, operates the reception queue, records and corrects vitals, records vaccinations, manages the formulary and catalog, composes documents, files and manages diagnostic results, manages the results review rota, publishes the roster, and manages attendance. In short, a Clinic Admin can act as a backstop for most workflows another role primarily owns.
 
-**`receptionist`** registers patients, updates patient contact details and communication consent, books/edits/cancels appointments, manages today's session setup, operates the reception queue, views (but doesn't publish) vaccination records, and views/prints/emails existing patient documents. Receptionists can also upload and view diagnostic results, and build/adjust roster drafts — but only an admin can publish a week.
+**Receptionist** runs the front desk. A Receptionist registers patients, updates contact details and communication consent, books and edits appointments, manages today's session setup, operates the reception queue, files and views diagnostic results, and views and prints existing patient documents. A Receptionist can build and adjust roster drafts, but only a Clinic Admin can publish a week.
 
-**`doctor`** and **`nurse`** read patient, practitioner, and appointment data through authorized clinical workflows; update patient contact details and communication consent; record and correct vitals; record/edit/void vaccinations; view the formulary; and view/print/email patient documents. Both can compose letters and memos, and upload/view diagnostic results. Doctors can additionally compose referrals, issue medical certificates, and acknowledge, reassign, or withdraw results — nurses cannot. Neither can register patients, book/edit/cancel appointments, or manage staff, sessions, the queue, formulary entries, the results-duty rota, or roster publishing.
+**Doctor** and **Nurse** read patient, practitioner, and appointment data through their clinical workflows. Both record and correct vitals, record vaccinations, view the formulary, and view and print patient documents. Both compose letters and memos, and file and view diagnostic results. A Doctor can additionally compose referrals, issue medical certificates, and sign off, reassign, or withdraw results. A Nurse cannot. Neither role registers patients, books appointments, nor manages staff, sessions, the queue, the formulary, the results rota, or roster publishing.
 
-## The `superuser` role
+## The Superuser account
 
-`superuser` is not a real clinic role — it's an internal/testing account that passes every role gate in the app, meant to exercise every role's capabilities from one login rather than swapping accounts to verify a workflow end to end. It isn't offered as an option on the staff form; it's set directly on an account. Because it bypasses the role allowlist rather than being granted the union of every role's capabilities, some write controls that check for a *specific* role rather than for general access still stay hidden to it — Acknowledge on Results, Compose on a patient's Documents, and the Displays panel on Session setup all require signing in as the role that actually owns them.
+Superuser is not a real clinic role. It is an internal and testing account that passes every role check, so one login can exercise every role's work without swapping accounts. It is not offered on the staff form; it is set directly on an account. Because it bypasses the role list rather than being granted the sum of every role's permissions, a few controls that look for one specific role stay hidden to it. Signing off a result, composing on a patient's Documents, and the Displays panel on Session setup all require signing in as the role that owns them.
 
-## Where role gating shows up
+> **Note:** Platform administration screens are seen only by Medbot platform superadmins, a Medbot staff identity that is not a clinic role. No clinic role, including Clinic Admin, gives access. See [Platform Administration](/cms/platform-administration).
 
-Nearly every page in this section notes which role a workflow belongs to — see [Staff Management](/cms/staff) (admin-only), [Session Setup](/cms/session-setup), [Rostering](/cms/rostering) and [Attendance](/cms/attendance) (both admin-only to publish/manage, though reception can draft a roster), and [Documents & Certificates](/cms/documents-and-certificates) (referrals and medical certificates require a doctor or admin).
+## Permissions matrix
 
-## SmartCMS screens (Singapore)
+Each row is one task. A cell reads **Yes**, **View only**, or **No**. Notes below a section cover any nuance, such as a view limited to a doctor's own patients.
 
-Organisations in Singapore that subscribe to [SmartCMS modules](/cms/smartcms/modules) get two more screens, gated by module as well as role:
+## Patients and clinical care
 
-- **Claims** (`/claims`): `admin`, `receptionist`, `doctor`.
-- **Reports** (`/reports`): `admin`, `doctor`.
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| [See the patient list and open a chart](/cms/patient-records) | Yes | Yes | Yes | Yes |
+| [Register a patient](/cms/patient-records) | Yes | Yes | No | No |
+| [Invite a patient to self-register](/cms/patient-records) | Yes | Yes | No | No |
+| [Deactivate a patient](/cms/patient-records) | Yes | Yes | No | No |
+| [Edit contact details](/cms/patient-records) | Yes | Yes | Yes | Yes |
+| [Record or change communication consent](/cms/patient-records) | Yes | Yes | Yes | Yes |
+| [See a patient's encounters](/cms/encounters) | Yes | Yes | Yes | Yes |
+| [Start an encounter](/cms/encounters) | Yes | No | Yes | Yes |
+| [Read clinical notes](/cms/encounters) | Yes | Yes | Yes | Yes |
+| [Write a consultation note](/cms/encounters) | Yes | No | Yes | No |
+| [Write a progress note](/cms/encounters) | Yes | No | Yes | Yes |
+| [Amend or retract a consultation note](/cms/encounters) | Yes | No | Yes | No |
+| [Amend or retract a progress note](/cms/encounters) | Yes | No | Yes | Yes |
+| [See vitals and their history](/cms/vitals) | Yes | Yes | Yes | Yes |
+| [Record vitals](/cms/vitals) | Yes | No | Yes | Yes |
+| [Correct a reading](/cms/vitals) | Yes | No | Yes | Yes |
+| [See a patient's vaccinations](/cms/vaccinations) | Yes | Yes | Yes | Yes |
+| [Record, edit or void a vaccination](/cms/vaccinations) | Yes | No | Yes | Yes |
+| [Order a vaccination service](/cms/vaccinations) | Yes | No | Yes | Yes |
+| [Register a vaccination service in the catalog](/cms/vaccinations) | Yes | No | No | No |
+| [See an encounter's orders](/cms/orders-and-order-sets) | Yes | Yes | Yes | Yes |
+| [Apply an order set to an encounter](/cms/orders-and-order-sets) | Yes | No | Yes | Yes |
+| [Cancel an order](/cms/orders-and-order-sets) | Yes | No | Yes | Yes |
+| [Open the Order sets page and build your own sets](/cms/orders-and-order-sets) | Yes | No | Yes | Yes |
+| [Edit, share, retire or delete a set someone else owns](/cms/orders-and-order-sets) | Yes | No | No | No |
+| [See results and open a result](/cms/diagnostic-results) | Yes | Yes | Yes | Yes |
+| [File an incoming result](/cms/diagnostic-results) | Yes | Yes | Yes | Yes |
+| [Sign off a result](/cms/diagnostic-results) | No | No | Yes | No |
+| [Reassign a review to another doctor](/cms/diagnostic-results) | Yes | No | Yes | No |
+| [Withdraw a misfiled result](/cms/diagnostic-results) | Yes | No | Yes | No |
+| [Change the results review rota](/cms/diagnostic-results) | Yes | No | No | No |
+| [See the results review rota](/cms/diagnostic-results) | Yes | View only | View only | View only |
+| [See documents, and download, print, or email them](/cms/documents-and-certificates) | Yes | Yes | Yes | Yes |
+| [Compose a letter or memo](/cms/documents-and-certificates) | Yes | No | Yes | Yes |
+| [Compose a referral letter](/cms/documents-and-certificates) | Yes | No | Yes | No |
+| [Issue a medical certificate](/cms/documents-and-certificates) | Yes | No | Yes | No |
+| [Void a letter or memo](/cms/documents-and-certificates) | Yes | No | Yes | Yes |
+| [Void a referral letter or medical certificate](/cms/documents-and-certificates) | Yes | No | Yes | No |
+| [Read and reply to clinic inbox threads](/cms/messaging) | Yes | Yes | No | No |
+| [Close an inbox thread](/cms/messaging) | Yes | Yes | No | No |
+| [Read a patient's Messages section](/cms/messaging) | Yes | Yes | Yes | Yes |
+| [Send a message from a patient's chart](/cms/messaging) | Yes | No | Yes | No |
+| [Send a ping](/cms/tasks) | Yes | Yes | Yes | Yes |
+| [Receive, acknowledge, and finish pings](/cms/tasks) | Yes | Yes | Yes | Yes |
+| [See the pings you sent](/cms/tasks) | Yes | Yes | Yes | Yes |
+| [Open a patient's notes and read the list](/cms/patient-notes) | Yes | Yes | Yes | Yes |
+| [Claim an existing note into the chart](/cms/patient-notes) | Yes | No | Yes | Yes |
+| [Start a new note](/cms/patient-notes) | Yes | No | Yes | Yes |
+| [Remove or delete a note](/cms/patient-notes) | Yes | No | Yes | Yes |
+| [Make a portal invite for an existing patient](/cms/patient-portal) | Yes | Yes | Yes | Yes |
+| [Invite a new patient to self-register](/cms/patient-portal) | Yes | Yes | No | No |
+| [Answer portal messages in the clinic inbox](/cms/patient-portal) | Yes | Yes | No | No |
+
+A Doctor sees only the patients assigned to them in the queue; a Nurse sees every patient at the location. Reading a chart, its vitals, and its notes is open to all four roles for a patient in the organization.
+
+## Front desk and scheduling
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| [See the appointment list](/cms/appointments) | Yes | Yes | View only | View only |
+| [Book a new appointment](/cms/appointments) | Yes | Yes | No | No |
+| [Book with the agent](/cms/appointments) | Yes | Yes | No | No |
+| [Edit or cancel an appointment](/cms/appointments) | Yes | Yes | No | No |
+| [Answer a booking request](/cms/appointments) | Yes | Yes | No | No |
+| [See today's queue](/cms/reception-queue) | Yes | Yes | View only | View only |
+| [Check a patient in](/cms/reception-queue) | Yes | Yes | No | No |
+| [Call a patient to a room](/cms/reception-queue) | Yes | Yes | No | No |
+| [Route a patient to a stage, or mark payment](/cms/reception-queue) | Yes | Yes | No | No |
+| [Assign or change the doctor](/cms/reception-queue) | Yes | Yes | No | No |
+| [Cancel an appointment, mark a no-show, or reopen](/cms/reception-queue) | Yes | Yes | No | No |
+| [Arrange a session for the patient](/cms/reception-queue) | No | No | Yes | No |
+| [Complete the visit and send the outcome](/cms/reception-queue) | No | No | Yes | No |
+| [Open today's session](/cms/session-setup) | Yes | Yes | No | No |
+| [Mark who is working today](/cms/session-setup) | Yes | Yes | No | No |
+| [Add and assign rooms](/cms/session-setup) | Yes | Yes | No | No |
+| [Add a clinic location](/cms/session-setup) | Yes | No | No | No |
+| [Add, view, and revoke displays](/cms/session-setup) | Yes | No | No | No |
+| [Add a display](/cms/display-boards) | Yes | No | No | No |
+| [See the list of displays](/cms/display-boards) | Yes | No | No | No |
+| [Revoke a display](/cms/display-boards) | Yes | No | No | No |
+| [See the roster](/cms/rostering) | Yes | Yes | View only | View only |
+| [Add, edit, or cancel a shift](/cms/rostering) | Yes | Yes | No | No |
+| [Assign or replace the staff member on a shift](/cms/rostering) | Yes | Yes | No | No |
+| [Create a recurring pattern of shifts](/cms/rostering) | Yes | Yes | No | No |
+| [Publish a week](/cms/rostering) | Yes | No | No | No |
+| [See the attendance page](/cms/attendance) | Yes | No | No | No |
+| [Finalize or reopen a day](/cms/attendance) | Yes | No | No | No |
+| [Correct a record](/cms/attendance) | Yes | No | No | No |
+| [Export a timesheet](/cms/attendance) | Yes | No | No | No |
+
+A Doctor and a Nurse see the appointment list and the queue read only, and each sees a shorter view of their own work. Only a Clinic Admin can reopen or correct an attendance record, and never their own.
+
+## Billing
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| [See accounts and invoices](/cms/billing) | Yes | Yes | No | No |
+| [Create a patient's billing account](/cms/billing) | Yes | Yes | No | No |
+| [Add charge items to an account](/cms/billing) | Yes | Yes | No | No |
+| [Generate an invoice](/cms/billing) | Yes | Yes | No | No |
+| [Download or print an invoice](/cms/billing) | Yes | Yes | No | No |
+| [See the catalog](/cms/billable-catalog) | Yes | Yes | No | No |
+| [Create, import, or delete a charge item definition](/cms/billable-catalog) | Yes | No | No | No |
+| [Manage vaccination services](/cms/billable-catalog) | Yes | No | No | No |
+| [See services, devices, and substances](/cms/services-and-consumables) | Yes | No | Yes | Yes |
+| [Add, edit, price, retire, or delete an entry](/cms/services-and-consumables) | Yes | No | No | No |
+
+## Pharmacy and inventory
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| [Search and view medications](/cms/formulary) | Yes | No | View only | View only |
+| [Add, edit, retire, or delete a medication](/cms/formulary) | Yes | No | No | No |
+| [See inventory lots and the stock overview](/cms/inventory-and-stock) | Yes | No | Yes | Yes |
+| [Receive stock (log a delivery)](/cms/inventory-and-stock) | Yes | No | No | Yes |
+| [Adjust a lot's quantity](/cms/inventory-and-stock) | Yes | No | No | Yes |
+| [Create, edit, delete, or import lots](/cms/inventory-and-stock) | Yes | No | No | No |
+| [Set a reorder threshold](/cms/inventory-and-stock) | Yes | No | No | No |
+
+## Administration
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| [See the staff list](/cms/staff) | Yes | No | No | No |
+| [Add a staff member](/cms/staff) | Yes | No | No | No |
+| [Change a role or registration number](/cms/staff) | Yes | No | No | No |
+| [Deactivate or reactivate a staff member](/cms/staff) | Yes | No | No | No |
+
+## Related
+
+- Follow your role's working day in the Guides by Role: [Receptionist](/cms/guides/receptionist), [Nurse](/cms/guides/nurse), [Doctor](/cms/guides/doctor), or [Admin](/cms/guides/admin).
+- Look up a term in the [Glossary](/cms/glossary).
