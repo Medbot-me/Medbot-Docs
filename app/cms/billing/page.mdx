@@ -1,0 +1,53 @@
+# Billing
+
+Billing turns the charges from a visit into an invoice. Find it at **Billing → Billing** (`/billing`). A billing account belongs to one patient. You add charge items to the account, then generate an invoice.
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| See accounts and invoices | Yes | Yes | No | No |
+| Create a patient's billing account | Yes | Yes | No | No |
+| Add charge items to an account | Yes | Yes | No | No |
+| Generate an invoice | Yes | Yes | No | No |
+| Download or print an invoice | Yes | Yes | No | No |
+
+Doctors and nurses do not see **Billing** or the patient chart's **Accounts** section. If they open the page by address, it says the action requires the admin or receptionist role.
+
+## Creating a billing account
+
+1. Open the patient, then **Accounts**.
+2. Select **Create Account**.
+3. Enter an **Account name** (optional), choose an **Account type** (**Patient Billing Account**, **Account Receivable**, **Cash**, or **Credit Card**) and a **Status** (**Active**, **Inactive**, **On Hold**, or **Unknown**), and add a description if you want.
+4. Select **Create Account**. You see "Account created for" and the patient's name.
+
+The new account appears on the **Accounts** tab of the Billing page with its name, status, type, subject, and last update.
+
+## Adding charge items
+
+1. On **Billing → Accounts**, open the actions menu on the account's row (**Actions for** the account name).
+2. Select **Add items**.
+3. Search for a **Charge item definition** and select it. Only active definitions with a base price are listed, each with its price. Definitions come from the [Billable Catalog](/cms/billable-catalog).
+4. Enter a **Quantity** (a positive number) and select **Add charge item**.
+
+Repeat for each line. Items wait on the account as billable until you generate an invoice.
+
+## Generating an invoice
+
+1. Open the same actions menu and select **Generate invoice**.
+2. Review the list of billable items (**Item**, **Qty**, **Entered**). The dialog explains: "Prices are calculated from each item's charge definition when the invoice is generated." and "Generating will price these items, create an invoice, and mark them as billed. This can't be undone from here."
+3. Select **Generate invoice**. The result shows the invoice with each line's unit price and amount, the **Net** and **Total**.
+4. Select **Download PDF** to save it, or **Close**.
+
+If the account has no billable items, the dialog says "No billable charge items on this account. Add charge items before generating an invoice." An item that is already on an invoice, or is being invoiced by someone else at the same moment, is skipped. If nothing is left, generating is refused with a message that the items may already be billed.
+
+## Finding and reprinting invoices
+
+The **Invoices** tab lists each invoice with its **Invoice** number, **Patient**, **Date**, **Status**, and **Total**. Open **Actions for invoice** on a row to choose **Download PDF** or **Print**.
+
+What the patient sees: a completed visit's invoice is also available to the patient in their portal. See [Visits in the Patient tab](/patient/visits).
+
+## Related
+
+- [Billable Catalog](/cms/billable-catalog): the priced items you bill.
+- [Services & Consumables](/cms/services-and-consumables): the clinical services that carry prices.

@@ -1,0 +1,35 @@
+# Attendance
+
+Attendance shows what actually happened against each [published shift](/cms/rostering#publishing-a-week-clinic-admin-only). Find it at **Scheduling → Attendance** (`/roster/attendance`). Only a Clinic Admin can manage it, the same team that owns publishing. Everyone's attendance is recorded, but only a Clinic Admin reviews, corrects, finalizes, and exports it.
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| See the attendance page | Yes | No | No | No |
+| Finalize or reopen a day | Yes | No | No | No |
+| Correct a record | Yes | No | No | No |
+| Export a timesheet | Yes | No | No | No |
+
+A Clinic Admin cannot reopen or correct their own record. Another Clinic Admin has to do it.
+
+## How attendance is derived
+
+There is no clock-in button. Attendance is derived from staff activity in the app during a published shift. Presence is inferred from real work, such as checking in a patient, opening a chart, or recording an observation. A shift with no recorded activity reads as **Absent**. This is deliberate: it reflects real work rather than a self-reported time.
+
+## Reviewing a week
+
+The page opens on the current week showing **Needs a look**. These are the partial and absent days, the ones most likely to need a correction. Switch to **All** to see every record in the range instead.
+
+## Finalizing and correcting
+
+Set the date at the top and select **Finalize** to lock a day. Select **Reopen** to unlock one that needs a late fix. Select **Correct** on a row to amend the clock-in, clock-out, or status. A reason is required. A finalized record must be reopened before it will accept a correction.
+
+## Exporting a timesheet
+
+**Export CSV** produces a timesheet for the selected range. Records that are not finalized are left out of the export, and the export tells you how many were skipped. An export is only ever as complete as the finalization work behind it.
+
+## Related
+
+- [Rostering](/cms/rostering): plan and publish the shifts that attendance is measured against.
+- [Session Setup](/cms/session-setup): open a location's working day.

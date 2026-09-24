@@ -1,0 +1,59 @@
+# Platform Administration
+
+> **Note:** Only Medbot platform superadmins see these screens. No clinic role, including Clinic Admin, gives access.
+
+Platform administration is where Medbot operations staff handle requests for Medbot-hosted organizations, look after those organizations, and decide who else is a platform superadmin. The screens appear in the sidebar under **Platform**. A clinic that wants a hosted organization starts from [Medbot-Hosted Organizations](/cms/hosted-organisations).
+
+If a person without the superadmin role opens these addresses, the page says **404 | This page could not be found.** The screens are hidden on purpose.
+
+## Provisioning requests
+
+Open **Platform → Provisioning requests** (`/admin/provisioning`). The page is headed **PLATFORM ADMINISTRATION** and lists every request for a Medbot-hosted organization. Tabs group them by status: **Pending**, **In progress**, **Fulfilled**, **Rejected**, and **Cancelled**. Each row shows the **Requester**, **Organisation**, **Country**, **Requested** date, and who it is **Assigned to**. When a tab is empty the page says "No requests in this status."
+
+Select a request to open it. The page shows the requester, the requested time, country, time zone, the slug the requester asked for, who claimed it, and any message or rejection reason. A history of what happened to the request is at the bottom.
+
+### Claim a request
+
+For a pending or in-progress request, select **Claim**. This tells other administrators that you are handling it. Select **Release** to hand it back.
+
+### Keep notes
+
+Type in **Admin notes** and select **Save note**. Notes are never shown to the requester.
+
+### Reject a request
+
+1. Select **Reject**.
+2. Write a reason. The reason is emailed to the requester exactly as you write it.
+3. Confirm. The request moves to **Rejected**.
+
+### Fulfil a request
+
+Provision the organization's medical record server first. That step happens outside the CMS. Then:
+
+1. Select **Fulfil**.
+2. Check the **Organisation name** and slug, and enter the **Medplum base URL** (optional), **Medplum client ID**, and **Medplum client secret**.
+3. Turn on **Force** only if you need to override another administrator's claim.
+4. Confirm. A message shows **Organisation provisioned** with the organization's join code.
+
+The requester is emailed that the organization is ready. On a fulfilled request, **Resend email** sends that message again. The card shows when it was last sent, or why sending failed.
+
+## Hosted organizations
+
+Open **Platform → Hosted organisations** (`/admin/organisations`). The page lists every organization Medbot provisioned and holds credentials for. If there are none it says **No hosted organisations yet.** Each entry shows whether it is **Active** or **Offboarded**, and the request it came from ("No originating request on record" when there is none).
+
+- **Set credentials** or **Rotate credentials** saves a new Medplum client ID and secret (and an optional base URL). A **Credentials updated** message confirms it. An organization's own Clinic Admin cannot change credentials for a hosted organization.
+- **Offboard** ends access: "Its staff can no longer sign in and every active PHR link is discharged. This can be reversed."
+- **Reactivate** restores it: "Its staff will be able to sign in again immediately."
+
+## Platform admins
+
+At the bottom of the hosted organizations page, **Platform admins** grants or removes the superadmin role by email.
+
+1. Enter the person's **Email** and select **Search**.
+2. If they have never signed in, you see "No account found for that email yet". They must sign in once before they can be promoted.
+3. Choose the role in the list and select **Save**. A **Role updated** message confirms it.
+
+## Related
+
+- [Medbot-Hosted Organizations](/cms/hosted-organisations): the clinic's side of a request.
+- [Roles & Permissions](/cms/roles-and-permissions): clinic roles, which are separate from the superadmin role.

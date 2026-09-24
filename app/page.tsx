@@ -4,6 +4,7 @@ import HomePageCard from "@/components/HomePageCard";
 import { 
   BackpackIcon, 
   BotIcon, 
+  HospitalIcon,
   BinocularsIcon,
   NotebookTextIcon, 
   MicroscopeIcon, 
@@ -48,6 +49,12 @@ export default function Page() {
           title="DeepResearch"
           description="Leverage the power of agents for comprehensive medical research"
           href="/docs/deep-research"
+        />
+        <HomePageCard
+          icon={HospitalIcon}
+          title="Medbot CMS"
+          description="Run a clinic day in the Medbot CMS: queue, chart, orders, billing, and more"
+          href="/cms"
         />
       </div>
       <h1 className="text-3xl font-medium mt-4">Use Cases</h1>

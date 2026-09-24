@@ -1,0 +1,88 @@
+import { ImageZoom } from "nextra/components";
+
+# Encounters & Clinical Notes
+
+An encounter is the record of one visit. Doctors and nurses attach vitals, notes, orders and vaccinations to it. Find encounters in a patient's chart under **Encounters** (`/patients/[id]/encounters`). Clinical notes appear on the chart **Overview**.
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| See a patient's encounters | Yes | Yes | Yes | Yes |
+| Start an encounter | Yes | No | Yes | Yes |
+| Read clinical notes | Yes | Yes | Yes | Yes |
+| Write a consultation note | Yes | No | Yes | No |
+| Write a progress note | Yes | No | Yes | Yes |
+| Amend or retract a consultation note | Yes | No | Yes | No |
+| Amend or retract a progress note | Yes | No | Yes | Yes |
+
+The **Start Encounter** button is visible to every role. A Receptionist who submits the form sees "Something went wrong while starting the encounter." Ask a Doctor, Nurse or Clinic Admin to start it.
+
+## Starting an encounter
+
+1. Open the patient's chart and select **Encounters**, or select **Start Encounter** in the actions menu on the Patients page.
+2. Choose the **Encounter class**: **Ambulatory** (the default), **Emergency**, **Virtual**, **Home Health** or **Inpatient**.
+3. Choose the **Status**: **Planned**, **Arrived**, **Triaged** or **In Progress** (the default).
+4. Choose the **Priority**: **Routine** (the default), **Urgent**, **ASAP** or **STAT**.
+5. Optionally enter a **Reason for visit (optional)**.
+6. Select **Start Encounter**.
+
+Clinic Admins also see an **Account** field to link a billing account. See [Billing](/cms/billing).
+
+<ImageZoom src="/images/cms/encounters/01-start-encounter-dialog.png" alt="The Start Encounter dialog with encounter class, status, priority and reason for visit" />
+_The Start Encounter dialog_
+
+You cannot start an encounter for an inactive patient. The button is disabled and the app says "Cannot start an encounter for an inactive patient."
+
+### Which encounter counts as current
+
+Vitals, notes, orders, order sets and vaccination orders attach to the patient's current encounter. The current encounter is the most recently started one with status **In Progress**. An encounter that is only **Planned**, **Arrived** or **Triaged** is not current. Without a current encounter the chart says so and hides **Write note**, **Apply order set** and **Order service**.
+
+An encounter started from the chart is not linked to an appointment. It does not appear on the [Reception Queue](/cms/reception-queue). Visits from the queue finish when the doctor selects **Complete visit**. The chart has no control to finish an encounter.
+
+<ImageZoom src="/images/cms/encounters/04-encounters-page.png" alt="The Encounters page with a table of encounters and the Orders card" />
+_The Encounters page_
+
+## The encounters table
+
+Each row shows the ID, status, class, priority, type, reason, account, start and end time, and service provider. Newest rows come first. Clinic Admins, Doctors and Nurses see **Record vitals** on any encounter that is still open. See [Vitals](/cms/vitals). The **Orders** card below the table is described in [Orders & Order Sets](/cms/orders-and-order-sets).
+
+## Clinical notes
+
+The **Clinical notes** card on **Overview** lists notes grouped by encounter, newest first. Each note shows its type, author and time. There are two types:
+
+- **Consultation Note**: the physician's note for the consultation. Doctors and Clinic Admins write these.
+- **Progress Note**: a procedure performed or health education given. Doctors, Nurses and Clinic Admins write these.
+
+<ImageZoom src="/images/cms/encounters/02-clinical-notes-card.png" alt="The Clinical notes card with a consultation note and a progress note" />
+_The Clinical notes card_
+
+### Writing a note
+
+1. Select **Write note**. It appears only when you may write a note and the patient has a current encounter.
+2. Choose the **Type**. The list offers only the types your role may write.
+3. Optionally enter a **Title (optional)**. The note type is the default title.
+4. Enter the **Note** text.
+5. Select **Save note**.
+
+Your account must be linked to a clinical profile so the note can carry your name. Otherwise you see "Your account has no linked clinical profile yet, so a note cannot be attributed to you." Notes cannot be filed against an encounter that is finished, cancelled or entered in error.
+
+### Amending a note
+
+Select **Amend** on a note, change the text and select **Save amendment**. The note is labeled **Amended** with the name of the person who amended it and when. The earlier text stays in the note's version history. Any Doctor or Clinic Admin can amend a note, not only its author. Nurses can amend progress notes only.
+
+### Retracting a note
+
+Select **Retract**, enter a **Reason for retracting**, then select **Confirm retraction**. Retracting cannot be undone. The note stays in the chart, greyed out and labeled **Retracted** with the reason, who retracted it and when. A retracted note can no longer be amended.
+
+<ImageZoom src="/images/cms/encounters/03-retract-note.png" alt="A note being retracted with the reason field and the Confirm retraction button" />
+_Retracting a note_
+
+Receptionists can read notes but cannot write, amend or retract them.
+
+## Related
+
+- [Vitals](/cms/vitals): record readings on the encounter.
+- [Orders & Order Sets](/cms/orders-and-order-sets): place and cancel orders.
+- [Vaccinations](/cms/vaccinations): record a vaccination.
+- [Patient Records & Consent](/cms/patient-records): the chart itself.
