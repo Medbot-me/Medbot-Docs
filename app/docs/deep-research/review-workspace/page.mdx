@@ -1,0 +1,52 @@
+# The Review Workspace
+
+Opening a review takes you to its workspace at `medbot.me/research/<review>`. The current stage is part of the address (`?stage=question`, `criteria`, `strategy`, `search`, `screening`, `eligibility` or `synthesis`), so you can link to a stage directly.
+
+## Layout
+
+- **Header**: a **Deep Research** back link, the review's title, its status, an **Automatic** or **Manual** badge, and **Model: &lt;name&gt;**. Reviews someone else owns show **Shared with you**.
+- **Stage stepper**: the seven stages, numbered 1 to 7. Each shows **Done**, **Running**, **Failed**, **Next** or **Not run**. A dot on a stage means Medbot has a proposal waiting there. Click a stage to open it.
+- **Conversation** (left): your conversation with Medbot about this review. See [Working with Medbot](/docs/deep-research/working-with-medbot).
+- **Stage panel** (right): the current stage's results and controls.
+
+While a stage runs, a progress bar shows how far it has got, for example **Screening: 120 of 480**. On a phone, the conversation and the stage panel are two tabs, **Medbot** and the stage name.
+
+## Running a review
+
+The owner's run controls are in the header:
+
+| Button | When it shows | What it does |
+| --- | --- | --- |
+| **Run review** | An automatic review that has not started. | Runs every stage in turn. |
+| **Run the rest** | An automatic review part-way through. | Runs the remaining stages. |
+| **Continue** | After a stop or a pause point. | Carries on from where it stopped. |
+| **Stop** | While a run is going. | Stops after the current step (**Stopping…**). |
+| **Switch to manual** | An automatic review that is not running. | Makes the review manual so you can edit it. |
+
+In manual mode, the **Question**, **Criteria** and **Search strategy** stages wait for you to agree each one. **Run search** at the end of the search strategy starts the search, and screening, eligibility and synthesis then run on their own, stopping at any pause point you set. In manual mode a stage's own run button runs just that stage; in automatic mode running a stage runs it and everything after it.
+
+If a stage fails, the panel shows **&lt;Stage&gt; failed** with the error and a **Retry from here** button.
+
+### Pause points
+
+Automatic reviews that are not yet complete show a **Pause points** card. Tick **After question**, **After criteria**, **After search strategy**, **After search**, **After screening** or **After eligibility**, and the run stops after that stage so you can check its results. Changes apply to a run in progress too; stages the run has already passed are marked **(passed)**. When a run pauses, the conversation says so; click **Continue** when you are ready.
+
+You can also ask Medbot to set pause points for you.
+
+## Who can change what
+
+- **The owner** can edit fields, override decisions and upload PDFs when the review is in **manual** mode and nothing is running. In automatic mode, panels are read-only apart from the run buttons and the conversation; switch to manual to edit.
+- **People it is shared with** can read everything, including the conversation, but cannot change anything or talk to Medbot.
+
+## More actions
+
+The **More actions** menu in the header has:
+
+- **Export articles (CSV)**: every article with its decisions and extracted data. See [Synthesis and Export](/docs/deep-research/synthesis-and-export#export-articles).
+- **Share**: share the review with a Medbot user, found by name or email. People you share with can read the review but not change it.
+- **Switch to automatic**: for a manual review that is not running.
+- **Delete review**: deletes the review with its articles, decisions and syntheses. This cannot be undone.
+
+## If the review's model is removed
+
+Every stage runs on the review's model. If that model is removed or is no longer available, the owner sees **Choose a model for this review**. Pick another and click **Use this model**; it becomes the review's model from then on. A model that is still available cannot be swapped.

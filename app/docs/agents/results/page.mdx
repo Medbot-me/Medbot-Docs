@@ -1,0 +1,49 @@
+# Results
+
+The **Results** tab on the agent page shows how the agent is performing across its runs. Open it from the agent page, or with **Dashboard** in the agent card's menu.
+
+## Choosing what to look at
+
+- **Validation runs**, **Live calls** or **All calls** (the default).
+- The period: **Last 4 weeks**, **Last 12 weeks** (the default), **Last 6 months** or **Last year**.
+- **Every version**, or one workflow version.
+- **Matrix on &lt;field&gt;**: which yes/no output field the confusion matrix uses, when the agent has more than one.
+
+Ground truth comes from [labels](/docs/agents/validation#ground-truth-labels) first, then from verdicts recorded on individual runs.
+
+## Tiles
+
+| Tile | What it shows |
+| --- | --- |
+| **Successful runs** | Runs that finished, out of all runs in scope. |
+| **Labelled** | Runs with ground truth or a verdict. |
+| **Not labelled** | Successful runs with no truth. |
+| **In the matrix** | Yes/no answers with a truth. |
+| **Median run time** | Of successful runs. |
+
+## Classification
+
+For a yes/no output field, **Classification on &lt;field&gt;** shows a confusion matrix (**Truly yes** / **Truly no** against the agent's yes and no: true positives, false positives, false negatives and true negatives) and, with their confidence intervals:
+
+| Measure | Meaning |
+| --- | --- |
+| **Sensitivity** | Of the patients who truly are yes, the share the agent said yes to. |
+| **Specificity** | Of the patients who truly are no, the share the agent said no to. |
+| **Positive predictive value** | When the agent says yes, how often it is right. |
+| **Negative predictive value** | When the agent says no, how often it is right. |
+| **Accuracy** | The share of labelled patients the agent got right either way. |
+
+An agent with no yes/no output field has no matrix.
+
+## Charts
+
+- **Runs per week**: live and validation runs each week.
+- **Accuracy by field**: how many labelled answers were right for each output field.
+- **Recommendation distribution**: when the agent has a field named like *recommendation*, *change*, *action* or *next step*, how often it gave each value.
+
+## Ask about these results
+
+The chat on the Results tab answers questions about the agent's runs. Try the suggestions, such as *What do the misses have in common?*, *Which rule do clinicians overrule most often?*, *Summarise the edited live calls this month* or *Are any patients labelled inconsistently?*
+
+- **Show patients** opens the Validation tab on its misses.
+- **Send to refine flow** (editors) opens [Refine](/docs/agents/refine).

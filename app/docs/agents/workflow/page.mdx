@@ -1,0 +1,90 @@
+# Workflows and Versions
+
+An agent's **expert knowledge** is its numbered rules, written in plain language. A **workflow** turns those rules into a graph of steps that the agent follows on every run: gather the facts it needs, apply each rule, answer yes/no questions, and write the output fields. Medbot checks every workflow before it can go live, and keeps each saved workflow as a numbered version, so you always know which version produced a result.
+
+An agent without a workflow still runs, from its prompt and expert knowledge alone.
+
+## Step kinds
+
+| Step | What it does |
+| --- | --- |
+| **Start** | Every run begins here. Connect it to the first steps. |
+| **Data** | Gathers facts from the record. Its **Source** is the **Patient record**, a **Dataset** or a **Tool**. |
+| **Reason** | Applies one rule. |
+| **Decision** | Asks a yes/no question, for example *Is the latest HbA1c above 7%?*, and follows the **Yes** or **No** branch. Steps reached only through the branch not taken are skipped. |
+| **Subagent** | A step other agents may call. Exposing a step as a subagent is saved now and used in a later release. |
+| **Output** | Writes the output fields. |
+| **End** | Every path must reach End. |
+
+Each step can record which rule it came from (**From rule**), the values it **Reads**, and the values it **Produces**.
+
+## Generating a workflow
+
+Medbot generates a workflow from the expert knowledge when you create an agent (see [Create an Agent](/docs/agents/create-an-agent#step-3-expert-knowledge-and-workflow)). To generate one later, click **Generate workflow** on the agent card, on the agent's **Workflow** tab, or in the editor. **Regenerate from expert knowledge** in the editor replaces the current graph with a new one; it asks first if you have unsaved edits.
+
+## The workflow editor
+
+Open the editor from **Open in the editor** on the agent's **Workflow** tab, or go to `medbot.me/agents/<agent>/workflow`. People who cannot edit the agent see it read-only.
+
+- **Canvas**: the steps and their connections, drawn as animated dashed arrows in the direction the run flows. Decision branches are labelled **Yes** or **No**; click a label to switch it. Errors are highlighted in red, and proposed changes in amber.
+- **Add step** palette: click a step kind, or drag it onto the canvas, then drag from a step's handle to another step to connect them. Below the palette, the **Expert knowledge** list shows the numbered rules.
+- **Tidy** lays the graph out again, **Left to right** or **Top to bottom**.
+- The side panel has three tabs: **Inspector**, **Checks** and **Proposals**.
+
+### Inspector
+
+Select a step to edit its **Name**, **Instruction** (or **Question** for a decision), **From rule**, **Source** (data steps), **Reads** and **Produces**, or click **Remove step**. Select a connection to set its **Branch** (Yes or No) when it leaves a decision, or click **Remove connection**.
+
+### Checks
+
+Every change is checked straight away. The banner says **Valid: every check passes**, **Valid, with N warnings**, or **N errors; fix before making it live**. The twelve checks are:
+
+1. Every step has its own id
+2. Every connection points at a step that exists
+3. One Start, with nothing before it
+4. One End, with nothing after it
+5. No loops
+6. Every step is reachable from Start
+7. Every step reaches End
+8. Both branches of every decision are labelled
+9. Every data step names a source
+10. Every output field is produced by a step
+11. Every produced output field reaches an output step
+12. No step reads a value nothing before it produces
+
+Errors (checks 1 to 8) block **Make live**. The last four raise warnings, which do not: a data step without a source reads the patient record, and an output field no step produces will be empty.
+
+Click **Select** on an issue to highlight it. Some issues have a quick fix: **Remove this connection** for a loop, **Connect to End** for a dead end, and **Connect from Start** for an unreachable step.
+
+### AI proposals
+
+Click **Ask AI to propose fixes** on the Checks tab. Medbot proposes changes (**Remove connection**, **Add connection**, **Label branch**, **Map output field** or **Insert step**), each with the rule it relates to and its rationale. The **Proposals** tab shows whether the workflow would be valid after all of them.
+
+- **Apply** or **Skip** each proposal, or **Apply all and verify**.
+- To steer Medbot, type in **Ask for a different fix** (for example *Keep the eGFR check before the decision*) and click **Propose again**.
+
+### Try on one patient
+
+**Try on one patient** runs a saved version that passes every check on one patient you choose, without making it live. It runs in the background; follow it on the agent's **Agent Runs** tab.
+
+## Versions
+
+| Status | Meaning |
+| --- | --- |
+| **Draft** | Editable. Saving again overwrites the newest version while it is a draft. |
+| **Live** | The version every new run follows. An agent has at most one live version, and it cannot be changed or archived. |
+| **Archived** | A previous version, kept for reference. |
+
+In the editor:
+
+- **Save as version N** saves your edits. If the newest version is a draft it is overwritten; otherwise a new version is created.
+- **Make live** makes the saved version live, after Medbot checks it again. It is disabled until you have saved your edits and fixed every error. If the agent is set to **Re-run on every new version** and has a validation dataset, a validation run starts.
+
+Every run records the workflow version it followed, so results on the [Live calls](/docs/agents/live-calls), [Validation](/docs/agents/validation) and [Results](/docs/agents/results) tabs can be compared by version.
+
+### The Workflow and Versions tabs
+
+On the agent page:
+
+- The **Workflow** tab shows the live version (or that nothing is live yet), any newer draft and its errors, the number of steps and rules, and a read-only view of the graph. It warns you when the expert knowledge has changed since the version was saved.
+- The **Versions** tab lists every version with its status, when it was saved, its checks and note, and **Open**, **Make live** and **Archive** (drafts only). Frozen releases and their evaluations are in the agent's **Registry**.

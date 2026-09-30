@@ -1,0 +1,97 @@
+# Bring Patient Data
+
+**Bring patient data** turns any set of CSV files, or one Excel workbook with several tabs, into a dataset agents can read. Columns can be anything: you tell Medbot what each table means, and which column names the patient, and it joins the tables into one record per patient.
+
+Open it from **Datasets → Bring patient data** ([medbot.me/datasets/import](https://www.medbot.me/datasets/import)). The import has three steps: **Choose files**, **Map columns** and **Review and save**. Nothing is uploaded until you click **Save as dataset**.
+
+The page's other tabs point elsewhere: **FHIR connector** and **Notes connector** explain [connectors](/docs/agents/connectors) and link to them, and **FHIR JSON and other** opens the [other imports](/docs/agents/datasets#other-imports).
+
+## Step 1: Choose files
+
+Drop files onto the page or click **Choose files**. You can bring .csv, .tsv and .xlsx files, up to 200 MB in total.
+
+- Each CSV or TSV file becomes one table, named after the file.
+- Each tab of an Excel workbook that has rows becomes a table, named after the tab.
+- Blank rows, and columns without a header, are dropped.
+
+Each table shows its row and column counts, its headers, and the kind of data Medbot thinks it holds (or **Unsure, check**). The patient column can be named differently in each table: rows are joined by the value, not the column name.
+
+Click **Continue to mapping**. Over 100,000 rows in total, Medbot warns that the upload will be slow and suggests importing in parts.
+
+## Step 2: Map columns
+
+For each table in the **Tables** list, say what the table describes and which column names the patient. Everything else is optional. Medbot guesses all of this from the headers and sample values; check its guesses. A table marked **Needs a role** has something to fix.
+
+### This table describes
+
+| Kind | Becomes |
+| --- | --- |
+| **Patients** | Patient |
+| **Lab results** | Observation |
+| **Medications** | MedicationStatement |
+| **Problems and diagnoses** | Condition |
+| **Allergies** | AllergyIntolerance |
+| **Clinical notes** | DocumentReference |
+| **Encounters** | Encounter |
+| **Other** | Observation, or a note when it has free text |
+
+Changing the kind guesses the column roles again.
+
+### Patient identifier and date
+
+- **Patient identifier**: the column that names the patient, such as an MRN or study id. Medbot shows how many patients the table has or, when there is a patients table, how many of this table's patients it matches, and how many rows have no identifier.
+- **Date**: the column that dates each row, and whether dates are written **D/M/Y** or **M/D/Y**. Dates can be ISO (2024-01-12), day/month/year or month/day/year with / or -, or written with a month name (12 Jan 2024). Medbot tells you how many values it could not read.
+
+### Column roles
+
+Give each column a role:
+
+| Role | Use it for |
+| --- | --- |
+| **Patient identifier** | The column that names the patient. One per table. |
+| **Name**, **Date of birth**, **Sex** | Patient demographics (patients tables). |
+| **Date** | When the row happened. One per table. |
+| **Name or code** | What the row is: the test, drug, diagnosis or allergy. |
+| **Value**, **Unit** | A result and its unit. |
+| **Status or flag** | A status or abnormal flag. |
+| **Free text, kept as a note** | Text kept verbatim as a note, which can be extracted later. |
+| **Ignore** | Leave the column out of the patient record. |
+
+The roles offered depend on the table's kind. Lab results, medications, problems and allergies tables need a **Name or code** column, and clinical notes tables need a **Free text** column. Extra columns on a patients table become per-patient observations named after the column.
+
+To reuse a mapping, click **Apply the same roles to** and choose another table; columns with the same header get the same role.
+
+### One patient, as an agent will read it
+
+The right-hand panel assembles one patient across every table, as a timeline, newest first, exactly as an agent will read it. Pick a patient to check the join. Values are shown exactly as recorded: Medbot never rounds, abbreviates or re-cases clinical data.
+
+## Step 3: Review and save
+
+Name the dataset (**Dataset name**; it defaults to the first file's name). The tiles summarise what will be saved:
+
+| Tile | What it shows |
+| --- | --- |
+| **Patients** | How many patients can be analysed. |
+| **Records attached** | Rows attached to a patient, by kind. |
+| **Date range** | The years the records cover, and the median number of records per patient. |
+| **Rows not attached** | Rows kept aside rather than dropped. |
+
+The patient table lists each patient with the tables they appear in, their counts, their latest record and a status: **Analysable**, **No notes** (there are notes tables but none for this patient) or **No medicines**. Click a patient to preview their record below.
+
+### Rows Medbot could not attach
+
+- Rows with no patient identifier.
+- Rows whose patient appears in no patients table (only when you have a patients table).
+- Rows whose date could not be read, with a link to change the table's date order.
+
+**Download rows** saves the unattached rows as one CSV per table. Tick **Create patients from them** to add rows whose patient is not in a patients table as new patients.
+
+### Saving
+
+Click **Save as dataset**. Patients tables are saved first, then each table in chunks, with a progress bar. When it finishes you go to the new dataset. Its source is **Tables from files**.
+
+- Importing the same rows again updates them rather than duplicating them.
+- A patients table's demographics are never overwritten by later tables.
+- Rows with nothing to keep (for example a lab row with no test name and no value, or a note with no text) are skipped.
+
+To pull records out of free-text notes as well, click **Extract from notes with a connector**; see [Notes extraction](/docs/agents/connectors#notes-extraction).

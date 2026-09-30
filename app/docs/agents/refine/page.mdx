@@ -1,0 +1,38 @@
+# Refine an Agent
+
+The Refine flow learns from the cases an agent got wrong. It re-validates the agent on its (grown) validation dataset, proposes changes to its rules, workflow steps and system instructions from the misses and from clinicians' edits, lets you try each change on a few patients, and saves the ones you accept as a new workflow version.
+
+Click **Refine** in the agent page header, or **Refine agent from these misses** on the Validation tab. Refining is for the agent's editors: its owner or an organisation admin. You need a validation dataset with labelled patients.
+
+## Step 1: Grown dataset
+
+The tiles show the dataset's **Patients**, how many are **Labelled**, how many were **Added from live calls** (reviewed by clinicians), and how many reviewed live calls are **Waiting** to be added. If edited or rejected calls are waiting, add them from [Live calls](/docs/agents/live-calls#adding-calls-to-a-dataset) first, so the new version is checked against them.
+
+Click **Re-validate v&lt;n&gt; on &lt;n&gt; patients** to run the current version on the dataset, or **Use the latest results instead** to go straight to proposals.
+
+## Step 2: Re-validate
+
+Follow the run as it goes. When it finishes, the tiles show the **Overall** score, the score on the **Original patients**, and on those **Added from live calls**, with **Misses by workflow step**. Click **Propose changes from &lt;n&gt; misses**.
+
+## Step 3: Proposed changes
+
+Medbot proposes changes from the misses and from the most recent edited or rejected live calls. To steer it, add guidance (for example *the eGFR rule is too strict*) and click **Propose again**.
+
+| Proposal | What it changes |
+| --- | --- |
+| **Rewrite a rule** | One rule of the expert knowledge, and the workflow steps made from it. |
+| **Change a workflow step** | One step's instruction. |
+| **Amend the system instructions** | The agent's system instructions. |
+
+Each proposal shows its rationale and the change word by word. For each:
+
+- **Try on &lt;n&gt; patients** runs the agent with the change on up to 20 patients, misses first, without recording any calls. It reports how many misses it fixed, how many matches it broke, and the result for each patient.
+- **Accept** or **Skip**.
+
+When you have decided, choose **Keep v&lt;n&gt; live, save v&lt;n+1&gt; as a draft** or **Make v&lt;n+1&gt; live**.
+
+## Step 4: Compare and save
+
+Medbot saves the accepted changes as a new workflow version (made live only if you asked and it passes every check), records a version in the agent's registry, and validates the new version straight away. The comparison table fills in field by field as the run comes in, showing the change in points against the previous version.
+
+From here, **Open Validation**, open the new version in the editor, or open the **Registry**.

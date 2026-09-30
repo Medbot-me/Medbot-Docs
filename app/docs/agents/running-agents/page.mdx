@@ -1,0 +1,40 @@
+# Running Agents
+
+You can run an agent from its page, on one patient or many, from the workspace while you write, and from a conversation with Medbot about a patient. Every run is recorded as a **call** on the agent, with the workflow version it followed.
+
+## From the agent page
+
+Click **Run** in the agent page header (or **Run** on its card) to open **Run Agent**.
+
+1. Choose what to run on:
+   - **Choose patients**: pick a dataset, search its patients, and select one or more (**All** / **None**), then **Use patient** or **Use &lt;n&gt; patients**. The agent reads each record through FHIR tools.
+   - Or paste a note into the box to run the agent on it directly. The dialog estimates the note's token count.
+2. Choose the **Run mode**:
+   - **Interface** runs on one patient or note and shows the result on the page straight away.
+   - **Background** runs on every selected patient, even when you leave the app. It needs one or more dataset patients. See [Background Runs](/docs/agents/background-runs).
+3. Choose the **Processing**:
+   - **With algorithm** follows the agent's workflow step by step: its live version, or a saved plan if it has no verified workflow yet. It needs expert knowledge.
+   - **No algorithm** runs the agent from its prompt in one pass.
+4. Click **Run**.
+
+An interface run's result appears as **Agent's Output** on the Overview tab, with the [Accept, Edit and Reject](/docs/agents/live-calls#reviewing-a-result) bar.
+
+Every run, whatever its source, is listed on the agent's **Agent Runs** tab, where you can open its details, retry a failed run, cancel a running one, or delete it.
+
+## In a conversation about a patient
+
+When a workspace conversation with Medbot is about a patient, click **Run an agent on this patient** (▶) in the message box. Choose one of your agents in **Run an agent on &lt;patient&gt;**. The result appears in the conversation as a card, with the Accept, Edit and Reject bar so you can review it there, and it is recorded on the agent's [live calls](/docs/agents/live-calls).
+
+## In the notes editor
+
+Agents that process notes can be run on the note you are writing:
+
+- The **Agents** panel in the workspace sidebar lists your agents. Choose **Default** or **Algo** processing and click **Run** to process the open note. Use **Copy output** or **Insert into editor** on the result.
+- Select text and choose **Agents** in the editor's bubble menu to run a selection agent on it. See [Note Agents](/docs/agents/types/non-form).
+- Form agents fill in a form from the note. See [Form Agents](/docs/agents/types/form).
+
+## Other ways an agent runs
+
+- **Validation runs** run the agent on every patient in its validation dataset (up to 500). See [Validation](/docs/agents/validation).
+- **Try on one patient** in the workflow editor runs a saved version on one patient without making it live. See [Workflows and Versions](/docs/agents/workflow#try-on-one-patient).
+- **Service agents** run on a service's cohort, on demand or on a schedule. See [Service Agents](/docs/services/agents).
