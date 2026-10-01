@@ -1,140 +1,90 @@
-import { ImageZoom } from "nextra/components";
-
 # Introduction
 
-Agents are a central component of the Medbot AI features. They facilitate quick processing of notes, and can be used for a variety of purposes such as filling out forms and detecting inconsistencies in diagnosis/treatment recommendations.
+Agents are a central part of Medbot. An agent reads a patient's record (or a note, or a form), applies the rules an experienced clinician would follow, and returns structured output fields: a classification, a recommendation, a completed form or a summary. Agents can be run on one patient while you work, or on hundreds in the background, and they can be checked against labelled patients before you rely on them.
 
-### Creating agents
-To create agents, fill out the form at [medbot.me/agents/new](https://www.medbot.me/agents/new). The table below describes each field in the agent creation form.
+## How an agent is built and improved
 
-| Field                            | Description                                                                     | Affects agent behavior |
-| -------------------------------- | ------------------------------------------------------------------------------- | ---------------------- | 
-| Agent Name                       | The name of the agent to be created.                                            | No                     |
-| Description                      | A descriptive text describing the agent's purpose.                              | No                     |
-| System Instructions              | General instructions the agent must follow while executing a task.              | Yes                    |
-| Define your algorithm<sup>1</sup>| Step-by-step instructions the agent must follow to determine its response.      | Yes                    |
-| Agent Category                   | Type of the agent to be created.                                                | Yes                    |
-| Select Model                     | LLM Model to be used for the agent.                                             | Yes                    |
-| Define fields used by your agent | Fields to be returned by the agent in its JSON response.                        | Yes                    |
-| Process whole note content       | Whether to process all contents of the open note in the workspace.              | Yes                    |
-| Use Database tools               | Whether to use database tools. To view the details about Database tools [Click Here](#database-tools) | Yes |
-| Make this agent public           | Whether to make the agent available to the other members of your organization. | No                     |
-| Process forms                    | Whether the agent is meant to process forms.                                   | Yes                    |
+1. **Create it** with the four-step wizard: basics, where its patient data comes from, the expert knowledge it follows, and the output fields it returns. See [Create an Agent](/docs/agents/create-an-agent).
+2. **Turn its expert knowledge into a workflow.** Medbot converts your numbered rules into a graph of steps (gather data, reason, decide yes/no, write the output), checks the graph, and saves it as a version. Only a version that passes every check can go live. See [Workflows and Versions](/docs/agents/workflow).
+3. **Bring patient data.** Import CSV files or an Excel workbook as a dataset, or connect the agent to a FHIR server or a notes store through an MCP connector. See [Patient Data](/docs/agents/datasets) and [Connectors](/docs/agents/connectors).
+4. **Validate it** against a dataset whose patients carry ground-truth labels, and see how often it is right, field by field and version by version. See [Validation](/docs/agents/validation).
+5. **Run it** on patients, notes or forms. See [Running Agents](/docs/agents/running-agents).
+6. **Collect clinician feedback.** Clinicians accept, edit or reject each result. Edited and rejected calls can be added to the validation dataset. See [Live Calls and Clinician Review](/docs/agents/live-calls).
+7. **Measure and refine.** The [Results](/docs/agents/results) tab shows the agent's performance, and the [Refine](/docs/agents/refine) flow proposes changes to its rules, workflow and instructions from the cases it got wrong, and saves them as a new version.
 
-1. See [this](#) section on how to define an agent algorithm.
+## The Agents page
 
-### Agent Types
-Agents on Medbot can be used for any of the many agentic features available. However, agents can broadly be categorized into the following types.
-1. [Form Agents](/docs/agents/types/form)
-2. [Non-Form Agents](/docs/agents/types/non-form)
-3. [Deep Research Agents](/docs/agents/types/deep-research)
+Open **Agents** from the sidebar to go to [medbot.me/agents](https://www.medbot.me/agents). Each agent is shown as a card. The header has **Learn about Agents**, the [notifications bell](#notifications), **View background runs** and **+ New agent**.
 
-Please visit their respective pages to learn more about them.
+Use the chips to choose which agents to show:
 
-### Agent Visibility
+| Chip | Shows |
+| --- | --- |
+| **&lt;your organisation&gt;** | Agents owned by your organisation (shown when you are working in an organisation). |
+| **All** | Every agent you can see. |
+| **Mine** | Your own agents. |
+| **Default** | Agents managed by Medbot or your administrator. You can run and copy them, but not edit or delete them. |
+| **Public** | Agents other Medbot users have listed publicly. |
+| **Shared with you** | Agents other users have shared with you. |
 
-Agents in Medbot can be categorized as **Private, Public, Default, or Shared**:
+Search with **Search agents**, and sort by **Last run** (the default), **Last updated**, **Date created** or **Name**.
 
-#### 1. Private Agents
+### Agent cards
 
-These are agents you create and choose not to make public.
-**Access:** Only you can access them.
+Each card shows the agent's name and description, badges for its scope (for example **Mine**, **Default**, **Public**, **Shared by &lt;name&gt;** or your organisation), its model and its [workflow status](#workflow-status), and three tiles:
 
-#### 2. Public Agents
+| Tile | What it shows |
+| --- | --- |
+| **Validation** | The share of labelled patients in the agent's validation dataset it got right, with the number of patients. Shows **No dataset** or **Not run yet** until a validation run has finished. |
+| **Agreement** | The share of live calls reviewed by clinicians in the last 30 days that were accepted as drafted. |
+| **Live calls** | How many times the agent ran on live data in the last 30 days, and how many of those were flagged (failed, marked as a false positive or negative, or rejected by a clinician). |
 
-These are agents made public by other Medbot users.
+The footer shows when the agent last ran and its validation dataset, with **Open** and either **Run** or **Copy to mine**. The **⋮** menu has the actions that apply to the agent: **Dashboard** (its Results tab), **Edit**, **Run**, **Share**, **Copy to mine**, **Claim for &lt;organisation&gt;** and **Delete agent**.
 
-* You can browse them in the **"Public Agents"** tab on the Agents page: https://www.medbot.me/agents
-* To make your own agent public, go to its edit page and enable the **"Make this agent public"** checkbox.
+An agent with no workflow shows *This agent runs from its prompt alone. Turn its expert knowledge into a workflow.* with a **Generate workflow** link, which opens the [workflow editor](/docs/agents/workflow).
 
-#### 3. Default Agents
+### Workflow status
 
-These are agents managed by your administrator (or by Medbot).
+| Badge | Meaning |
+| --- | --- |
+| **Workflow verified · v&lt;n&gt;** | Version *n* is live, and runs follow it. |
+| **Workflow draft · v&lt;n&gt;** | The newest version passes every check but has not been made live. |
+| **Workflow needs attention** | The newest draft fails a check. Fix it in the editor. |
+| **Workflow saved** | The agent has a plan saved before verified workflows existed. |
+| **No workflow yet** | The agent runs from its prompt and expert knowledge alone. |
 
-* You can **view and use** them to process folders
-* You **cannot edit or delete** them
+## Notifications
 
-#### 4. Shared Agents
+The bell in the Agents header shows your unread notices. Click one to open it; **Mark all as read** clears them.
 
-These are agents shared with you by other users via your email address.
+| Notice | When you get it | Opens |
+| --- | --- | --- |
+| **&lt;agent&gt; · background run finished** | Every patient in a background run you started has finished, for example *42 of 44 patients completed, 2 failed*. | The agent's **Agent Runs** tab. |
+| **&lt;agent&gt; · validation finished: 92% (previously 90%)** | A validation run has finished and been scored. | The **Validation** tab. |
+| **&lt;agent&gt; · validation dropped 90% → 85%** | A validation run scored 3 or more points below the previous one on the same dataset. | The **Validation** tab. |
+| **&lt;agent&gt; · 10 reviewed calls are not in a dataset** | Clinicians have edited or rejected 10 or more live calls that are not yet in a dataset (sent to the agent's owner). | The **Live calls** tab. |
+| **&lt;connector&gt; · extraction finished** | A notes extraction run has finished. | The extracted dataset. |
 
-* You can find them in the **"Shared with me"** tab on the Agents page: https://www.medbot.me/agents
-* You can share your own agents using the context menu on any of your agents
+## Who can see an agent
 
-> **Note:** You cannot share an agent that is already public, since it is already accessible to everyone.
+| Kind | Who can use it |
+| --- | --- |
+| **Your own agents** | Only you, unless you share them or list them publicly. |
+| **Organisation agents** | Every member of the organisation can run them. Choose the organisation under **Who owns it** when you create the agent, or use **Claim for &lt;organisation&gt;** on a personal or public agent to copy it into the organisation. |
+| **Public agents** | Every Medbot user can find and copy them. Tick **List it publicly so other Medbot users can copy it** in the wizard. |
+| **Default agents** | Managed by Medbot or your administrator. You can run and copy them, but not edit or delete them. |
+| **Shared agents** | Agents shared with you by email or name. Share your own from the card menu or the agent page (**Share**). An agent that is already public cannot be shared, since everyone can reach it. |
 
-### Background runs
-Each agent you create can be used to process notes in bulk as a background process that continues working even when you leave the app. You can learn more about it [here](/docs/agents/background-runs).
+**Copy to mine** makes your own editable copy of any agent you can see.
 
-### Agent Demo
-The Agent Demo feature allows you to generate a sample note, use your own note, or browse your directory of notes to select a number of notes to be processed by the agent. This allows you to verify your agent's behavior in a temporary environment.
+## Tools
 
-### Database Tools
+Agents can call tools while they run: Medbot's built-in actions (such as **Send Email**, with an optional subject and body template), and the tools of any [connector](/docs/agents/connectors) the agent reads from. Choose built-in tools under **Actions the agent may take** in step 2 of the wizard. Administrators can add tools; see [Tools](/docs/agents/tools).
 
-Database Tools allow agents to access external tools while processing notes and executing tasks.
-
-
-#### Tool Selection under Database Tools
-
-Select the tools that your agent is allowed to use.
-
-<div style={{ display: "flex", gap: "24px", marginTop: "16px" }}>
-  <div style={{ flex: 1 }}>
-    <ImageZoom
-      src="/images/tools/toolSelection.png"
-      alt="Tool Selection"
-    />
-    <p align="center">
-      <em>Enable the tools available to the agent.</em>
-    </p>
-  </div>
-
-  <div style={{ flex: 1 }}>
-    <ImageZoom
-      src="/images/tools/toolTemplateSelection.png"
-      alt="Template Selection"
-    />
-    <p align="center">
-      <em>Select templates for the enabled tools.</em>
-    </p>
-  </div>
-</div>
-
-#### Email Tool
-
-The **Email Tool** allows agents to send emails during execution.
-
-
-##### Email Tool Behavior
+### Email tool
 
 | Configuration | Result |
 | --- | --- |
-| Email Tool disabled | No email is sent, even if the agent is instructed to send one. |
-| Email Tool enabled, no template selected | A raw email is sent to the recipient. |
-| Email Tool enabled with a template selected | A formatted email is generated using the selected template. |
-
-
-<div style={{ display: "flex", gap: "24px", marginTop: "16px" }}>
-  <div style={{ flex: 1 }}>
-    <ImageZoom
-      src="/images/tools/rawEmail.png"
-      alt="Raw Email"
-    />
-    <p align="center">
-      <em>Email generated without a template.</em>
-    </p>
-  </div>
-
-  <div style={{ flex: 1 }}>
-    <ImageZoom
-      src="/images/tools/emailWithTemplate.png"
-      alt="Email With Template"
-    />
-    <p align="center">
-      <em>Email generated using a template.</em>
-    </p>
-  </div>
-</div>
-
-You can see a demo run of each agent you create by clicking the `View Agent` button in the [agents](https://www.medbot.me/agents) page.
-
+| Send Email not selected | No email is sent, even if the agent is instructed to send one. |
+| Send Email selected, no subject or body template | The agent writes the email itself. |
+| Send Email selected with a subject and body template | The email follows your template. The body can use placeholders such as `{{age}}` and `{{gender}}`. |

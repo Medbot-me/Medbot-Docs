@@ -1,0 +1,86 @@
+# Connectors
+
+Connectors let agents read patient data from outside Medbot. A connector is an MCP server, such as a FHIR gateway, a document store or a lab system. Once connected, Medbot lists its tools, and agents that use the connector can call the tools you allow while they run.
+
+Go to **Datasets → Connectors** ([medbot.me/datasets/connectors](https://www.medbot.me/datasets/connectors)).
+
+## Kinds of connector
+
+| Kind | What it serves |
+| --- | --- |
+| **Medbot datasets** | Built in and always on: patients assembled from your CSV and Excel imports, served to agents through the same FHIR tools. |
+| **FHIR server** | Structured records straight from a FHIR server. Agents query it at run time; nothing is copied until a call is added to a dataset. |
+| **Unstructured notes** | Free-text notes. An extraction run turns each note into problems, medicines, allergies and results, keeping the original text alongside. |
+| **Other MCP server** | Any other MCP server: its tools become actions agents may take. |
+
+## Adding a connector
+
+1. Click **Add connector**.
+2. Enter a **Name** (for example *Northside FHIR*).
+3. Choose **What it serves**: **FHIR server**, **Unstructured notes** or **Other MCP server**.
+4. Enter the **MCP server URL** (http or https), for example `https://fhir.example.org/mcp`.
+5. Choose the **Authentication**:
+   - **Bearer token**: enter the **Token**.
+   - **Header**: enter the **Secret** and the **Header name** (default `X-Api-Key`).
+   - **None**.
+
+   The secret is stored encrypted and is never shown again.
+6. Organisation admins can tick **Add it for &lt;organisation&gt;** (ticked by default for them): every member's agents can use it, and admins manage it. Otherwise the connector is personal.
+7. Click **Connect**. Medbot creates the connector and tests the connection straight away.
+
+## The connector card
+
+Each card shows the connector's kind, whether it belongs to the organisation or is personal, and its status: **Connected**, **Not reachable** (with the last error) or **Not tested yet**. It lists the tools agents may call, and how many agents use it and when it was last checked.
+
+- **Test connection** connects to the server again, lists its tools and updates the status.
+- **Settings** (managers only) opens the connector's settings.
+- **Extraction** (notes connectors) opens the [extraction run](#notes-extraction).
+
+## Settings and allowed tools
+
+In a connector's settings you can change its **Name** and **MCP server URL**, **Replace the secret** (leave it blank to keep the current one), and choose the **Tools agents may call**. Tools that look like they change data (create, update, delete, send and so on) are tagged **action** and are unticked by default.
+
+Until you save the settings once, agents may call every tool the server lists, including action tools. Open **Settings**, choose the tools, and click **Save** to restrict them. Test the connection first if no tools are listed.
+
+Changing the URL or secret resets the status to **Not tested yet**. **Remove connector** deletes it; agents using it lose its tools.
+
+## Who can manage connectors
+
+| Connector | Who can see, use and test it | Who can change settings, remove it and run extraction |
+| --- | --- | --- |
+| Personal | Only you. | Only you. |
+| Organisation | Every active member of the organisation. | The organisation's admins. |
+
+## Using a connector in an agent
+
+Choose connectors in step 2 of the [agent wizard](/docs/agents/create-an-agent#sources), up to five per agent. On every run, each connector's allowed tools are added to the agent's tools, named after the connector (for example `northside_fhir__search`), so renaming a connector changes its tools' names. Results from a tool are capped at 64,000 characters. A connector that has never been tested, or that the person running the agent may not use, adds no tools.
+
+## Notes extraction
+
+A notes connector can turn a store of free-text notes into structured records in a dataset of its own, so agents and validation can use them.
+
+### Setting it up
+
+In the notes connector's **Settings**, under **Extraction**:
+
+1. Choose the **Tool that lists notes**. It should return notes with an id and a patient key.
+2. Optionally choose the **Tool that reads one note**. It is called with `{ id }` when a note's text is not in the list.
+3. Tick the categories to extract:
+
+| Category | Becomes |
+| --- | --- |
+| **Problems and diagnoses** | Condition |
+| **Medicines mentioned** | MedicationStatement |
+| **Allergies** | AllergyIntolerance |
+| **Results quoted in the text** | Observation |
+
+### Running it
+
+Select the connector's **Extraction** panel and click **Run extraction** (managers only). The panel shows progress (*done of total patients*), counts by category, and a log. Every extracted item keeps the note it came from, so a clinician can check it.
+
+- A run reads the notes, then extracts up to 200 patients, 10 at a time.
+- **Pause extraction** stops the run after the current batch of 10.
+- **Run extraction again** starts a fresh run from the first patient. Re-extraction replaces each patient's previous AI-derived items.
+- Only one run per connector can go at a time.
+
+The results go into a dataset named **&lt;connector&gt; (extracted)**, with source **Notes connector**, owned by the manager who first ran extraction. Click **Review extracted patients** to open it. When a run finishes, you get an **extraction finished** [notification](/docs/agents#notifications).

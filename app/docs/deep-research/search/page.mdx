@@ -1,0 +1,41 @@
+# Search Strategy and Search
+
+Deep Research searches **PubMed**. The search strategy is a set of PubMed search strings, each tested against live hit counts; the search runs them all and keeps each article once.
+
+## Stage 3: Search strategy
+
+The **Search strategy** panel lists the review's search strings. For each one it shows:
+
+- its name and how many articles it matches (for example **240 articles**), with a warning if that is more than the review's article limit;
+- the query, in PubMed syntax;
+- **PubMed could not match: …** when PubMed did not recognise some terms;
+- Medbot's rationale, and **How PubMed read it** (PubMed's own translation of the query).
+
+When a string matches more than the article limit, the search keeps the first articles PubMed returns, up to the limit. **Notes on the search** holds Medbot's notes on the strategy as a whole.
+
+### Building the strategy
+
+Click **Build with Medbot** (or **Rebuild with Medbot**), or ask in the conversation. Medbot proposes one to three strings, primary first, tests each in PubMed, and shows them as **Medbot's proposed search strings**. Keeping the proposal replaces the current strings and tests each one again.
+
+Medbot builds strings from MeSH terms and title/abstract synonyms, adds study-design filters, and excludes reviews, meta-analyses and animal studies where appropriate.
+
+### Adding or editing a string yourself
+
+Click **Add string**, or the edit icon on a string. Give it a **Name** and a **Search string** in PubMed syntax, tagging every term (for example `[MeSH Terms]` or `[Title/Abstract]`). Click **Test in PubMed** to see how many articles it matches and how PubMed reads it, then **Save**.
+
+### Date limits
+
+There are no date fields. To limit by date, the limit goes in the query itself, for example `("2015/01/01"[Date - Publication] : "3000"[Date - Publication])`. Medbot adds one when the criteria set a date range, or when you ask it to ("add a limit to studies since 2015").
+
+### Running the search
+
+Click **Run search**. This saves the strategy and retrieves the records. In a manual review, screening, eligibility and synthesis then run on their own, stopping at any [pause point](/docs/deep-research/review-workspace#pause-points) you set.
+
+## Stage 4: Search
+
+The **Search** stage runs every search string in PubMed and keeps each article once (duplicates are removed by PMID), noting which strings found it. The limit applies across all strings, primary string first, up to the review's **Most articles to retrieve** (1,000 by default, at most 10,000).
+
+The panel shows three tiles: **PubMed matches, all strings**, **Article limit** and **Articles in the review**.
+
+- **Search again** re-runs the strings. Decisions already made on articles that are still found are kept; articles that are no longer found are removed. Articles added by PMID stay.
+- **Add by PMID** (manual mode) adds articles that the search missed. Paste up to 200 PubMed IDs, separated by spaces, commas or new lines, and click **Add articles**. Medbot tells you how many were added, how many were already in the review, and which were not found in PubMed.

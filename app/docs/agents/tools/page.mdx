@@ -31,9 +31,9 @@ In order to create a tool:
 | Tool Name                        | The name of the tool to be created.                                             | No                     |
 | Description                      | A descriptive text describing the tool's purpose.                               | No                     |
 | System Instructions              | General instructions the tool must follow while executing a task.               | Yes                    |
-| Select Model                     | LLM Model to be used for the agent.                                             | Yes                    |
+| Select Model                     | LLM Model to be used for the tool.                                              | Yes                    |
 | Define input schema for the tool | This schema defines the input parameters taken by your tool                     | Yes                    |
-| Define input schema for the tool | This schema defines the output given your tool                                  | Yes                    |
+| Define output schema for the tool| This schema defines the output given by your tool                               | Yes                    |
 
 Visit [here](/docs/agents/tools/sample-tools) for a sample tool definition.
 
@@ -43,6 +43,6 @@ Visit [here](/docs/agents/tools/sample-tools) for a sample tool definition.
 
 ![Admin panel](/images/tools/toollist.png)
 
-9. You will now see your tools listed in the create agent form on clicking the usetools checkbox as below. Use this tool when creating an agent.
+9. Your tools are now listed under **Actions the agent may take** in step 2 of the [agent wizard](/docs/agents/create-an-agent#actions-the-agent-may-take). Turn it on and tick the tool to let an agent use it.
 
 ![Admin panel](/images/tools/toolsinform.png)

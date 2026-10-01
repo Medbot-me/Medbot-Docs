@@ -1,0 +1,52 @@
+# Working with Medbot
+
+Every review has one conversation with Medbot, shown on the left of the [review workspace](/docs/deep-research/review-workspace) (the **Medbot** tab on a phone). Medbot knows which stage you are looking at (**Working on &lt;stage&gt;**) and has tools for that stage: it can refine the question, draft criteria, search PubMed, read articles, explain decisions and rewrite the report.
+
+Medbot uses the review's model, which cannot be changed from the conversation. Only the review's owner can talk to Medbot; people the review is shared with can read the conversation.
+
+## What you can ask at each stage
+
+| Stage | What Medbot can do |
+| --- | --- |
+| **Question** | Frame the question as PICO (or PECO for exposures), ask you up to three questions at a time, and flag choices that would make the review too narrow or too broad. |
+| **Criteria** | Draft and revise the inclusion and exclusion lists. |
+| **Search strategy** | Run live PubMed searches, test terms, add limits (for example a date range), and propose one to three search strings. |
+| **Search**, **Screening**, **Eligibility** | List and read articles, explain a decision by quoting the reviewers' reasons, change a decision, and re-run up to 50 named articles. |
+| **Eligibility**, **Synthesis** | Re-extract an article's data, and change one GRADE domain with a reason. |
+| **Synthesis** | Read the synthesis and rewrite the wording of a section. Medbot never changes the numbers; to change them, change the data or grades and run **Synthesise again**. |
+| Any stage | Set pause points, and switch the review between automatic and manual. |
+
+The input box suggests what to ask at each stage, for example *Ask Medbot to change a string, add a limit or test a term* on the search strategy, or *Ask about a decision, or ask Medbot to change one* on screening.
+
+After a reply, Medbot may offer two to four short replies as chips under its message. Click one to send it.
+
+## Proposals
+
+When Medbot drafts something (a refined question, criteria, search strings, a re-extraction or a new wording for a report section), it does not save it. The conversation shows a line such as **Proposed inclusion and exclusion criteria** with a **Show in &lt;stage&gt;** button, and the stage panel shows the proposal next to what is saved, with the changes marked. You decide:
+
+- **Keep proposal** saves it to the review.
+- **Dismiss** throws it away.
+
+A dot on a stage in the stepper means a proposal is waiting there.
+
+## Approvals
+
+Some actions change the review directly: overriding a decision, re-running articles, changing a GRADE rating, setting pause points, or switching mode. For these Medbot asks first with a card, **Medbot asks to: &lt;what it will do&gt;**, for example *Exclude article 12 at screening (Wrong population), as your decision*. Click **Approve** or **Decline**. The conversation then records **Done: …** or **Declined: …**.
+
+## Buttons that talk to Medbot
+
+Several panel buttons send Medbot a message for you, so the work happens in the conversation where you can follow up:
+
+| Button | Message sent |
+| --- | --- |
+| **Refine with Medbot** (Question) | Look at the question again. Is anything missing, or would anything make the search too narrow or too broad? |
+| **Agree and draft criteria** | The question is agreed. Please draft the inclusion and exclusion criteria. |
+| **Refine with Medbot** (Criteria) | Please review the criteria again and propose improvements. |
+| **Agree and build the search** | The criteria are agreed. Please build and test the PubMed search strategy. |
+| **Rebuild with Medbot** | Please rebuild and re-test the PubMed search strategy. |
+| **Ask Medbot about this article** | Asks Medbot to explain the article's decision and the reviewers' reasons. |
+| **Refine** (on a report section) | Asks to change that section of the report. Medbot asks what to change if it is not clear. |
+
+## The run log
+
+As the pipeline finishes each stage, it writes a status line into the conversation, for example *Retrieved 812 records from PubMed.* or *Screened titles and abstracts: 96 included, 716 excluded.* In an automatic review this is the live log of the run. Tool activity also appears as one line each, such as **Searched PubMed: 1,204 matches** (click to see the query) or **Read article 7**.

@@ -1,24 +1,19 @@
 # Background Runs
 
-When you want to process multiple folders in the background, processing them one at a time can take too long. Instead, you can use the Background Run feature to process them in the background, even when not using the app.
+A background run processes many patients at once and keeps going when you leave the app. Use it to run an agent over a dataset, or a cohort within one.
 
-To use background runs, visit [medbot.me/agents](https://www.medbot.me/agents) and click the Background Run icon under Actions, as shown below.
+## Starting a background run
 
-![Background Run](/images/background-run.png)
-***Background Run** icon under Actions*
+1. Open the agent and click **Run**.
+2. Under **Choose patients**, pick a dataset and select the patients to process (**All** selects every patient shown), then click **Use &lt;n&gt; patients**.
+3. Set **Run mode** to **Background**, choose the **Processing** (**With algorithm** follows the agent's workflow), and click **Run**.
 
-Clicking this icon will take you to the background run page. You can follow the following steps to start a background run.
-1. Select folders that you want to process
-2. Click the `Start processing` button
+Medbot confirms that background runs have started, one per patient.
 
-![Background Run Page](/images/bg-run.png)
-*Steps to start a background run*
+## Following a run
 
-A progress bar showing the progress of your latest background run will be shown once a run starts. You can also see your past background runs in this page.
+- The agent's **Agent Runs** tab lists every call, with its patient, mode, status and who started it. Retry failed calls, cancel running ones, or open a call to see its output.
+- **View background runs** on the Agents page lists all your background calls across agents, with the agent used, the patient, the event id and the status.
+- When every patient in the run has finished, you get a notification such as *&lt;agent&gt; · background run finished: 42 of 44 patients completed, 2 failed*, which opens the agent's **Agent Runs** tab. See [Notifications](/docs/agents#notifications).
 
-![Background Run Progress](/images/bg-run-progress.png)
-*Background run progress*
-
-The `Event ID` field of a background run will be filled in once it's complete.
-
-*Note: You can only have **one** background run running at a time. Once you select a number of folders and start processing, you will have to wait for this run to complete before you can start a new one.*
+Validation runs are background runs too. They run the agent's validation dataset and are scored when they finish; see [Validation](/docs/agents/validation).

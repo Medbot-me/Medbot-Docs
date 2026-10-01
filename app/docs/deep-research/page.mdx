@@ -2,17 +2,65 @@
 
 ## Introduction
 
-The DeepResearch feature is an end-to-end research automation system designed to help users generate high-quality, structured, and verifiable research outputs. Instead of manually searching, filtering, reading, and organizing information, this feature guides users through a complete research workflow, from defining a research question to reviewing final evaluated results.
+Deep Research runs a systematic review of the published evidence for a clinical question. You ask a question, and Medbot refines it into PICO form, drafts inclusion and exclusion criteria, builds and tests PubMed search strings, retrieves the articles, screens them, assesses the eligible ones on their full text, extracts their data, grades the certainty of the evidence, and synthesises an answer, as a meta-analysis where results can be pooled and as a narrative where they cannot.
 
-## Workflow Diagram
+Every review follows the same seven stages. You can let it run from start to finish, or work through the first three stages with Medbot in a conversation and then let the rest run on their own. Either way you can read every decision, override it, and export the result.
 
-The diagram below shows the high-level workflow for the deepresearch feature of the application.
+## The seven stages
 
-![DeepResearch Workflow](/images/image0.png)
+| # | Stage | What happens |
+| --- | --- | --- |
+| 1 | **Question** | Refine the question into PICO form and check its scope. |
+| 2 | **Criteria** | Inclusion and exclusion criteria. |
+| 3 | **Search strategy** | PubMed search strings, tested against live hit counts. |
+| 4 | **Search** | Retrieve the matching PubMed records. |
+| 5 | **Screening** | Title and abstract screening. |
+| 6 | **Eligibility** | Full-text eligibility, data extraction and GRADE. |
+| 7 | **Synthesis** | Narrative or meta-analytic answer to the question. |
 
-To use this feature: 
+## Automatic and manual reviews
 
-1. Goto homepage and from the sidebar select "Deep Research". You will see all of your research questions listed. You can view, edit, delete or pin a research
-question by clicking on the icons under "Actions" column.
+Each review has a mode, which you choose when you start it and can switch later.
 
-![DeepResearch Workflow](/images/deepsearch/homepage.png)
+| Mode | How it runs |
+| --- | --- |
+| **Automatic** | Runs every stage start to finish. You can pause it or switch to manual at any time, and set [pause points](/docs/deep-research/review-workspace#pause-points) so it stops after a stage for you to check. |
+| **Manual** | Pauses after the question, the criteria and the search strategy so you can refine each with Medbot. Screening, eligibility and synthesis then run on their own, and you can still override any decision. |
+
+## Where to find it
+
+- **Deep Research** in the sidebar opens [medbot.me/research](https://www.medbot.me/research), where you ask a question and see your reviews.
+- The **Deep Research** card on the home page shows how many reviews you have and your most recent ones, with **New review** and **View All**.
+- The **Deep research** section of the notes editor sidebar lists your five most recent reviews and lets you start a new one without leaving your note. See [Start a Review](/docs/deep-research/start-a-review#from-the-notes-editor).
+
+## Your reviews
+
+Below the question box on [medbot.me/research](https://www.medbot.me/research), **Your reviews** lists your reviews on two tabs:
+
+- **My reviews**: the reviews you started.
+- **Shared with me**: reviews other people have shared with you. You can read them, including their conversation with Medbot, but not change them.
+
+The table shows each review's title, mode (**Automatic** or **Manual**), model, status and when it was last updated. Search with **Search reviews...**, sort by review or date, and click a row to open the review. The row menu has **View** and **Pin** / **Unpin**; pinned reviews show a pin icon. To delete a review, open it and use **More actions → Delete review**.
+
+The status shows where a review is:
+
+| Status | Meaning |
+| --- | --- |
+| **Running · *stage*** | A stage is running now. |
+| **Stopping…** | You asked it to stop; it stops after the current step. |
+| **Next · *stage*** | It is waiting for you, or for a run, at this stage. |
+| **Stopped · *stage*** | It was stopped at this stage. |
+| **Failed · *stage*** | This stage failed. Open the review to see why and retry. |
+| **Complete** | Every stage has run. |
+
+## Models
+
+A review is pinned to one model, the one you choose when you start it or the platform default, for its whole life. Every stage and Medbot's conversation run on it. You can add extra reviewer models for screening and eligibility when you start a review; see [Screening and Eligibility](/docs/deep-research/screening-and-eligibility#reviewers).
+
+Deep Research no longer uses agents from the Agents library. Earlier versions had "Deep Research agents", selectable inclusion/exclusion agents and an orchestrator; these have been replaced by the fixed pipeline described here. Reviews created before the change open in the new workspace.
+
+## Next steps
+
+- [Start a Review](/docs/deep-research/start-a-review)
+- [The Review Workspace](/docs/deep-research/review-workspace)
+- [Working with Medbot](/docs/deep-research/working-with-medbot)

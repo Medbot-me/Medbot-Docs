@@ -1,0 +1,108 @@
+# Create an Agent
+
+Click **+ New agent** on the [Agents page](https://www.medbot.me/agents) (or go to [medbot.me/agents/new](https://www.medbot.me/agents/new)). A four-step wizard walks you through the agent, with a **Summary** panel alongside that fills in as you go.
+
+1. **Basics**
+2. **Data sources**
+3. **Expert knowledge and workflow**
+4. **Outputs and validation**
+
+Move between steps with **Back** and **Continue to …**; you can click back to any step you have completed. **Save draft** keeps your progress in this browser only, and the wizard offers to **Restore it** next time you open it.
+
+## Step 1: Basics
+
+*What is this agent for?* Name it the way a colleague would look for it. You can change everything later.
+
+| Field | What it does |
+| --- | --- |
+| **Agent name** | Required, up to 255 characters, for example *Diabetes medication review*. |
+| **Model** | The model the agent runs on. The organisation's default is marked **· default**. |
+| **Description** | Shown on the agent card and to anyone you share it with. |
+| **Who owns it** | Shown when you are working in an organisation. Choose the organisation (every member can run it) or **Only you** (a personal agent you can share or move later). |
+| **Temperature** | From 0 to 1. 0 is deterministic; higher values vary more. |
+| **List it publicly so other Medbot users can copy it** | Makes the agent [public](/docs/agents#who-can-see-an-agent). |
+| **System instructions** | The agent's role, tone and hard limits. Clinical rules belong in step 3. |
+
+## Step 2: Data sources
+
+*Where does patient data come from?*
+
+### Sources
+
+Tick every source the agent may read:
+
+| Source | What it is |
+| --- | --- |
+| **Dataset from files** | Patient data you imported from CSV files or an Excel workbook, one record per patient. See [Patient Data](/docs/agents/datasets). |
+| **FHIR connector** | An MCP connector to a FHIR server, queried when the agent runs. |
+| **Notes connector** | An MCP connector to a store of unstructured notes. |
+
+An agent can use up to five connectors. Each connector shows whether it is connected and how many tools it offers. If you have none, **Add a connector** takes you to [Connectors](/docs/agents/connectors). When the agent runs, the tools each chosen connector allows are added to the agent's tools.
+
+### What to gather for each patient
+
+Choose the kinds of data that matter to the agent: **Demographics**, **Problems and diagnoses**, **Medications**, **Laboratory results**, **Observations and vitals**, **Encounters** and **Clinical notes, verbatim** (off by default). **Let connectors extract everything they can** is on by default and recommended; if you turn it off, tick at least one kind of data. Your choices are shown on the agent's Overview.
+
+### How the agent is called
+
+| Option | Use it when |
+| --- | --- |
+| **Whole patient record** (default) | The agent reads a patient's record through FHIR tools. |
+| **A single note** | The agent processes one clinical note, or text selected in the editor. |
+| **A form the clinician fills in** | The agent fills in a form from a patient record. See [Form Agents](/docs/agents/types/form). |
+
+### Actions the agent may take
+
+Turn this on to let the agent call Medbot's built-in tools while it runs, and tick the tools it may use. If you choose **Send Email**, you can set an **Email subject** and **Email body** template; the body can use placeholders such as `{{age}}` and `{{gender}}`.
+
+## Step 3: Expert knowledge and workflow
+
+*Write down the expert knowledge*: the rules a senior clinician would follow, in plain language. Number the rules; each workflow step names the rule it came from.
+
+For example:
+
+```text
+1. Find the latest HbA1c in the last 6 months.
+2. If the HbA1c is above 7%, check whether the patient is on metformin.
+3. If they are not on metformin and their eGFR is at least 30, recommend starting it.
+4. Otherwise recommend no change.
+```
+
+Click **Generate workflow**. Medbot turns the rules into a workflow of steps and checks it, and a preview shows either **Verified · N steps, no errors** or the number of errors to fix. The workflow is saved as version 1 when you create the agent, and goes live only if it passes every check; otherwise it is saved as a draft for you to fix in the [workflow editor](/docs/agents/workflow). If you change the rules after generating, click **Regenerate workflow**.
+
+If you are not ready, turn on **Build the workflow later**. The agent then runs from its prompt and expert knowledge alone, and you can generate and edit the workflow from the agent page at any time.
+
+## Step 4: Outputs and validation
+
+*What does the agent return, and how is it checked?*
+
+### Output fields
+
+Add one row per value the agent returns, with a **Field** name and a **Type**: **Text**, **Short text**, **Integer**, **Number** or **Boolean**. When there is a workflow, **Produced by** shows which step produces each field, and **Suggest from workflow** fills the table from the workflow's output steps. You need at least one field, and field names must be unique.
+
+Yes/no questions work best as **Boolean** fields: they give you a confusion matrix, sensitivity and specificity on the [Results](/docs/agents/results) tab.
+
+### Validation dataset (optional)
+
+Choose a dataset whose patients have ground-truth labels, or **No dataset for now**. You can create the agent without one: it runs on live data straight away, and its card shows no performance figures until a validation run has finished. See [Validation](/docs/agents/validation).
+
+### Scoring
+
+| Option | What it does |
+| --- | --- |
+| **Run the whole dataset when the agent is created** | Starts a validation run on the dataset as soon as the agent is created. The wizard estimates how long it will take. |
+| **Re-run on every new version** | Runs the dataset again each time a workflow version is made live. |
+| **Track live calls and ask clinicians to accept or edit each result** | Marks the agent for clinician review. Clinicians can accept, edit or reject any agent's result; edited calls can be added to the dataset later to refine the agent. See [Live Calls](/docs/agents/live-calls). |
+
+A validation run covers up to 500 patients from the dataset.
+
+## Creating the agent
+
+Click one of the header buttons on the last step:
+
+- **Create and run validation**: creates the agent and starts a validation run. Needs a validation dataset and **Run the whole dataset when the agent is created**. You land on the agent's runs so you can follow it, and get a [notification](/docs/agents#notifications) when it has been scored.
+- **Create without validation**: creates the agent only. You can validate it later from the [Validation](/docs/agents/validation) tab.
+
+## Editing an agent
+
+Choose **Edit** from the card or agent page menu to open the same wizard on the agent, at any step. Click **Save changes** to save. Editing never changes workflow versions: if you change the expert knowledge, the wizard reminds you to regenerate the workflow in the editor (**Open in the editor**) so it follows the new rules.

@@ -1,0 +1,51 @@
+# Datasets
+
+A dataset is de-identified patient data, stored as FHIR, that agents run on and are validated against. Agents read a dataset patient's record through FHIR tools, the same way they read a live FHIR server, so a workflow validated on a dataset runs unchanged against live data. You can also connect an MCP client to a dataset.
+
+Datasets belong to the person who created them; they cannot be shared with an organisation. Use de-identified data only.
+
+## The Datasets page
+
+Go to **Datasets** ([medbot.me/datasets](https://www.medbot.me/datasets)). The table lists your datasets with their **Name**, **Source**, **Patients**, **Resources** and when they were **Updated**, newest first.
+
+| Source | How the data came in |
+| --- | --- |
+| **Tables from files** | CSV files or an Excel workbook, through [Bring patient data](/docs/agents/datasets/import). |
+| **Notes connector** | Extracted from a notes store by a [notes connector](/docs/agents/connectors#notes-extraction). |
+| **Notes spreadsheet** | A spreadsheet of notes in the Folder / Title / Content layout. |
+| **Results / lists** | A single sheet of results, problems, medications or allergies. |
+| **Epic paste** | Notes pasted from Epic in the notes workspace. |
+| **FHIR server** | Imported from a FHIR server. |
+| **Mixed** | More than one of the above. |
+
+The header has three buttons:
+
+- **Bring patient data** imports any set of CSV files, or an Excel workbook with several tabs. See [Bring Patient Data](/docs/agents/datasets/import).
+- **Other imports** opens the [other imports](#other-imports) dialog.
+- **Connectors** opens [Connectors](/docs/agents/connectors).
+
+## A dataset's page
+
+Click a dataset to open it. The page shows how many patients it has and its MCP endpoint, with **Import to dataset** (the other imports dialog, with this dataset chosen) and **Delete**. Deleting a dataset deletes every resource in it; agent runs keep their results but lose the link to the patient record.
+
+The patient table shows each patient with their records (for example *3 Condition · 5 Observation*) and two actions:
+
+- **View record** opens the patient's record, grouped by resource type. Expand a row to see its details and the raw FHIR JSON. Items extracted by AI carry an **AI-derived** badge.
+- **Extract with AI** extracts conditions, medications, allergies and results from the patient's notes. It is available when the patient has notes. Results are marked AI-derived, and re-running replaces the previous extraction.
+
+## Other imports
+
+**Other imports** opens **Import patient data**. Choose an existing dataset or **New dataset…**, then one of:
+
+| Tab | What you import |
+| --- | --- |
+| **Notes spreadsheet** | A .csv or .xlsx file with columns **Folder** (the patient), **Title** and **Content**, and optionally **Label** (note type) and **Date**. Each row becomes a note. Only the first sheet is read. Choose whether dates are written day first or month first. |
+| **Results / lists** | One row per lab result, problem, medication or allergy. Choose what the rows are, then which column holds the patient, the name, the date, the code and the value, unit or status. |
+| **FHIR JSON** | A FHIR R4 resource, a Bundle, an array of either, or NDJSON. You can choose to skip resources that are not valid FHIR R4 instead of rejecting the file. |
+| **FHIR server** | Search the public HAPI test server or a custom base URL for a patient, and import them with their clinical resources (the first 200 of each type). |
+
+To add notes copied from Epic, use **Paste Epic notes** in the notes workspace's file browser. You can choose to extract conditions, medications, allergies and results from them with AI at the same time.
+
+## Validation datasets
+
+Any dataset can be an agent's validation dataset, chosen in the [wizard](/docs/agents/create-an-agent#validation-dataset-optional) or on the [Validation](/docs/agents/validation) tab. Its patients' ground-truth labels are stored per agent, so the same dataset can validate several agents.

@@ -127,6 +127,58 @@ export default withNextra({
         destination: '/cms/messaging',
         permanent: true,
       },
+
+      // Agents redesign and the Deep Research review pipeline replaced these pages.
+      {
+        source: '/docs/agents/agent-demo',
+        destination: '/docs/agents/workflow',
+        permanent: true,
+      },
+      {
+        source: '/docs/agents/agent-evaluation',
+        destination: '/docs/agents/validation',
+        permanent: true,
+      },
+      {
+        source: '/docs/agents/types/deep-research',
+        destination: '/docs/deep-research',
+        permanent: true,
+      },
+      {
+        source: '/docs/deep-research/create-research-question',
+        destination: '/docs/deep-research/question-and-criteria',
+        permanent: true,
+      },
+      {
+        source: '/docs/deep-research/create-inclusion-exclusion-criteria',
+        destination: '/docs/deep-research/question-and-criteria',
+        permanent: true,
+      },
+      {
+        source: '/docs/deep-research/create-search-strategy',
+        destination: '/docs/deep-research/search',
+        permanent: true,
+      },
+      {
+        source: '/docs/deep-research/run-search-strategy',
+        destination: '/docs/deep-research/search',
+        permanent: true,
+      },
+      {
+        source: '/docs/deep-research/use-inclusion-exclusion-agents',
+        destination: '/docs/deep-research/screening-and-eligibility',
+        permanent: true,
+      },
+      {
+        source: '/docs/deep-research/evaluate-results',
+        destination: '/docs/deep-research/screening-and-eligibility',
+        permanent: true,
+      },
+      {
+        source: '/docs/deep-research/default_agents',
+        destination: '/docs/deep-research',
+        permanent: true,
+      },
     ]
   },
 })

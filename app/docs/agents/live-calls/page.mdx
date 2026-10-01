@@ -1,0 +1,53 @@
+# Live Calls and Clinician Review
+
+A **live call** is any run of an agent on real work, as opposed to a validation run. Clinicians can accept, edit or reject each result. Their judgements show how often the agent agrees with them, and edited or rejected calls can be added to the validation dataset so that every new version is checked against them.
+
+## Reviewing a result
+
+Wherever an agent's result appears (on the agent page after a run, in a conversation with Medbot, or in the call drawer described below), a bar asks **Is this draft right?**
+
+| Choice | What happens |
+| --- | --- |
+| **Accept** | The result is recorded as accepted as drafted. |
+| **Edit** | Correct the output fields (yes/no fields become Yes/No choices), optionally say **Why**, and click **Save my version**. If you change nothing, it is saved as accepted. |
+| **Reject** | Say what the agent got wrong, for whoever refines it, and click **Reject draft**. |
+
+The bar then shows **Accepted as drafted**, **Edited by you** or **Rejected**, saved on the agent's live calls. Click **Change** to revise your decision. Only finished calls can be reviewed, by the person who ran them or anyone who can see every run of the agent.
+
+## The Live calls tab
+
+Open the agent and choose **Live calls**. The tiles cover the last 30 days:
+
+| Tile | What it shows |
+| --- | --- |
+| **Calls, 30 days** | Live calls, and how many have been added to a dataset. |
+| **Accepted as drafted** | Reviewed calls clinicians accepted. |
+| **Edited** | Reviewed calls clinicians edited. |
+| **Rejected** | Reviewed calls clinicians rejected. |
+| **Waiting for review** | Calls not yet reviewed, and how many reviewed calls are not yet in a dataset. |
+
+Filter the table with **All**, **Not reviewed**, **Edited**, **Rejected** and **Reviewed, not in a dataset**, by source (**Dataset**, **FHIR**, **FHIR + notes**, **Note** or **Form**), and by **Last 30 days** or **All time**.
+
+The table shows when each call ran, the patient (or note), its source, up to three output fields (an edited value is marked **(edited)**; hover to see what the agent drafted), the clinician's decision, and whether it is **In dataset**.
+
+## The call drawer
+
+Click a call to open it:
+
+- **What the agent read**: the FHIR resources (and note) the agent read, recorded at the time of the call.
+- **Path through the workflow**: the steps the call took, with each decision's Yes/No branch and the steps that were **Skipped** or **Not reached**.
+- **Agent draft**, or **Agent draft and the clinician's version** as a word-by-word comparison, with the clinician's reason.
+- **Review**: the Accept, Edit and Reject bar.
+- **Add to a dataset**: see below.
+
+## Adding calls to a dataset
+
+Adding a call copies the patient, and everything the agent read at the time, into a dataset, and makes the chosen version of the output that patient's ground-truth label. Validation then replays exactly that case on every new version. Adding the same patient again replaces the label.
+
+From the drawer, click **Add with the clinician's version**, **Add with the agent's version**, or **Leave it out**. A rejected call can only be added with the clinician's version if they edited it.
+
+To add several at once, tick calls in the table, choose the dataset in the selection bar (the agent's validation dataset is marked **(validation)**), and choose **Add with the agent's version** or **Add with the clinician's version as ground truth**.
+
+Only finished calls on a patient can be added. Calls on a note, and calls made before Medbot started recording what agents read, cannot.
+
+When 10 or more edited or rejected calls are waiting outside any dataset, the agent's owner gets a [notification](/docs/agents#notifications), and the agent's Overview shows how many are waiting, with **Review live calls**.

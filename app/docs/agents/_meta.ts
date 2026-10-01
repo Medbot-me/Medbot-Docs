@@ -1,6 +1,15 @@
 export default {
-  types: "Types",
+  index: "Introduction",
+  "create-an-agent": "Create an Agent",
+  workflow: "Workflows and Versions",
+  datasets: "Patient Data",
+  connectors: "Connectors",
+  "running-agents": "Running Agents",
   "background-runs": "Background Runs",
-  "agent-demo": "Agent Demo",
-  "agent-evaluation": "Agent Evaluation",
+  "live-calls": "Live Calls and Clinician Review",
+  validation: "Validation",
+  results: "Results",
+  refine: "Refine an Agent",
+  types: "Types",
+  tools: "Tools",
 };

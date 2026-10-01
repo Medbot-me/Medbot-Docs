@@ -1,0 +1,71 @@
+# Screening and Eligibility
+
+Once the search has run, every article is judged twice: first on its title and abstract (**Screening**), then, if it passes, on its full text (**Eligibility**), where its data are also extracted and each included study is graded. Both stages run on their own after the search, and you can check and override every decision.
+
+## Reviewers
+
+Each stage is judged by the review's model. When you [start a review](/docs/deep-research/start-a-review#review-options) you can add up to two extra reviewer models per stage as second opinions. The panel lists them, for example **Reviewers: &lt;model&gt; (decides ties), &lt;model&gt;**.
+
+- With extra reviewers, the majority decides.
+- When reviewers split evenly, the review model makes a tiebreak decision, reading every reviewer's reasoning.
+- A reviewer whose call fails is recorded as **No vote (call failed)**. If every reviewer fails, or the tiebreak fails, the article is marked **Failed** rather than excluded, so you can run it again.
+
+There is no "undecided" outcome: every article ends up **Included**, **Excluded** (with a reason) or **Failed**.
+
+## Stage 5: Screening
+
+Each reviewer judges every article on its title and abstract. Anything the abstract does not rule out goes on to eligibility. Articles without an abstract are excluded (reason **No abstract**).
+
+## Stage 6: Eligibility
+
+Articles that passed screening are judged on the best text available, in this order:
+
+1. a PDF you uploaded;
+2. the open-access full text from PubMed Central;
+3. the abstract.
+
+In the same step, each included article's data are extracted: study design, number of participants, population, intervention, comparator, and each outcome with its effect measure (odds ratio, risk ratio, hazard ratio, mean difference, standardised mean difference or other), estimate, 95% confidence interval and p-value.
+
+Each included study is then graded (GRADE) for **Risk of bias**, **Indirectness** and **Imprecision** (**No concern**, **Serious** or **Very serious**, each with a reason), giving an overall certainty of **High**, **Moderate**, **Low** or **Very low**. Inconsistency and publication bias are judged per outcome at synthesis.
+
+## The article table
+
+Both stages show a table of articles with filter tabs **All**, **Included**, **Excluded**, **Pending** and, when there are any, **Failed**. The table shows 25 articles a page.
+
+| Column | What it shows |
+| --- | --- |
+| **Article** | Title, journal and year. |
+| **Decision** | **Included**, **Excluded · &lt;reason&gt;**, **Failed** or **Pending**. A person icon means you decided it. |
+| **Votes** | One dot per reviewer (filled for include, a ring for exclude, dashed for a failed call, outlined for a tiebreak), and the reviewers' mean confidence. |
+| **Text** (eligibility) | What was read: **PDF**, **PMC** or **Abstract**. |
+| **Certainty** (eligibility) | The study's GRADE certainty. |
+
+Exclusion reasons are **Wrong population**, **Wrong intervention**, **Wrong comparator**, **Wrong outcome**, **Wrong study design**, **Not primary research**, **No abstract**, **Insufficient data** and **Other**.
+
+### Running a stage again
+
+- **Run screening** / **Run eligibility** (or **… again**) judges every article in the stage again.
+- **Finish the rest** judges only the articles that are still pending or failed.
+- Your own decisions are never overwritten by a re-run. In manual mode, tick **Re-judge articles I decided** to include them.
+
+You can also ask Medbot to re-run up to 50 named articles.
+
+## The article drawer
+
+Click an article to open it. The drawer shows its authors, journal and date, links to **PMID**, PubMed Central and **DOI**, its publication types, and:
+
+- **Screening decision** / **Eligibility decision**: the current decision. In manual mode the owner can override it: click **Include**, or choose a **Reason** and click **Exclude**. Eligibility can only be decided for articles that passed screening.
+- **Screening reviewers** / **Eligibility reviewers**: each vote, with the model, its role (**Review model**, **Second opinion** or **Tiebreak**), its decision and reason, its justification and its confidence.
+- **Abstract**.
+- **Ask Medbot about this article**: asks Medbot to explain the decision and the reviewers' reasons in the conversation.
+
+On the eligibility stage the drawer also has:
+
+- **Text assessed**: **Uploaded PDF**, **PubMed Central full text**, **Abstract only** or **Not assessed yet**, and how many characters were read.
+- **Upload PDF** / **Replace PDF**: upload the full text when PubMed Central does not have it (PDF only, up to 25 MB; scanned images cannot be read). Eligibility reads it the next time it runs.
+- **Extracted data**: each outcome and its effect (95% CI). **Re-extract with Medbot** proposes a new extraction; keeping it replaces the extracted data, and the next synthesis uses it.
+- **Certainty of evidence (GRADE)**: click **Adjust** (or **Grade**) to change a domain's rating and reason and the overall certainty, then **Save grade**. Grades you set show **Set by you**.
+
+## Human review
+
+Deep Research does not have a separate conflict queue or human double screening. You stay in control by reading the votes and reasons, overriding decisions, uploading full texts, adjusting grades, and approving or declining the changes Medbot asks to make.

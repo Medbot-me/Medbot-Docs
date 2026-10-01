@@ -1,0 +1,57 @@
+# Validation
+
+Validation measures how often an agent is right. The agent runs on every patient in a **validation dataset**, and its output is compared, field by field, with each patient's **ground-truth label**: the answer a clinician says is correct.
+
+## What you need
+
+1. **A dataset** of patients. See [Patient Data](/docs/agents/datasets).
+2. **The agent's validation dataset** set to it, in step 4 of the [wizard](/docs/agents/create-an-agent#validation-dataset-optional) or with **Change dataset** on the Validation tab.
+3. **Ground-truth labels** for some or all of the patients: import a table, label patients one at a time, or add reviewed [live calls](/docs/agents/live-calls#adding-calls-to-a-dataset).
+
+## Running validation
+
+A validation run covers up to 500 patients from the dataset. It starts:
+
+- when you create an agent with **Create and run validation**;
+- when you click **Run validation** (or **Run validation on v&lt;n&gt;**) on the Validation tab;
+- each time a workflow version is made live, if the agent is set to **Re-run on every new version**;
+- from the [Refine](/docs/agents/refine) flow.
+
+When the run finishes, you get a notification with the new score and the previous one, or a warning if it dropped by 3 or more points. The agent card's **Validation** tile shows the latest score.
+
+## The Validation tab
+
+The dataset bar shows the validation dataset and its patient count, with **Change dataset**; the version being scored (**Newest run per patient**, or a particular version); how many reviewed live calls are waiting to be added; and **Run validation**.
+
+The tiles show the **Overall** score (the share of labelled patients whose every labelled field matched), a tile per output field, and **Not labelled** (patients with no ground truth). Matching forgives differences in case and spacing, and values typed as text: *Yes* matches a true boolean, and *6* matches the number 6.
+
+Filter the table with **All**, **Misses**, **Not labelled** and **Added from live calls**, compare with another version, or **Download CSV**. For each patient the table shows the truth and the agent's answer for each field (misses in red), **Match** or **Miss**, **Where it diverged** in the workflow, and how long the run took. Editors can **Add label** or **Edit label** on any row.
+
+Below the table:
+
+- **Refine agent from these misses** opens the [Refine](/docs/agents/refine) flow.
+- **Misses by workflow step** shows which steps the misses went wrong at.
+- **Versions on this dataset** compares each version's overall and per-field scores, median run time and patient count.
+
+## Ground-truth labels
+
+A label holds the correct value of each output field for one patient, for this agent and dataset. The **Ground-truth labels** panel counts labels **From live calls** and **Entered or imported**, and has:
+
+- **Import a labels table** (editors).
+- **All labels**, to see and edit every label.
+- **Cross-sectional evaluation**, which opens the older labels and evaluation pages, including the manual verdicts (TP, TN, FP, FN) recorded on individual runs.
+
+### Importing a labels table
+
+Prepare a table with one row per patient: a column that names the patient, and a column for each output field. For example:
+
+| patient_id | on_metformin | recommend_start |
+| --- | --- | --- |
+| P001 | yes | no |
+| P002 | no | yes |
+
+1. Click **Import a labels table** and choose a .csv, .tsv, .txt or .xlsx file (the first sheet of a workbook is used; the first row must be headers).
+2. Check the **Patient column** and the column for each field. Medbot matches headers to field names; choose **Not in this table** for fields the table does not have. Map at least one field.
+3. Click **Import labels**.
+
+Patients are matched by their dataset id or by the key they were imported with. Yes/no fields accept true/yes/y/1 and false/no/n/0, number fields are read as numbers, and empty cells label nothing. Importing replaces each matched patient's whole label for this agent and dataset. Medbot reports how many patients were labelled, and which rows named no patient in the dataset. A table can have up to 5,000 rows and 50 field columns. You need to be able to edit the agent and own the dataset.

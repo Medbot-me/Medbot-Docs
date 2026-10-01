@@ -1,0 +1,43 @@
+# Start a Review
+
+## From the Deep Research page
+
+1. Click **Deep Research** in the sidebar to open [medbot.me/research](https://www.medbot.me/research). The page asks **What do you want to find out?**
+2. Type your clinical question in the box, for example: *in adults with type 2 diabetes, do SGLT2 inhibitors reduce hospitalisation for heart failure?* Questions can be up to 4,000 characters. Press **Enter** to submit, or **Shift+Enter** for a new line. The **Try** row under the box has example questions you can start from.
+3. Choose a mode with the **Auto** / **Manual** toggle. **Manual** is the default.
+4. Choose the review's model. The model marked **Default** is the platform default. The model is fixed for the life of the review.
+5. Optionally, open the review options (the button shows the article limit, for example **Up to 1,000 articles**, and the summary line under the box has a **Change** link). See [Review options](#review-options).
+6. Click **Start review**.
+
+What happens next depends on the mode:
+
+- **Manual** opens the review on the **Question** stage. Your question is the first message in the conversation, and Medbot's first reply, a proposed PICO question with any questions it has for you, streams in. See [Question and Criteria](/docs/deep-research/question-and-criteria).
+- **Auto** creates the review, starts the run and opens it. Every stage runs in turn; you can watch the run log in the conversation.
+
+You can prefill the question box by linking to `medbot.me/research?q=<your question>`.
+
+## Review options
+
+On a computer the options open in a **Review options** popover; on a phone they open in a sheet, which also holds the model picker (**Review model**).
+
+| Option | What it does |
+| --- | --- |
+| **Extra reviewers for title and abstract screening** | Add up to two more models, each of which screens every article as a second opinion. Cost grows with each one. When reviewers split, the review model decides. |
+| **Extra reviewers for eligibility and data extraction** | Add up to two more models for full-text eligibility. Useful where extraction errors matter most. |
+| **Most articles to retrieve** | The most PubMed records the search keeps, from 1 to 10,000. Default 1,000. |
+| **Synthesis** | **Decide from the data** (default): meta-analysis when two or more studies report the same effect with a confidence interval, otherwise narrative. **Meta-analysis**: pool effect estimates, falling back to narrative (and saying why) if nothing can be pooled. **Narrative**: a structured narrative synthesis without pooling. |
+| **Title** | The review's title, up to 160 characters. Defaults to the question. |
+
+Extra reviewers can only be added when you start a review. The search always uses PubMed.
+
+## From the notes editor
+
+The **Deep research** section of the [workspace](/docs/workspace) sidebar lets you start a review while writing a note:
+
+1. Type a question in **Ask a clinical question to review the evidence**.
+2. Choose **Auto** (the default here) or **Manual**.
+   - **Auto** runs every stage on the default model, searching PubMed.
+   - **Manual** opens the review in a new tab, where you refine the question, criteria and search with Medbot.
+3. Click **Start an automatic review** or **Start a manual review**.
+
+The same section lists your **Recent reviews**, with a link to **All reviews**.
