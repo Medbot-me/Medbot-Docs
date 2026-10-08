@@ -7,7 +7,7 @@
 | Store | Holds | How organisations are separated |
 | --- | --- | --- |
 | **Medplum** (per organisation) | The clinical record: patients, practitioners, appointments, encounters, observations, immunisations, documents | A different Medplum server per organisation. Not a shared store with a filter on it. |
-| **Postgres** (shared) | Operational state Medplum does not model: queue tickets, clinic sessions, visits, rosters and attendance, locations and rooms, displays, inventory, order sets, booking requests, clinic-inbox threads, notes claimed onto a patient chart, SMS/WhatsApp channel links, SmartCMS entitlements and message logs | One database, every row carrying the organisation it belongs to — directly, or through its location or parent row |
+| **Postgres** (shared) | Operational state Medplum does not model: queue tickets, clinic sessions, visits, rosters and attendance, locations and rooms, displays, inventory, order sets, booking requests, clinic-inbox threads, notes claimed onto a patient chart, SMS/WhatsApp channel links, SmartCMS entitlements, claims queue and message logs | One database, every row carrying the organisation it belongs to — directly, or through its location or parent row |
 
 ## Which organisation a request is for
 
@@ -43,7 +43,7 @@ Consequences worth knowing:
 
 ## Country and module gating
 
-Some surfaces depend on the organisation's **country** and the national-service **modules** it subscribes to, on top of the user's role. Today that means the [SmartCMS](/cms/smartcms/modules) screens, **Claims** and **Reports**, which exist only for organisations in Singapore that subscribe to a matching module. An organisation without them gets **not found** for those pages, exactly as for any organisation you cannot see, and the API refuses the matching endpoints.
+Some surfaces depend on the organisation's **country** and the national-service **modules** it subscribes to, on top of the user's role. Today that means the [SmartCMS](/cms/smartcms/modules) screens, **Claims** and **Reports**, which exist only for organisations in Singapore that subscribe to a matching module. Outside Singapore those pages answer **not found**, exactly as for any organisation you cannot see. A Singapore organisation without the matching module gets a "not allowed" page that tells staff to ask an admin to turn the module on. Either way the API refuses the matching endpoints.
 
 ## Denials look like absence
 

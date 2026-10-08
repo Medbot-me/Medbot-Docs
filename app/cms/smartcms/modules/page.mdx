@@ -27,6 +27,7 @@ Modules are shown as cards grouped under the certification badge they belong to.
 | **National Immunisation Registry** (`NIR`) | Notify the National Immunisation Registry of every vaccination given. | HE code per location, SDD vaccine codes |
 | **Disease notification** (`DEROM`) | Notify MOH of notifiable diseases, confirmed by the diagnosing doctor. | HE code per location, practitioner MCR numbers |
 | **Chronic disease indicators** (`CIDC`) | Report chronic disease clinical indicators prepared from chronic visits. | HE code per location, coded chronic diagnoses |
+| **Referral contribution to NEHR** (`NEHR_REFERRAL`) | Contribute referral letters to the National Electronic Health Record, as the CHAS Badge requires. | HE code per location, NEHR onboarding |
 | **Medical alerts and allergies** (`CMIS`) · *Planned* | Share and look up drug allergies and medical alerts with the national system. | CMIS codeset, clinician-recorded allergies |
 
 ### Migrant Worker Health Badge
@@ -50,14 +51,16 @@ A Singapore organisation with at least one matching module gets a **SmartCMS** g
 | Screen | Route | Shown when the organisation subscribes to | Roles |
 | --- | --- | --- | --- |
 | **Claims**: "Subsidy and Medisave claims" | `/claims` | CHAS, CDMP or SFL | `admin`, `receptionist`, `doctor` |
-| **Reports**: "National registry notifications and reports" | `/reports` | NIR, DEROM, CIDC or MW_HEALTH | `admin`, `doctor` |
+| **Reports**: "National registry notifications and reports" | `/reports` | NIR, DEROM, CIDC, MW_HEALTH or NEHR_REFERRAL | `admin` and `doctor`; a `nurse` sees the NIR section only |
 
-Both screens currently show an empty state: "No claims yet: claims appear here once they are prepared from issued invoices" and "No reports yet: reports appear here once they are prepared from vaccinations, diagnoses and visits." They fill up as the claim and report workflows ship.
+See [Claims Workflow](/cms/smartcms/claims) and [Reports](/cms/smartcms/reports). Each section of **Reports** shows only for its own module and roles.
+
+Modules also add panels to screens staff already use, such as CHAS verification at check-in, the **Diagnoses (ICD-10-AM)** card, and the claim panels on **Generate invoice**. See [The screens](/cms/smartcms#the-screens).
 
 ### How gating is enforced
 
 - **Sidebar.** A SmartCMS item shows only when the organisation is in Singapore, subscribes to a matching module, **and** the user's role is allowed. `superuser` does not bypass the module check.
-- **Pages.** Opening `/claims` or `/reports` for an organisation that is not subscribed answers **not found**, the same way the CMS treats any organisation you cannot see. The module is checked before the role.
+- **Pages.** Opening `/claims` or `/reports` outside Singapore answers **not found**. In a Singapore organisation without the module, the page says "You are not allowed to access this page" and "This feature is not enabled for your organisation. Ask an organisation admin to turn on the matching SmartCMS module in the organisation settings." The module is checked before the role.
 - **API.** SmartCMS endpoints refuse (403) any organisation outside Singapore or without the module, whatever the page decided.
 
 ## Changing modules or country
@@ -68,13 +71,12 @@ Both screens currently show an empty state: "No claims yet: claims appear here o
 
 ## Entitlements: per-location approval
 
-Subscribing to a module is the clinic's choice. **Entitlement** is Synapxe's approval. Medbot keeps one entitlement per **clinic location** and **service group**, each set to `off`, `uat` or `prod`.
+Subscribing to a module is the clinic's choice. **Entitlement** is Synapxe's approval. Medbot keeps one entitlement per **clinic location** and **service group**, each set to **Off**, **UAT** or **Production**.
 
-- When a module is subscribed, Medbot creates `off` entitlements for every location automatically. Dropping a module turns its entitlements back `off` and deletes nothing.
-- Before any SmartCMS call, Medbot checks that the location belongs to the organisation, the organisation is in Singapore and subscribes to the group, the location's entitlement is on for the environment Medbot is running in, and the location has an HE code. If any check fails, **nothing is sent**.
-
-> There is no screen to turn an entitlement on yet. A dedicated SmartCMS tab for approvals, connection tests and onboarding export is planned. Until then every location stays `off`.
+- When a module is subscribed, Medbot creates **Off** entitlements for every location automatically. Dropping a module turns its entitlements back **Off** and deletes nothing.
+- An admin switches a location on, once Synapxe approves it, on the [SmartCMS settings](/cms/smartcms/settings) page, with Synapxe's approval reference.
+- Before any SmartCMS call, Medbot checks that the location belongs to the organisation, the organisation is in Singapore and subscribes to the group, the location's entitlement is on for the environment Medbot is running in, and the location has an HE code. If any check fails, **nothing is sent**. Claims for a switched-off location wait in the queue.
 
 ## Agent policy
 
-An organisation also has a SmartCMS **agent policy**: `off`, `prepare_only` or `auto_submit`. It will decide whether AI agents may only prepare claims for staff to submit, or submit them too. A policy other than `off` needs the CHAS or CDMP module. It is stored and validated by the API but has no control in the CMS yet, and defaults to `off`.
+An organisation also has a SmartCMS **agent policy**: **Off**, **Prepare only** or **Auto-submit**. It decides whether AI agents may only prepare claims for staff to submit, or submit routine claims too. A policy other than **Off** needs the CHAS or CDMP module, and it defaults to **Off**. An admin sets it, and any per-location override, on the [SmartCMS settings](/cms/smartcms/settings) page. See [Claims Agent](/cms/smartcms/claims-agent).

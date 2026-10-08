@@ -1,0 +1,101 @@
+# Claims Agent
+
+The **claims agent** prepares SmartCMS claims and reports so front-desk staff do not have to build each one by hand. It works from bills that have already been issued and visits that are complete. It never decides what to bill, never appeals, and never sends a disease notification or CIDC report: those always wait for a doctor.
+
+There are three ways an agent can work on a clinic's claims:
+
+| Way | What it is | Started by |
+| --- | --- | --- |
+| **Nightly run** | A fixed, rule-based run at 7 pm, Monday to Saturday, at each location whose agent policy is on. | Medbot, on schedule, or **Run now** |
+| **Prepare today's claims** | An AI agent that works through today's bills and visits at one location, and leaves a note on anything it could not prepare. | Staff, from the **Claims** page |
+| **Your own AI assistant** | An assistant such as Claude, connected to Medbot's SmartCMS claims tools. | An admin, with an agent credential or by approving a connection |
+
+All three follow the same **agent policy** and the same rules as staff.
+
+## Agent policy
+
+An admin sets how far an agent may go on the **SmartCMS** settings page, in the **Agent policy** card: "How far an automated agent may take a SmartCMS claim for this organisation. DEROM and CIDC always wait for a doctor."
+
+| Policy | What it means |
+| --- | --- |
+| **Off: agents never prepare claims** | The default. No agent prepares anything. |
+| **Prepare only: a person submits** | Agents prepare claims and reports. They wait in the **Claims** queue as **Waiting for review** until a person submits them. |
+| **Auto-submit routine claims** | Agents may also submit what they prepare. |
+
+**Auto-submit** is offered only once a location is approved for production for CHAS, Medisave or Screen for Life claims. Even then, an agent may submit only CHAS and Medisave claims, NIR notifications and migrant worker reports, and never a claim held with problems.
+
+Each clinic location can override the organisation's policy with **Agent policy at this location**. The default is **Same as the organisation**. See [SmartCMS Settings](/cms/smartcms/settings).
+
+## What the agent prepares
+
+- **Claims** for issued bills: CHAS and Medisave. Vaccination, CDS and Screen for Life claims are prepared from the bill itself when it is issued.
+- **Reports** for completed visits: National Immunisation Registry notifications, disease notifications (DEROM), chronic disease indicators (CIDC) and migrant worker health reports. DEROM and CIDC always wait for a doctor to confirm them in [Reports](/cms/smartcms/reports).
+- **Notes for staff** for anything it could not prepare, and why. They appear under **Notes for staff** on the **Claims** page. Take each one up by hand, then select **Resolve**.
+
+The agent never prepares the same claim twice. If a claim already exists for a bill, it reports it as already there.
+
+## The Claims agent card
+
+The **Claims agent** card is at the top of **SmartCMS → Claims**:
+
+> At 7 pm, Monday to Saturday, the claims agent prepares the past week's claims and reports at each location whose agent policy is on. Under "prepare only" they wait here for you to submit. "Prepare today's claims" runs the agent now and leaves a note on anything it held.
+
+Clinic Admins and receptionists see two buttons, with a location list when the organisation has more than one location:
+
+- **Run now** starts the nightly run straight away. It runs once a day per location. If it has already run: "Today's run at this location is already running" or "…done".
+- **Prepare today's claims** starts the AI agent. It uses the organisation's default model and can be run more than once a day, but only one at a time per location. If one is already working: "The claims agent is already working at this location."
+
+Both take a minute or two. Refresh the page to see what they prepared.
+
+The table below the buttons lists recent runs:
+
+| Column | What it shows |
+| --- | --- |
+| **Date** | The day the run covered. |
+| **Location** | The clinic location. |
+| **How** | **Nightly**, **Run now** or **Prepare today's claims**. |
+| **Status** | **Running**, **Done** or **Failed**. |
+| **Result** | What happened, for example "3 prepared, 1 sent, 2 already there, 1 note", or "Nothing new". |
+
+A failed nightly run says "Failed; the next run tries again." A failed **Prepare today's claims** run says "Failed; start another when ready." A **Prepare today's claims** run also shows the agent's closing note and the steps it took, such as preparing a CHAS claim or leaving a note for staff.
+
+In the queue, the **Prepared** column marks what an agent built: **Prepared by agent**, with the agent's name in brackets, for example "Prepared by agent (Nightly claims agent)". Anything an agent prepared that nobody submits within 7 days is discarded as "Not submitted within 7 days".
+
+### How "Prepare today's claims" is kept safe
+
+- It runs with a short-lived credential tied to that one location, which is revoked as soon as the run ends.
+- It can only use the same claims tools staff can, under the same policy and location checks.
+- Its record of the run leaves out NRICs and claim drafts.
+
+## Connecting your own AI assistant
+
+Medbot offers its SmartCMS claims tools to AI assistants over the Model Context Protocol (MCP), at `/mcp/smartcms` on the Medbot API. An assistant connected this way can list claimable visits, check CHAS coverage, prepare and (under auto-submit) submit claims and reports, read the queue and reconciliation, and leave notes for staff. Its rights are the ones the agent policy allows. Clinic Admins and receptionists can also use the tools directly.
+
+There are two ways to connect one.
+
+### Approve a connection
+
+An assistant that supports OAuth, such as Claude's connectors, asks to connect. An admin of a CHAS, Medisave or Screen for Life organisation sees **Connect an assistant** in the CMS:
+
+1. Check the assistant's name. The page notes the name is "self-reported by the assistant, not verified".
+2. Choose the **Location** it may work at, or **All locations**.
+3. Choose how long the access lasts: 7, 14 or 30 days.
+4. Select **Approve**, or **Decline**.
+
+Access ends when the period runs out. There is no automatic renewal: approve the assistant again to continue.
+
+### Create an agent credential
+
+On the **SmartCMS** settings page, the **Agent credentials** card issues a token for an assistant you run yourself.
+
+1. Enter a **Name**, choose a **Location** (or **All locations**) and how long until it **Expires after** (7, 14 or 30 days).
+2. Select **Create credential**.
+3. Copy the token. It is shown once: "Copy it now: it will not be shown again."
+
+The list shows each credential's location, expiry, when it was last used and its status: **Active**, **Revoked** or **Expired**. Select **Revoke** to end one, for example if the token is lost.
+
+## Related
+
+- [Claims Workflow](/cms/smartcms/claims): the claim from check-in to payment.
+- [SmartCMS Settings](/cms/smartcms/settings): agent policy, credentials and location switches.
+- [Reports](/cms/smartcms/reports): the reports a doctor must confirm.

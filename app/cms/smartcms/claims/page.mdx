@@ -1,0 +1,246 @@
+# Claims Workflow
+
+This page follows a Singapore subsidy or Medisave claim from check-in to payment: verifying the patient's CHAS card, coding the diagnoses, billing the visit, and then preparing, sending, tracking and correcting the claim from the **Claims** queue.
+
+The claim types Medbot handles are:
+
+| Claim | Module | Sent to |
+| --- | --- | --- |
+| **CHAS** acute and chronic subsidies | CHAS | MOH's MHCP |
+| **PHPC** (Haze, Flu Subsidy Scheme) | CHAS | MHCP |
+| **Vaccination (VSS)** and **childhood developmental screening (CDS)** subsidies | CHAS | MHCP |
+| **Screen for Life** screenings and follow-up consults | SFL | MHCP |
+| **Medisave** for the Chronic Disease Management Programme | CDMP | CPF, through MediClaim |
+
+> **Before go-live.** These workflows are built and tested against Synapxe's specifications and a mock gateway. A clinic location sends nothing until Synapxe approves it and an admin switches it on. See [SmartCMS Settings](/cms/smartcms/settings).
+
+## The workflow at a glance
+
+1. **Check-in.** Medbot verifies the patient's CHAS card on their first check-in.
+2. **Consultation.** The doctor codes the visit's diagnoses in ICD-10-AM.
+3. **Billing.** Front-desk staff generate the bill for the visit and choose what to claim.
+4. **Preparation.** Issuing the bill prepares the claims. A complete claim is queued to send. A claim with gaps waits for review.
+5. **Sending and tracking.** Medbot sends queued claims and follows MHCP's or CPF's status until the claim is paid or closed.
+6. **Corrections.** Staff appeal a rejected CHAS claim, amend or cancel a Medisave claim, or void and correct the bill.
+
+The [claims agent](/cms/smartcms/claims-agent) can also prepare claims every evening, and staff can ask it to prepare today's claims on demand.
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| See the CHAS badge and **Verify now** | Yes | Yes | Yes | Yes |
+| Code a visit's diagnoses | Yes | No | Yes | No |
+| Order a Screen for Life screening | Yes | No | Yes | Yes |
+| Record a developmental screening (CDS) | Yes | No | Yes | No |
+| Bill a visit and choose its claims | Yes | Yes | No | No |
+| Check a Medisave payer | Yes | Yes | No | No |
+| See the **Claims** queue | Yes | Yes | Yes | No |
+| Submit, re-prepare or discard a claim; resolve notes for staff | Yes | Yes | No | No |
+| Run the claims agent | Yes | Yes | No | No |
+| Amend or cancel a Medisave claim; check CPF payments | Yes | Yes | No | No |
+| Appeal a rejected CHAS claim | Yes | No | Yes | No |
+
+## 1. Check-in and CHAS verification
+
+When a patient checks in at the [reception queue](/cms/reception-queue) for the first time that day, Medbot asks MHCP for their CHAS card, chronic balance and acute balance. Verification never blocks check-in. If it fails, the patient is still checked in.
+
+The patient header then shows a **CHAS badge** to every clinic role:
+
+- the card name, or **CHAS not verified**, **No CHAS card**, or the card name followed by **expired**
+- the card's validity, the chronic tier, the chronic and acute balances, and the number of visits at this clinic
+- **Verified at** and the time, in Singapore time
+
+**Verify now** asks MHCP again. It checks at the clinic of the patient's visit in today's queue session, or at the organisation's default location if there is none.
+
+If verification fails, the badge says why, for example:
+
+| Message | What to do |
+| --- | --- |
+| "Not verified: the patient has no Singapore NRIC (S or T) recorded." | Record the patient's NRIC on their [identifiers](/cms/patient-records). |
+| "Not verified: … is not connected to SmartCMS for CHAS. It needs an HE code and CHAS switched on in the SmartCMS settings." | An admin finishes the location's [SmartCMS settings](/cms/smartcms/settings). |
+| "Not verified: SmartCMS is switched off on this Medbot server." | Nothing is sent from this server. Contact Medbot. |
+| "Not verified: MHCP's answer could not be read. Try again later." | Select **Verify now** later. |
+
+A card verified more than 30 days ago, or in an earlier year than the visit, is flagged as stale. MHCP is asked again when the bill is issued, and **Verify now** checks it straight away.
+
+## 2. Code the diagnoses
+
+CHAS, Medisave, Screen for Life and the national reports all need the visit's diagnoses coded in **ICD-10-AM**. On the patient chart's **Overview**, the **Diagnoses (ICD-10-AM)** card covers the current visit. See [Encounters & Clinical Notes](/cms/encounters).
+
+- Search by code or name, for example `J06.9` or "diabetes", and select **Add a diagnosis**.
+- Add complications, and pick from the suggested CDMP conditions for a chronic visit.
+- Select **Save diagnoses**. A code that is not on MOH's lists is marked **Not on MOH's lists**, because MHCP and CPF will not accept it.
+
+Only Clinic Admins and doctors can edit diagnoses. Everyone else sees them read-only.
+
+A coded notifiable disease also prepares a disease notification, and a chronic diagnosis prepares a CIDC report. Both wait for a doctor in [Reports](/cms/smartcms/reports).
+
+### Screenings and vaccinations
+
+- **Screen for Life.** The **Screen for Life** panel on the encounter checks eligibility with HPB and the patient's CHAS history (**Check eligibility**), then **Order screening**.
+- **Developmental screening.** The **Childhood developmental screening (CDS)** panel shows the child's previous claims (**Check CDS history**) and records a screening (**Record screening**). It warns when MHCP already has a claim for that milestone, because a second one is rejected unless appealed.
+- **Vaccinations.** Choosing the **SDD product** when you record a vaccination lets Medbot claim the vaccination subsidy and notify the National Immunisation Registry. The **Vaccination subsidy (VSS)** panel checks eligibility. See [Vaccinations](/cms/vaccinations).
+
+## 3. Bill the visit
+
+Claims start from the bill. In Singapore, a visit has **one bill**, and each bill belongs to one visit. On [Billing](/cms/billing), select **Generate invoice** and choose the **Visit** the bill is for.
+
+Below the charges, the dialog shows a panel for each claim the visit can carry. A panel appears only if the organisation subscribes to its module **and** the visit's clinic location is connected. Otherwise the dialog says "SmartCMS is not connected for … at this location yet."
+
+### CHAS claim
+
+| Field | What to enter |
+| --- | --- |
+| **Scheme** | **No CHAS claim**, **CHAS Acute**, **CHAS Chronic**, **PHPC Haze** or **PHPC Flu Subsidy Scheme**. |
+| **Tier** (chronic only) | **Tier 1: less severe** or **Tier 2: more severe, with complications**. |
+| **Amount to claim (SGD)** | The subsidy to claim. |
+| **Diagnoses (ICD-10-AM)** | Filled in from the diagnoses coded at the visit. |
+| **Referred to (optional)** | Where the patient was referred, if anywhere. |
+
+PHPC also asks for the **Patient type** and any justification MHCP requires. The charges are grouped by their **Bill category** from the [Billable Catalog](/cms/billable-catalog).
+
+### Screen for Life, vaccination and CDS subsidies
+
+- **Screen for Life** lists the screenings and the follow-up consult to claim. A patient without a CHAS card is claimed as **No CHAS card (NONCHAS)**.
+- **Vaccination and CDS subsidy claims** lists one line per claimable vaccination or screening, each with a **Check** against MHCP. A Singapore citizen without a CHAS card is claimed as **Citizen without a CHAS card (NC-SC)**.
+
+### Medisave
+
+1. Tick **Pay part with Medisave**.
+2. Under **Check a payer**, enter the payer's NRIC and who the payer is (the patient or a family member).
+3. Confirm that the patient and payer signed the once-off Medisave consent form (MCAF(S)). The consent must be dated on the visit day.
+4. Select **Check Medisave**. Medbot shows the payer's balance.
+5. Choose the **Chronic condition** and enter how much **Medisave pays**. Medbot caps it: "Medisave can pay at most $X of this bill: the payer can claim $Y, and the patient pays $Z after the bill's subsidies."
+
+### After you generate the bill
+
+The invoice gets a receipt number of the form `{LOCATION}-RC-{YYYY}-{NNNNNN}`. Its summary shows the category totals, **Net**, the GST included, and the **Total**. Below that are the estimated subsidies (CHAS, vaccination, CDS, Screen for Life), Medisave, and **Patient pays (cash)**.
+
+If the claims could not be queued at that moment, the invoice is still issued and the dialog says: "The invoice is issued, but its SmartCMS claims could not be queued just now. They will be queued by the nightly check; see the claims queue tomorrow."
+
+## 4. Claims are prepared
+
+Issuing the bill prepares its claims automatically. Issuing the bill is the human decision, so a claim with nothing missing goes straight to **Queued to send**.
+
+A claim with gaps is **held** as **Waiting for review**, with each problem listed in red on its row. Typical problems:
+
+- "No CHAS card is verified for the patient; verify it, or choose a non-card patient type for PHPC."
+- "The visit has no attending doctor with an MCR number."
+- "The attending doctor's NRIC is not recorded."
+- "The clinic location has no HE code."
+- "The payer's once-off Medisave consent was taken on …, not on the visit day…"
+- "Medisave cannot pay more than the $… the patient pays after the government subsidies on the bill (RC103, RC104)."
+- "The patient's race is not recorded…"
+
+Fix the cause, then select **Re-prepare** on the claim. If any one Screen for Life claim on a visit is held, the visit's whole Screen for Life batch waits.
+
+A daily check at 02:30 (Singapore time) picks up any issued bill from the past week whose claims were not prepared.
+
+## 5. The Claims queue
+
+**SmartCMS → Claims** (`/claims`) lists every claim for the organisation, newest activity first. The page says which modules it covers and that "MHCP status is checked every four hours during the day." With Medisave, it also links to **Medisave payments from CPF**.
+
+From top to bottom, the page shows:
+
+1. **Claims agent.** The agent's recent runs and the buttons to start one. See [Claims Agent](/cms/smartcms/claims-agent).
+2. **Notes for staff.** "What an agent or Medbot could not prepare, and why. Take each up by hand, then mark it resolved." Select **Resolve** once you have dealt with a note.
+3. **The queue.** Filter by **All**, **Prepared** or **Needs attention**.
+
+| Column | What it shows |
+| --- | --- |
+| **Claim** | The module, location, claim number, a summary and any problems. |
+| **Prepared** | **Prepared by staff**, **Prepared automatically** or **Prepared by agent** and the agent's name. |
+| **Status** | Where the claim stands. See below. |
+| **Paid** | The amount paid and the date. |
+
+**Needs attention** collects claims that are waiting for review, were refused or not confirmed, are parked because a location was switched off, were paid short by Medisave, or that MHCP or CPF rejected, recovered or returned with an error.
+
+### Actions on a claim
+
+| Action | When it is offered |
+| --- | --- |
+| **Submit** | A prepared claim with no problems. |
+| **Submit all prepared: … at …** | Every prepared claim for one module at one location. Held claims are left for review: "… claim(s) held with issues were left for review." |
+| **Re-prepare** | A held CHAS claim, after you fix the cause. The result says it is ready to submit, or still held and why. |
+| **Discard** | Any claim not yet sent. You are asked "Why is this claim being discarded?" |
+| **Refresh status** | A sent CHAS claim. Asks MHCP for its status now. |
+| **Check CPF now** | A sent Medisave claim. If nothing is back yet: "CPF has not answered this claim yet. Medbot checks again on its own." |
+| **Appeal** | A CHAS claim MHCP rejected. See [Appealing a rejected CHAS claim](#appealing-a-rejected-chas-claim). |
+| **Amend** and **Cancel with CPF** | A Medisave claim. See [Amending or cancelling a Medisave claim](#amending-or-cancelling-a-medisave-claim). |
+
+Claims the agent prepared but nobody submitted within 7 days are discarded as "Not submitted within 7 days".
+
+### Claim statuses
+
+Before MHCP or CPF decides on it, a claim shows where it is in sending:
+
+| Status | Meaning |
+| --- | --- |
+| **Waiting for review** | Prepared, waiting for a person to submit it, or held with problems. |
+| **Queued to send** | Ready. Medbot sends it shortly. |
+| **Sending** / **Sending (retrying)** | Being sent. Medbot retries after 1, 5 and 15 minutes. |
+| **Sent** | The gateway received it. For Medisave this reads **Queued with CPF**. |
+| **Accepted by MHCP** | MHCP accepted it. For Medisave this reads **Approved by CPF**. |
+| **Not sent** | The gateway refused it. The row says why. |
+| **Not confirmed** | Medbot cannot tell whether it arrived. It is never resent automatically. Check before sending again. |
+| **Discarded** | Withdrawn by staff, or not submitted within 7 days. |
+
+After that, the status is MHCP's or CPF's own, with its code and description. MHCP statuses include **Submitted**, **Approved**, **Rejected**, **Appealed**, **Paid**, **Recovered** and **Cancelled**. A claim rejected again after an appeal shows **Rejected after appeal**. A Medisave claim that CPF paid less than claimed shows **Approved with shortfall**, and the patient owes the difference.
+
+## 6. Sending and tracking
+
+- **CHAS.** Medbot checks MHCP for each CHAS claim's status every four hours between 08:00 and 20:00 (Singapore time). It checks every run for the first 14 days, then daily, then weekly after 60 days. It stops once a claim is paid, finally rejected or cancelled, and keeps watching paid claims for audit recovery.
+- **Medisave.** CPF answers through files rather than at once. Medbot collects CPF's advice at 09:00, 13:00 and 18:00 and its payment files at 10:00, Monday to Friday.
+- **A location switched off.** If an admin switches a module off at a location, its claims are parked and nothing is sent.
+
+### Medisave payments
+
+**Medisave payments** (`/claims/medisave-payments`) shows the payment files CPF sent in the last 60 days: payment detail, summary and GIRO letter. For each file you see whether it was applied, how many records it held, its total, the claims it paid, and whether the totals tie out. **Check CPF payments now** collects new files immediately. If none arrived: "No payment files from CPF in the last 60 days."
+
+## 7. Corrections
+
+### Appealing a rejected CHAS claim
+
+Clinic Admins and doctors can appeal a CHAS claim MHCP rejected. Receptionists cannot, and the claims agent never appeals.
+
+1. Select **Appeal** on the rejected claim. The dialog **Appeal the CHAS claim** notes that "MHCP reviews appeals by hand; it may take a day or two to hear back."
+2. Choose the **Reason for the appeal**:
+   - A1 Claim overlooked or missed
+   - A2 Administrative or manpower issues
+   - A3 IT issues
+   - A4 Re-submission after audit recovery
+   - A5 Re-submission after claim cancellation
+   - OT Clinical or other reasons
+3. For **OT**, explain under **Reason for MHCP** (required, up to 1,000 characters).
+4. Select **Send appeal**.
+
+The appeal appears as its own row: **Appeal queued**, **Appeal submitted**, **Appeal refused**, **Appeal not confirmed** or **Appeal replaced**. Once MHCP accepts it, the claim shows as appealed and Medbot follows its status again.
+
+A claim can be appealed once. Medbot explains when it cannot: "This claim has already been appealed.", "MHCP does not accept an appeal for this rejection.", or "An appeal for this claim is already in progress." Screen for Life claims cannot be appealed.
+
+### Amending or cancelling a Medisave claim
+
+- **Cancel with CPF.** Once a Medisave claim is queued, CPF is sent a cancellation under the same reference and refunds what it deducted. A claim not yet sent is simply withdrawn.
+- **Amend.** Once CPF approves a claim, **Amend the Medisave claim** lets you change how much **Medisave pays** and, optionally, the **Chronic condition**. Select **Send amendment**. Only one amendment can be in progress at a time.
+
+Both ask whose error it was: **The clinic's error** or **The patient's error**. The queue labels these rows **Amendment** and **Cancellation**.
+
+### Voiding and correcting a bill
+
+To fix a bill that has already been issued, void it from **Billing → Invoices** with **Void invoice** (or **Void draft** for a draft). Enter a **Reason**. If the bill carries a claim, you are asked **Whose error was the bill?**
+
+Choose **Correct the bill** to bill the visit again. The new invoice replaces the voided one and its claims are prepared again. What happens to the old claims:
+
+- A Medisave claim is cancelled with CPF, or withdrawn if it was not yet sent.
+- A CHAS, Screen for Life, vaccination or CDS claim not yet sent is withdrawn.
+- A claim already sent to MHCP cannot be withdrawn by Medbot. A note for staff says to cancel it in the MHCP portal, then resubmit the corrected claim. Once MHCP reports it cancelled, the corrected bill can be claimed.
+
+The Invoices table marks the new invoice "Corrects …" and the old one "Voided for correction". An invoice marked as paid cannot be voided. See [Billing](/cms/billing#voiding-and-correcting-a-bill).
+
+## Related
+
+- [Claims Agent](/cms/smartcms/claims-agent): preparing claims automatically, and connecting AI assistants.
+- [SmartCMS Settings](/cms/smartcms/settings): switching locations on, accreditation and agent policy.
+- [Reports](/cms/smartcms/reports): NIR, disease notification, CIDC, NEHR and migrant worker reports.
+- [Billing](/cms/billing): bills, receipts, voids and corrections.

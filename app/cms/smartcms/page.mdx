@@ -1,10 +1,10 @@
 # SmartCMS (Singapore)
 
-**SmartCMS** is the national gateway, run by **Synapxe**, that Singapore clinic management systems call to reach MOH and agency back-ends: CHAS and MOH subsidy claims, Medisave (CDMP) claims, the National Immunisation Registry, disease notification, migrant worker health reporting, Healthier SG and more.
+**SmartCMS** is the national gateway, run by **Synapxe**, that Singapore clinic management systems call to reach MOH and agency back-ends: CHAS and MOH subsidy claims, Medisave (CDMP) claims, Screen for Life, the National Immunisation Registry, disease notification, chronic disease indicators, NEHR referrals, migrant worker health reporting and more.
 
-Medbot CMS is building its SmartCMS integration so a Singapore clinic can run these national workflows from the same screens it already uses for patients, visits, vaccinations and billing.
+Medbot CMS runs these national workflows from the screens a clinic already uses. Staff verify a patient's CHAS card at check-in, code diagnoses during the consultation, and choose claims when they bill the visit. Medbot then prepares, sends and tracks the claims and reports.
 
-> **Status: foundations only.** Today an organisation can pick the SmartCMS services it will use, record the regulatory identity SmartCMS needs, and see the **Claims** and **Reports** screens that those services unlock. Medbot does not send anything to SmartCMS from any clinic workflow yet, and both screens are still empty. See [What works today](#what-works-today).
+> **Status: built, awaiting Synapxe certification.** The claims and reports workflows on these pages are built to Synapxe's specifications and tested against a mock gateway. Nothing is sent for a clinic location until Synapxe approves it and an admin switches it on in [SmartCMS Settings](/cms/smartcms/settings). See [What works today](#what-works-today).
 
 ## How it fits together
 
@@ -26,27 +26,54 @@ SmartCMS is enabled **per organisation** and only for organisations whose countr
 | **Module** | A group of SmartCMS services a clinic subscribes to, e.g. "CHAS and MOH subsidy claims" or "National Immunisation Registry". An admin chooses them when [creating the organisation](/cms/create-organisation) or later in [Organisation Settings](/cms/settings#integrations). See [Modules & Gating](/cms/smartcms/modules). |
 | **Badge** | Synapxe's grouping of modules for certification: **CHAS Badge**, **Migrant Worker Health Badge**, **Healthier SG bundle**. |
 | **HE code** | The MOH Health Establishment code of one clinic location. SmartCMS identifies the clinic on every call by this code. See [Singapore Registration](/cms/smartcms/registration). |
-| **Regulatory identity** | The organisation's UEN and GST details, each location's HE code and Hospital Code, and each practitioner's MCR or SNB number and NRIC. |
-| **Entitlement** | Synapxe's approval for **one location** to use **one service group** in **one environment** (UAT or production). Nothing is sent for a location that is not approved. |
+| **Regulatory identity** | The organisation's UEN and GST details, each location's HE code and Hospital Code, and each practitioner's MCR or SNB number. |
+| **Entitlement** | Synapxe's approval for **one location** to use **one service group** in **one environment** (UAT or production). An admin records it in [SmartCMS Settings](/cms/smartcms/settings). Nothing is sent for a location that is not switched on. |
+| **Claims queue** | Every claim the organisation has prepared, with its status at MHCP or CPF. See [Claims Workflow](/cms/smartcms/claims). |
+| **Agent policy** | How far an AI agent may take a claim: off, prepare only, or auto-submit. See [Claims Agent](/cms/smartcms/claims-agent). |
 | **Evidence log** | An encrypted record of every message Medbot sends to SmartCMS and every reply, kept for audit and certification. |
 
 ## What works today
 
 | Area | State |
 | --- | --- |
-| Country and time zone on every organisation | Live |
-| Choosing SmartCMS modules (wizard and settings) | Live |
-| **Singapore registration**: UEN, GST, HE code, Hospital Code | Live |
-| Practitioner MCR / SNB numbers and doctor NRIC on staff records | Live |
-| **SmartCMS** sidebar group with **Claims** and **Reports** | Live, but both screens show an empty state |
-| Gateway client, sequencing, evidence log, per-location entitlements (backend) | Built and tested against a mock gateway, not yet called by any workflow |
-| Setting a location's entitlement to UAT or production, connection test | Not yet available. Every location starts **off** |
-| CHAS balance enquiry at check-in, claims queue, registry and disease reports | Planned |
-| Viewing or exporting the evidence log | Planned |
+| Choosing SmartCMS modules (wizard and settings) | Available |
+| **Singapore registration**: UEN, GST, HE code, Hospital Code, location email and phone | Available |
+| **SmartCMS settings**: switching services on per location, connection test, accreditation check, agent policy, agent credentials, Synapxe onboarding export, SIT evidence | Available |
+| **CHAS verification** at check-in and **Verify now** | Available |
+| **Coded diagnoses** (ICD-10-AM) on the visit | Available |
+| **Singapore billing**: one bill per visit, receipt numbers, GST, bill categories, void and correct | Available |
+| **Claims**: CHAS, PHPC, vaccination and CDS subsidies, Screen for Life, Medisave | Available |
+| **Claims queue**: submit, re-prepare, discard, status tracking, CHAS appeals, Medisave amend and cancel, CPF payment reconciliation | Available |
+| **Claims agent**: nightly run, "Prepare today's claims", AI assistant connections over MCP | Available |
+| **Reports**: NIR, disease notification (DEROM), CIDC, NEHR referral letters, migrant worker health | Available |
+| Sending to Synapxe UAT or production | Waiting on Synapxe's approval of each location |
+| Medical alerts and allergies (CMIS), Healthier SG | Planned |
+
+## The screens
+
+A Singapore organisation with a matching module gets a **SmartCMS** group in the sidebar:
+
+| Screen | What it is for |
+| --- | --- |
+| **Claims** (`/claims`) | The claims queue, the claims agent, notes for staff, and Medisave payments. See [Claims Workflow](/cms/smartcms/claims). |
+| **Reports** (`/reports`) | National registry notifications and reports. See [Reports](/cms/smartcms/reports). |
+
+SmartCMS also adds to screens staff already use:
+
+| Screen | What SmartCMS adds |
+| --- | --- |
+| [Reception Queue](/cms/reception-queue) and the patient header | CHAS verification and the CHAS badge |
+| [Encounters](/cms/encounters) | The **Diagnoses (ICD-10-AM)** card, Screen for Life and developmental screening panels |
+| [Vaccinations](/cms/vaccinations) | The SDD product and the vaccination subsidy check |
+| [Billing](/cms/billing) | The claim panels on **Generate invoice**, and void and correct |
+| [Organisation Settings](/cms/settings) | Modules, Singapore registration, and the link to **SmartCMS settings** |
 
 ## Where to go next
 
-- Choosing what the clinic subscribes to, and what appears in the app as a result: [Modules & Gating](/cms/smartcms/modules).
+- Following a claim from check-in to payment: [Claims Workflow](/cms/smartcms/claims).
+- Letting an agent prepare claims: [Claims Agent](/cms/smartcms/claims-agent).
+- National registry notifications and reports: [Reports](/cms/smartcms/reports).
+- Choosing what the clinic subscribes to: [Modules & Gating](/cms/smartcms/modules).
 - Entering the UEN, HE codes and practitioner numbers SmartCMS needs: [Singapore Registration](/cms/smartcms/registration).
-- For developers, how the backend talks to SmartCMS and how to run the mock gateway: [Gateway](/cms/smartcms/gateway).
-- For developers, every SmartCMS service Medbot knows about: [Service Registry](/cms/smartcms/service-registry).
+- Switching locations on, accreditation and agent policy: [SmartCMS Settings](/cms/smartcms/settings).
+- For developers, how the backend talks to SmartCMS: [Gateway](/cms/smartcms/gateway) and [Service Registry](/cms/smartcms/service-registry).

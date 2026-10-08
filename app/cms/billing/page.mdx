@@ -1,6 +1,6 @@
 # Billing
 
-Billing turns the charges from a visit into an invoice. Find it at **Billing → Billing** (`/billing`). A billing account belongs to one patient. You add charge items to the account, then generate an invoice.
+Billing turns the charges from a visit into an invoice. Find it at **Billing → Billing** (`/billing`). A billing account belongs to one patient. You add charge items to the account, then generate an invoice for one of the patient's visits.
 
 ## Who can do this
 
@@ -8,8 +8,9 @@ Billing turns the charges from a visit into an invoice. Find it at **Billing →
 | --- | --- | --- | --- | --- |
 | See accounts and invoices | Yes | Yes | No | No |
 | Create a patient's billing account | Yes | Yes | No | No |
-| Add charge items to an account | Yes | Yes | No | No |
+| Add or remove charge items | Yes | Yes | No | No |
 | Generate an invoice | Yes | Yes | No | No |
+| Void an invoice or a draft | Yes | Yes | No | No |
 | Download or print an invoice | Yes | Yes | No | No |
 
 Doctors and nurses do not see **Billing** or the patient chart's **Accounts** section. If they open the page by address, it says the action requires the admin or receptionist role.
@@ -30,24 +31,130 @@ The new account appears on the **Accounts** tab of the Billing page with its nam
 3. Search for a **Charge item definition** and select it. Only active definitions with a base price are listed, each with its price. Definitions come from the [Billable Catalog](/cms/billable-catalog).
 4. Enter a **Quantity** (a positive number) and select **Add charge item**.
 
-Repeat for each line. Items wait on the account as billable until you generate an invoice.
+Repeat for each line. Items wait on the account as billable until you generate an invoice. Each charge takes its **Bill category** from the catalog item when you add it. The category decides where the charge is totalled on the bill.
 
 ## Generating an invoice
 
-1. Open the same actions menu and select **Generate invoice**.
-2. Review the list of billable items (**Item**, **Qty**, **Entered**). The dialog explains: "Prices are calculated from each item's charge definition when the invoice is generated." and "Generating will price these items, create an invoice, and mark them as billed. This can't be undone from here."
-3. Select **Generate invoice**. The result shows the invoice with each line's unit price and amount, the **Net** and **Total**.
-4. Select **Download PDF** to save it, or **Close**.
+A bill is for one visit, and a visit is billed once.
 
-If the account has no billable items, the dialog says "No billable charge items on this account. Add charge items before generating an invoice." An item that is already on an invoice, or is being invoiced by someone else at the same moment, is skipped. If nothing is left, generating is refused with a message that the items may already be billed.
+1. Open the same actions menu and select **Generate invoice**.
+2. Choose the **Visit**. The list shows the patient's 10 most recent visits, each with its date and type. A visit that already has an invoice shows " (billed)".
+3. Review the billable items (**Item**, **Unit price**, **Qty**, **Entered**). The unit price is the catalog's base price. The dialog explains: "Final prices are calculated from each item's charge definition when the invoice is generated."
+4. If a SmartCMS claim panel appears, fill it in. See [Singapore claims on the bill](#singapore-claims-on-the-bill).
+5. Select **Generate invoice**. The button shows how many items will be billed, for example **Generate invoice (3)**. The dialog warns: "Generating will price these items, create an invoice, and mark them as billed. This can't be undone from here."
+
+The result is titled **Invoice generated**. It shows the invoice with each line's quantity, unit price and amount, then the totals. See [Reading the invoice](#reading-the-invoice). Select **Download PDF** to save it, or **Close**.
+
+### Choosing the visit
+
+- **In Singapore** the visit is required. The list starts on the latest visit that is not billed yet. If none is chosen, the list reads "Choose the visit this bill is for".
+- **Elsewhere** the visit is optional. Leave it empty to bill the whole account. The list then reads "The whole account (no visit)".
+
+If you choose a visit that is already billed, the dialog says "This visit is already billed on Invoice/" followed by the invoice number, then "Void it with “Correct the bill” to bill it again." **Generate invoice** stays unavailable. See [Voiding and correcting a bill](#voiding-and-correcting-a-bill).
+
+If the patient has no visits, the dialog says "The patient has no recorded visits." A charge recorded against a different visit is left off this bill.
+
+### Removing a charge before billing
+
+To leave a charge off the bill without billing it, select **Remove** on its row. You are asked to confirm: "The charge item will be marked as entered in error and left off this invoice. This can't be undone from here. Add a new charge item if it was removed by mistake." Select **Remove** to confirm.
+
+A charge that is being invoiced at that moment cannot be removed: "This charge item is being invoiced right now, so it cannot be removed."
+
+### When generating is refused
+
+- No billable items: "No billable charge items on this account. Add charge items before generating an invoice."
+- An item with no catalog entry shows **No price definition**, and the dialog asks you to fix it before generating.
+- An item that is already on an invoice, or is being invoiced by someone else at the same moment, is skipped. If nothing is left, generating is refused with a message that the items may already be billed.
+- In Singapore every price must be in SGD. Otherwise you see, for example, "A bill here is in SGD; these charges are priced in USD. Reprice them in the catalog." Fix the price in the [Billable Catalog](/cms/billable-catalog).
+
+When generating fails, the dialog keeps your choices and shows the reason above the list. Select **Try again** when it is fixed.
+
+## Reading the invoice
+
+The generated invoice, its PDF, and the **Invoices** tab show the same bill.
+
+- **Receipt number.** An issued bill gets a receipt number such as `MAIN-RC-2026-000123`: the clinic location's code, `RC`, the year of the visit, and a running number for that location. The code is the location's **Code** from [Session Setup](/cms/session-setup), in capitals. If the visit's location cannot be found, the bill shows its invoice number instead.
+- **Category totals.** The bill totals its lines under **Consultation**, **Prescription**, **Investigation** and **Others**, from each charge's bill category. In Singapore these are also the CHAS claim buckets.
+- **Net** and **Total.** Catalog prices include GST. **Total** is the sum of the lines. **Net** is the total without the GST it contains.
+- **GST.** When the organisation is GST-registered on the visit date, the bill shows a line such as "GST 9% included" with the GST amount. The rate follows the visit date (9% from 2024). The PDF also prints the GST registration number. Set the registration under [Singapore Registration](/cms/smartcms/registration). A visit before the **Registered from** date has no GST line.
+- **Corrects.** A bill that replaces a voided one says "Corrects Invoice/…".
+
+When the bill carries a SmartCMS claim, the totals continue with what each claim is expected to pay, then what the patient pays:
+
+| Line | Meaning |
+| --- | --- |
+| **CHAS subsidy (estimate)** | The CHAS claim |
+| **Vaccination subsidy (estimate)** | The vaccination subsidy claim |
+| **CDS subsidy (estimate)** | The CDS subsidy claim |
+| **Screen for Life (estimate)** | The Screen for Life claim |
+| **Medisave** | The amount paid from Medisave |
+| **Patient pays (cash)** | What is left for the patient to pay |
+
+Only lines with an amount appear. Subsidies are estimates until the payer answers. These lines are on screen only, not on the PDF.
+
+### If the invoice was not fully issued
+
+Sometimes the invoice is created but a later step fails.
+
+- **Left as a draft.** The title reads **Invoice created as draft** and the dialog says the invoice was created but not issued. The warning ends: "Void the draft from Invoices to release its charges and bill the visit again." A draft has no receipt number and makes no claims. Void it, then generate the bill again.
+- **Claims not queued.** The invoice is issued, but you see: "The invoice is issued, but its SmartCMS claims could not be queued just now. They will be queued by the nightly check; see the claims queue tomorrow." You do not need to bill again.
+
+## Singapore claims on the bill
+
+Singapore organisations that subscribe to SmartCMS modules see claim panels in the **Generate invoice** dialog, under the item list:
+
+- the **CHAS** claim panel;
+- **Screen for Life**;
+- vaccination and CDS subsidy claims;
+- **Medisave**.
+
+A panel appears only when the organisation subscribes to its module and the visit's clinic location is connected for it. While the location is checked, the dialog says "Checking SmartCMS at the visit's location…". Every claim on the bill is for the bill's visit, so the panels have no visit choice of their own.
+
+If a module is not available for this visit you see one of these instead of the panel:
+
+- "SmartCMS is not connected for … at this location yet."
+- "The visit's clinic location could not be told, so no … claim can be made on this bill."
+
+For what each panel asks and what happens to a claim afterwards, see [Billing the visit](/cms/smartcms/claims#3-bill-the-visit) in SmartCMS Claims.
+
+## Voiding and correcting a bill
+
+Void an invoice to cancel it and free its charges so the visit can be billed again. You cannot edit an issued invoice in place.
+
+1. Open the **Invoices** tab and the row's **Actions for invoice** menu.
+2. Select **Void invoice**, or **Void draft** for a draft.
+3. Enter a **Reason** (required, up to 500 characters).
+4. If the invoice carries a SmartCMS claim, answer **Whose error was the bill?**: **The clinic's** or **The patient's**. The payer is told when the claim is corrected.
+5. To bill the visit again, tick **Correct the bill**: "Correct the bill: bill this visit again, and the new invoice replaces this one". When the bill has claims, the text adds ", with its claims resubmitted".
+6. Select **Void**, or **Keep invoice** to leave it as it is.
+
+The invoice's status becomes **cancelled** and its charges are billable again. Then use **Generate invoice** for the same visit. The new invoice gets a new receipt number and says "Corrects Invoice/…". On the **Invoices** tab the old invoice shows "Voided for correction" and the new one shows "Corrects …".
+
+**Correct the bill** is offered only for an invoice that names a visit. A draft was never issued, so voiding it simply releases its charges and makes no claim changes.
+
+Only an issued or draft invoice can be voided. An invoice marked as paid (status **balanced**) has no void option.
+
+### What happens to the claims
+
+When you void a bill that carries claims:
+
+- A **Medisave** claim is cancelled with CPF, or withdrawn if it was not sent yet.
+- A **CHAS**, **Screen for Life**, or vaccination or CDS subsidy claim that was not sent yet is withdrawn.
+- One that was already sent cannot be cancelled by Medbot. It gets a note on the claims queue telling staff to cancel it in the MHCP portal, then resubmit the corrected claim.
+
+If SmartCMS cannot be told about the void, the invoice is still voided and you see: "The invoice is voided, but SmartCMS could not be told just now, so its claims are not cancelled yet. Cancel them from the claims queue."
+
+See [Voiding and correcting a bill](/cms/smartcms/claims#voiding-and-correcting-a-bill) in SmartCMS Claims for the full claim steps.
 
 ## Finding and reprinting invoices
 
-The **Invoices** tab lists each invoice with its **Invoice** number, **Patient**, **Date**, **Status**, and **Total**. Open **Actions for invoice** on a row to choose **Download PDF** or **Print**.
+The **Invoices** tab lists each invoice with its **Invoice** number (the receipt number when it has one), **Patient**, **Date**, **Status**, and **Total**. Open **Actions for invoice** on a row to choose **Download PDF** or **Print**, or to void it. Select **Refresh** to reload the list.
 
 What the patient sees: a completed visit's invoice is also available to the patient in their portal. See [Visits in the Patient tab](/patient/visits).
 
 ## Related
 
-- [Billable Catalog](/cms/billable-catalog): the priced items you bill.
+- [Billable Catalog](/cms/billable-catalog): the priced items you bill, and their bill categories.
 - [Services & Consumables](/cms/services-and-consumables): the clinical services that carry prices.
+- [Singapore Registration](/cms/smartcms/registration): the GST registration the bill uses.
+- [SmartCMS (Singapore)](/cms/smartcms): the claims the bill can carry.

@@ -14,21 +14,39 @@ Receptionists see the tables without the **New definition** and **Import CSV** b
 
 ## Reading the table
 
-The table shows **Title**, **Identifier**, **Status**, **Code**, **Price**, **Version**, and **Last Updated**. Use the search box to find an entry by title. Prices read like "80.00 USD (base)". A definition that is not **Active** is not offered when adding charge items to an account.
+The table shows **Title**, **Identifier**, **Status**, **Code**, **Price**, **Version**, and **Last Updated**. Use the search box to find an entry by title. Prices read like "80.00 SGD (base)". A definition that is not **Active** is not offered when adding charge items to an account.
 
 ## Adding a definition
 
 1. Select **New definition**.
 2. Fill in **Title** and **Billing Code**. The **Slug** fills in from the code or title. It is the lookup key other parts of the CMS use to find the price, it must be unique, and it never changes once assigned. Select **Edit manually** to type your own (lowercase letters, numbers, and hyphens).
 3. Choose a **Status**: **draft**, **active**, **retired**, or **unknown**. New definitions start as draft. Choose **active** to make one billable.
-4. Under **Pricing**, choose the **Type** (the default is **base**, which sets the price), enter the **Amount**, and choose the **Currency** (the default is **USD**).
-5. Select **Create**. If the slug is already used you see a message that the slug already exists.
+4. Check the **Bill category**: **Consultation**, **Prescription**, **Investigation**, or **Others**. The form suggests one from the code system, the billing code, and the title. Change it if the suggestion is wrong. See [Bill categories](#bill-categories).
+5. Under **Pricing**, choose the **Type** (the default is **base**, which sets the price), enter the **Amount**, and choose the **Currency** (the default is **SGD**). The other choices are **MYR**, **AUD**, **USD**, **EUR**, **GBP**, and **CAD**.
+6. Select **Create**. If the slug is already used you see a message that the slug already exists.
+
+In Singapore, prices must be in SGD. Another currency is refused, for example "Prices here are in SGD; "USD" is not accepted." Enter prices with GST included. The bill works out the GST they contain. See [Reading the invoice](/cms/billing#reading-the-invoice).
 
 The optional fields are **Version**, **Publisher**, **Identifier**, **Code System**, and **Description**. To base a definition on a vaccination service, pick it in **Vaccination service**.
 
 ## Importing many definitions
 
-Select **Import CSV**, then **Download template** for the format. The file needs a **status** column and either a **slug** or a **url** for each row. Rows whose slug or URL already exists are skipped, and the dialog lists problems by row before you import.
+Select **Import CSV**, then **Download template** for the format. The file needs a **status** column and either a **slug** or a **url** for each row. Rows whose slug or URL already exists are skipped, and the dialog lists problems by row before you import. An optional **category** column sets each row's bill category: `consultation`, `prescription`, `investigation`, or `others`. A row without one gets the suggested category. Any other value is refused with a message starting "Invalid category". A row with an amount but no currency is priced in the organisation's currency, and in Singapore a currency other than SGD is refused.
+
+## Bill categories
+
+Every definition has a bill category. It decides where the charge is totalled on the invoice:
+
+| Bill category | Use it for |
+| --- | --- |
+| **Consultation** | Consultation fees |
+| **Prescription** | Medicines |
+| **Investigation** | Lab tests, imaging, and other investigations |
+| **Others** | Anything else |
+
+The invoice shows a total for each category. In Singapore the category is also the CHAS claim bucket, so a wrong category puts the charge in the wrong bucket of the claim.
+
+A charge copies its category from the definition when it is added to an account, and keeps it after that. A definition made before categories existed has none. When its charges are billed, they get the category the form would suggest.
 
 ## Deleting a definition
 
