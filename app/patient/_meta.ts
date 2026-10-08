@@ -8,5 +8,6 @@ export default {
   results: "Results & Records",
   "health-records": "Health Records",
   profile: "Profile & Preferences",
+  caregivers: "Caregivers & Family Access",
   invites: "Invites & Join Links",
 };

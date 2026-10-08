@@ -12,6 +12,8 @@ The vaccination record lists every vaccine a patient has received, whether given
 | Record, edit or void a vaccination | Yes | No | Yes | Yes |
 | Order a vaccination service | Yes | No | Yes | Yes |
 | Register a vaccination service in the catalog | Yes | No | No | No |
+| Check vaccination subsidy (VSS) eligibility (Singapore) | Yes | Yes | Yes | Yes |
+| See a vaccination's NIR status (Singapore) | Yes | No | Yes | Yes |
 
 Receptionists see the list but no buttons.
 
@@ -69,8 +71,63 @@ _Voiding a vaccination_
 
 Voiding a dose that was drawn from stock does not return it to stock. Adjust the stock item yourself if the dose was not given.
 
+## Singapore: SDD product, VSS and NIR
+
+These appear only for a Singapore organisation that subscribes to SmartCMS modules.
+
+### SDD product
+
+The **Record vaccination** and **Edit** dialogs gain an **SDD product (optional)** field: "Needed for VSS claims and NIR notifications." It lists the Singapore Drug Dictionary products of the vaccine you chose that are in force on the **Date given**. Search by brand or code. Choose the vaccine first.
+
+If no product is listed for the vaccine, the field says "No SDD product is listed for this vaccine. It is recorded without one and cannot be claimed under VSS or notified to NIR." Changing the vaccine or the date drops a product that no longer fits.
+
+A wrong product is refused on save: "That SDD product is not a product of …" or "That SDD product is not on the vaccination product list for the date given."
+
+### Vaccination subsidy (VSS)
+
+For an organisation that subscribes to CHAS, the **Vaccination subsidy (VSS)** panel sits above the list. Use it before giving the vaccine.
+
+1. Choose the **Claim code**. Codes that match the patient's latest vaccination with an SDD product are listed first under **Suggested**.
+2. Select **Check eligibility**.
+
+MHCP's answer is shown as a table, one row per dose:
+
+| Column | What it shows |
+| --- | --- |
+| **Dose** | The dose step. |
+| **Status** | **Can be claimed**, **Claimed** or **Not eligible**. |
+| **Eligible SDD products** | The products MHCP accepts for this dose. |
+| **Conditions** | Any conditions on the subsidy. |
+| **Fee cap** | The most the clinic may charge before subsidy. |
+| **OOP cap** | The most the patient pays out of pocket. |
+| **Fixed subsidy** | The subsidy MHCP pays. |
+| **Eligible from** | The date the dose becomes eligible. |
+| **NIR records** | Matching records in the National Immunisation Registry, and whether each is clinically valid. |
+
+The subsidy is claimed on the visit's bill. See [Claims Workflow](/cms/smartcms/claims#3-bill-the-visit).
+
+### NIR notifications
+
+For an organisation that subscribes to NIR, the list gains an **NIR** column. A vaccination **Administered here** with an SDD product is sent to the National Immunisation Registry without review, at a location connected for NIR. Receptionists do not see the column.
+
+| NIR status | What it means |
+| --- | --- |
+| **Sending to NIR** | Waiting to send, or being sent. |
+| **Notified NIR** | NIR has the record. |
+| **Not sent: notify NIR directly** | Given here without an SDD product. Medbot cannot send it. Notify NIR yourself, or add the SDD product. |
+| **Prepared by agent: submit or discard** | The claims agent prepared it. Someone must submit or discard it. |
+| **Not confirmed: resend** | Medbot cannot tell whether NIR received it. Resend it. |
+| **Not sent: check and resend** | Sending failed. Check the record and resend. |
+| **Edited after sending: correct in NIR** | You edited the record after NIR had it. Medbot cannot send the change, so correct it in NIR directly. |
+| **Voided after sending: tell NIR** | You voided the record after NIR had it. Tell NIR directly. |
+| **Discarded: not sent to NIR** or **Expired: not sent to NIR** | It was never sent. |
+
+**Resend**, **Submit**, **Discard** and **Mark corrected** are on [Reports](/cms/smartcms/reports).
+
 ## Related
 
 - [Encounters & Clinical Notes](/cms/encounters)
 - [Inventory & Stock](/cms/inventory-and-stock)
 - [Billable Catalog](/cms/billable-catalog)
+- [Claims Workflow](/cms/smartcms/claims): claim the vaccination subsidy on the bill.
+- [Reports](/cms/smartcms/reports): follow up NIR notifications.

@@ -16,6 +16,7 @@ The reception queue is today's list of booked and checked-in patients at one cli
 | Cancel an appointment, mark a no-show, or reopen | Yes | Yes | No | No |
 | Arrange a session for the patient | No | No | Yes | No |
 | Complete the visit and send the outcome | No | No | Yes | No |
+| See the CHAS badge and select **Verify now** (Singapore) | Yes | Yes | Yes | Yes |
 
 Doctors see only the patients assigned to them. Nurses see every patient at the location and open the vitals form from their own view. The **Arrange session** and **Complete visit** buttons appear on a doctor's row only after a consultation has been started for that appointment.
 
@@ -57,6 +58,32 @@ Check-in has no time window. A patient booked for later in the day can be checke
 
 Patients can also check themselves in from the [patient portal](/patient/visits). They either share their location or type the six digit **Self check-in code** shown in the page header. A self check-in works like a staff check-in, and the row appears in the queue with a ticket.
 
+### CHAS verification at check-in (Singapore)
+
+For a Singapore organisation that subscribes to CHAS, checking a patient in also asks MHCP for their CHAS card. This happens on the first check-in of the appointment, from the desk or the portal, at a location connected for CHAS. Nobody has to press anything. Verification never blocks check-in. If it fails, the patient is still checked in.
+
+The result shows on the CHAS badge under the patient's name in their chart. Every role sees it. The badge shows one of:
+
+- the card's name
+- **CHAS not verified**
+- **No CHAS card**
+- the card name followed by **expired**
+
+For a valid card, the badge also shows when it is valid, the chronic tier, the chronic and acute balances for this year, and the visits left at this clinic. "checked" and a date and time, in Singapore time, show when MHCP was last asked.
+
+Select **Verify now** on the badge to ask MHCP again. Any role can. Medbot asks at the clinic of the patient's visit in today's queue session. If the patient is not on today's queue, it asks at the organisation's default location. A successful check says, for example, "Verified at Main Clinic." A failed one says why and changes nothing else:
+
+| Message | What to do |
+| --- | --- |
+| "Not verified: the patient has no Singapore NRIC (S or T) recorded." | Record the patient's NRIC in their chart. See [Patient Records & Consent](/cms/patient-records). |
+| "Not verified: … is not connected to SmartCMS for CHAS. It needs an HE code and CHAS switched on in the SmartCMS settings." | Ask a Clinic Admin to finish the location's [SmartCMS settings](/cms/smartcms/settings). |
+| "Not verified: SmartCMS is switched off on this Medbot server." | Nothing is sent from this server. Contact Medbot. |
+| "Not verified: the patient's details could not be sent to MHCP. Check the NRIC." | Correct the patient's NRIC, then select **Verify now**. |
+| "Not verified: MHCP's answer could not be read. Try again later." | Select **Verify now** later. |
+| "Not verified: the SmartCMS gateway did not accept the call from Main Clinic. Try again later." | Select **Verify now** later. |
+
+When you bill the visit, the CHAS panel warns if the card is not verified, was verified more than 30 days ago or in an earlier year, or is not valid on the visit date. MHCP is asked again when the bill is issued. See [Claims Workflow](/cms/smartcms/claims#1-check-in-and-chas-verification).
+
 ## Calling a patient to a room
 
 1. On a checked-in row, select **Call**.
@@ -83,7 +110,7 @@ The patient leaves the active queue. To find the row again, set the status filte
 
 ## What the doctor and nurse see
 
-A doctor opens **Today's Patients**. Each row has **Start consultation**, which opens the patient's chart at **Encounters**, or **Continue consultation** once one has started. See [Encounters & Clinical Notes](/cms/encounters). A nurse opens **Today's Queue**, and the **Vitals** button on each row opens the vitals form. See [Vitals](/cms/vitals). Neither role can check patients in, change the doctor, or call a room.
+A doctor opens **Today's Patients**. Each row has **Start consultation**, which opens the patient's chart at **Encounters** for that appointment, or **Continue consultation** once one has started. If the visit already has an open encounter, Medbot reuses it rather than starting a second. See [Encounters & Clinical Notes](/cms/encounters). A nurse opens **Today's Queue**, and the **Vitals** button on each row opens the vitals form. See [Vitals](/cms/vitals). Neither role can check patients in, change the doctor, or call a room.
 
 ## Arranging a session and completing the visit
 

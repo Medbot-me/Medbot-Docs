@@ -1,0 +1,80 @@
+# SmartCMS Settings
+
+The **SmartCMS** settings page is where an organisation's admin switches each clinic location on for each SmartCMS service, checks the connection and accreditation, sets the agent policy, and prepares the paperwork Synapxe asks for.
+
+Open it from [Organisation Settings](/cms/settings#integrations): in the **Singapore integrations** card, select **SmartCMS settings**. The page is at `/organisations/[id]/smartcms`. Only an **admin** of a Singapore organisation can open it.
+
+The page's header says which Synapxe environment this Medbot server talks to:
+
+- "This server connects to Synapxe UAT. A location sends only in the environment it is approved for." (or "production")
+- If SmartCMS is switched off on the server: "SmartCMS is not enabled on this server; settings are saved but nothing is sent."
+
+From top to bottom, the page has these cards.
+
+## Agent policy
+
+How far an AI agent may take a claim: **Off: agents never prepare claims**, **Prepare only: a person submits**, or **Auto-submit routine claims**. Select **Save policy**. **Auto-submit** appears only once a location is approved for production for CHAS, Medisave or Screen for Life claims. See [Claims Agent](/cms/smartcms/claims-agent#agent-policy).
+
+## Agent credentials
+
+Tokens an AI assistant uses to reach Medbot's SmartCMS claims tools, for one location or the whole organisation, lasting up to 30 days. A token is shown once, at creation. See [Claims Agent](/cms/smartcms/claims-agent#create-an-agent-credential).
+
+## Clinic locations
+
+Choose a location from the location list. Each location shows its HE code and Hospital Code (with **Edit codes**), then one row per subscribed module.
+
+### Switching a service on at a location
+
+**Entitlement** is Synapxe's approval for one location to use one service. Once Synapxe approves a location, record it here:
+
+1. Find the module's row under the location.
+2. Set **Environment** to **Off**, **UAT** or **Production**, to match what Synapxe approved.
+3. Enter the **Synapxe reference** (the approval reference Synapxe gave you).
+4. For migrant worker health reporting, also enter the **MOM organisation code**.
+5. Save the row.
+
+A location sends only when its environment matches the one this server connects to. A location needs an HE code before any service can be switched on, and Medisave also needs a Hospital Code. Every location starts **Off**. Switching a service off parks its unsent claims: nothing is sent and nothing is deleted.
+
+Each location can also set **Agent policy at this location**, or leave it as **Same as the organisation**.
+
+### Changing an HE code
+
+Synapxe knows each location by its HE code. Changing an existing HE code switches every SmartCMS service at that location **off**, so nothing is sent under a code Synapxe has not approved. Changing the Hospital Code switches off only Medisave. You are asked to confirm before saving.
+
+After the change, the location shows a reminder: send Synapxe an **UPDATE** row from **Synapxe onboarding** (below), and switch the services back on once Synapxe approves the new code. Also ask the CIDC administrator to update the HE code in their system. See [Singapore Registration](/cms/smartcms/registration).
+
+### Testing the connection
+
+**Test connection** sends a test enquiry to SmartCMS from that location and shows the result.
+
+### Accreditation
+
+**Check accreditation** asks MHCP whether the location is accredited, for each of the accreditation types Medbot checks: `CM`, `PHPC` and `CD`. Each shows **Accredited**, **Suspended**, **Not accredited**, or the date accreditation starts. A scheme not yet asked about shows **Not checked yet**.
+
+A location that is not accredited for a scheme cannot claim under it, so check before you switch it on.
+
+## Synapxe onboarding
+
+Synapxe onboards clinics from a spreadsheet template. This card exports the organisation's clinic rows in that format, one per location. Choose the action:
+
+- **NEW: onboard these clinics**
+- **UPDATE: change clinic details** (for example after an HE code change; the row carries the old and the new code)
+- **DELETE: clinic no longer exists**
+
+Select **Download CSV** and send the file to Synapxe. Locations missing an HE code or Hospital Code are listed so you can complete them first.
+
+## SIT evidence
+
+For Synapxe's system integration testing (SIT), the clinic must show evidence of each test scenario. This card is only useful on a server connected to Synapxe **UAT**.
+
+1. Select **Start run** with the scenario's tag, for example `ACC-01-01`.
+2. Carry out the scenario in the CMS.
+3. Select **End**, then **Download evidence**. The file holds every message Medbot sent to SmartCMS during the run and every reply, up to 500 messages.
+
+Medbot keeps an encrypted record of every SmartCMS message and reply for audit, whether or not a SIT run is open.
+
+## Related
+
+- [Modules & Gating](/cms/smartcms/modules): choosing modules.
+- [Singapore Registration](/cms/smartcms/registration): UEN, GST, HE codes and practitioner numbers.
+- [Claims Workflow](/cms/smartcms/claims) and [Claims Agent](/cms/smartcms/claims-agent).

@@ -25,11 +25,18 @@ A Singapore organisation with SmartCMS modules cannot change its country until t
 Country-specific national services, at `#integrations`.
 
 - **Singapore:** the card is titled **Singapore integrations**: "The SmartCMS services this clinic uses. Each one also needs Synapxe's approval for every location before it connects." Pick modules in the module picker (or **Use GP starter**) and click **Save integrations**. See [Modules & Gating](/cms/smartcms/modules).
+  Once at least one module is saved, a **SmartCMS settings** button opens the organisation's SmartCMS tab (`/organisations/[id]/smartcms`). There an admin switches services on per location, tests the connection and exports the Synapxe onboarding rows. Only an administrator can open it. See [SmartCMS Settings](/cms/smartcms/settings).
 - **Anywhere else:** "No country-specific integrations are available for &lt;country&gt;."
 
 ## Singapore registration
 
-Singapore organisations only, at `#registration`: the organisation's **UEN** and **GST** registration, saved with **Save registration**, and for each clinic location its **HE code** and **Hospital Code**, each saved with its own **Save**. See [Singapore Registration](/cms/smartcms/registration) for the formats.
+Singapore organisations only, at `#registration`: the organisation's **UEN** and **GST** registration, saved with **Save registration**, and the details of each clinic location.
+
+Under **Clinic locations**, one location is shown at a time. If the organisation has more than one, choose it from the **Clinic** dropdown. The choice is kept in the page address as `?location=<id>`, so a link can open a given clinic, for example the **Edit codes** link on the SmartCMS tab. Unsaved edits survive switching between clinics.
+
+Each location has its **HE code**, **Hospital Code**, **Contact email** and **Contact phone**, saved together with its own **Save**. Replacing an HE code or Hospital Code that is already set asks for confirmation first, because it switches SmartCMS services at that location off. The dialog is titled, for example, "Change the HE code of Main Clinic?" and its button is **Change the code**. Setting a code for the first time needs no confirmation.
+
+See [Singapore Registration](/cms/smartcms/registration) for the formats and what to do after changing a code.
 
 ## Join code
 
