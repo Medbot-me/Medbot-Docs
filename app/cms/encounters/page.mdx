@@ -15,6 +15,9 @@ An encounter is the record of one visit. Doctors and nurses attach vitals, notes
 | Write a progress note | Yes | No | Yes | Yes |
 | Amend or retract a consultation note | Yes | No | Yes | No |
 | Amend or retract a progress note | Yes | No | Yes | Yes |
+| Code the visit's diagnoses (Singapore) | Yes | No | Yes | No |
+| Order a Screen for Life screening (Singapore) | Yes | No | Yes | Yes |
+| Record a developmental screening (Singapore) | Yes | No | Yes | No |
 
 The **Start Encounter** button is visible to every role. A Receptionist who submits the form sees "Something went wrong while starting the encounter." Ask a Doctor, Nurse or Clinic Admin to start it.
 
@@ -38,7 +41,17 @@ You cannot start an encounter for an inactive patient. The button is disabled an
 
 Vitals, notes, orders, order sets and vaccination orders attach to the patient's current encounter. The current encounter is the most recently started one with status **In Progress**. An encounter that is only **Planned**, **Arrived** or **Triaged** is not current. Without a current encounter the chart says so and hides **Write note**, **Apply order set** and **Order service**.
 
-An encounter started from the chart is not linked to an appointment. It does not appear on the [Reception Queue](/cms/reception-queue). Visits from the queue finish when the doctor selects **Complete visit**. The chart has no control to finish an encounter.
+### Encounters and the queue
+
+A doctor who selects **Start consultation** on the [Reception Queue](/cms/reception-queue) lands on **Encounters** for that exact queue appointment. The dialog then says "Create a new encounter for this patient's visit in today's queue." The new encounter is linked to that appointment, and the queue row moves to **Consultation**.
+
+An encounter started from the chart without going through the queue is still linked to the patient's visit if they are checked in on the queue and their visit is not finished. If they are not checked in, the encounter is not linked to any appointment and does not appear on the queue.
+
+If the visit already has an open encounter, **Start Encounter** opens that one again instead of starting a second. A billing account chosen in the dialog is added to it if it has none. A visit that is already finished, cancelled or a no-show never takes a new encounter. Medbot uses the patient's open visit instead, or no visit.
+
+When a Clinic Admin or Nurse starts the encounter, the doctor assigned on the queue appointment is recorded as the attending doctor. When a doctor starts it, they are.
+
+Visits from the queue finish when the doctor selects **Complete visit**. The chart has no control to finish an encounter.
 
 <ImageZoom src="/images/cms/encounters/04-encounters-page.png" alt="The Encounters page with a table of encounters and the Orders card" />
 _The Encounters page_
@@ -79,6 +92,47 @@ Select **Retract**, enter a **Reason for retracting**, then select **Confirm ret
 _Retracting a note_
 
 Receptionists can read notes but cannot write, amend or retract them.
+
+## Coding the visit's diagnoses (Singapore)
+
+The **Diagnoses (ICD-10-AM)** card sits on the chart **Overview**, above **Clinical notes**. It covers the current encounter only. It appears for a Singapore organisation that subscribes to CHAS, CDMP, SFL, DEROM, CIDC or MW_HEALTH. Without a current encounter it is not shown. It says: "This visit's coded diagnoses. Claims and MOH reports take them from here."
+
+1. Under **Add a diagnosis**, type in **Search by code or name, e.g. J06.9 or diabetes** and choose a match. A well-formed code that is not on MOH's lists is offered as **Not on MOH's lists**.
+2. Medbot fills in the CDMP conditions the diagnosis suggests. Remove any that do not apply, or choose **Add** beside **CDMP:** to add one.
+3. To add a complication, type in **Add a complication of …** under that diagnosis.
+4. Select **Save diagnoses**. You see "Diagnoses saved." **Discard** drops your unsaved changes.
+
+A visit has at most 20 diagnoses and 10 complications. Remove a diagnosis or complication with its **×** button.
+
+Clinic Admins and Doctors code diagnoses. Nurses and Receptionists see the card read-only.
+
+If someone else saved the diagnoses after you opened the chart, your save is refused: "The visit's diagnoses changed since they were loaded. Reload them and make your changes again." Your unsaved changes stay on screen. Select **Reload diagnoses**, then make your changes again.
+
+The bill fills the CHAS claim from these diagnoses. See [Claims Workflow](/cms/smartcms/claims#2-code-the-diagnoses). A newly coded notifiable disease prepares a disease notification (DEROM) for a doctor to complete. A chronic visit's CIDC report is prepared from these diagnoses when the visit is completed or billed. Both appear in [Reports](/cms/smartcms/reports).
+
+## Screenings on the Encounters page (Singapore)
+
+Two panels can appear under **Orders** on **Encounters**. Every role sees them. Ordering and recording need a current encounter. Otherwise the panel says "Start an encounter to order a screening." or "Start a visit to record a CDS screening."
+
+### Screen for Life
+
+Shown when the organisation subscribes to Screen for Life (SFL).
+
+- **Check eligibility** asks HPB which national screenings the patient is due for. A table shows each screening, whether the patient is eligible, the lab subsidy, when they were last screened and when the next is due. Below it, **Screening claims on record** lists earlier claims.
+- To order, choose the **Screening** and the **Test order** (**First screen**, **Repeat screen** or **Second repeat screen**). A repeat also needs a **Repeat test**. Select **Order screening**. The order keeps what HPB said at that moment.
+
+Clinic Admins, Doctors and Nurses order screenings. **Ordered at this visit** lists them.
+
+### Childhood developmental screening (CDS)
+
+Shown when the organisation subscribes to CHAS.
+
+- **Check CDS history** lists the milestones MHCP already has claims for.
+- To record, choose the **Milestone** and the **Outcome**, tick **Health booklet completed** if it was, and add a **Note (optional)**. Select **Record screening**.
+
+Medbot warns when the milestone does not fit the child's age, and when MHCP already has a claim for that milestone, because a second one is rejected unless appealed. Only Clinic Admins and Doctors record screenings.
+
+Both are claimed on the visit's bill. See [Claims Workflow](/cms/smartcms/claims#3-bill-the-visit).
 
 ## Related
 

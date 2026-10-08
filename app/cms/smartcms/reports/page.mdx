@@ -1,0 +1,250 @@
+# Reports
+
+**Reports** lists the notifications and reports Medbot sends to national registries through SmartCMS. Find it at **SmartCMS → Reports** (`/reports`). The page says "National registry notifications and reports for" and your organisation's name.
+
+The page has one section per module:
+
+| Section | Module | What it holds |
+| --- | --- | --- |
+| **NIR vaccination notifications** | National Immunisation Registry (`NIR`) | One notification per vaccination given at the clinic. |
+| **Disease notifications (DEROM)** | Disease notification (`DEROM`) | One notification per notifiable disease diagnosed at a visit. |
+| **Chronic disease indicators (CIDC)** | Chronic disease indicators (`CIDC`) | One report per chronic visit, with its updates and deletion. |
+| **MW Health consult reports** | Migrant worker health reporting (`MW_HEALTH`) | One report per completed visit of a migrant worker. |
+| **NEHR referral letters** | Referral contribution to NEHR (`NEHR_REFERRAL`) | Each referral letter issued, its cancellation, and the daily reconciliation file. |
+
+You see a section only when your organisation subscribes to its module (see [Modules & Gating](/cms/smartcms/modules)) and your role may view it. Each list shows the newest activity first.
+
+> Reports are prepared only at clinic locations that Synapxe has approved for the module, and nothing is sent from a location that is not approved. An admin records approvals on the [SmartCMS settings](/cms/smartcms/settings) page. No Medbot clinic has connected to Synapxe yet, not even in UAT. Everything on this page has been tested only against Medbot's mock gateway.
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| See NIR vaccination notifications | Yes | No | Yes | Yes |
+| Resend, submit, discard or close an NIR notification | Yes | No | Yes | Yes |
+| See disease notifications (DEROM) | Yes | No | Yes | No |
+| Complete, confirm, correct, send again or discard a DEROM notification | No | No | Yes | No |
+| See CIDC reports | Yes | No | Yes | No |
+| Complete, confirm, update, delete or discard a CIDC report | No | No | Yes | No |
+| See MW Health consult reports | Yes | No | Yes | No |
+| Complete, submit or discard an MW Health report | No | No | Yes | No |
+| See NEHR referral letters | Yes | No | Yes | No |
+| Resend a failed NEHR row | Yes | No | Yes | No |
+| Confirm patient consent for a held referral letter | No | No | Yes | No |
+
+A receptionist does not see **Reports** at all. A nurse sees only the NIR section. An admin can open every DEROM, CIDC and MW Health form to follow it up, but the form is read only.
+
+## When the page will not open
+
+| Situation | What you see |
+| --- | --- |
+| Your organisation is not in Singapore | Page not found. SmartCMS does not exist outside Singapore. |
+| A Singapore organisation that subscribes to none of the report modules | "You are not allowed to access this page" and "This feature is not enabled for your organisation. Ask an organisation admin to turn on the matching SmartCMS module in the organisation settings.", with **Go to home**. |
+| Your role cannot view any subscribed section | "This action requires one of the following roles:" followed by the roles that can. |
+| A report that belongs to another organisation | Page not found. |
+
+A form at `/reports/derom/[id]`, `/reports/cidc/[id]` or `/reports/mwh/[id]` follows the same rules for its own module.
+
+## Who sends what
+
+| Module | Sent | Waits for |
+| --- | --- | --- |
+| NIR | Automatically, when the vaccination is recorded | Nobody, unless an agent prepared it or Medbot holds it |
+| NEHR referral letters | Automatically, when the letter is issued | A doctor, only when the letter may need the patient's consent |
+| DEROM | When a doctor confirms it | Always a doctor |
+| CIDC | When a doctor confirms it | Always a doctor |
+| MW Health | When a doctor submits it | A doctor |
+
+**DEROM and CIDC always wait for a doctor**, even when the [claims agent](/cms/smartcms/claims-agent) prepares them, and even under the **Auto-submit routine claims** policy. Under that policy an agent may send NIR notifications, and an MW Health report only when MOM's own check already accepts it. Under **Prepare only**, an agent's NIR notification waits on this page for staff to submit it.
+
+Medbot never discards a report waiting for a doctor on its own. Prepared claims an agent leaves untouched for a week are cancelled, but reports never are.
+
+### Sending, retries and lost answers
+
+- If a message cannot reach SmartCMS, or the registry asks Medbot to try later, Medbot tries again after 1, 5 and 15 minutes. The row shows as sending meanwhile.
+- If SmartCMS may have received a message but its answer was lost, the row shows **Not confirmed**. Medbot does not send it again by itself, because the registry may already have it. Staff decide, using the resend action where the section offers one.
+
+## NIR vaccination notifications
+
+"Sent to the National Immunisation Registry when a vaccination with a product code is recorded here."
+
+When a vaccination given at the clinic is recorded with an SDD product code, Medbot notifies NIR without review. Columns: **Patient**, **Vaccine**, **Given**, **Status**, **NIR reference** (NIR's acknowledgement number) and **Actions**. The same status also appears in the **NIR** column of the patient's vaccination list (see [Vaccinations](/cms/vaccinations)).
+
+| Status | What it means | Action |
+| --- | --- | --- |
+| **Notified NIR** | NIR has the record. | None |
+| **Sending to NIR** | Queued, sending, or waiting to try again. | None |
+| **Prepared by agent: submit or discard** | An agent prepared it under **Prepare only**. | **Submit**, or **Discard** with a reason |
+| **Not sent: notify NIR directly** | The vaccine has no SDD product code, so Medbot cannot notify NIR of it. The row explains: "No NIR mapping for this vaccine (no SDD product code): Medbot cannot notify NIR of it. If it is notifiable, notify NIR directly, then discard this." | **Notified NIR directly** |
+| **Not confirmed: resend** | NIR's answer was lost. | **Resend** |
+| **Not sent: check and resend** | NIR refused it. The error code is shown under the status. | **Resend** |
+| **Edited after sending: correct in NIR** | The vaccination was changed after NIR had it. | **Mark corrected** |
+| **Voided after sending: tell NIR** | The vaccination was voided after NIR had it. | **Mark corrected** |
+| **Correction done** | Staff marked the correction as made. | None |
+| **Not done: correct in NIR directly** | The correction was closed without staff marking it made. | None |
+| **Discarded: not sent to NIR** | Staff discarded it. | None |
+| **Expired: not sent to NIR** | Medbot cancelled it before sending, for example because the vaccination was voided first. | None |
+
+- **Resend** is safe: NIR answers a record it already has with the original acknowledgement.
+- Medbot cannot send corrections to NIR yet. Make the change with NIR directly, then select **Mark corrected**.
+- **Discard** asks "Why is this notification being discarded?". **Notified NIR directly** asks "How was NIR notified (e.g. NIR portal, date)?".
+
+## Disease notifications (DEROM)
+
+"Prepared when a visit’s diagnosis is a notifiable disease. A doctor completes and confirms each one for MOH."
+
+### When a notification is prepared
+
+- A doctor codes a visit diagnosis (ICD-10-AM) that is a notifiable disease. See [Claims Workflow](/cms/smartcms/claims) for coding diagnoses.
+- There is one notification per disease per visit.
+- If the same patient already has a notification for the same disease from the last **90 days**, no second one is prepared. A discarded notification does not count.
+- Diseases that only laboratories must notify are not prepared.
+- **Tuberculosis** is prepared but held. It says: "Tuberculosis is notified on DROM’s TB form, which Medbot does not send yet: notify it there, then discard this notification."
+- **Sexually transmitted infections** are notified without the patient's identity. The list shows "Not identified (STI)", and the form asks for ethnic group and residential status instead of name and ID.
+
+### The list
+
+Columns: **Disease**, **Patient**, **Status** and **To do**. Select the disease to open the form.
+
+| Status | What it means |
+| --- | --- |
+| **Waiting for the doctor** | Prepared. **To do** shows how many fields are left to fix, or "Ready to confirm". |
+| **Queued to send**, **Sending**, **Sending (retrying)** | Confirmed and on its way. |
+| **Sent** | SmartCMS accepted it. |
+| **Notified** | DROM holds the notification. |
+| **Not accepted** | DROM refused or failed it. **To do** shows "Correct and send again" or "Send again". |
+| **Not confirmed** | DROM's answer was lost. **To do** shows "Send again". |
+| **Discarded** | The doctor discarded it. |
+
+### Completing and confirming a notification
+
+The form at `/reports/derom/[id]` is titled "Disease notification:" and the disease. It is prefilled from the chart and set out as three numbered steps:
+
+| Step | What it holds |
+| --- | --- |
+| **About the case** | "Your own answers. Only you know these." The diagnosis, vaccination, travel history and remarks. |
+| **Patient** | "Filled from the patient’s record. Check it is right." Contact details and addresses are folded under **Contact and addresses** and open by themselves if something in them needs fixing. |
+| **Doctor and clinic** | "The notifying doctor and this clinic. Filled from the visit and the clinic’s settings." |
+
+Each step is marked "N to fix", **Complete** or **Optional**.
+
+A progress card at the top says either "Everything DROM requires is filled in." or "DROM would refuse the notification as it stands:" with the number of fields to fix. It counts the required answers given, and lists each missing field under **Still needed:** and each wrong one under **To correct:**. Select a field's name to jump to it. Problems are checked as you type, with DROM's own error codes.
+
+At the bottom, a bar says "Ready to send to MOH." or how many fields are left, with:
+
+- **Save draft**: keeps your changes. You see "Notification saved."
+- **Confirm and send**: available once nothing is left to fix. It asks "Confirm the notification and send it to MOH’s DROM?", or, with unsaved changes, "Save your changes, confirm the notification and send it to MOH’s DROM?". You see "Notification confirmed."
+- **Discard**: asks "Why is this notification discarded?".
+
+### After DROM answers
+
+- **Refused for its content.** The form shows DROM's message and field errors. Select **Correct** ("Reopened for correction.") to reopen it with the same answers and DROM's errors marked, then confirm it again.
+- **Failed, or the answer was lost.** Select **Send again**. If the answer was lost, it first asks "DROM’s answer was lost. Send the notification again?". You see "Queued to send again."
+- **Notified.** "DROM holds this notification. Medbot keeps no copy once it is sent, and DROM has no amendment: send any correction to MOH directly."
+
+## Chronic disease indicators (CIDC)
+
+"Prepared from chronic visits. A doctor completes and confirms each one for MOH, and can update or delete it once CIDC holds it."
+
+### When a report is prepared
+
+A report is prepared when a visit has a chronic diagnosis recorded and the patient has a condition CIDC covers. It is prefilled when the visit is completed or its bill is issued, whichever first finds the coded diagnoses. The patient needs an NRIC or FIN.
+
+### The list
+
+Columns: **Patient** (marked **Report**, **Update** or **Deletion**), **Conditions**, **Status** and **To do**.
+
+| Status | What it means |
+| --- | --- |
+| **Waiting for the doctor** | Prepared. **To do** shows how many fields are left to fix, or "Ready to confirm". |
+| **Queued to send**, **Sending**, **Sending (retrying)** | Confirmed and on its way. |
+| **Sent** | SmartCMS accepted it. |
+| **Held by CIDC** | CIDC holds the report. |
+| **Refused** | CIDC refused it. **To do** shows CIDC's error code. |
+| **Not confirmed** | CIDC's answer was lost. |
+| **Discarded** | The doctor discarded it. |
+
+### Completing and confirming a report
+
+The form at `/reports/cidc/[id]` is prefilled from the visit: the patient, the doctor, coded conditions and diagnoses, vitals and recent results. The doctor adds what Medbot does not record, such as smoking, treatments (with the year each started) and assessments. Its sections are **Patient**, **Attending doctor**, **Medical conditions**, **Treatments**, **Clinical indicators and assessments** and **Diagnosis codes (ICD-10-AM)**.
+
+If CIDC would refuse the report, the form lists why under "CIDC would refuse the report as saved:".
+
+- **Save**: keeps your changes. You see "Report saved."
+- **Confirm and send**: asks "Confirm the report and send it to MOH’s CIDC?", or, with unsaved changes, "Save your changes, confirm the report and send it to MOH’s CIDC?". You become the reporting doctor. You see "Report confirmed." If the saved report still has problems, nothing is sent: "Your changes were saved, but CIDC would refuse the report: fix what is listed above."
+- **Discard**: asks "Why is this report discarded?".
+
+### Once CIDC holds the report
+
+The form says "CIDC holds this report. Medbot keeps no copy once it is sent; an update starts again from the visit." The doctor can:
+
+- **Send an update**: prepares a new update, prefilled again from the visit, and opens it to complete and confirm. You see "Update prepared."
+- **Delete from CIDC**: asks "Why is the report being deleted from CIDC?" and sends the deletion at once. You see "Deletion sent."
+
+Only the report CIDC currently holds can be updated or deleted, and only when nothing else for it is under way.
+
+## MW Health consult reports
+
+"Prepared when a migrant worker's visit is completed. A doctor completes and submits each one to MOM."
+
+A patient counts as a migrant worker when their record has a FIN or a work pass type.
+
+### The list
+
+Columns: **Worker**, **Consulted**, **Status** and **To do**. **To do** shows the first thing MOM would refuse, or "Ready to submit".
+
+| Status | What it means |
+| --- | --- |
+| **To complete** | Prepared, waiting for the doctor. |
+| **Queued**, **Sending**, **Retrying** | Submitted and on its way. |
+| **Sent** | SmartCMS accepted it. |
+| **Accepted by MOM** | MOM has the record. |
+| **Failed** | MOM refused it. The error code is shown. |
+| **Outcome unknown** | MOM's answer was lost. |
+| **Discarded** | The doctor decided no report was needed. |
+
+### Completing and submitting a report
+
+The form at `/reports/mwh/[id]` is prefilled from the visit, in sections **Consultation**, **Worker**, **Presentation**, **Diagnosis and treatment** and **Disposition and payment**. As the doctor edits, a line says "Complete: MOM would accept this report." or "MOM would refuse this:" and the reason.
+
+- **Save draft**: you see "Draft saved."
+- **Submit to MOM**: asks "Send this report to MOM? MOM keeps no way to amend or withdraw it." You see "Report queued for MOM."
+- **Discard**: asks "Why is no report needed for this visit?".
+
+An admin sees "Only a doctor completes and submits this report." Once sent: "The report has been sent; the record that was sent is kept in the SmartCMS evidence log."
+
+## NEHR referral letters
+
+"Referral letters contributed to the National Electronic Health Record, and cancelled there when voided here. A letter that may mention termination of pregnancy, sterilisation or organ transplant is held until a doctor confirms the patient’s consent."
+
+- **Issuing** a referral letter (see [Documents & Certificates](/cms/documents-and-certificates)) sends it to NEHR automatically.
+- **Voiding** a letter NEHR has, or may have, sends a cancellation. A letter voided before it was sent is simply not sent.
+- **Every day at 00:15** Singapore time, Medbot sends the previous day's reconciliation file for every connected location, even one that sent nothing.
+
+Columns: **Sent** (**Referral letter**, **Cancellation** or **Daily reconciliation**), **Patient**, **Letter**, **Status** and **Actions**.
+
+| Status | What it means | Action |
+| --- | --- | --- |
+| **In NEHR** | NEHR has the letter. | None |
+| **Cancelled in NEHR** | NEHR has the cancellation. | None |
+| **File accepted** | NEHR accepted the day's reconciliation file. | None |
+| **Sending to NEHR** | Queued, sending, or waiting to try again. | None |
+| **Held: doctor to confirm patient consent** | The letter may carry information NEHR must not receive without the patient's consent. The reasons are listed under the status. | **Confirm and send** (doctor) |
+| **Not confirmed: resend** | NEHR's answer was lost. | **Resend** |
+| **Not sent: check and resend** | NEHR refused it. The error code is shown. | **Resend** |
+| **Voided before sending** | The letter was voided before it went. | None |
+
+### Held letters
+
+A letter is held when the patient has a diagnosis of termination of pregnancy, voluntary sterilisation or organ transplant, on any visit, or when the letter's title or text mentions one. **Confirm and send** first warns: "NEHR must not receive termination-of-pregnancy, voluntary sterilisation or organ-transplant information unless the patient has explicitly consented. Send only if the patient has consented, or the letter contains none of this." Only a doctor can confirm.
+
+**Resend** is safe: the letter keeps its identifier, so NEHR updates it rather than adding a copy.
+
+## Related
+
+- [Modules & Gating](/cms/smartcms/modules): which modules show which sections.
+- [SmartCMS Settings](/cms/smartcms/settings): approving a location for each module.
+- [Claims Workflow](/cms/smartcms/claims): coding diagnoses, and the claims queue.
+- [Claims Agent](/cms/smartcms/claims-agent): what agents may prepare and send.
+- [Vaccinations](/cms/vaccinations): recording a vaccination with its product code.
+- [Documents & Certificates](/cms/documents-and-certificates): issuing and voiding referral letters.
