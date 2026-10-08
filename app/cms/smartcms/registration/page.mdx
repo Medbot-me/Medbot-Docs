@@ -6,7 +6,7 @@ All of it is entered by an organisation **admin**. The organisation and location
 
 ## Organisation and locations
 
-On [Organisation Settings](/cms/settings), the **Singapore registration** card (`#registration`) holds "your ACRA and IRAS registration, and the MOH codes of each clinic location."
+On [Organisation Settings](/cms/settings), the **Singapore registration** card (`#registration`) holds "your ACRA and IRAS registration, and the MOH codes of each clinic location. SmartCMS identifies every clinic by its HE code."
 
 ### Organisation
 
@@ -21,27 +21,47 @@ Save with **Save registration**.
 
 ### Clinic locations
 
-Under **Clinic locations**, each location has its own row and its own **Save**:
+Under **Clinic locations**, one location is shown at a time. Choose it from the **Clinic** dropdown when there is more than one. Each location has its own **Save**, which saves all four fields together:
 
 | Field | Format | Notes |
 | --- | --- | --- |
 | **HE code** | 4 to 15 letters or digits, e.g. `9400001` | The MOH **Health Establishment** code. SmartCMS names the clinic by this code on every call, so a location without one cannot connect. It must be **unique across all of Medbot**: "Another clinic location already has this HE code." |
 | **Hospital Code** | 1 to 15 letters or digits | Only needed for **Medisave (CDMP)** claims. |
+| **Contact email** | An email address, e.g. `frontdesk@clinic.sg` | Otherwise refused with "email must be an email address." |
+| **Contact phone** | 6 to 20 characters: digits, spaces, `+`, `-` and brackets, e.g. `+65 6123 4567` | Otherwise refused with "phone must be a phone number, e.g. +65 6123 4567." |
 
-All codes are stored without spaces and in upper case. Clearing a field removes the code.
+All codes are stored without spaces and in upper case. Clearing a field removes it.
+
+The contact email and phone go into the clinic rows of the **Synapxe onboarding** export on the [SmartCMS tab](/cms/smartcms/settings#synapxe-onboarding). The **Referral contribution to NEHR** module needs no extra field here, only an HE code per location. It is not a service in Synapxe's onboarding template, so the export lists it in a note instead.
+
+### Changing an HE code or Hospital Code
+
+Synapxe approves each location by its HE code, and approves Medisave by its Hospital Code. Replacing a code that is already set asks for confirmation before saving. Setting a code for the first time does not.
+
+- **HE code.** The dialog asks "Change the HE code of &lt;location&gt;?" It explains that saving "switches every SmartCMS service at this location off, so no claim or report is sent under a code Synapxe has not approved."
+- **Hospital Code.** The dialog asks "Change the Hospital Code of &lt;location&gt;?" Saving switches off only Medisave at that location. Other SmartCMS services are unaffected.
+
+Select **Change the code** to save, or **Cancel**. Then:
+
+1. On the [SmartCMS tab](/cms/smartcms/settings), under **Synapxe onboarding**, download an **UPDATE** row and send it to Synapxe. After an HE code change, the row names the old code as the HE Code and the new one as the New HECode.
+2. Once Synapxe approves the new code, switch each service back on at that location on the SmartCMS tab.
+3. After an HE code change, also ask the CIDC administrator to update the HE code in their system.
+
+After an HE code change, the location on the SmartCMS tab also shows a reminder: "HE code changed from &lt;old code&gt;: send Synapxe an UPDATE row from Synapxe onboarding below, and switch services back on once Synapxe approves the new code."
 
 ## Practitioners
 
-A staff member's registration number is part of their membership and is written to their Practitioner record in the organisation's Medplum. It is set in the **Add staff** dialog and corrected later with the **Edit registration** row action on `/staff`. Both are admin-only. See [Members & Roles](/cms/members-and-roles).
+A staff member's registration number is part of their membership and is also written to their Practitioner record in the organisation's Medplum. It is set in the **Add staff** dialog and corrected later with the **Edit registration** row action on `/staff`. Both are admin-only. See [Members & Roles](/cms/members-and-roles).
 
 | Role | Field label | Helper | Format | Example |
 | --- | --- | --- | --- | --- |
-| `doctor` | **Medical License Number** | MCR number | `M` + 4 or 5 digits + a letter | `M12345A` |
+| `doctor` | **Medical License Number** | MCR number | `M`, five digits and a letter | `M12345A` |
 | `nurse` | **Nursing Registration Number** | SNB number | 4 to 15 letters or digits | `N123456` |
 | `admin`, `receptionist` | None | | | |
 
 - The number is checked as you type: "MCR number must look like M12345A." / "SNB number must look like N123456."
 - Values are stored upper-case without spaces.
+- An older MCR number in the form `M` and four digits, or without the `M`, is refused. Enter the full number, `M` and five digits and a letter.
 - On the Practitioner record the number is written under `https://www.healthprofessionals.gov.sg/mcr` (doctors) or `https://www.healthprofessionals.gov.sg/snb` (nurses).
 
 ### NRIC or FIN (doctors, Singapore only)
@@ -49,8 +69,8 @@ A staff member's registration number is part of their membership and is written 
 For a doctor in a Singapore organisation, the **Add staff** dialog also asks for **NRIC or FIN (optional)**: "Needed before this doctor's SmartCMS claims can be submitted." SmartCMS uses it as the attending doctor's identifier on CHAS claims.
 
 - It is checksum-validated: "Enter a valid NRIC or FIN, e.g. S1234567D."
-- Once saved it is only ever shown **masked**, e.g. `*****567D`. **Edit registration** shows "On file: *****567D. Enter a new one to replace it."
-- It is written to the Practitioner record under `urn:gov:sg:nric`.
+- Once saved it is only ever shown **masked**, e.g. `*****567D`. **Edit registration** shows "On file: *****567D. Enter a new one to replace it." Otherwise it shows "Needed before this doctor's SmartCMS claims can be submitted."
+- It is kept only on the doctor's membership in Medbot, never on their Practitioner record. Every clinical role can read Practitioner records, so the NRIC stays off them. The SmartCMS claims read it from the membership.
 
 ## For administrators upgrading an existing deployment
 
@@ -70,3 +90,12 @@ pnpm db:migrate-practitioner-registrations:prod --apply
 Use the `:dev` variant against a development database. The script needs `ORGANISATION_SECRETS_KEY` and the database settings, exactly like booting the API.
 
 It rewrites each Practitioner's identifier to the MCR or SNB system that matches the member's role. Stored numbers that fail the new format rules are **reported, never changed**; an admin corrects them with **Edit registration**.
+
+Earlier versions also wrote a doctor's NRIC or FIN to their Practitioner record under `urn:gov:sg:nric`. Medbot now removes it from every Practitioner it returns, and drops it the next time the member is updated. To remove it at the source, run this once per environment from `apps/api`. It is a dry run unless you add `--apply`, and takes `--organisation <uuid>` like the script above:
+
+```bash
+NODE_ENV=production pnpm exec tsx scripts/strip-practitioner-nric.ts
+NODE_ENV=production pnpm exec tsx scripts/strip-practitioner-nric.ts --apply
+```
+
+It needs the same settings as the script above. Only the NRIC entries are removed.

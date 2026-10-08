@@ -49,9 +49,9 @@ The patient header then shows a **CHAS badge** to every clinic role:
 
 - the card name, or **CHAS not verified**, **No CHAS card**, or the card name followed by **expired**
 - the card's validity, the chronic tier, the chronic and acute balances, and the number of visits at this clinic
-- **Verified at** and the time, in Singapore time
+- when the card was last **checked**, in Singapore time
 
-**Verify now** asks MHCP again. It checks at the clinic of the patient's visit in today's queue session, or at the organisation's default location if there is none.
+**Verify now** asks MHCP again, and says "Verified at" the location when it succeeds. It checks at the clinic of the patient's visit in today's queue session, or at the organisation's default location if there is none.
 
 If verification fails, the badge says why, for example:
 
@@ -74,7 +74,7 @@ CHAS, Medisave, Screen for Life and the national reports all need the visit's di
 
 Only Clinic Admins and doctors can edit diagnoses. Everyone else sees them read-only.
 
-A coded notifiable disease also prepares a disease notification, and a chronic diagnosis prepares a CIDC report. Both wait for a doctor in [Reports](/cms/smartcms/reports).
+Coding a notifiable disease prepares a disease notification. A visit with a chronic diagnosis gets a CIDC report once it is completed or billed. Both wait for a doctor in [Reports](/cms/smartcms/reports).
 
 ### Screenings and vaccinations
 

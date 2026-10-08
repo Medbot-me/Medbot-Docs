@@ -14,11 +14,12 @@ const balance = serviceBySn(1); // chasAnnualBalanceEnquiry
 | --- | --- |
 | `sn` | The specification's serial number, 1 to 56. |
 | `serviceType` | The catalog name, exactly as the specification spells it. |
-| `wireServiceType` | The value actually sent in the control header and the `ServiceType` header. Equal to `serviceType` except for S/N 54 and 55. |
+| `wireServiceType` | The value actually sent in the control header and the `ServiceType` header. Equal to `serviceType` except for S/N 48 (`getPaginatedReferralByInstitution`, as its workbook spells it) and S/N 54 and 55 (kebab-case). |
 | `route` | The path under the gateway base URL. `null` only for S/N 25, whose route the specification leaves blank; the client refuses to call it. |
 | `format` | `xml` or `json`. |
 | `envelope` | The default wrapper: `scg-json` for JSON services, `scg-xml` for XML ones. It can be overridden per route with `SMARTCMS_ENVELOPE_OVERRIDES`. |
-| `legacyEnvelopeCandidate` | True for S/N 1 to 15, which also have an older AP481 envelope form. |
+| `legacyEnvelope` | The older AP481 request shape the service's workbook documents (wrapping elements, fields, fixed values), or `null`. |
+| `legacyEnvelopeCandidate` | True exactly when `legacyEnvelope` is set: S/N 1 to 3 and 12 to 16. |
 | `group` | The entitlement group. Where a module exists, the group has the module's name. |
 | `phase` | Delivery phase: **P0** platform, **P1** CHAS and MHCP subsidies, **P2** CDMP, **P3** registries and NEHR contribution, **P4** Healthier SG, **PM** an opt-in module outside the CHAS Badge, **X** out of scope, **L** legacy or retired. |
 | `kind` | `enquiry` when the call changes no remote state, otherwise `submission`. |
@@ -26,13 +27,17 @@ const balance = serviceBySn(1); // chasAnnualBalanceEnquiry
 
 > **Do not correct the spelling.** Names and routes are copied exactly, misspellings included (`submisssion/hsg/iquitjourney`, `putReconcillationFile`, `getPaginatedReferralByInstituion`). The gateway routes on these strings, and a test compares the list against a transcription of the specification.
 
-A service can only be called when its group belongs to a module the organisation subscribes to and the location is entitled to it (see [Gateway](/cms/smartcms/gateway#entitlements)). Groups with no module (NEHR, CHAS_DENTAL, ALPS, PSS, LEGACY) cannot be called at all today. S/N 7, the clinic accreditation status query, is the one planned for a location's connection test.
+A service can only be called when its group belongs to a module the organisation subscribes to and the location is entitled to it (see [Gateway](/cms/smartcms/gateway#entitlements)). Groups with no module (CHAS_DENTAL, ALPS, PSS, LEGACY) cannot be called at all. The planned modules, CMIS and HSG_BUNDLE, can be subscribed to, but Medbot has no code that calls their services yet. S/N 7, the clinic accreditation status query, is what a location's connection test calls.
+
+Each group below says what Medbot does with it today. Everything has been tested against the mock gateway only; nothing has been sent to Synapxe UAT yet.
 
 ## Services by group
 
 ### CHAS: CHAS and MOH subsidy claims
 
 Module: `CHAS`
+
+In Medbot: all seven are used. S/N 1 verifies the CHAS card at check-in; S/N 2 sends CHAS, PHPC, vaccination (VSS), developmental screening (CDS) and Screen for Life claims from the issued bill; S/N 3 polls claim status on a schedule; S/N 4 appeals a rejected claim; S/N 7 checks accreditation and is the connection test; S/N 8 and 9 read a patient's vaccination and CDS claim history, which the bill's subsidy claims are built from. See [Claims Workflow](/cms/smartcms/claims).
 
 | S/N | Service type | Route | Format | Kind | Phase |
 | --- | --- | --- | --- | --- | --- |
@@ -48,6 +53,8 @@ Module: `CHAS`
 
 Module: `SFL`. Screen for Life claims are submitted with S/N 2, so subscribing to SFL also creates CHAS entitlements.
 
+In Medbot: both are used, to ask whether a patient is due for screening (S/N 11, which fans out to EISS and eCHAS) and to read their screening claims (S/N 10).
+
 | S/N | Service type | Route | Format | Kind | Phase |
 | --- | --- | --- | --- | --- | --- |
 | 10 | `CHASClaimHistoryQuery` | `claims/enquiry/claimhistory` | XML | Enquiry | P1 |
@@ -56,6 +63,8 @@ Module: `SFL`. Screen for Life claims are submitted with S/N 2, so subscribing t
 ### CDMP: Medisave (Chronic Disease Management Programme)
 
 Module: `CDMP`
+
+In Medbot: all four are used. S/N 15 checks the payer's Medisave balance (with the once-off consent); S/N 12 submits, amends and cancels Medisave claims; S/N 13 pulls CPF's advice from the CDMP mailbox; S/N 14 pulls CPF's payment files for reconciliation.
 
 | S/N | Service type | Route | Format | Kind | Phase |
 | --- | --- | --- | --- | --- | --- |
@@ -68,6 +77,8 @@ Module: `CDMP`
 
 Module: `CIDC`
 
+In Medbot: used. A report is prepared from each chronic visit and sent, updated or deleted once a doctor confirms it. See [Reports](/cms/smartcms/reports#chronic-disease-indicators-cidc).
+
 | S/N | Service type | Route | Format | Kind | Phase |
 | --- | --- | --- | --- | --- | --- |
 | 16 | `cidcReportSubmission` | `submission/cidc` | XML | Submission | P3 |
@@ -75,6 +86,8 @@ Module: `CIDC`
 ### DEROM: Disease notification
 
 Module: `DEROM`
+
+In Medbot: used. A notification is prepared from each notifiable diagnosis and sent once a doctor confirms it. Tuberculosis's own form is not built. See [Reports](/cms/smartcms/reports#disease-notifications-derom).
 
 | S/N | Service type | Route | Format | Kind | Phase |
 | --- | --- | --- | --- | --- | --- |
@@ -84,6 +97,8 @@ Module: `DEROM`
 
 Module: `NIR`
 
+In Medbot: S/N 24 notifies NIR of each vaccination given with an SDD product code, without review. S/N 25 has no route, so a change after NIR has the record is held for staff to make with NIR directly. See [Reports](/cms/smartcms/reports#nir-vaccination-notifications).
+
 | S/N | Service type | Route | Format | Kind | Phase |
 | --- | --- | --- | --- | --- | --- |
 | 24 | `NIRsubmitNotificationOfVaccination` | `submission/nirimmunization` | XML | Submission | P3 |
@@ -92,6 +107,8 @@ Module: `NIR`
 ### CMIS: Medical alerts and allergies
 
 Module: `CMIS` (planned)
+
+In Medbot: not used yet.
 
 | S/N | Service type | Route | Format | Kind | Phase |
 | --- | --- | --- | --- | --- | --- |
@@ -104,6 +121,8 @@ Module: `CMIS` (planned)
 
 Module: `MW_HEALTH`
 
+In Medbot: used. A consult report is prepared from each completed visit of a migrant worker and sent once a doctor submits it. See [Reports](/cms/smartcms/reports#mw-health-consult-reports).
+
 | S/N | Service type | Route | Format | Kind | Phase |
 | --- | --- | --- | --- | --- | --- |
 | 19 | `PutHealthRecordsMWH` | `submission/mwh` | JSON | Submission | PM |
@@ -111,6 +130,8 @@ Module: `MW_HEALTH`
 ### HSG_BUNDLE: Healthier SG
 
 Module: `HSG_BUNDLE` (planned)
+
+In Medbot: not used yet.
 
 | S/N | Service type | Route | Format | Kind | Phase |
 | --- | --- | --- | --- | --- | --- |
@@ -138,9 +159,11 @@ Module: `HSG_BUNDLE` (planned)
 | 53 | `getReferralActionLink` | `enquiry/referralactionlink` | JSON | Enquiry | P4 |
 | 56 | `getPatientCareSummaryToken` | `enquiry/hsg/patientcaresummarytoken` | JSON | Enquiry | P4 |
 
-### NEHR: National Electronic Health Record contribution
+### NEHR_REFERRAL: Referral contribution to NEHR
 
-Module: None
+Module: `NEHR_REFERRAL`
+
+In Medbot: both are used. S/N 38 sends each issued referral letter to the National Electronic Health Record, and a `Cancelled` composition with the same identifier when a letter NEHR has, or may have, is voided. S/N 39 sends the daily reconciliation file at 00:15 Singapore time. A letter that may carry termination-of-pregnancy, voluntary sterilisation or transplant information is held until a doctor confirms the patient's consent. See [Reports](/cms/smartcms/reports#nehr-referral-letters).
 
 | S/N | Service type | Route | Format | Kind | Phase |
 | --- | --- | --- | --- | --- | --- |
@@ -191,9 +214,11 @@ Module: None
 | `envelope.ts` | Zod schemas for the control header, `SCG_RequestInfo` and `SCG_ResponseInfo` (strict on documented fields, passing unknown keys through); `SCG_STATUS_CODES` with HTTP status, error type and retry flag; `formatMsgDateTime` / `parseMsgDateTime` for Singapore-time timestamps. |
 | `modules.ts` | `SMARTCMS_MODULES` (label, description, badge, status, service groups, "needs" chips, presets), `modulesForPreset('gp-starter')` and `SMARTCMS_BADGE_LABELS`. See [Modules & Gating](/cms/smartcms/modules). |
 | `vocab.ts` | Submission states, actor kinds (member, agent, job), gateway outcome kinds, business-error categories and entitlement environments (`off`, `uat`, `prod`). |
-| `codesets/` | 18 MHCP code tables and 6 HSAR ValueSet 7.3 sets, with date-aware `lookup(setId, code, onDate)` and `activeEntries(setId, onDate)`. |
+| `codesets/` | Code tables for MHCP (CHAS, Screen for Life, VSS and CDS), MCAF and Mediclaim (Medisave), HSAR ValueSet 7.3, NIR, MW Health, CIDC (including its ICD-10-AM mapping), DEROM (including the notifiable diseases) and NEHR, with crosswalks between them. Date-aware `lookup(setId, code, onDate)` and `activeEntries(setId, onDate)`. |
 | `fhir-urls.ts` | `urn:gov:sg:nric` and Medbot's `http://medbot.me/fhir/.../smartcms-*` StructureDefinition, CodeSystem and NamingSystem URLs. |
 | `schema-version.ts` | `SCHEMA_VERSION`, the version of the knowledge base the contract was transcribed from (`kb-2026-09`). |
-| `dto/` | Request and response shapes for upcoming endpoints (CHAS verification, the claims queue, location settings). Skeletons only. |
+| `identifiers.ts` | `isValidNric`, `isValidFin` and `isValidNricOrFin`: the one NRIC and FIN check-letter implementation every Medbot surface uses, including M-series FINs. |
+| `fhir/` | Helpers that build and read Medbot's SmartCMS FHIR shapes: national demographics on `Patient`, coded ICD-10-AM encounter diagnoses (with search), CDS screening `Procedure`s, and the CHAS, Screen for Life, VSS/CDS and Medisave choices on an `Invoice`. |
+| `dto/` | The wire shapes `apps/api` returns and the CMS parses, with their validation rules where the back-end has them: `coverage.ts` (CHAS card verification, S/N 1), `claims.ts` (the claims queue and review), `sfl.ts` (Screen for Life), `vcdss.ts` (VSS and CDS), `cdmp.ts` (Medisave balance, consent and claims), `registry.ts` (CIDC reports), `derom.ts` (DEROM notifications, with DROM's error codes), `mwh.ts` (MW Health records, with MOM's first-error check), `demographics.ts` (national demographics) and `settings.ts` (the SmartCMS settings page). `hsg.ts` is an empty placeholder for Healthier SG. |
 
 Run the package's tests with `pnpm --filter @repo/smartcms-contract test`.

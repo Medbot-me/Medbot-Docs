@@ -47,7 +47,7 @@ A doctor who selects **Start consultation** on the [Reception Queue](/cms/recept
 
 An encounter started from the chart without going through the queue is still linked to the patient's visit if they are checked in on the queue and their visit is not finished. If they are not checked in, the encounter is not linked to any appointment and does not appear on the queue.
 
-If the visit already has an open encounter, **Start Encounter** opens that one again instead of starting a second. A billing account chosen in the dialog is added to it if it has none. A visit that is already finished, cancelled or a no-show never takes a new encounter. Medbot uses the patient's open visit instead, or no visit.
+If the visit already has an open encounter, **Start Encounter** reuses it instead of starting a second. A billing account chosen in the dialog is added to it if it has none. An encounter is never linked to a visit that is already finished, cancelled or a no-show, even if the page still points at it. Medbot links the patient's open visit instead, if there is one.
 
 When a Clinic Admin or Nurse starts the encounter, the doctor assigned on the queue appointment is recorded as the attending doctor. When a doctor starts it, they are.
 

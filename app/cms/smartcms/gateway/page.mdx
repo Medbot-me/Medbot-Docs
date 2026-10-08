@@ -1,22 +1,30 @@
 # Gateway (Developers)
 
-This page is for engineers working on the Medbot API. It describes how `apps/api` talks to SmartCMS: configuration, authentication, envelopes, outcomes, sequencing, the evidence log, entitlements, and the mock gateway used in development and tests.
+This page is for engineers working on the Medbot API. It describes how `apps/api` talks to SmartCMS: configuration, authentication, envelopes, outcomes, the submission outbox, sequencing, the evidence log, entitlements, scheduled jobs, the MCP claims server, and the mock gateway used in development and tests.
 
-> Everything here is built and tested, but **no clinic workflow calls it yet**. The first consumer planned is the CHAS balance enquiry (S/N 1) at check-in.
+> **Status.** The CHAS, Screen for Life, VCDSS, Medisave, NIR, CIDC, DEROM, MW Health and NEHR workflows all call SmartCMS through this gateway: enquiries directly, submissions by way of the submission outbox. Everything is built and tested against the mock gateway only. **Nothing has been sent to Synapxe UAT yet**, and some envelope and route details are still open questions with Synapxe (see [the end of this page](#open-questions-with-synapxe)).
 
 ## Where the code lives
 
 | Path | What it holds |
 | --- | --- |
-| `packages/smartcms-contract` (`@repo/smartcms-contract`) | The shared contract: the [service registry](/cms/smartcms/service-registry), envelope schemas, SCG status codes, module definitions, vocabularies, code sets and DTOs. |
+| `packages/smartcms-contract` (`@repo/smartcms-contract`) | The shared contract: the [service registry](/cms/smartcms/service-registry), envelope schemas, SCG status codes, module definitions, vocabularies, NRIC and FIN checks, code sets and DTOs. |
 | `apps/api/src/smartcms/config/` | Environment configuration. |
-| `apps/api/src/smartcms/transport/` | JWT signer, headers, envelope codecs, the gateway client, outcome classification, sequencing and `SmartcmsGatewayService`. |
-| `apps/api/src/smartcms/evidence/` | The encrypted message log. |
+| `apps/api/src/smartcms/transport/` | JWT signer, headers, envelope codecs, the gateway client, outcome classification, legacy status tables, sequencing and `SmartcmsGatewayService`. |
+| `apps/api/src/smartcms/xml/` | XML helpers, including the MSB envelope reader. |
+| `apps/api/src/smartcms/outbox/` | The submission outbox, dispatch, the stale-submission sweep and the lost-invoice sweep. |
+| `apps/api/src/smartcms/events/` | Domain-event handlers and the gate every handler passes. |
+| `apps/api/src/smartcms/services/` | One folder per service family (`chas`, `cdmp`, `cidc`, `derom`, `mwh`, `nehr`, `nir`, `diagnoses`): mappers, report and claim services, controllers. |
+| `apps/api/src/smartcms/claims/` | The claims queue and CHAS claim status polling. |
+| `apps/api/src/smartcms/evidence/` | The encrypted message log and SIT evidence export. |
 | `apps/api/src/smartcms/entitlements/` | Per-location entitlements, the module guard and the entitlement sync. |
+| `apps/api/src/smartcms/settings/` | The API behind the SmartCMS settings page. |
+| `apps/api/src/smartcms/agent/`, `mcp/` | The claims agent, the MCP claims server, agent credentials and OAuth. |
+| `apps/api/src/inngest/functions/smartcms-*.ts` | Dispatch, event subscribers and [scheduled jobs](#scheduled-jobs). |
 | `apps/api/test/smartcms-mock/` | The mock CAG/SCG gateway. |
 | `docs/plans/smartcms-foundations.md` | The build record, decisions and open questions. |
 
-Singapore-only code is fenced by an ESLint `no-restricted-imports` rule in both `apps/api` and `apps/medbot-cms`. In the API only `src/smartcms/**`, `src/inngest/functions/smartcms-*.ts` and `app.module.ts` may import it; in the CMS the only seams are the sidebar, the create-organisation wizard and organisation settings.
+Singapore-only code is fenced by an ESLint `no-restricted-imports` rule in both `apps/api` and `apps/medbot-cms`. In the API only `src/smartcms/**`, `src/inngest/functions/smartcms-*.ts` and `app.module.ts` may import it. In the CMS, Singapore code lives in `features/smartcms*`, the `/claims`, `/reports`, SmartCMS settings and OAuth routes, and is reached from the base CMS only through named seams: the sidebar, the create-organisation wizard, organisation settings, and the `smartcms-seams` files of patients, vaccinations and billing.
 
 ## Configuration
 
@@ -26,7 +34,7 @@ SmartCMS is **off** unless `SMARTCMS_ENABLED=true`. When it is on, every variabl
 | --- | --- | --- |
 | `SMARTCMS_ENABLED` | | `true` to turn the gateway on. Anything else leaves it off. |
 | `SMARTCMS_ENV` | Yes | `uat` or `prod`. Calls are only made for locations entitled in this environment. |
-| `SMARTCMS_BASE_URL` | Yes | The CAG base URL. |
+| `SMARTCMS_BASE_URL` | Yes | The CAG base URL. Must be `https`, except to a loopback host. |
 | `SMARTCMS_API_KEY` | Yes | Sent as `x-api-key`. |
 | `SMARTCMS_JWT_KID` | Yes | JWT header `kid`. |
 | `SMARTCMS_JWT_ISS` | Yes | JWT `iss`. |
@@ -35,8 +43,18 @@ SmartCMS is **off** unless `SMARTCMS_ENABLED=true`. When it is on, every variabl
 | `SMARTCMS_SRC_APPLICATION` | Yes | `controlHeader.srcApplication`, up to 50 characters. |
 | `SMARTCMS_DOMAIN_SOURCE_ID` | Yes | Becomes `NC_<id>` in the legacy envelope. |
 | `SMARTCMS_JWT_TTL_SECONDS` | No | 30 to 180, default 120. |
-| `SMARTCMS_HTTP_TIMEOUT_MS` | No | Default 20000. |
+| `SMARTCMS_HTTP_TIMEOUT_MS` | No | Default 20000. At least 1000 and **below 120000**, the outbox's dispatch lease. |
 | `SMARTCMS_ENVELOPE_OVERRIDES` | No | JSON map of route to `scg-json`, `scg-xml` or `legacy-isb-xml`, overriding the registry default. |
+| `SMARTCMS_BARE_XML_ROUTES` | No | JSON array of `scg-xml` routes whose envelope goes out without the SOAP wrapper, as the NIR samples are. |
+| `SMARTCMS_CDMP_SENDER_MAILBOX` | No | The UCFMSG sender mailbox SCG issues for CDMP. Without it Medisave claims wait in `prepared`. |
+| `SMARTCMS_DEROM_SERVICE_INTERFACE_ID` | No | DROM's `ServiceInterfaceID`, once Synapxe issues one. |
+| `SMARTCMS_OAUTH_REDIRECT_ORIGINS` | No | Origins an MCP connector may redirect to. Default `https://claude.ai` and `https://claude.com`, plus loopback. |
+
+Start-up also fails when:
+
+- an override or bare-XML route is not a SmartCMS route, or its variant cannot carry the service's format (a JSON service only takes `scg-json`; `legacy-isb-xml` only where the service has a legacy form; only `scg-xml` can go bare);
+- `SMARTCMS_BASE_URL` is a documented gateway host for the other environment: `cag-uat.synapxe.sg` is UAT and `api.healthiersg.com.sg` is production, so UAT credentials never reach production and the reverse;
+- `SMARTCMS_HTTP_TIMEOUT_MS` is at or above the 120 s lease. A call still in flight would lose its lease, and the sweep could hand the same submission to a second dispatcher.
 
 The evidence log also uses the organisation secrets key: `ORGANISATION_SECRETS_KEY`, `ORGANISATION_SECRETS_KEY_VERSION` and `ORGANISATION_SECRETS_KEY_PREVIOUS`.
 
@@ -58,7 +76,7 @@ A SmartCMS message is an `SCG_RequestInfo` with a **control header** and a strin
 | `srcApplication` | `SMARTCMS_SRC_APPLICATION`. |
 | `msgID` | A new UUID per attempt. |
 | `msgSequenceID` | From the sequence allocator, at most 15 digits. |
-| `msgDateTime` | Singapore time, `YYYY-MM-DDThh:mm:ss.sss+08:00`. |
+| `msgDateTime` | Singapore time, `YYYY-MM-DDThh:mm:ss.sss+08:00`. Received times may have any number of fractional digits. |
 | `serviceType` | The registry's wire service type. |
 
 Three codecs encode requests and decode replies (`transport/envelope/`):
@@ -66,10 +84,23 @@ Three codecs encode requests and decode replies (`transport/envelope/`):
 | Variant | Shape |
 | --- | --- |
 | `scg-json` | The SCG envelope as JSON. Default for JSON services. |
-| `scg-xml` | The same envelope inside a SOAP 1.1 body. Default for XML services. Screen for Life uses `SCG_SFL_RequestInfo`. |
-| `legacy-isb-xml` | The older AP481 `Operation_1` envelope, a candidate for S/N 1 to 15. |
+| `scg-xml` | Default for XML services. Written as `<scg:Root xmlns:scg="…">` with **unqualified** children, as every SCG schema requires; a default namespace would put the children in the SCG namespace and fail validation. Screen for Life uses `SCG_SFL_RequestInfo` with an `eCHAS` element (and `EISS` for S/N 11). NIR uses `SCG_NIR_RequestInfo` in `http://www.mohh.com/scg/Request`. Sent in a SOAP 1.1 body unless the route is in `SMARTCMS_BARE_XML_ROUTES`. |
+| `legacy-isb-xml` | The older AP481 envelope, built from each service's WSDL (wrapper, namespaces, `SOAPAction`). Only S/N 1 to 3 and 12 to 16 have one. |
 
-Which envelope CAG expects per route is still an open question with Synapxe, which is why `SMARTCMS_ENVELOPE_OVERRIDES` exists.
+Envelopes are checked per S/N against the vendor XSDs in tests, with libxml2 (`xmllint-wasm`).
+
+Decoding is lenient: any `SCG_*ResponseInfo` root in any namespace, with or without the SOAP wrapper, children by local name. The status is read even when the control header is invalid, because the status alone classifies the call.
+
+**MSB.** CHAS, eCHAS and EISS answers may arrive inside an MSB `Response` with the payload under `ContextBody` → `Content`. Every reader takes both the bare payload and the MSB-wrapped one (`xml/msb.ts`), because whether SCG strips the wrapper is still open. MSB statuses are mapped too: a write answered with a failure MSB does not document as "not acted on" may have been applied, so it is treated as unknown.
+
+Which envelope CAG expects per route is still an open question with Synapxe, which is why `SMARTCMS_ENVELOPE_OVERRIDES` and `SMARTCMS_BARE_XML_ROUTES` exist.
+
+### Identifiers
+
+- NRIC and FIN check letters have one implementation, `identifiers.ts` in the contract, used by every Medbot surface. M-series FINs (issued from 2022) use the GovTech FormSG table.
+- An MCR number is `M`, five digits and a letter (`MCR_PATTERN` in `@repo/authz`).
+- NEHR identifies a patient without an NRIC by passport.
+- Hex message ids are not mistaken for NRICs.
 
 ### SCG status codes
 
@@ -87,18 +118,20 @@ Which envelope CAG expects per route is still an open question with Synapxe, whi
 | `SCG_09` | Invalid format (HTTP 400) |
 | `SCG_99` | Missing headers (HTTP 400) |
 
+Legacy (AP481) statuses are classified by each service family's own error table (`transport/legacy-status.ts`).
+
 ## Making a call
 
 The rest of the API calls SmartCMS only through `SmartcmsGatewayService.call(...)`, passing the organisation, the clinic location, the service and the message content (plus optional submission id, attempt, acting member and patient reference). In order, it:
 
 1. Checks the kill switch (`SMARTCMS_ENABLED`).
-2. Checks the location's **entitlement** for the configured environment. A refusal throws `SmartcmsNotEntitledError` and nothing is sent.
+2. Checks the location's subscription, its **entitlement** for the configured environment, and its HE code. A refusal throws `SmartcmsNotEntitledError` and nothing is sent.
 3. Allocates one **sequence number**.
 4. Writes the **request** to the evidence log. If that write fails, nothing is sent.
 5. Sends one attempt through `SmartcmsGatewayClient`.
 6. Writes the **response** (or timeout, or transport error) to the evidence log. A failure here is logged, and the result is still returned.
 
-Services whose group has no subscribable module (NEHR, LEGACY, PSS, ALPS, CHAS_DENTAL) cannot pass step 2, so they cannot be called.
+Services whose group has no module (CHAS_DENTAL, ALPS, PSS, LEGACY) cannot pass step 2. The planned modules (CMIS, HSG_BUNDLE) can be subscribed to, but no code calls their services yet. S/N 25 has no route, so the client refuses it.
 
 ### Outcomes, not exceptions
 
@@ -110,20 +143,52 @@ The client throws only for local problems: SmartCMS is disabled, or the service 
 | `rejected_before_backend` | Rejected by CAG/SCG before reaching the back-end. `fix` says whether the cause is `config`, `code` or `data`. |
 | `rejected_unknown_reach` | Rejected, and it is unknown whether the back-end saw it. |
 | `not_authorised` | Authentication or entitlement refused. |
-| `rejected_legacy` | A legacy-envelope rejection. |
-| `timeout` | No reply within the timeout. |
-| `transport_error` | Connection-level failure. |
+| `rejected_legacy` | A legacy-envelope rejection, with what the service's AP481 error table says it means. |
+| `timeout` | No reply within the timeout, from CAG or the client. |
+| `transport_error` | Connection-level failure, noting whether any of the request was sent. |
 
 `outcomePolicy()` (`transport/classify.ts`) maps each outcome to whether an enquiry may retry once, the resulting submission state, and whether to alert (`no`, `yes` or `if_repeated`).
 
-### Retries and idempotency
+## The submission outbox
 
-- **The client never retries.** Each retry needs a new `msgID`, so retries belong to the submission outbox, which is planned.
-- Only **enquiries** are safe to retry.
-- A **submission** that times out, or returns `SCG_01` or `SCG_03`, becomes `outcome_unknown` and is **never retried automatically**: the back-end may already have processed it.
-- `SCG_03` is the gateway's duplicate detection on the control header. Medbot never reuses a control header.
+Every submission goes through `smartcms_submissions`. `SmartcmsSubmissionService` is the only write path, shared by staff screens, domain-event handlers, MCP tools and jobs.
 
-Submission states are `prepared`, `pending`, `dispatching`, `acknowledged`, `completed`, `failed_retryable`, `failed_terminal`, `outcome_unknown` and `cancelled`. Only the vocabulary exists so far.
+- **One live row per business key**, for example `chas:{encounterId}:ACT`, `nir:{immunizationId}` or `derom:{encounterId}:{disease}`. A replayed event or a second prepare finds the existing row. This is Medbot's layer of double-claim prevention.
+- **States:** `prepared`, `pending`, `dispatching`, `acknowledged`, `completed`, `failed_retryable`, `failed_terminal`, `outcome_unknown` and `cancelled`.
+- **Who may promote.** A person's Submit, or an agent under `auto_submit` for CHAS, CDMP, NIR and MW Health, moves `prepared` to `pending`. **DEROM and CIDC rows are only ever promoted from their report form, by a doctor.** A row whose draft lists issues is refused with `draft_incomplete`.
+- **Entitlement is not checked on write.** A row may exist while its location is `off`; dispatch checks again.
+
+Becoming `pending` emits `smartcms/submission.pending`, which starts the `smartcms-dispatch` function.
+
+### Dispatch and retries
+
+One dispatch is one attempt. It takes a **lease** on the row (2 minutes), runs the service's mapper on current data, renews the lease, calls the gateway, and records the next state. Every write that ends an attempt is conditioned on the attempt number, so a dispatcher that lost its lease cannot record over another.
+
+| What happened | Next state |
+| --- | --- |
+| Accepted | `acknowledged`, or the mapper's verdict (`completed`, `failed_terminal`, `failed_retryable` when the back-end asks to try later, `outcome_unknown` for an unreadable answer) |
+| Nothing was sent (connection refused) | `failed_retryable`, retried after **1, 5 and 15 minutes**, then `failed_terminal` |
+| May have reached the back-end: a timeout, `SCG_01`, `SCG_03`, a reset, or any error once the request was logged | `outcome_unknown`, **never resent automatically** |
+| Rejected before the back-end | `failed_terminal` |
+| The mapper refuses the data | A claim goes back to `prepared`, held with the issue; anything else `failed_terminal` |
+| The location is not (or no longer) entitled, in the wrong environment, has no HE code, or SmartCMS is off | Back to `pending` untouched. The row is **parked** until the entitlement is fixed. |
+
+CHAS and MSB `DOWNTIME_EXCEPTION`, and NIR `ERR_SYSTEM` and `ERR_NOT_WITHIN_OPS_HR`, are retried on the same backoff.
+
+The client itself never retries: each attempt needs a new `msgID`, and `SCG_03` is the gateway's duplicate detection on the control header. Medbot never reuses a control header. Only enquiries are safe to retry blindly.
+
+### The stale-submission sweep
+
+`smartcms-stale-submission-sweep` runs hourly at :15. It:
+
+- reclaims expired leases: `outcome_unknown` if the attempt's request may have left (its evidence row exists), else `pending` again;
+- offers `pending` rows idle for ten minutes, and `failed_retryable` rows overdue by ten, to dispatch again (this is how parked rows are retried);
+- cancels claims (CHAS, CDMP, SFL) an **agent** prepared and nobody touched for seven days. A person's or a job's rows are never cancelled, and no report or registry row is;
+- alerts once on a report waiting `prepared` past its deadline (DEROM a day; CIDC, MW Health, held NIR rows and held NEHR letters a week), on `outcome_unknown` rows a working day old, and on rows parked by entitlement for a working day.
+
+### Domain events
+
+The CMS announces writes it makes straight to Medplum through `POST /domain-events` (for example `medbot/invoice.issued`, `medbot/immunization.recorded`, `medbot/referral.issued`); `apps/api` emits `visit.completed` itself. Each event has a `smartcms-on-*` Inngest function. Every handler first passes a shared gate: the organisation is in Singapore, subscribes to the handler's group, and, when the event names a location, that location is entitled in the configured environment. Handlers re-read the source record, so a forged event does nothing.
 
 ## Sequencing
 
@@ -131,23 +196,51 @@ Submission states are `prepared`, `pending`, `dispatching`, `acknowledged`, `com
 
 ## Evidence log
 
-`smartcms_messages` records **one row per attempt**, written before sending and completed afterwards.
+`smartcms_messages` records **one row per attempt**, written before sending and completed afterwards. It is unique on submission and attempt.
 
 - Request and response **bodies are encrypted** with the organisation secrets key and bound to the organisation.
 - `x-api-key` and `Authorization` headers are **never stored**.
 - Plaintext columns support lookup and audit: service type, route, environment, envelope variant, `msg_id`, sequence, `msg_date_time`, JWT `jti` and key id, attempt, HTTP status, SCG status, business status code, outcome (`success`, `business_rejection`, `gateway_error`, `transport_error`, `timeout`), latency, the acting member, and `patient_ref` as a `Patient/<id>` reference, **never an NRIC**.
 
-There is no viewer, export or retention policy yet; an audit and certification (SIT) evidence export is planned.
+**SIT evidence export.** An admin can export one message (`GET /smartcms/evidence/:msgId`) or every message of a SIT tag as one text file per `msgID`, with the full request (headers without secrets) and response. SIT runs open a window at one location and only on a deployment configured for `uat`. Every export decrypts PHI, so it is written to `audit_events` first; a failed audit write fails the export. See [SmartCMS Settings](/cms/smartcms/settings#sit-evidence).
+
+How long the log must be kept is still open.
 
 ## Entitlements
 
 `smartcms_entitlements` holds one row per **clinic location** and **service group**, with an `environment` (`off`, `uat`, `prod`), a Synapxe reference, an optional agent-policy override, a MOM organisation code (for migrant worker health), and who last changed it.
 
 - **Sync.** When an organisation is updated, the API publishes `medbot/organisation.updated`. The Inngest function `smartcms-entitlements-sync` creates `off` rows for every location and every group of every subscribed module (Screen for Life creates both SFL and CHAS rows), and turns rows for dropped modules `off`. Rows are never deleted.
+- **Setting one.** An admin sets a location's entitlement to `uat` or `prod` on the [SmartCMS settings](/cms/smartcms/settings) page (`/organisations/[id]/smartcms`), through `PUT /organisations/:orgId/smartcms/locations/:locationId/entitlements/:group`. The same page runs the connection test (S/N 7, the accreditation status query, for the location's own HE code) and the onboarding export. Changing a location's HE code or Hospital Code switches its approvals off.
 - **Check.** `requireEntitled` refuses, in order, with `unknown_location`, `not_singapore`, `not_subscribed`, `not_entitled`, `wrong_environment` or `no_he_code`.
-- **Route guard.** `@RequireSmartcmsModule(...)` with `SmartcmsModuleGuard` fails closed with 403 outside Singapore or without the module. When the route names a location, via a `:locationId` parameter or the `X-Clinic-Location-Id` header, it checks that location's entitlement too. No controller uses it yet.
+- **Route guard.** `@RequireSmartcmsModule(...)` with `SmartcmsModuleGuard` fails closed with 403 outside Singapore or without the module. When the route names a location, via a `:locationId` parameter or the `X-Clinic-Location-Id` header, it checks that location's entitlement too. Every staff-facing SmartCMS controller uses it, alongside the staff role guard. The MCP and OAuth routes have their own guards.
 
-There is no way to set an entitlement to `uat` or `prod` from the product yet.
+## Scheduled jobs
+
+All times are Singapore time (SGT).
+
+| Function | Schedule | What it does |
+| --- | --- | --- |
+| `smartcms-chas-status-poll` | Every 4 hours, 08:00 to 20:00, daily | Asks MHCP about every CHAS claim whose own cadence says it is due. |
+| `smartcms-cdmp-status-pull` | 09:00, 13:00 and 18:00, Monday to Friday | Pulls CPF's advice (CPFADV) on Medisave claims from every CDMP mailbox. |
+| `smartcms-cdmp-recon-pull` | 10:00, Monday to Friday | Pulls CPF's payment files (CPFPAY, CPFSUM, CPFIBG) for each Hospital Code. |
+| `smartcms-agent-daily` | 19:00, Monday to Saturday | The nightly claims agent, at each location whose agent policy is on. Also runs on demand (**Run now**). |
+| `smartcms-invoice-claims-sweep` | 02:30 daily | Replays `medbot/invoice.issued` for a week's issued bills whose claim never reached the outbox, and alerts on a bill already replayed that still has none. |
+| `smartcms-nehr-reconciliation` | 00:15 daily | Queues the previous day's NEHR reconciliation file for every location connected for NEHR referral contribution, even one that sent nothing. |
+| `smartcms-oauth-cleanup` | 03:00 daily | Deletes OAuth codes expired over a day ago, and clients registered over 30 days ago that never got a credential. |
+| `smartcms-stale-submission-sweep` | Hourly at :15 | See [the sweep](#the-stale-submission-sweep). |
+
+Event-driven functions: `smartcms-dispatch` (one per pending submission, one at a time per submission), the `smartcms-on-*` domain-event subscribers, `smartcms-entitlements-sync`, and `smartcms-agent-prepare` ("Prepare today's claims").
+
+## MCP claims server
+
+`/mcp/smartcms` is a stateless MCP server that offers the SmartCMS claims tools to AI agents: listing claimable visits, CHAS and Medisave enquiries, preparing claims and reports, submitting under `auto_submit`, reading the queue and reconciliation, and flagging work for staff. Its only writes go through `SmartcmsSubmissionService`, and the organisation and location always come from the caller's credential, never from a tool argument.
+
+- **Who may call it.** An agent credential, checked by `SmartcmsAgentGuard`, or a staff session with the admin or receptionist role in a Singapore organisation with a SmartCMS module. Every refused token answers 401 with a `WWW-Authenticate` bearer challenge.
+- **OAuth.** A connector discovers the CMS as authorisation server through `/.well-known/oauth-protected-resource/mcp/smartcms`, registers a public client, and sends an admin to a consent page. The approved code (PKCE `S256`) is exchanged for an ordinary location-bound agent credential lasting 7, 14 or 30 days. There are no refresh tokens. A replayed code revokes the credential it produced. Public OAuth routes are throttled, and each caller's CHAS and Medisave enquiries are rate-limited.
+- **Agent rules.** DEROM and CIDC always wait for a doctor, and appeals are never offered to an agent.
+
+For the user side, see [Claims Agent](/cms/smartcms/claims-agent).
 
 ## The mock gateway
 
@@ -167,7 +260,7 @@ pnpm --filter medbot-api smartcms-mock
 | `SMARTCMS_MOCK_ISSUER` | `MEDBOT` |
 | `SMARTCMS_MOCK_SUBJECT` | `MEDBOT` |
 
-It prints the API key to use (`smartcms-mock-api-key`). The expected `srcApplication` is `MEDBOT`. Two HE codes are seeded: `9400001` (entitled) and `9400002` (no service groups).
+It prints the API key to use (`smartcms-mock-api-key`). The expected `srcApplication` is `MEDBOT`. Two HE codes are seeded: `9400001` (entitled to CHAS, SFL, CDMP, MW_HEALTH, NIR, CIDC, DEROM and NEHR_REFERRAL) and `9400002` (no service groups, so every call answers `SCG_06`).
 
 To point a local API at it, set `SMARTCMS_ENABLED=true`, `SMARTCMS_ENV=uat`, `SMARTCMS_BASE_URL=http://localhost:4455`, the printed API key and private key, and matching `kid`/`iss`/`sub`.
 
@@ -176,8 +269,8 @@ In tests, start it in-process with `startSmartcmsMock({ consumers })`.
 ### What it checks
 
 - **CAG:** the API key; the JWT's `kid`, `iss` and `sub`; `iat` within 60 seconds; `exp - iat` at most 180 seconds; a `jti` of at least 36 characters that has not been seen before. Failures answer 401 with a reason. CAG times out at 15 seconds (504) while the back-end keeps running, as the real one does.
-- **SCG:** the envelope and every status code from `SCG_01` to `SCG_99`.
-- **Back-ends:** CHAS/MHCP S/N 1, 2, 3 and 7, and migrant worker health S/N 19. Any other service answers `SCG_01`.
+- **SCG:** the envelope, validated against the vendor XSDs; each route takes only its own format, and the legacy form only where the route has one; every status code from `SCG_01` to `SCG_99`. A reused `msgSequenceID` for the same `srcInstitution` and `serviceType` answers `SCG_09`.
+- **Back-ends:** S/N 1 to 4, 7 to 16, 19, 24, 38, 39 and 47. Any other service answers `SCG_01`.
 
 ### Control API
 
@@ -185,15 +278,20 @@ Loopback only:
 
 | Endpoint | Purpose |
 | --- | --- |
-| `POST /__mock/faults` | Arm faults: `cag_timeout`, `latency_ms`, `scg_01`, `scg_07`, `http_500_after_processing`, `connection_reset_after_send`, `mwh_forbidden`. |
+| `POST /__mock/faults` | Arm faults: `cag_timeout`, `latency_ms`, `scg_01`, `scg_07`, `http_500_after_processing`, `connection_reset_after_send`, `mwh_forbidden`, `nir_outside_ops_hours`, `nir_system_error`, `nehr_technical`, `sfl_eiss_down`, `sfl_echas_down`, `msb_exception`, `duplicate_delivery`. |
 | `POST /__mock/reset` | Restore the seed; clear claims, records, faults and the received log. |
 | `POST /__mock/patients` | Add or replace CHAS (MHCP) cardholders. |
 | `POST /__mock/clinics` | Add or replace clinics. |
 | `POST /__mock/mhcp/claims/:claimNo/advance` | Move a claim: `{status, errorCode?, paidAmount?, paidDate?}`. |
+| `POST /__mock/mhcp/adjudicate` | Apply every submitted VSS and CDS claim's computed verdict. |
 | `POST /__mock/mhcp/legacy-statuses` | `{enabled}`: answer status queries with pre-2019 codes. |
+| `POST /__mock/mhcp/msb-envelope` | `{enabled}`: answer MHCP, eCHAS and EISS inside the MSB envelope (on after reset). |
 | `GET /__mock/received` | Every request received, in order. |
 | `GET /__mock/mhcp/claims` | Claims accepted. |
 | `GET /__mock/mwh/records` | Migrant worker health records accepted. |
+| `GET /__mock/nir/records` | NIR vaccination records accepted. |
+| `GET /__mock/nehr/compositions` | NEHR referral compositions held, with their statuses. |
+| `GET /__mock/nehr/reconciliations` | NEHR reconciliation files received. |
 
 Fixtures, all with synthetic identifiers, are in `apps/api/test/fixtures/smartcms/`.
 
@@ -201,8 +299,9 @@ Fixtures, all with synthetic identifiers, are in `apps/api/test/fixtures/smartcm
 
 These are tracked in the plan and cited in the code:
 
-- which envelope each route expects, and the exact CAG error status
-- the route for S/N 25 (NIR vaccination record update), which has none yet, so the client refuses it
-- the exact HE code and Hospital Code formats
+- which envelope each route expects, and whether XML goes in a SOAP body
+- whether SCG strips the MSB envelope before Medbot sees an answer
+- the route and layout for S/N 25 (NIR vaccination record update), which has none yet, so NIR corrections are made with NIR directly
+- DROM's `ServiceInterfaceID`, and how a GP corrects a notification DROM already holds
 - how SmartCMS relays MOM's answer for migrant worker health
 - how long the evidence log must be kept
