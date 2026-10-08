@@ -1,6 +1,6 @@
 # Ask Medbot
 
-**Chat** is the portal's landing tab, and the Ask Medbot box is the whole page: a search-first screen ("Ask Medbot about your health…") with a few try-asking suggestions under it.
+**Chat** is the portal's landing tab. Its centre is the Ask Medbot box ("Ask Medbot about your health…"), with cards above it for anything the clinic is waiting on — see [Home screen and notifications](#home-screen-and-notifications).
 
 ## What it can answer
 
@@ -8,7 +8,14 @@ Ask Medbot answers against the patient's **own record only** — a bounded read 
 
 Every answer carries its **sources** as chips, so a patient can see which visit or report an answer came from, and a **limits card** stating plainly what Ask Medbot cannot do. Each answer also offers a hand-off to the clinic for anything that needs a person.
 
-Questions are answered one at a time, synchronously — the question goes into the address bar and the answer comes back as a whole. No conversation is stored on the server between questions.
+## Conversations
+
+Each question starts a **conversation** that is saved, so the patient can ask follow-ups ("Ask a follow-up…") and come back to it later. Answers come back whole, not word by word.
+
+- **Recent conversations** on the Ask Medbot screen (`/ask`) lists past conversations, titled from their first question.
+- On Home, **Continue asking** reopens the latest conversation in place of the try-asking suggestions.
+- The Messages hub shows the three most recent conversations, with **See all**.
+- **Delete conversation** in a conversation's header removes it. Conversations are deleted automatically after 180 days.
 
 ## Red-flag screening
 
@@ -27,3 +34,25 @@ Alongside answering, Ask Medbot classifies the question for whether a **guided c
 A session is only ever offered this way, with consent — there is no separate picker to start one from. Accepting creates a thread in [Messages](/patient/messages) with the session's own identity. A red-flagged message never triggers a session offer.
 
 A session does not require the patient to be enrolled in any care program. When it completes, its summary is saved to the patient's own [Health Records](/patient/health-records), kept separate from any clinic's chart.
+
+## Home screen and notifications
+
+The **Chat** tab opens on **Home**. Besides the Ask Medbot box, Home shows cards when there is something for you to do:
+
+- **An appointment offer or check-in.** For example "Sunrise Diabetes Service has offered you an appointment", with an **Open** button. See [Offers from your clinic](/patient/visits#offers-from-your-clinic).
+- **Steps from your visit.** Steps your doctor confirmed at the end of your latest consultation. See [Steps from your visit](/patient/visits#steps-from-your-visit).
+- **A session from your care team.** For example "Your care team at Sunrise Clinic would like to go through a history taking with you", with a **Start** button.
+- **Continue asking.** Your most recent Ask Medbot conversation. With none yet, Home shows **Try asking** suggestions instead.
+
+### The notification bell
+
+The bell at the top of Home shows how many notifications you have not read. Select it to see the list, then select a notification to open it. With none, it says "No notifications yet."
+
+| Notification | Why you get it |
+| --- | --- |
+| A session "encounter waiting" or "session waiting", for example **History taking encounter waiting** | Your care team or clinic has a guided care session for you. |
+| A session "encounter completed" | A guided care session has finished. |
+| **It is your turn** | Reception called you, and you turned on **Notify me when it is my turn**. See [Today's visit](/patient/visits#getting-told-when-it-is-your-turn). |
+| **Your visit summary is ready** | Your clinician sent the summary of today's visit. See [Your visit summary](/patient/visits#your-visit-summary). |
+| **Your care team replied** | A member of your care team replied in one of your sessions. |
+| Caregiver access changes | Someone was given or lost access to your record, or your access to someone else's changed. See [Caregivers](/patient/caregivers#notifications). |
