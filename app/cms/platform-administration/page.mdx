@@ -53,6 +53,16 @@ At the bottom of the hosted organizations page, **Platform admins** grants or re
 2. If they have never signed in, you see "No account found for that email yet". They must sign in once before they can be promoted.
 3. Choose the role in the list and select **Save**. A **Role updated** message confirms it.
 
+## Caregiver access
+
+Open **Platform → Caregiver access** (`/admin/caregivers`) to look up [caregiver access](/cms/patient-portal#caregiver-access) across every organisation, for example when a patient or family member contacts Medbot support.
+
+- **Search** by email, Clerk user id (`user_...`) or PHR patient id. Results show the grants the person holds or that exist on that record, with each grant's history.
+- **Revoke** ends a grant at once, after the confirmation "Revoke this caregiver?".
+- **Invite** a caregiver on a patient's behalf. A platform invite requires a written **basis** for the access, and the caregiver still has to accept it. The patient sees the grant as added by **Medbot support**.
+
+The same screen is also in the Medbot web app's admin area, under **Caregiver Access**.
+
 ## Related
 
 - [Medbot-Hosted Organizations](/cms/hosted-organisations): the clinic's side of a request.

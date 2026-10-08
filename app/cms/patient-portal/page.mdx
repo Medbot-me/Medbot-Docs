@@ -15,6 +15,7 @@ The portal is a separate app from Medbot CMS, with its own sign-in. The [Patient
 | Make a portal invite for an existing patient | Yes | Yes | Yes | Yes |
 | Invite a new patient to self-register | Yes | Yes | No | No |
 | Answer portal messages in the clinic inbox | Yes | Yes | No | No |
+| See, invite and revoke a patient's caregivers | Yes | Yes | Yes | Yes |
 
 Inviting a patient to self-register is covered in [Patient Records & Consent](/cms/patient-records).
 
@@ -61,6 +62,56 @@ The portal does not show a patient a verdict the clinic has not released:
 
 See [Diagnostic Results](/cms/diagnostic-results) for sign-off and recall.
 
+## Caregiver access
+
+A **caregiver** is a parent, guardian, adult child or carer who uses the patient app *for* a patient, with their own Medbot account. Patients can add caregivers themselves from their profile. Your clinic can also add one from the chart, which is how a child's parent or guardian gets access: a patient cannot name themselves a child's guardian from the patient app. The patient's side is covered in [Caregivers & Family Access](/patient/caregivers).
+
+Every caregiver has one of two access levels:
+
+| Level | What the caregiver can do in the patient app |
+| --- | --- |
+| **Read-only** | See results, visits, records and messages. They cannot book, send messages or change anything. |
+| **Can make changes** | Also book appointments, message the clinic, check in, answer AI encounters and update the patient's address. |
+
+At either level, only the patient can connect clinics, change their consent, name or date of birth, or choose who has access.
+
+### Adding a caregiver
+
+1. Open the patient's chart. In the **Contact** card, select **Caregivers**. A badge shows how many caregivers have access now.
+2. In the **Caregiver access** window, open **Invite a caregiver**.
+3. Fill in:
+   - **Caregiver email** (required). Only someone signed in with that verified email can accept.
+   - **Mobile (optional)**. Medbot sends an SMS with the link. It contains no patient details.
+   - **Their relationship to the patient**, which defaults to **Parent**.
+   - **Access ends (optional)**. For a patient under 18 this is filled in with their 18th birthday. You can change it.
+   - The access level, which defaults to **Can make changes**.
+   - **How did you verify this person?** Describe the check you made, for example "Parent's NRIC and the child's birth certificate sighted at the front desk." At least 10 characters.
+4. Tick **I have verified this person's identity and their relationship to the patient.**
+5. Select **Create invite**. Medbot emails the invite and shows the link with a copy button. If the email could not be sent, hand the link over yourself. **Invite someone else** starts a new one.
+
+The caregiver must open the link, sign in with the invited email and accept a consent statement before they get access. The link works once and expires after **7 days**. A patient can have at most 5 invites waiting.
+
+For a patient under 18, the **Contact** card shows a reminder: "Under 18: a parent or guardian can use the patient app for this patient once you add them under Caregivers."
+
+**A patient with no Medbot account of their own.** You can still add a caregiver. If the patient has never been linked to the patient app, the first caregiver invite links them. Your clinic's records start syncing into the patient's health record once the caregiver accepts.
+
+**A patient who has stopped your clinic syncing.** If the patient has stopped your clinic syncing into their health record, your clinic cannot add caregivers and **Invite a caregiver** is disabled. The patient can still add one from their own profile.
+
+### Reviewing and ending access
+
+**Current access** lists each caregiver with their relationship, access level, status, who added them (for example "Added by … (your clinic)"), the end date, when they last used it, and the verification note that was recorded. **Past access** lists revoked and expired grants. If nobody has access, it says "No one else can access this patient's record."
+
+- **Revoke** ends a caregiver's access at once, after you confirm. Your clinic can revoke a grant it issued, or any grant on a patient it actively treats.
+- **Pending invites** lists invites not yet accepted. You can cancel your own clinic's invites. Invites from the patient or from another clinic are marked "Not issued by your clinic".
+
+Access also ends when the patient removes the caregiver, when the caregiver stops it, or when the end date passes. Both sides are reminded 30 days before an end date. When your clinic records a patient's death, a caregiver who could make changes keeps read-only access only.
+
+Inviting, cancelling and revoking are recorded in the audit log.
+
+### What reaches staff from a caregiver
+
+A caregiver who can make changes may message the clinic, request appointments and check in for the patient. These reach the same screens as the patient's own actions. When Ask Medbot escalates a red flag raised by a caregiver, the message to the clinic says it was sent by the patient's caregiver and names their relationship.
+
 ## What changed
 
 Three differences matter for staff who knew the old `/portal`.
@@ -75,5 +126,6 @@ Three differences matter for staff who knew the old `/portal`.
 
 - [Patient](/patient): the patient's own view, screen by screen.
 - [Getting Started](/patient/getting-started) and [Connected Clinics](/patient/connected-clinics): connecting, from the patient's side.
+- [Caregivers & Family Access](/patient/caregivers): caregiver access, from the patient's and caregiver's side.
 - [Clinic Messaging](/cms/messaging): the staff side of portal conversations.
 - [Appointments](/cms/appointments): the staff side of portal booking.
