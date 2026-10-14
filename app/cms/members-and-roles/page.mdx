@@ -1,18 +1,20 @@
 # Members & Roles
 
-Staff belong to an organisation through a **membership**. The membership carries the person's name, email, role, professional registration number where the role has one, their Practitioner record on that organisation's Medplum, and whether they are active. In Singapore organisations, a doctor's membership can also hold their NRIC or FIN.
+Staff belong to an organisation through a **membership**. A membership is one role for one person: it carries the person's name, email, role, professional registration number where the role has one, their Practitioner record on that organisation's Medplum, and whether it is active. In Singapore organisations, a doctor's membership can also hold their NRIC or FIN.
+
+A person can hold several roles in the same organisation, as several memberships under one sign-in. See [One person, several roles](#one-person-several-roles).
 
 Members are managed from `/staff`, which lists the current organisation's members and, for admins, the [pending access requests](/cms/join-an-organisation#resolving-requests-admins) above them.
 
 ## Roles
 
-An organisation uses four clinic roles. Each membership has exactly one.
+An organisation uses four clinic roles. Each membership has exactly one; a person who needs two holds two memberships.
 
 | Role | Shown as | Broadly |
 | --- | --- | --- |
 | `admin` | Clinic Admin | Full clinic administration: staff, patients, appointments, locations and sessions, displays, queue, clinical records, formulary, documents, results and the review rota. |
 | `receptionist` | Receptionist | Front desk: registering patients, appointments, today's session setup, the queue, patient documents, diagnostic result upload and viewing. |
-| `doctor` | Doctor | Clinical work: patient and appointment reads, vitals, vaccinations, formulary, documents, referrals, medical certificates, and acknowledging, reassigning or withdrawing results. |
+| `doctor` | Doctor | Clinical work: patient and appointment reads, vitals, vaccinations, formulary, documents, referrals, medical certificates (only a Doctor issues them), and acknowledging, reassigning or withdrawing results. |
 | `nurse` | Nurse | As `doctor`, minus referrals, medical certificates and results acknowledgement. |
 
 The full matrix of what each role can do lives in [Roles & Access](/docs/medbot-cms/roles-and-access).
@@ -42,26 +44,42 @@ The number is checked as it is typed ("MCR number must look like M12345A."), and
 
 - **NRIC or FIN (optional)**: doctors in **Singapore** organisations only. It is needed before that doctor's SmartCMS claims can be submitted. It is checksum-validated, and only ever shown masked (`*****567D`) once saved.
 
-Adding a member creates their Practitioner record on the organisation's own Medplum alongside their membership row, with the registration number as an identifier, so they can act clinically from their first sign-in. The NRIC or FIN stays on the membership only and is never written to the Practitioner record. A duplicate email in the same organisation is rejected. If any step fails, the ones before it are undone rather than leaving a half-created member.
+Adding a member creates their Practitioner record on the organisation's own Medplum alongside their membership row, with the registration number as an identifier, so they can act clinically from their first sign-in. The NRIC or FIN stays on the membership only and is never written to the Practitioner record. If any step fails, the ones before it are undone rather than leaving a half-created member.
+
+**Add Staff** is only for people the organisation does not have yet. Adding someone already on the staff, or already invited, is refused with a message pointing to their row: give an existing member a second role with **Add another role** (below), not by adding them again.
 
 If the person already has a Medbot account under that email they are linked immediately; otherwise the membership waits for them to sign up. See [Join an Organisation](/cms/join-an-organisation). To add many people at once, use [Seeding Staff & Patients](/cms/seed-data).
 
 ## Changing a role, registration or status
 
-From each member's row, an admin can change their role, update their profile, correct their registration, or deactivate them.
+From each member's row, an admin can change that role, give the person another role, correct their registration, or deactivate that role.
 
+- **Edit role** changes the row's role into one the person does not already hold. If the change would drop a registration number (for example Doctor to Clinic Admin), the dialog warns first and suggests **Add another role** instead.
 - **Edit registration** opens "Edit registration — &lt;name&gt;" to correct the MCR or SNB number and, for a Singapore doctor, add or replace the NRIC or FIN ("On file: *****567D. Enter a new one to replace it."). A new registration number is written to the member's Practitioner record. The NRIC or FIN is not.
 - Changing someone's role **to doctor** requires a medical license number.
 
 Two rules are always enforced:
 
 - **An organisation always keeps at least one active admin.** Deactivating or demoting the last one is refused.
-- **Nobody deactivates themselves.**
+- **Nobody deactivates themselves**, in any of their roles.
 
-Deactivating a member ends their access to that organisation. Their account is only locked out entirely if they have no active membership anywhere else: a doctor who covers two clinics and leaves one keeps working at the other.
+Deactivating a membership ends that role's access. A person with another active role in the organisation keeps working in it. Their account is only locked out entirely if they have no active membership anywhere else: a doctor who covers two clinics and leaves one keeps working at the other.
+
+The steps and messages are on [Staff](/cms/staff#changing-a-role-or-registration-number).
 
 The details of the Singapore registration fields are on [Singapore Registration](/cms/smartcms/registration).
 
+## One person, several roles
+
+A person can hold more than one role in the same organisation, for example Doctor and Clinic Admin. Each role is its own membership: its own row on `/staff`, its own active or deactivated status, and its own registration number. All of a person's roles in an organisation share one sign-in and one Practitioner record.
+
+- An admin gives an existing member a role with **Add another role** on their row. The person must have joined (not only been invited), and the row must be active.
+- The same role cannot be held twice. A deactivated role is reactivated, not added again.
+- A registration number belongs to its registry, not to the person. The Doctor role carries the MCR number and the Nurse role the SNB number; each is entered for that role, and a Clinic Admin or Receptionist role carries none.
+- The person works as one role at a time and [switches between them](/cms/switching#switching-role) with the role menu at the top of the screen. Permissions are those of the active role only; they do not add up across roles.
+
+For example, a doctor who also runs the clinic works as Clinic Admin to manage staff and as Doctor to issue a medical certificate.
+
 ## One person, several organisations
 
-Memberships are independent. The same email can be a member of several organisations with a different role in each, and an email is unique *within* an organisation rather than globally. Every actor recorded on a clinical or operational write (who performed a stock movement, who acted on a queue ticket, who owns an order set) is the member, resolved server-side from the caller's own session, never something a client supplies.
+Memberships are independent. The same email can be a member of several organisations with different roles in each. Within an organisation, an email holds each role at most once. Every actor recorded on a clinical or operational write (who performed a stock movement, who acted on a queue ticket, who owns an order set) is the member: the person, in the role they were working as. It is resolved server-side from the caller's own session, and the role can only ever be one of their own active roles in that organisation.

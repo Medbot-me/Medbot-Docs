@@ -1,6 +1,6 @@
 # Roles & Permissions
 
-> **Note:** Roles are set per organization. A person can be a Clinic Admin at one clinic and a Nurse at another, and every check below runs against their role in the organization they have currently chosen.
+> **Note:** Roles are set per organization. A person can be a Clinic Admin at one clinic and a Nurse at another, or hold more than one role in the same clinic, such as Doctor and Clinic Admin. They work as one role at a time, chosen with the [role menu](/cms/switching#switching-role), and every check below runs against that active role in the organization they have currently chosen. Roles do not add up: to do a Clinic Admin task, switch to Clinic Admin.
 
 Medbot CMS is built around four clinic roles, plus one internal account that is not a real clinic role. Every action re-checks the signed-in user's role before it reads or writes clinic data. What you see on a page only controls what is visible, so a role's real boundary is enforced at the action, not on the screen. When a role cannot do something, the control is hidden or disabled, and an action attempted anyway is refused.
 
@@ -16,7 +16,7 @@ This page is the master list. Every **Who can do this** table on a feature page 
 
 ## The Superuser account
 
-Superuser is not a real clinic role. It is an internal and testing account that passes every role check, so one login can exercise every role's work without swapping accounts. It is not offered on the staff form; it is set directly on an account. Because it bypasses the role list rather than being granted the sum of every role's permissions, a few controls that look for one specific role stay hidden to it. Signing off a result, composing on a patient's Documents, and the Displays panel on Session setup all require signing in as the role that owns them.
+Superuser is not a real clinic role. It is an internal and testing account that passes every role check, so one login can exercise every role's work without swapping accounts. It is not offered on the staff form; it is set directly on an account. Because it bypasses the role list rather than being granted the sum of every role's permissions, a few controls that look for one specific role stay hidden to it. Signing off a result, composing on a patient's Documents, issuing a medical certificate, and the Displays panel on Session setup all require signing in as the role that owns them.
 
 > **Note:** Platform administration screens are seen only by Medbot platform superadmins, a Medbot staff identity that is not a clinic role. No clinic role, including Clinic Admin, gives access. See [Platform Administration](/cms/platform-administration).
 
@@ -64,7 +64,7 @@ Each row is one task. A cell reads **Yes**, **View only**, or **No**. Notes belo
 | [See documents, and download, print, or email them](/cms/documents-and-certificates) | Yes | Yes | Yes | Yes |
 | [Compose a letter or memo](/cms/documents-and-certificates) | Yes | No | Yes | Yes |
 | [Compose a referral letter](/cms/documents-and-certificates) | Yes | No | Yes | No |
-| [Issue a medical certificate](/cms/documents-and-certificates) | Yes | No | Yes | No |
+| [Issue a medical certificate](/cms/documents-and-certificates) | No | No | Yes | No |
 | [Void a letter or memo](/cms/documents-and-certificates) | Yes | No | Yes | Yes |
 | [Void a referral letter or medical certificate](/cms/documents-and-certificates) | Yes | No | Yes | No |
 | [Read and reply to clinic inbox threads](/cms/messaging) | Yes | Yes | No | No |
@@ -81,6 +81,8 @@ Each row is one task. A cell reads **Yes**, **View only**, or **No**. Notes belo
 | [Make a portal invite for an existing patient](/cms/patient-portal) | Yes | Yes | Yes | Yes |
 | [Invite a new patient to self-register](/cms/patient-portal) | Yes | Yes | No | No |
 | [Answer portal messages in the clinic inbox](/cms/patient-portal) | Yes | Yes | No | No |
+
+A medical certificate prints the issuing doctor's MCR number, so only the Doctor role issues one. A Clinic Admin who is also a doctor switches to their Doctor role to issue it. A Clinic Admin can still void one.
 
 A Doctor sees only the patients assigned to them in the queue; a Nurse sees every patient at the location. Reading a chart, its vitals, and its notes is open to all four roles for a patient in the organization.
 
@@ -175,7 +177,11 @@ Only for organisations in Singapore that subscribe to the matching [module](/cms
 | [See the staff list](/cms/staff) | Yes | No | No | No |
 | [Add a staff member](/cms/staff) | Yes | No | No | No |
 | [Change a role or registration number](/cms/staff) | Yes | No | No | No |
-| [Deactivate or reactivate a staff member](/cms/staff) | Yes | No | No | No |
+| [Give a staff member another role](/cms/staff#giving-someone-another-role) | Yes | No | No | No |
+| [Deactivate or reactivate a staff member or one of their roles](/cms/staff#deactivating-and-reactivating) | Yes | No | No | No |
+| [Switch between your own roles](/cms/switching#switching-role) | Yes | Yes | Yes | Yes |
+
+Switching role is open to anyone who holds more than one active role in the organization.
 
 ## Related
 
