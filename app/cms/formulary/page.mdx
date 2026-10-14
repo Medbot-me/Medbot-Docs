@@ -2,36 +2,90 @@
 
 The formulary is the clinic's list of medications. Find it at **Pharmacy → Formulary** (`/formulary`). Each entry is a medication from RxNorm, the standard US drug naming system, so prescribing and stock use the same names and codes.
 
+Each medication also records its active ingredients and ATC classes. Allergy and duplicate checks use them to recognize a medication. See [Ingredients and ATC classes](#ingredients-and-atc-classes).
+
 ## Who can do this
 
 | Task | Clinic Admin | Receptionist | Doctor | Nurse |
 | --- | --- | --- | --- | --- |
 | Search and view medications | Yes | No | View only | View only |
+| See ingredients, ATC classes, and safety coverage | Yes | No | View only | View only |
 | Add, edit, retire, or delete a medication | Yes | No | No | No |
+| Re-enrich a medication or pick its ingredients by hand | Yes | No | No | No |
 
-Doctors and nurses see the search box and the status filter only. Receptionists cannot open the page.
+Doctors and nurses see the search box, the status filter, and the safety filter only. Receptionists cannot open the page.
 
 ## Finding a medication
 
-Type in **Search medications…** or use the status list (**All statuses**, **Active**, **Inactive**, **Entered in error**). The table shows **Medication**, **Code** (the RxNorm code), **Dose form**, and **Status**. Select a row to open its detail page with the name, code, status, dose form, manufacturer, and synonyms.
+Type in **Search medications…** or use the status list (**All statuses**, **Active**, **Inactive**, **Entered in error**). The table shows **Medication**, **Code** (the RxNorm code), **Dose form**, and **Status**. Select a row to open its detail page.
+
+The detail page shows the name, code, status, dose form, manufacturer, and synonyms. Below them, the **Allergy and duplicate checks** card shows the medication's **Ingredients** and **ATC classes**.
 
 ## Adding a medication
 
 1. Select **Add medication**.
-2. Type at least three characters of a generic or brand name, for example lisinopril. Results come from the National Library of Medicine's RxNav service and show the code as **RxCUI**.
+2. Type at least three characters of a generic or brand name, for example lisinopril. Results come from the National Library of Medicine's RxNav service, grouped as **Generic drugs**, **Brand-name drugs**, **Generic packs**, and **Brand-name packs**, and show the code as **RxCUI**.
 3. Select a result.
 4. Under **Medication details**, check the **Name** and **Catalog Slug** (the lookup key, filled in for you) and enter the **Dispensable Unit** (for example tablet, capsule, or mL), which is required. Optionally set **Status**, **Dose form**, **Manufacturer reference**, and **Synonyms** (one per line).
 5. Select **Create medication**.
 
-A coded medication can be added only once. Adding it again is refused with a message that a medication with that code already exists.
+The CMS then looks up the medication's ingredients and ATC classes from its RxNorm code and tells you the result, for example "Saved. Ingredients recorded: lisinopril." If the lookup fails, the medication is still saved, and the message offers a **Re-enrich** button to try again.
+
+A coded medication can be added only once. If you select one that is already in the formulary, the details show "An entry with this RxNorm code already exists in your formulary." and you cannot create it.
 
 ## Changing a medication
 
 Open the row's actions menu.
 
-- **Edit** changes details such as the name or dose form. The code cannot be changed.
+- **Edit** changes details such as the name, catalog slug, dose form, or synonyms. The code cannot be changed. The editor also shows the medication's ingredients and ATC classes; see [Picking ingredients by hand](#picking-ingredients-by-hand).
+- **Re-enrich** looks up the ingredients and ATC classes again from the RxNorm code. It is offered only for a medication that has an RxNorm code.
 - **Retire** marks the medication inactive so it is no longer offered. **Set Active** brings it back.
 - **Delete** removes it after you confirm **Delete item?** ("This action cannot be undone."). A medication with inventory lots on record cannot be deleted: "Retire it instead to keep movement history readable."
+
+A Clinic Admin can also select **Edit** at the top of the detail page, and **Re-enrich** on its **Allergy and duplicate checks** card.
+
+## Ingredients and ATC classes
+
+Each medication's **Ingredients** are its active ingredients as RxNorm names them, for example amoxicillin and clavulanate for co-amoxiclav. Allergy and duplicate checks match a medication on its ingredients, so a patient allergic to amoxicillin is flagged for any product that contains it, whatever its brand name. The duplicate check also flags a new order that shares an ingredient with the patient's current medications or other draft orders.
+
+**ATC classes** come from the Anatomical Therapeutic Chemical classification, an international system that sorts medicines into groups by the body system they act on and how they work. Each class has a code and a name, for example J01CA, Penicillins with extended spectrum, for amoxicillin. Allergy checks also use them to recognize a medication as part of a drug group, such as penicillins.
+
+The CMS fills both in for you from the RxNorm code when a medication is added, when a Clinic Admin selects **Re-enrich**, and when an edited medication has no ingredients on record. On the detail page, a note under the ingredients says where they came from: **from RxNorm** or **picked by hand**. ATC classes are always **from RxNorm**, or **None on record**.
+
+### Re-enrich
+
+Select **Re-enrich** from the row's actions menu or on the detail page. The result appears as a message:
+
+- "Ingredients updated: …" when something changed, or "Already up to date: …" when nothing did.
+- "Ingredients could not be looked up. Try again in a moment." when RxNorm could not be reached. A medication that already has ingredients keeps them.
+- "RxNorm lists no ingredient for this item's code. Pick the ingredients by hand."
+
+### Picking ingredients by hand
+
+A Clinic Admin can pick ingredients by hand for a medication that has no RxNorm code or no ingredients on record. A medication that has both keeps what RxNorm gave it, and its ingredients cannot be changed in the editor.
+
+1. Open the row's actions menu and select **Edit**.
+2. Under **Ingredients**, select **Add ingredient**.
+3. Search by the generic ingredient name, for example amoxicillin, not a brand or a product. Ingredients already on the list show **Added**.
+4. Select the ingredient. Repeat for each active ingredient. Remove one with its **×** button.
+5. Select **Save changes**.
+
+The ingredients you save replace the ones on record. A medication can have up to 20 ingredients. A medication that already has ingredients cannot be left with none: add the replacement before you remove the last one.
+
+If your other changes save but the ingredients do not, the editor stays open with your picks: "Your other changes were saved, but the ingredients you picked were not recorded." Try saving again.
+
+### Medications that can't be checked
+
+A medication with no ingredients on record can be matched only by its name or code, so allergy and duplicate checks may miss it. Its detail page shows a warning such as "No ingredients on record. Allergy and duplicate checks can't match this item on its ingredients."
+
+To list every such medication, choose **Safety: can't be checked** in the safety filter (the default is **Safety: all items**). A line above the table counts them, for example "12 of 140 items can't be checked". The list shows one status at a time, **Active** unless you choose another. The **Why it can't be checked** column gives the reason and the fix:
+
+| Reason | Fix (Clinic Admin) |
+| --- | --- |
+| **No RxNorm code** | Select **Edit** and pick its ingredients by hand. |
+| **No ingredients on record** | Select **Re-enrich** to look them up, or **Edit** to pick them by hand. |
+
+When every medication with the chosen status has an ingredient, the list says "Every active item has an RxNorm ingredient. Nothing to fix."
 
 ## Related
 
