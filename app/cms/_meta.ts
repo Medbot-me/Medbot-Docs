@@ -13,6 +13,7 @@ export default {
   "orders-and-order-sets": "Orders & Order Sets",
   "diagnostic-results": "Diagnostic Results",
   "documents-and-certificates": "Documents & Certificates",
+  "clinical-photos": "Clinical Photos",
   messaging: "Clinic Messaging",
   tasks: "Tasks & Staff Pings",
   "patient-notes": "Patient Notes Workspace",
