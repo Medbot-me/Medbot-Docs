@@ -1,6 +1,6 @@
 # Roles & Permissions
 
-> **Note:** Roles are set per organization. A person can be a Clinic Admin at one clinic and a Nurse at another, and every check below runs against their role in the organization they have currently chosen.
+> **Note:** Roles are set per organization. A person can be a Clinic Admin at one clinic and a Nurse at another, or hold more than one role in the same clinic, such as Doctor and Clinic Admin. They work as one role at a time, chosen with the [role menu](/cms/switching#switching-role), and every check below runs against that active role in the organization they have currently chosen. Roles do not add up: to do a Clinic Admin task, switch to Clinic Admin.
 
 Medbot CMS is built around four clinic roles, plus one internal account that is not a real clinic role. Every action re-checks the signed-in user's role before it reads or writes clinic data. What you see on a page only controls what is visible, so a role's real boundary is enforced at the action, not on the screen. When a role cannot do something, the control is hidden or disabled, and an action attempted anyway is refused.
 
@@ -12,11 +12,11 @@ This page is the master list. Every **Who can do this** table on a feature page 
 
 **Receptionist** runs the front desk. A Receptionist registers patients, updates contact details and communication consent, books and edits appointments, manages today's session setup, operates the reception queue, files and views diagnostic results, and views and prints existing patient documents. A Receptionist can build and adjust roster drafts, but only a Clinic Admin can publish a week.
 
-**Doctor** and **Nurse** read patient, practitioner, and appointment data through their clinical workflows. Both record and correct vitals, record vaccinations, view the formulary, and view and print patient documents. Both compose letters and memos, and file and view diagnostic results. A Doctor can additionally compose referrals, issue medical certificates, and sign off, reassign, or withdraw results. A Nurse cannot. Neither role registers patients, books appointments, nor manages staff, sessions, the queue, the formulary, the results rota, or roster publishing.
+**Doctor** and **Nurse** read patient, practitioner, and appointment data through their clinical workflows. Both record and correct vitals, record vaccinations, view the formulary, and view and print patient documents. Both compose letters and memos, file and view diagnostic results, and draft result explanations for patients. A Doctor can additionally compose referrals, issue medical certificates, sign off, reassign, or withdraw results, and approve, send, or withdraw result explanations. A Nurse cannot. Neither role registers patients, books appointments, nor manages staff, sessions, the queue, the formulary, the results rota, or roster publishing.
 
 ## The Superuser account
 
-Superuser is not a real clinic role. It is an internal and testing account that passes every role check, so one login can exercise every role's work without swapping accounts. It is not offered on the staff form; it is set directly on an account. Because it bypasses the role list rather than being granted the sum of every role's permissions, a few controls that look for one specific role stay hidden to it. Signing off a result, composing on a patient's Documents, and the Displays panel on Session setup all require signing in as the role that owns them.
+Superuser is not a real clinic role. It is an internal and testing account that passes every role check, so one login can exercise every role's work without swapping accounts. It is not offered on the staff form; it is set directly on an account. Because it bypasses the role list rather than being granted the sum of every role's permissions, a few controls that look for one specific role stay hidden to it. Signing off a result, composing on a patient's Documents, issuing a medical certificate, and the Displays panel on Session setup all require signing in as the role that owns them. Approving a result explanation also needs a linked clinician profile, which a Superuser account usually lacks.
 
 > **Note:** Platform administration screens are seen only by Medbot platform superadmins, a Medbot staff identity that is not a clinic role. No clinic role, including Clinic Admin, gives access. See [Platform Administration](/cms/platform-administration).
 
@@ -45,6 +45,11 @@ Each row is one task. A cell reads **Yes**, **View only**, or **No**. Notes belo
 | [See vitals and their history](/cms/vitals) | Yes | Yes | Yes | Yes |
 | [Record vitals](/cms/vitals) | Yes | No | Yes | Yes |
 | [Correct a reading](/cms/vitals) | Yes | No | Yes | Yes |
+| [See a patient's allergies](/cms/allergies-and-medication-safety) | Yes | No | Yes | Yes |
+| [Add an allergy or record "No known drug allergies"](/cms/allergies-and-medication-safety#adding-an-allergy) | No | No | Yes | Yes |
+| [Edit, resolve or mark an allergy entered in error](/cms/allergies-and-medication-safety#correcting-an-allergy) | No | No | Yes | No |
+| [Override an allergy alert and sign a prescription](/cms/allergies-and-medication-safety#allergy-alerts-when-prescribing) | Yes | No | Yes | No |
+| [Open the Medication safety report](/cms/allergies-and-medication-safety#medication-safety-report) | Yes | No | No | No |
 | [See a patient's vaccinations](/cms/vaccinations) | Yes | Yes | Yes | Yes |
 | [Record, edit or void a vaccination](/cms/vaccinations) | Yes | No | Yes | Yes |
 | [Order a vaccination service](/cms/vaccinations) | Yes | No | Yes | Yes |
@@ -61,12 +66,23 @@ Each row is one task. A cell reads **Yes**, **View only**, or **No**. Notes belo
 | [Withdraw a misfiled result](/cms/diagnostic-results) | Yes | No | Yes | No |
 | [Change the results review rota](/cms/diagnostic-results) | Yes | No | No | No |
 | [See the results review rota](/cms/diagnostic-results) | Yes | View only | View only | View only |
+| [Draft and edit a result explanation](/cms/diagnostic-results#explaining-results-to-the-patient) | No | No | Yes | Yes |
+| [Approve, send, or withdraw a result explanation](/cms/diagnostic-results#approving) | No | No | Yes | No |
+| [Withdraw an explanation whose result was withdrawn](/cms/diagnostic-results#withdrawing-an-explanation) | Yes | No | Yes | No |
+| [Open and print an approved explanation](/cms/diagnostic-results#approving) | Yes | Yes | Yes | Yes |
+| [Edit explanation library wording](/cms/diagnostic-results#the-explanation-library) | Yes | No | Yes | No |
+| [Approve or retire library wording](/cms/diagnostic-results#the-explanation-library) | No | No | Yes | No |
 | [See documents, and download, print, or email them](/cms/documents-and-certificates) | Yes | Yes | Yes | Yes |
 | [Compose a letter or memo](/cms/documents-and-certificates) | Yes | No | Yes | Yes |
 | [Compose a referral letter](/cms/documents-and-certificates) | Yes | No | Yes | No |
-| [Issue a medical certificate](/cms/documents-and-certificates) | Yes | No | Yes | No |
+| [Issue a medical certificate](/cms/documents-and-certificates) | No | No | Yes | No |
 | [Void a letter or memo](/cms/documents-and-certificates) | Yes | No | Yes | Yes |
 | [Void a referral letter or medical certificate](/cms/documents-and-certificates) | Yes | No | Yes | No |
+| [See clinical photos](/cms/clinical-photos) | Yes | Yes | Yes | Yes |
+| [Take or upload clinical photos](/cms/clinical-photos) | Yes | Yes | Yes | Yes |
+| [Open a Sensitive photo, or turn Sensitive off](/cms/clinical-photos#sensitive-photos) | No | No | Yes | Yes |
+| [Edit or void a clinical photo](/cms/clinical-photos) | Yes | Own photos | Yes | Yes |
+| [File a photographed paper report as a result](/cms/clinical-photos#filing-a-paper-report-as-a-result) | Yes | Yes | Yes | Yes |
 | [Read and reply to clinic inbox threads](/cms/messaging) | Yes | Yes | No | No |
 | [Close an inbox thread](/cms/messaging) | Yes | Yes | No | No |
 | [Read a patient's Messages section](/cms/messaging) | Yes | Yes | Yes | Yes |
@@ -82,6 +98,8 @@ Each row is one task. A cell reads **Yes**, **View only**, or **No**. Notes belo
 | [Invite a new patient to self-register](/cms/patient-portal) | Yes | Yes | No | No |
 | [Answer portal messages in the clinic inbox](/cms/patient-portal) | Yes | Yes | No | No |
 
+A medical certificate prints the issuing doctor's MCR number, so only the Doctor role issues one. A Clinic Admin who is also a doctor switches to their Doctor role to issue it. A Clinic Admin can still void one.
+
 A Doctor sees only the patients assigned to them in the queue; a Nurse sees every patient at the location. Reading a chart, its vitals, and its notes is open to all four roles for a patient in the organization.
 
 ## Front desk and scheduling
@@ -96,7 +114,8 @@ A Doctor sees only the patients assigned to them in the queue; a Nurse sees ever
 | [See today's queue](/cms/reception-queue) | Yes | Yes | View only | View only |
 | [Check a patient in](/cms/reception-queue) | Yes | Yes | No | No |
 | [Call a patient to a room](/cms/reception-queue) | Yes | Yes | No | No |
-| [Route a patient to a stage, or mark payment](/cms/reception-queue) | Yes | Yes | No | No |
+| [Route a patient to a stage](/cms/reception-queue#routing-a-patient) | Yes | Yes | No | No |
+| [Take payment, void a payment, or mark the visit paid](/cms/reception-queue#taking-payment) | Yes | Yes | No | No |
 | [Assign or change the doctor](/cms/reception-queue) | Yes | Yes | No | No |
 | [Cancel an appointment, mark a no-show, or reopen](/cms/reception-queue) | Yes | Yes | No | No |
 | [Arrange a session for the patient](/cms/reception-queue) | No | No | Yes | No |
@@ -148,11 +167,14 @@ Only for organisations in Singapore that subscribe to the matching [module](/cms
 | [Order a Screen for Life screening](/cms/smartcms/claims#screenings-and-vaccinations) | Yes | No | Yes | Yes |
 | [Record a developmental screening (CDS)](/cms/smartcms/claims#screenings-and-vaccinations) | Yes | No | Yes | No |
 | [Choose claims on a bill, check a Medisave payer](/cms/smartcms/claims#3-bill-the-visit) | Yes | Yes | No | No |
-| [See the Claims queue](/cms/smartcms/claims#5-the-claims-queue) | Yes | Yes | Yes | No |
+| [See the Claims queue and Claims today](/cms/smartcms/claims#5-the-claims-queue) | Yes | Yes | Yes | No |
+| [See what patients paid on Claims today](/cms/smartcms/claims#claims-today) | Yes | Yes | No | No |
 | [Submit, re-prepare or discard a claim](/cms/smartcms/claims#actions-on-a-claim) | Yes | Yes | No | No |
 | [Run the claims agent](/cms/smartcms/claims-agent) | Yes | Yes | No | No |
 | [Amend or cancel a Medisave claim, check CPF payments](/cms/smartcms/claims#amending-or-cancelling-a-medisave-claim) | Yes | Yes | No | No |
+| [Match or dismiss a CPF message that matches no claim](/cms/smartcms/claims#messages-from-cpf-that-match-no-claim) | Yes | Yes | No | No |
 | [Appeal a rejected CHAS claim](/cms/smartcms/claims#appealing-a-rejected-chas-claim) | Yes | No | Yes | No |
+| [Resubmit a claim MHCP rejected](/cms/smartcms/claims#resubmitting-a-rejected-claim) | Yes | No | No | No |
 | [See Reports](/cms/smartcms/reports) | Yes | No | Yes | NIR only |
 | [Open SmartCMS settings: switch locations on, agent policy, credentials](/cms/smartcms/settings) | Yes | No | No | No |
 
@@ -162,6 +184,8 @@ Only for organisations in Singapore that subscribe to the matching [module](/cms
 | --- | --- | --- | --- | --- |
 | [Search and view medications](/cms/formulary) | Yes | No | View only | View only |
 | [Add, edit, retire, or delete a medication](/cms/formulary) | Yes | No | No | No |
+| [See ingredients, ATC classes, and safety coverage](/cms/formulary#ingredients-and-atc-classes) | Yes | No | View only | View only |
+| [Re-enrich a medication or pick its ingredients by hand](/cms/formulary#picking-ingredients-by-hand) | Yes | No | No | No |
 | [See inventory lots and the stock overview](/cms/inventory-and-stock) | Yes | No | Yes | Yes |
 | [Receive stock (log a delivery)](/cms/inventory-and-stock) | Yes | No | No | Yes |
 | [Adjust a lot's quantity](/cms/inventory-and-stock) | Yes | No | No | Yes |
@@ -175,7 +199,11 @@ Only for organisations in Singapore that subscribe to the matching [module](/cms
 | [See the staff list](/cms/staff) | Yes | No | No | No |
 | [Add a staff member](/cms/staff) | Yes | No | No | No |
 | [Change a role or registration number](/cms/staff) | Yes | No | No | No |
-| [Deactivate or reactivate a staff member](/cms/staff) | Yes | No | No | No |
+| [Give a staff member another role](/cms/staff#giving-someone-another-role) | Yes | No | No | No |
+| [Deactivate or reactivate a staff member or one of their roles](/cms/staff#deactivating-and-reactivating) | Yes | No | No | No |
+| [Switch between your own roles](/cms/switching#switching-role) | Yes | Yes | Yes | Yes |
+
+Switching role is open to anyone who holds more than one active role in the organization.
 
 ## Related
 

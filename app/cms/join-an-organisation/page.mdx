@@ -27,6 +27,8 @@ What happens next depends on what the backend finds:
 
 **Filing a request never grants access on its own.** It queues work for an admin.
 
+A join code gets a person into an organisation; it does not give someone who is already a member a second role there. For that, an admin uses **Add another role** on the person's row in [Staff](/cms/staff#giving-someone-another-role).
+
 ### Why a join code is required
 
 Naming the organisation up front is deliberate. Blindly searching every organisation an email was ever invited to would silently link an account to a clinic the person never meant to reach: harmless when there was only ever one tenant, not harmless now.
@@ -35,7 +37,7 @@ Naming the organisation up front is deliberate. Blindly searching every organisa
 
 Pending access requests appear above the staff table on `/staff`, each showing the requester's name, email, and any message they sent. An admin has two actions:
 
-- **Add as staff** opens the add-staff dialog pre-filled from the request. Once the member is created, the request is cleared automatically.
+- **Add as staff** opens the add-staff dialog pre-filled from the request. Once the member is created, the request is cleared automatically. As with **Add Staff**, someone already on the staff is refused with a message saying what to do instead (see [Staff](/cms/staff#adding-a-staff-member)).
 - **Deny** dismisses the request without adding anyone.
 
 Either way the request stops appearing in the pending list. Denying is not a block: the person can request again if it was a mistake.

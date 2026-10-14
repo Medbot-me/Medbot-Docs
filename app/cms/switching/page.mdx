@@ -1,12 +1,14 @@
-# Choosing & Switching Organisations
+# Choosing & Switching Organisations and Roles
 
 A doctor who covers two clinics, or an administrator who runs a group, belongs to several organisations with one account. The CMS renders exactly one of them at a time: the **current organisation**.
+
+A person can also hold more than one role in the same organisation, for example a doctor who is also the Clinic Admin. The CMS works as exactly one of those roles at a time: the **active role**. You choose the organisation from the sidebar and the role from the role menu at the top of the screen.
 
 ## The welcome screen
 
 Every fresh sign-in starts at **Welcome back** (`/welcome`): "Choose the organisation and role to continue as." This happens even for someone who belongs to only one organisation.
 
-- There is one card per membership, showing the organisation's name and your role there.
+- There is one card per organisation, showing the organisation's name and the role you will enter it as. If you hold several roles there, the card shows one of them: the role you were last working as there, if this browser remembers it, or otherwise the role you were given first. You change role after you enter, with the [role menu](#switching-role).
 - The organisation you used last carries a **Last used** badge.
 - Click **Enter as &lt;Role&gt;** (for example, **Enter as Clinic Admin**) to continue. You go to the page you were trying to reach, or to the queue by default.
 - Links at the bottom: **Join with code**, **Create organisation**, **Manage organisations**, and **Sign out**.
@@ -19,31 +21,54 @@ A signed-in user with **no memberships** at all is sent to the [organisations sc
 
 The choice is tied to **this sign-in session**. Signing out and back in, a second person on a shared computer, or an expired session all mean choosing again. The "last used" organisation is only a hint for the badge, never a grant of access. That way nobody lands in a clinic they did not mean to open, or inherits someone else's context on a shared front-desk machine.
 
+**Sign out** (on the welcome screen or in the account menu) also makes the browser forget the organisation and role it last used. The next person to sign in on that computer sees no **Last used** badge, and enters each organisation as their first role there.
+
 ## The sidebar switcher
 
-The organisation switcher sits in the sidebar header for everyone, including people with a single organisation. It shows the current organisation's name and your role in it; with the sidebar collapsed, only its initials show.
+The organisation switcher sits in the sidebar header for everyone, including people with a single organisation. It shows the current organisation's name and your active role in it; with the sidebar collapsed, only its initials show.
 
-Opening it lists your **Organisations**, each with your role and a check mark on the current one, followed by:
+Opening it lists your **Organisations**, each listed once with the role you would enter it as, and a check mark on the current one, followed by:
 
 - **Manage organisations**: the organisations screen
 - **Create organisation**: see [Create an Organisation](/cms/create-organisation)
 - **Join with code**: see [Join an Organisation](/cms/join-an-organisation)
 
-Choosing a different organisation re-renders the entire app under it: the queue, the patient list, the schedule, the results, inventory, everything.
+Choosing a different organisation re-renders the entire app under it: the queue, the patient list, the schedule, the results, inventory, everything. You enter it as the role shown beside it; if you hold several roles there, switch with the role menu once you are in.
 
 ## From the organisations screen
 
-`/organisations` lists every organisation the user belongs to with their role in each, a **Current** badge on the active one, a switch action on the others, and a **Settings** link on any they administer. It also shows any pending [Medbot-hosted organisation requests](/cms/hosted-organisations).
+`/organisations` lists every organisation the user belongs to, once each, with the role they would enter it as, a **Current** badge on the active one, a **Switch to this** button on the others, and a **Settings** link where that role is Clinic Admin. It also shows any pending [Medbot-hosted organisation requests](/cms/hosted-organisations).
 
 A link to `/organisations?select=<organisation>`, such as the one in a hosted organisation's "ready" email, switches straight into that organisation if you are a member.
 
+## Switching role
+
+The role menu appears only for someone who holds more than one active role in the current organisation. It is the rounded button at the right of the bar across the top of the screen, reading **Working as** and your active role (on a narrow screen only the role's icon shows). It is deliberately far from the sidebar's organisation switcher, so changing role and changing organisation are never one mis-click apart.
+
+1. Open the role menu. Its heading reads **Switch role**, with "Your &lt;number&gt; roles at &lt;organisation&gt;" beneath it.
+2. Each role is listed with a short summary of the sidebar pages it opens (the first three, then how many more). Your active role is ticked and marked **Current role**.
+3. Choose another role. The button reads **Switching to &lt;Role&gt;…** while it works.
+
+When the switch is done, a message confirms "Now working as &lt;Role&gt;" with the organisation's name. Then:
+
+- **You stay on the same page** if the new role can open it, with its filters and tabs kept. The queue stays the queue.
+- **Otherwise you go to the nearest page the new role can open.** For example, from a section of a patient's chart the new role cannot see, you land on that patient's overview.
+- **If there is no such page, you go to the queue.**
+- The sidebar, the controls on each page, and every permission check now follow the new role. Roles do not add up: working as Doctor, you can do what a Doctor can, and none of what your Clinic Admin role can until you switch back.
+
+If the switch fails, you see "Could not switch role" and stay in your current role.
+
+Your choice of role is remembered in this browser. It stays as you move between pages, and if your session expires, the welcome screen offers the same role again. Switching to another organisation or signing out forgets it, and you next enter this organisation as your first role there. If the role you were working as is deactivated, the CMS uses your first remaining role in that organisation from the next page load.
+
+To be given another role, ask a Clinic Admin. See [Staff](/cms/staff#giving-someone-another-role).
+
 ## Roles are per organisation
 
-A person's role is a property of their membership, not of their account. The same user can be a Clinic Admin at one clinic and a Nurse at another; switching organisations switches which role they are acting under. Every permission check runs against the role in the organisation currently selected.
+A person's roles are a property of their memberships, not of their account. The same user can be a Clinic Admin at one clinic and a Nurse at another, or both a Doctor and a Clinic Admin at the same clinic. Switching organisation, or switching role, changes which role they are acting under. Every permission check runs against the active role in the organisation currently selected, and every action is recorded against that role.
 
 ## What switching does not do
 
-Switching does not widen anyone's access. The stored choice only decides *which* of the user's own organisations a page renders; it is never treated as authorisation on its own. Every request the CMS makes re-derives the caller's membership and role for that organisation server-side, so a tampered-with choice yields nothing: an organisation the user does not belong to answers as if it does not exist.
+Switching does not widen anyone's access. The stored choice only decides *which* of the user's own organisations, and which of their own active roles there, a page renders; it is never treated as authorisation on its own. Every request the CMS makes re-checks the caller's membership and role for that organisation server-side, so a tampered-with choice yields nothing: an organisation the user does not belong to answers as if it does not exist, and a role they do not hold is ignored in favour of one they do.
 
 Administering an organisation you are not currently in is fine, too. The settings page works on the organisation named in its own URL, not the current one, so an admin of several can manage any of them without switching first.
 

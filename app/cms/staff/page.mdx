@@ -1,6 +1,6 @@
 # Staff
 
-The staff page is where a Clinic Admin adds the people who work in the organization, keeps their roles and registration numbers current, and removes their access when they leave. Find it at **Administration → Staff** (`/staff`).
+The staff page is where a Clinic Admin adds the people who work in the organization, keeps their roles and registration numbers current, gives someone a second role, and removes a role or their access when they leave. Find it at **Administration → Staff** (`/staff`).
 
 ## Who can do this
 
@@ -9,9 +9,10 @@ The staff page is where a Clinic Admin adds the people who work in the organizat
 | See the staff list | Yes | No | No | No |
 | Add a staff member | Yes | No | No | No |
 | Change a role or registration number | Yes | No | No | No |
-| Deactivate or reactivate a staff member | Yes | No | No | No |
+| Give a staff member another role | Yes | No | No | No |
+| Deactivate or reactivate a staff member or one of their roles | Yes | No | No | No |
 
-Other roles do not see **Staff** in the sidebar. If they open the address directly, the page says the action requires the admin role.
+Other roles do not see **Staff** in the sidebar. If they open the address directly, the page says the action requires the admin role. Someone who is a Clinic Admin and also holds another role must be [working as Clinic Admin](/cms/switching#switching-role) to use this page.
 
 ## Adding a staff member
 
@@ -21,7 +22,13 @@ Other roles do not see **Staff** in the sidebar. If they open the address direct
 4. For a Doctor, enter the **Medical License Number** (the MCR number, for example `M12345A`). For a Nurse, enter the **Nursing Registration Number** (the SNB number, for example `N123456`). Both are required for those roles. The number is checked as you type and is shown in capital letters without spaces.
 5. Select **Add staff**. A **Staff added** message confirms it.
 
-If the person already has a Medbot sign-in, they can use it right away. If not, they receive an invitation and must accept it before they can sign in. Adding someone who is already a member of the organization is refused with the message **This person is already a member of the organisation.**
+If the person already has a Medbot sign-in, they can use it right away. If not, they receive an invitation and must accept it before they can sign in.
+
+Adding someone who is already on the staff is refused, and the message says what to do instead:
+
+- Already on staff: "&lt;email&gt; is already on this organisation's staff as &lt;Role&gt;. To give them another role, use "Add another role" on their row."
+- On staff but deactivated: "… as &lt;Role&gt;, deactivated. Reactivate them from their row, then use "Add another role" there to give them another role."
+- Invited but not yet joined: "&lt;email&gt; was already invited to this organisation as &lt;Role&gt; and has not joined yet. Change the role they were invited with from their row ("Edit role"), or give them another role once they have joined."
 
 A clinical profile for the person is also created automatically in the organization's medical record system. Features that record who did something, such as communication consent, rely on it.
 
@@ -29,34 +36,64 @@ To let someone in with a join code instead, see [Join an Organization](/cms/join
 
 ## The staff list
 
-The table shows each person's **Name**, **Email**, **Role**, **License** (their registration number, or a dash), and **Status** (**Active** or **Deactivated**). A person who was invited but has not yet joined appears with the name "Invited".
+The table shows each person's **Name**, **Email**, **Role**, **License** (the registration number for a Doctor or Nurse role, or a dash), and **Status** (**Active** or **Deactivated**). A person who was invited but has not yet joined appears with the name "Invited".
+
+A person who holds more than one role has **one row per role**. The rows are sorted by name, so a person's roles sit together, with the role they were given first at the top. Each row has its own license, status, and actions menu: you change, deactivate, or reactivate one role at a time.
+
+## Giving someone another role
+
+One person can hold several roles in the organization with the same sign-in, for example a doctor who is also the Clinic Admin. They then [switch between their roles](/cms/switching#switching-role) from the role menu at the top of the screen.
+
+1. Open the actions menu on one of the person's rows (the three dots labeled **Actions for** and their name).
+2. Select **Add another role**. The dialog **Add another role — &lt;name&gt;** lists the roles they keep.
+3. Choose the **Role to add**. Only roles the person does not already hold are offered.
+4. For **Doctor**, enter the **Medical License Number** (MCR number). For **Nurse**, enter the **Nursing Registration Number** (SNB number). Both are required for those roles. Clinic Admin and Receptionist carry no number.
+5. Select **Add role**. A **Role added** message confirms it: "&lt;name&gt; can now also work as &lt;Role&gt;, and switches with the role menu at the top of the screen."
+
+The new role appears as a new row in the list. Things to know:
+
+- **Add another role** appears only on an active row of a person who has joined. Someone who was invited but has not signed in yet cannot be given a second role until they join; change the role they were invited with using **Edit role** instead.
+- A registration number is not copied from one role to another. A nurse who becomes a doctor too needs their MCR number for the Doctor role; their SNB number stays with the Nurse role. Adding a Clinic Admin or Receptionist role copies no number.
+- A role the person held before and that was deactivated is not offered again. Reactivate that role's row instead.
+- The person does not need to sign out. The role menu appears for them from their next page load.
 
 ## Changing a role or registration number
 
-Open the actions menu on a person's row (the three dots labeled **Actions for** and their name).
+Open the actions menu on the row of the role you want to change.
 
-- **Edit role** changes the role. Changing someone to Doctor needs a medical license number, otherwise you see "Medical license number is required to change this member to doctor."
+- **Edit role** changes that one role into another, in the **Edit role — &lt;name&gt;** dialog. The list offers the row's own role and any role the person does not already hold. Select **Save role**; a **Role updated** message confirms it.
+  - Changing a role to Doctor needs a medical license number, otherwise you see "Medical license number is required to change this member to doctor." For a Nurse, the SNB number is optional here and can be added later with **Edit registration**.
+  - If the change would drop a registration number, the dialog warns you before you save, for example: "Changing &lt;name&gt; to Clinic Admin removes their Medical License Number from this role and from their practitioner record, because Clinic Admin carries no registration number. If &lt;name&gt; should keep working as a Doctor, use "Add another role" instead of changing this one."
 - **Edit registration** corrects the registration number. It appears only for roles that carry one.
 
-The new role applies everywhere in this organization from the person's next page load. A person's role in one organization does not affect their role in another.
+To keep the person's current role and add a new one, use **Add another role**, not **Edit role**.
+
+A changed role applies everywhere in this organization from the person's next page load. A person's roles in one organization do not affect their roles in another.
 
 ## Deactivating and reactivating
 
-1. Open the row's actions menu.
+Deactivating works on one row, so on one role.
+
+1. Open the actions menu on the row of the role to remove.
 2. Select **Cancel (deactivate)**.
-3. Confirm. The message reads: "They will no longer be able to sign in or be assigned new work. This can be reversed at any time."
+3. Confirm, or select **Go back**.
 
-Deactivating keeps the person's history and ends their access to this organization at their next request. They are locked out of Medbot entirely only if they have no other active membership in any organization.
+What the confirmation says depends on whether the person has other active roles here:
 
-To bring someone back, use **Reactivate** on the same row and confirm. "They will be able to sign in again immediately." Reactivate the existing person rather than adding them a second time.
+- **Their only active role**: "Deactivate &lt;name&gt;?" with "They will no longer be able to sign in or be assigned new work. This can be reversed at any time." Select **Deactivate**.
+- **One of several roles**: "Deactivate the &lt;Role&gt; role of &lt;name&gt;?" with "They will lose this role and no longer be assigned work as &lt;Role&gt;. Their &lt;other roles&gt; role stays active, so they can still sign in. This can be reversed at any time." Select **Deactivate role**. They keep working in their other roles.
+
+Deactivating keeps the person's history and ends that role's access at their next request. They are locked out of Medbot entirely only if they have no other active role in any organization.
+
+To bring a role back, use **Reactivate** on the same row and confirm. For a person with no other active role: "They will be able to sign in again immediately." When they have another active role: "They will be able to work as &lt;Role&gt; again immediately, switching to it from the role menu." Reactivate the existing row rather than adding the person or the role a second time.
 
 Two rules protect the organization:
 
-- You cannot deactivate your own account. The menu item is disabled on your own row.
-- At least one active Clinic Admin must remain. Removing the last one is refused with "At least one active administrator must remain."
+- You cannot deactivate yourself, in any of your roles. The menu item is disabled on all your own rows.
+- At least one active Clinic Admin must remain. Deactivating the last one, or changing their role, is refused with "At least one active administrator must remain."
 
 ## Related
 
 - [Roles & Permissions](/cms/roles-and-permissions): what each role can do.
 - [Seeding Staff & Patients](/cms/seed-data): add many people at once from a file.
-- [Choosing & Switching](/cms/switching): how people pick an organization when they sign in.
+- [Choosing & Switching](/cms/switching): how people pick an organization when they sign in, and switch between their roles.

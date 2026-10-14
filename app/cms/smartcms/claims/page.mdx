@@ -28,9 +28,9 @@ The claim types Medbot handles are:
 | 8. **Sending** | Medbot sends each queued claim to MHCP, or to CPF for Medisave. | Automatic. |
 | 9. **Tracking** | Medbot follows MHCP's or CPF's status until the claim is paid or closed. Staff can ask for the status at any time. | Automatic. Clinic Admin, Receptionist and Doctor can see the queue and refresh a CHAS claim. Only a Clinic Admin or Receptionist can check CPF. |
 | 10. **Following up with CPF** | Medbot flags a Medisave claim CPF has not answered for 20 days. Staff match or dismiss messages from CPF that match no claim, and check that CPF's payment files tie out. | Clinic Admin or Receptionist. |
-| 11. **Corrections** | Only when something was wrong: a rejected CHAS claim is appealed, a Medisave claim is amended or cancelled, or the bill is voided and corrected. | Clinic Admin or Doctor appeals. Clinic Admin or Receptionist amends, cancels and voids. |
+| 11. **Corrections** | Only when something was wrong: a rejected CHAS claim is appealed, a claim MHCP rejected is resubmitted, a Medisave claim is amended or cancelled, or the bill is voided and corrected. | Clinic Admin or Doctor appeals. Clinic Admin resubmits. Clinic Admin or Receptionist amends, cancels and voids. |
 
-The [claims agent](/cms/smartcms/claims-agent) can also prepare claims every evening, and staff can ask it to prepare today's claims on demand.
+The [claims agent](/cms/smartcms/claims-agent) can also prepare claims every evening, and staff can ask it to prepare today's claims on demand. **Claims today** shows each patient's bill, claims and what they owe, one clinic day at a time.
 
 ## Who can do this
 
@@ -42,12 +42,14 @@ The [claims agent](/cms/smartcms/claims-agent) can also prepare claims every eve
 | Record a developmental screening (CDS) | Yes | No | Yes | No |
 | Bill a visit and choose its claims | Yes | Yes | No | No |
 | Check a Medisave payer | Yes | Yes | No | No |
-| See the **Claims** queue | Yes | Yes | Yes | No |
+| See the **Claims** queue and **Claims today** | Yes | Yes | Yes | No |
+| See what patients paid on **Claims today** | Yes | Yes | No | No |
 | Submit, re-prepare or discard a claim; resolve notes for staff | Yes | Yes | No | No |
 | Run the claims agent | Yes | Yes | No | No |
 | Amend or cancel a Medisave claim; check CPF payments | Yes | Yes | No | No |
 | Match or dismiss a message from CPF that matches no claim | Yes | Yes | No | No |
 | Appeal a rejected CHAS claim | Yes | No | Yes | No |
+| Resubmit a claim MHCP rejected | Yes | No | No | No |
 
 ## 1. Check-in and CHAS verification
 
@@ -143,11 +145,11 @@ A claim with gaps is **held** as **Waiting for review**, with each problem liste
 
 Fix the cause, then select **Re-prepare** on the claim. If any one Screen for Life claim on a visit is held, the visit's whole Screen for Life batch waits.
 
-A daily check at 02:30 (Singapore time) picks up any issued bill from the past week whose claims were not prepared.
+A daily check at 02:30 (Singapore time) picks up any issued bill from the past week whose claims were not prepared. Where the agent policy is on, the nightly [claims agent](/cms/smartcms/claims-agent) run also prepares any vaccination or CDS subsidy claim that was missed, including on bills already paid.
 
 ## 5. The Claims queue
 
-**SmartCMS → Claims** (`/claims`) lists every claim for the organisation, newest activity first. The page says which modules it covers and that "MHCP status is checked every four hours during the day." With Medisave, it also links to **Medisave payments from CPF**.
+**SmartCMS → Claims** (`/claims`) lists every claim for the organisation, newest activity first. The page says which modules it covers and that "MHCP status is checked every four hours during the day." Below that, **Claims today** opens the [day view](#claims-today). With Medisave, Clinic Admins and receptionists also see a link to **Medisave payments from CPF**.
 
 From top to bottom, the page shows:
 
@@ -162,7 +164,7 @@ From top to bottom, the page shows:
 | **Status** | Where the claim stands. See below. |
 | **Paid** | The amount paid and the date. |
 
-**Needs attention** collects claims that are waiting for review, were refused or not confirmed, are parked because a location was switched off, were paid short by Medisave, have had no answer from CPF for 20 days, or that MHCP or CPF rejected, recovered or returned with an error.
+**Needs attention** collects claims that are waiting for review, were refused or not confirmed, are parked because a location was switched off, were paid short by Medisave, have had no answer from CPF for 20 days, or that MHCP or CPF rejected, recovered or returned with an error. A rejected claim leaves the list once it is resubmitted, and comes back if its resubmission is discarded.
 
 ### Actions on a claim
 
@@ -170,11 +172,12 @@ From top to bottom, the page shows:
 | --- | --- |
 | **Submit** | A prepared claim with no problems. |
 | **Submit all prepared: … at …** | Every prepared claim for one module at one location. Held claims are left for review: "… claim(s) held with issues were left for review." |
-| **Re-prepare** | A held CHAS claim, after you fix the cause. The result says it is ready to submit, or still held and why. |
+| **Re-prepare** | A held CHAS claim, after you fix the cause. The result says it is ready to submit, or still held and why. Not offered on a resubmission. |
 | **Discard** | Any claim not yet sent. You are asked "Why is this claim being discarded?" |
 | **Refresh status** | A sent CHAS claim. Asks MHCP for its status now. |
 | **Check CPF now** | A sent Medisave claim. If nothing is back yet: "CPF has not answered this claim yet. Medbot checks again on its own." |
 | **Appeal** | A CHAS claim MHCP rejected. See [Appealing a rejected CHAS claim](#appealing-a-rejected-chas-claim). |
+| **Resubmit** | A CHAS, PHPC, Screen for Life, vaccination or CDS claim MHCP rejected. Clinic Admins only. See [Resubmitting a rejected claim](#resubmitting-a-rejected-claim). |
 | **Amend** and **Cancel with CPF** | A Medisave claim. See [Amending or cancelling a Medisave claim](#amending-or-cancelling-a-medisave-claim). |
 
 Claims the agent prepared but nobody submitted within 7 days are discarded as "Not submitted within 7 days".
@@ -196,17 +199,56 @@ Before MHCP or CPF decides on it, a claim shows where it is in sending:
 
 After that, the status is MHCP's or CPF's own, with its code and description. MHCP statuses include **Submitted**, **Approved**, **Rejected**, **Appealed**, **Paid**, **Recovered** and **Cancelled**. A claim rejected again after an appeal shows **Rejected after appeal**. A Medisave claim that CPF paid less than claimed shows **Approved with shortfall**, and the patient owes the difference. A Medisave claim CPF has not answered shows **No answer from CPF** after 20 days and **No answer from CPF: urgent** after 25. See [When CPF does not answer](#when-cpf-does-not-answer).
 
+A few more statuses come from Medbot itself:
+
+| Status | Meaning |
+| --- | --- |
+| **Rejected, resubmitted** | MHCP rejected the claim and an admin resubmitted it. The resubmission is its own row, marked **Resubmission 1** (then 2, and so on), and carries the live status. |
+| **No answer from CPF** | CPF has not answered a Medisave claim 20 days after it was sent. See [When CPF does not answer](#when-cpf-does-not-answer). |
+| **No answer from CPF: urgent** | Still no answer 25 days after it was sent. |
+
+### Claims today
+
+**Claims today** (`/claims/today`) shows every patient checked in at one clinic location on one day: their bill, the status of each claim on it, and what they still owe. Open it with **Claims today** on the **Claims** page. It is read only: work claims in the queue, bills in [Billing](/cms/billing), and payments at the [reception queue](/cms/reception-queue).
+
+Choose the **Clinic** and the **Date**. It opens on today at the organisation's default location. For an earlier day the heading reads **Claims by day**. The page refreshes itself every 20 seconds.
+
+Tiles at the top total the day: **Patients billed**, **Claimed**, **Approved so far**, **Cash due**, **Cash collected** and **Need attention**. Filter the rows by **All**, **Needs attention**, **Awaiting payer**, **Settled** or **No claim**.
+
+| Column | What it shows |
+| --- | --- |
+| **#** | The queue ticket. |
+| **Patient** | The patient's name. |
+| **Bill** | The bill's total. |
+| **Claims** | Each claim on the bill, such as **CHAS ACT**, **VSS**, **CDS**, **Screen for Life**, **Medisave** or **Medisave amendment**, with its amount and status. Select one to open the queue. |
+| **Patient pays** | What the patient owes. "est." marks a figure that can still change. |
+| **Paid** | What the patient paid and how, for example "$20.00 · PayNow", or **Unpaid**, "owes …", "overpaid …", **Nothing to pay** or **Paid (amount not recorded)**. |
+| **Status** | **Needs attention**, **Awaiting payer**, **Settled**, **No claim** or **Not billed yet**. |
+
+Doctors see the page without the **Paid** column and the **Cash collected** tile.
+
+To take a balance for one of today's patients, use **Take payment** in the [Reception Queue](/cms/reception-queue#taking-payment). Its dialog starts from the same owed figure as **Patient pays**.
+
+**What the patient owes.** The bill's cash due assumes each scheme pays its share. **Patient pays** adds back whatever a payer refused or paid short, and the share of any claim staff discarded, because no payer will pay it. A claim that can no longer be sent counts as refused. A claim MHCP is still deciding, or that is under appeal, being cancelled or recovered, is not counted against the patient yet: the figure is marked "est.". A claim whose answer was lost (**Not confirmed**) is never charged to the patient. It shows as needing attention until staff find out what happened. For Medisave, only the submission in force counts, so an amendment or cancellation CPF accepted replaces the first claim's amount. The note under the table says: "“est.” marks an amount a payer has not answered yet: it changes if the payer approves less than was claimed."
+
+A visit **Needs attention** when one of its claims needs attention in the queue, a payer refused or paid short, or a claimed subsidy was discarded. It is **Awaiting payer** while any payer has yet to answer, and **Settled** once they all have.
+
+Select the arrow on a row to see its bill: the **Bill total** and receipt number, each claim taken off it with its status and reference ("payer approved …" when that differs from the claim), and **Patient pays in cash**. Lines below explain any difference, for example "Includes $… the payer did not approve." or "Includes $… of a subsidy whose claim was discarded: no payer will pay it." Then each payment, with its method, reference and time. A visit with no bill says "This visit has no bill yet."
+
+If nobody checked in: "No patients were checked in here on this day." If the day cannot be read: "Could not load the day’s claims. Try again in a moment."
+
 ## 6. Sending and tracking
 
 - **CHAS.** Medbot checks MHCP for each CHAS claim's status every four hours between 08:00 and 20:00 (Singapore time). It checks every run for the first 14 days, then daily, then weekly after 60 days. It stops once a claim is paid, finally rejected or cancelled, and keeps watching paid claims for audit recovery.
-- **Medisave.** CPF answers through files rather than at once. Medbot collects CPF's advice at 09:00, 13:00 and 18:00 and its payment files at 10:00, Monday to Friday.
+- **Medisave.** CPF answers through files rather than at once. Medbot collects CPF's advice at 09:00, 13:00 and 18:00 and its payment files at 10:00, Monday to Friday. Each answer is matched to its claim by the claim's HRN, submission type and the date and time it was sent.
+- **Medisave claims CPF has not answered.** CPF keeps its answer for 30 days only, so Medbot flags a Medisave claim still waiting 20 days after it was sent. See [When CPF does not answer](#when-cpf-does-not-answer).
 - **A location switched off.** If an admin switches a module off at a location, its claims are parked and nothing is sent.
 
 ### Medisave payments
 
 **Medisave payments** (`/claims/medisave-payments`) shows the payment files CPF sent in the last 60 days: payment detail, summary and GIRO letter. For each file you see whether it was applied, how many records it held, its total, the claims it paid, and whether the totals tie out. **Check CPF payments now** collects new files immediately. If none arrived: "No payment files from CPF in the last 60 days."
 
-The tie-outs compare CPF's summary with its payment detail for each kind of submission: first submissions, amendments and cancellations. A refund shows as a negative amount. A line starts with ✓ when the two agree and ✗ when they differ, with "off by" and the difference. A kind that appears in only one of the two files shows as a difference.
+Each day's tie-outs compare CPF's summary with its payment detail for every kind of submission the files name: first submissions (`FS`), then amendments (`AM`) and cancellations (`CA`), whose refunds are negative. Each line shows ✓ when the figures agree, or ✗ and "off by" the difference. A submission type that appears in only one of the two files shows as a difference.
 
 ### When CPF does not answer
 
@@ -217,18 +259,24 @@ CPF keeps its answer to a Medisave claim for 30 days only. Medbot checks every h
 | 20 days | **No answer from CPF** | Under **Needs attention** in the Claims queue. |
 | 25 days | **No answer from CPF: urgent** | Under **Needs attention** in the Claims queue. |
 
-Each stage raises one alert, not one every hour. Select **Check CPF now** on the claim to collect the answer. The flag clears as soon as CPF answers, whatever the answer. Nothing more happens after 30 days: the claim stays flagged as urgent until someone resolves it with CPF.
+The claim reads "CPF has not answered this Medisave claim 20 days after it was sent, and keeps its answer for 30 days only: check CPF now." At 25 days it adds "and ask CPF about the claim today". Each stage raises one alert, not one every hour. Select **Check CPF now** on the claim to collect the answer, and look for it under [Messages from CPF that match no claim](#messages-from-cpf-that-match-no-claim). The flag clears as soon as CPF answers, whatever the answer. Nothing more happens after 30 days: the claim stays flagged as urgent until someone resolves it with CPF.
 
 ### Messages from CPF that match no claim
 
-Sometimes CPF sends a message Medbot cannot tie to a claim, for example an answer to a claim sent through another system, or one that quotes a different submission date. Clinic Admins and Receptionists see these at the top of **Medisave payments**, under **Messages from CPF that match no claim**. The section is hidden when there are none.
+Sometimes a message from CPF matches none of Medbot's claims, for example an answer to a claim sent through another system, or one where CPF echoed a different submission date. These appear at the top of **Medisave payments** under **Messages from CPF that match no claim**: "Match each to the claim it answers, or dismiss it if the claim was not sent from Medbot. CPF keeps a message for 30 days." The section is hidden when there are none.
 
-Each row shows the message type (claim advice or error notice), the clinic location, the date it arrived, the claim reference, CPF's answer and the amount paid.
+| Column | What it shows |
+| --- | --- |
+| **Message** | **Claim advice (CPFADV)** or **Error notice (ERRMSG)**, the clinic location and the day it was received. |
+| **Claim reference** | For an advice, the HRN, submission type and when the claim was sent. For an error notice, the reference of the message CPF refused. |
+| **CPF's answer** | CPF's status, for example **Approved**, **Pending with CPF** or **Rejected by CPF** (an error notice reads **Refused by MediClaim**), and the amount paid. |
+| **Action** | Match or dismiss. |
 
-- **Match.** Under **Choose the claim it answers**, pick the claim and select **Match**. Medbot applies CPF's answer to the claim exactly as if it had matched on its own, and the Claims queue updates. Only claims that could be the right one are offered: Medisave claims sent from the same clinic location, and for a claim advice, only those sent under the same reference. If none qualifies, the row says "No claim sent from here could be its claim."
-- **Dismiss.** Select **Dismiss** when the claim was not sent from Medbot. The message is kept but no longer listed. A dismissal cannot be undone.
+1. Under **Choose the claim it answers**, pick the claim. Each choice shows the HRN, submission type, when it was sent and the amount. An advice offers only the claims sent from that location under its HRN and of the same submission type. If none fits: "No claim sent from here could be its claim."
+2. Select **Match**. CPF's answer is applied to the claim as if it had matched when collected, and the claim's status in the queue changes.
+3. Or select **Dismiss** if the message is not for a claim sent from Medbot. The message is kept, but leaves the list.
 
-Both actions are recorded in the audit log. If the answer cannot be applied at that moment, the message stays in the list so you can match it again.
+Medbot refuses a match that cannot be right, for example "The claim was sent from another clinic location." or "Choose a Medisave claim that has been sent to CPF." If the answer cannot be applied, the message stays on the list: "CPF’s answer could not be applied to the claim, so the message is still unmatched. Try again shortly." Every match and dismissal is audited.
 
 ## 7. Corrections
 
@@ -249,7 +297,22 @@ Clinic Admins and doctors can appeal a CHAS claim MHCP rejected. Receptionists c
 
 The appeal appears as its own row: **Appeal queued**, **Appeal submitted**, **Appeal refused**, **Appeal not confirmed** or **Appeal replaced**. Once MHCP accepts it, the claim shows as appealed and Medbot follows its status again.
 
-A claim can be appealed once. Medbot explains when it cannot: "This claim has already been appealed.", "MHCP does not accept an appeal for this rejection.", or "An appeal for this claim is already in progress." Screen for Life claims cannot be appealed.
+A claim can be appealed once. Medbot explains when it cannot: "This claim has already been appealed.", "MHCP does not accept an appeal for this rejection.", or "An appeal for this claim is already in progress." Screen for Life claims cannot be appealed. A claim that has been resubmitted cannot be appealed either.
+
+### Resubmitting a rejected claim
+
+When MHCP rejects a claim because something on it was wrong, a Clinic Admin can send a corrected claim instead of appealing. This works for any claim sent to MHCP: CHAS, PHPC, Screen for Life, vaccination (VSS) and CDS. It does not apply to Medisave, which is amended with CPF instead. Receptionists and doctors cannot resubmit, and the claims agent never does.
+
+1. If the rejection was about the bill, correct the bill first: void it with **Correct the bill** and bill the visit again. See [Voiding and correcting a bill](#voiding-and-correcting-a-bill).
+2. Select **Resubmit** on the rejected claim. Confirm "Resubmit this claim to MHCP from the visit’s current bill? Correct the bill first if the rejection was about it."
+3. Medbot prepares the claim again from the visit's current bill (the corrected one, if the bill was voided) as a new claim. You see "The corrected claim is queued for MHCP.", or, if something is still missing, "The corrected claim still has something to fix; it is waiting for review."
+
+The new claim appears as its own row marked **Resubmission 1**. The rejected claim stays in the queue as **Rejected, resubmitted**, keeping MHCP's rejection.
+
+- A held resubmission cannot be re-prepared. Fix the cause, **Discard** the resubmission, then select **Resubmit** on the rejected claim again.
+- Each rejection is either appealed or resubmitted, not both. **Resubmit** is not offered while an appeal is under way: "An appeal for this claim is in progress; wait for MHCP’s answer."
+- Only a rejected claim can be resubmitted: "Only a claim MHCP rejected can be resubmitted; MHCP has no cancellation for any other."
+- If the visit's bill no longer carries the claim: "The visit’s bill no longer carries this claim. Correct the bill with the claim on it, then resubmit." If the visit has no issued bill: "The visit has no issued bill. Bill the visit again with the correction, then resubmit."
 
 ### Amending or cancelling a Medisave claim
 
@@ -267,6 +330,8 @@ Choose **Correct the bill** to bill the visit again. The new invoice replaces th
 - A Medisave claim is cancelled with CPF, or withdrawn if it was not yet sent.
 - A CHAS, Screen for Life, vaccination or CDS claim not yet sent is withdrawn.
 - A claim already sent to MHCP cannot be withdrawn by Medbot. A note for staff says to cancel it in the MHCP portal, then resubmit the corrected claim. Once MHCP reports it cancelled, the corrected bill can be claimed.
+- A claim MHCP rejected needs no cancellation. Once the corrected bill is issued, a Clinic Admin selects **Resubmit** on the rejected claim (see [Resubmitting a rejected claim](#resubmitting-a-rejected-claim)), then resolves the note.
+- Billing a visit again never changes a claim that has already been sent. The corrected bill reaches MHCP only through a new claim.
 
 The Invoices table marks the new invoice "Corrects …" and the old one "Voided for correction". An invoice marked as paid cannot be voided. See [Billing](/cms/billing#voiding-and-correcting-a-bill).
 

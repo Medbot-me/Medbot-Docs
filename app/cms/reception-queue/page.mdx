@@ -11,14 +11,15 @@ The reception queue is today's list of booked and checked-in patients at one cli
 | See today's queue | Yes | Yes | View only | View only |
 | Check a patient in | Yes | Yes | No | No |
 | Call a patient to a room | Yes | Yes | No | No |
-| Route a patient to a stage, or mark payment | Yes | Yes | No | No |
+| Route a patient to a stage | Yes | Yes | No | No |
+| Take payment, void a payment, or mark the visit paid | Yes | Yes | No | No |
 | Assign or change the doctor | Yes | Yes | No | No |
 | Cancel an appointment, mark a no-show, or reopen | Yes | Yes | No | No |
 | Arrange a session for the patient | No | No | Yes | No |
 | Complete the visit and send the outcome | No | No | Yes | No |
 | See the CHAS badge and select **Verify now** (Singapore) | Yes | Yes | Yes | Yes |
 
-Doctors see only the patients assigned to them. Nurses see every patient at the location and open the vitals form from their own view. The **Arrange session** and **Complete visit** buttons appear on a doctor's row only after a consultation has been started for that appointment.
+Doctors see only the patients assigned to them. Nurses see every patient at the location and open the vitals form from their own view. Doctors and nurses do not see the **Bill** column or any payments. The **Arrange session** and **Complete visit** buttons appear on a doctor's row only after a consultation has been started for that appointment.
 
 ## Reading the queue
 
@@ -31,7 +32,7 @@ The table lists patients in this order:
 3. Patients who are booked but have not arrived, by appointment time.
 4. Completed and cancelled visits, at the bottom.
 
-Each row shows the ticket, the time, the patient, the reason, the doctor, the workflow controls, and the status.
+Each row shows the ticket, the time, the patient, the NRIC or passport, the reason, the doctor, the workflow controls, the **Bill**, and the status. On a narrow screen some columns, including **Bill**, are hidden. Turn them on from the **View** menu.
 
 | Status | What it means |
 | --- | --- |
@@ -95,11 +96,76 @@ A message such as "Called MAIN001 to Consult 1" appears, and the row shows **Cal
 
 Use the doctor menu on the row to change the doctor. A doctor chosen by hand shows **Manual**. A doctor chosen by the rotation shows **Auto-rotated**.
 
-## Routing a patient and marking payment
+## Routing a patient
 
 The **Route…** menu on a checked-in row moves the patient through the clinic: **Nurse**, **Doctor**, **Investigations**, **Dispensary**, **Completed**. Use it to show where the patient is. The nurse's own view shows a patient routed to the nurse as **Vitals now**, and a patient routed on to the doctor as **Ready for doctor**.
 
-Select **Mark paid** to record that the patient has paid. The button then reads **✓ Paid**. Select it again to undo it.
+## Taking payment
+
+Take payment from the **Bill** column. It has a button on rows that are **Waiting**, **Consultation**, or **Done**, so a patient can pay on the way out after the doctor has finished. **Done** rows are hidden by default; set the status filter to **All** to see them. The button reads **Take payment** until the visit is paid, then **✓ Paid**.
+
+1. Select **Take payment** (or **✓ Paid**) on the patient's row. The **Payment from** dialog opens with the patient's name.
+2. Check what is owed. See [What the patient owes](#what-the-patient-owes).
+3. Check the **Amount**, which is in the bill's currency, for example **Amount (SGD)**. It starts at what is still owed. Change it if the patient pays only part of it now.
+4. Choose the **Method**: **Cash**, **PayNow**, **NETS**, **Card**, or **Other**.
+5. For any method other than cash, you can enter a **Reference (optional)**, such as the slip or transaction number (up to 64 characters).
+6. Select **Record payment**.
+
+If the payments now cover what is owed, the dialog closes and the row shows **✓ Paid**. Otherwise the dialog stays open, says "Payment recorded.", lists the payment, and shows what is **Still owed**. Take the rest the same way, now or later.
+
+Enter what the patient pays towards the bill, not the note they hand over. If the amount is more than is owed, the dialog warns, for example, "$5.00 more than is owed. Enter what is paid towards the bill; change handed back is not part of the payment." You can still record it, and the dialog then shows the visit as **Overpaid**. An amount that is not a number, is zero, or is too large shows "Enter an amount such as 41.50, up to $1,000,000.00."
+
+Each payment is listed with its amount, method, reference, the time, and who recorded it. Taking payment does not print a receipt. For a receipt, print the visit's invoice from [Billing](/cms/billing#finding-and-reprinting-invoices).
+
+### What the patient owes
+
+The top of the dialog sets out what the patient owes on the visit's bill:
+
+| Line | Meaning |
+| --- | --- |
+| **Cash due on the bill** | The bill's **Patient pays (cash)** amount. It reads **No bill yet** if the visit has not been billed, or **Could not be read** if the bill could not be read just now. |
+| **Payers refused or paid short** | What a payer refused or paid less than the claim asked for. Only shown when there is some. |
+| **Subsidy whose claim was discarded** | A subsidy the bill counted on, whose claim staff discarded. Only shown when there is some. |
+| **Marked paid before amounts were recorded** | For a visit marked paid before payments were recorded with amounts, the cash due is counted as already paid. |
+| **Paid so far** | The total of the payments taken, not counting voided ones. |
+| **Still owed** or **Overpaid** | The difference. Not shown when it is zero. |
+
+While a payer has not yet answered a claim on the bill, the subsidy is assumed to be paid and the dialog says "A payer has yet to answer a claim on this bill, so what is owed may still change."
+
+In Singapore, **Claims today**, opened from the claims queue, shows the same figure for each checked-in patient at a location. See [SmartCMS Claims](/cms/smartcms/claims).
+
+### When the visit is marked paid
+
+Medbot marks the visit paid itself when the payments cover what is owed on an issued bill. Payments alone never mark a visit paid without a bill to compare them with.
+
+- **No bill yet.** A payment can be taken before the visit is billed, for example a deposit. It is kept, but the visit is not marked paid: "Payment recorded. This visit has no bill yet, so it is not marked paid. It can be marked paid once the bill is issued and the payments cover it."
+- **Bill could not be read.** The payment is kept and the paid status is left as it was. The dialog says so, for example "Payment recorded. The bill could not be read just now, so the visit is not marked paid: check it once the bill can be read." Open the dialog again later.
+- **Payments already cover the bill.** When the bill is issued after the patient paid, or the bill leaves nothing for the patient to pay (for example, a scheme pays it in full), the dialog says "The payments taken already cover the bill." or "Nothing is due on this bill." Select **Mark visit paid**. It is refused if the payments do not cover the bill, for example "The payments taken do not cover the bill: SGD 12.00 is still owed."
+
+The paid status is checked again only when someone records or voids a payment, or selects **Mark visit paid**. If a payer refuses a claim after the visit was marked paid, the row still shows **✓ Paid**. Open the dialog to see whether anything is still owed.
+
+### Voiding a payment
+
+A payment cannot be edited. If one was entered wrongly, void it and enter it again.
+
+1. Open the dialog and select **Void** on the payment.
+2. Optionally enter a **Reason (optional)** (up to 200 characters).
+3. Select **Void payment**, or **Keep** to leave it.
+
+The dialog says "Payment voided." The payment stays in the list, struck through, with who voided it and the reason. If the payments left no longer cover what is owed, the visit goes back to unpaid. Any Receptionist or Clinic Admin can void any payment.
+
+### Payment messages
+
+| Message | What to do |
+| --- | --- |
+| "This payment was already recorded, so it was not entered a second time." | Nothing. Recording the same payment again, for example after a slow connection, does not enter it twice. |
+| "This payment was already entered and has since been voided. Check the visit’s payments, then enter it again if it should stand." | Check the list, then enter the payment again if it is needed. |
+| "This payment attempt was already used for a different payment. Close the window and enter the payment again." | Close the dialog, open it again, and enter the payment. |
+| "This visit’s bill is in SGD; a payment cannot be in USD." | Payments must be in the bill's currency. Close the dialog and open it again. |
+| "This payment was not found, or is already voided." | Close the dialog and open it again to see the current list. |
+| "This visit has no bill yet, so there is nothing to settle the payments against." | Generate the invoice in [Billing](/cms/billing), then select **Mark visit paid**. |
+| "The bill could not be read just now. Try again in a moment." | Try again later. |
+| "No visit found for this appointment — it may not be in today’s queue yet." | Check the patient in first. |
 
 ## Cancelling, marking a no-show, and reopening
 
@@ -110,7 +176,7 @@ The patient leaves the active queue. To find the row again, set the status filte
 
 ## What the doctor and nurse see
 
-A doctor opens **Today's Patients**. Each row has **Start consultation**, which opens the patient's chart at **Encounters** for that appointment, or **Continue consultation** once one has started. If the visit already has an open encounter, Medbot reuses it rather than starting a second. See [Encounters & Clinical Notes](/cms/encounters). A nurse opens **Today's Queue**, and the **Vitals** button on each row opens the vitals form. See [Vitals](/cms/vitals). Neither role can check patients in, change the doctor, or call a room.
+A doctor opens **Today's Patients**. Each row has **Start consultation**, which opens the patient's chart at **Encounters** for that appointment, or **Continue consultation** once one has started. When the doctor starts the encounter there, the **Start Encounter** dialog says "Create a new encounter for this patient's visit in today's queue." The encounter is linked to that exact queue appointment, which moves the row to **Consultation** and shows **Complete visit**. If the visit already has an open encounter, Medbot reuses it rather than starting a second. A finished visit's row shows **Review** instead. An encounter started later from that chart is not added to the finished visit. It goes to the patient's open visit in the queue, if they have one. See [Encounters & Clinical Notes](/cms/encounters). A nurse opens **Today's Queue**, and the **Vitals** button on each row opens the vitals form. See [Vitals](/cms/vitals). Neither role can check patients in, change the doctor, or call a room.
 
 ## Arranging a session and completing the visit
 

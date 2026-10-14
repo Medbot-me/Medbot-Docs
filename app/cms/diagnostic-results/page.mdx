@@ -15,6 +15,13 @@ Diagnostic results are laboratory and imaging reports that reach the clinic. Fin
 | Withdraw a misfiled result | Yes | No | Yes | No |
 | Change the results review rota | Yes | No | No | No |
 | See the results review rota | Yes | View only | View only | View only |
+| Draft and edit a result explanation | No | No | Yes | Yes |
+| Approve, send, or withdraw a result explanation | No | No | Yes | No |
+| Withdraw an explanation whose result was withdrawn | Yes | No | Yes | No |
+| Open and print an approved explanation | Yes | Yes | Yes | Yes |
+| Open the explanation library and edit wording | Yes | No | Yes | No |
+| Approve or retire library wording | No | No | Yes | No |
+| Load the starter wording into the library | Yes | No | No | No |
 
 Any doctor can sign off any result, whoever it was routed to. Routing only decides whose list a result appears in first.
 
@@ -57,6 +64,8 @@ Anyone who works at the front desk or the clinic floor can file a result. Filing
 _Values keyed in from a full blood count panel_
 
 You must attach a report, key in at least one value, or both. A single report can carry up to 60 values.
+
+A paper report already photographed into the patient's **Photos** can be filed from there instead. Open the photo and select **File as result**. The pages appear under **Photographed report (n pages)** in place of **Scanned report**, and the result shows a **Page 1 of 3** link for each page. A photo filed as a result cannot be voided until the result is withdrawn. See [Clinical Photos](/cms/clinical-photos#filing-a-paper-report-as-a-result).
 
 ### Values and interpretation
 
@@ -110,6 +119,164 @@ A Clinic Admin or a doctor can reassign a result that still needs review. Open i
 
 To withdraw a result filed by mistake, open it, select **Withdraw**, and give a reason under "Why is this result being withdrawn?". Then select **Confirm withdrawal**. A withdrawn result no longer appears in the inbox. Its open review and follow-ups are cancelled. It stays on the patient's chart with the reason, for the audit trail.
 
+Withdrawing a result also withdraws any approved explanation of it. If Medbot cannot do this straight away, you see: "The result is withdrawn, but Medbot could not be told just now, so an explanation already sent to the patient may still be live. Open the patient's results and withdraw it from the Explanations list." See [Withdrawing an explanation](#withdrawing-an-explanation).
+
+## Explaining results to the patient
+
+A doctor or nurse can draft a plain-language explanation of one or more results for the patient. Medbot drafts it with AI from the result values and your input. A doctor reads it, fixes any checks, and approves it. Nothing reaches the patient until a doctor approves it and then sends it to Medbot Health or prints it.
+
+### Starting a draft
+
+Use one of these:
+
+- **From one result.** Open the result and select **Explain to patient**. If you are a doctor and the result is not signed off, the **Sign off** window opens first. Fill it in and select **Sign off and explain**. What you wrote under **What the patient will read (optional)** becomes the key message, and a recall, repeat test, or referral becomes the follow-up.
+- **From several results.** In the **Results** section of the patient's chart, tick the results and select **Explain selected**. One explanation can cover up to 20 results.
+
+The button shows **Drafting…** while the draft is written. The explanation page then opens.
+
+A nurse can draft for a result that is not signed off yet. A doctor must sign it off before the explanation can be approved.
+
+If a result you picked already has an explanation, the window "This result already has an explanation" opens. Select **Open it** to see it, or **Start a revision** to change it.
+
+### The explanation page
+
+The page is titled **Explain results to the patient**. It shows the results covered and the AI model the draft was written with. On the left are:
+
+- **Lab values**: the values and ranges the explanation is built from.
+- **Your input**: what you want the patient to take away.
+
+| Field | What it does |
+| --- | --- |
+| **Key message** | What the patient should take away. The draft explains it and never contradicts it. Up to 500 characters. |
+| **Plan** | Medicines, tests, or actions you decided. Select **Add plan item** for each one. |
+| **Follow-up** | **No follow-up**, **Repeat the test**, **Come back for a review**, or **See a specialist or service**, with a date and an optional note for the patient. |
+| **Languages** | English is always included. Tick **Chinese (Simplified)** to add a computer translation. |
+| **Reading level** | **Simple (about age 12)** or **Standard**. |
+| **Include** | **Tailor to the patient's conditions** (sends their active condition names to the drafting model), **Lifestyle advice**, and **Trend over time** (compares with earlier results of the same test). |
+
+On the right is the document, in sections such as **Summary**, **Your results**, **What this test measures**, **What this means for you**, **What happens next**, and **When to get help sooner**. Each section shows where its wording came from:
+
+| Label | Meaning |
+| --- | --- |
+| **AI draft** | Written by the drafting model. Read it before approving. |
+| **Library v2** (for example) | Approved wording from the [explanation library](#the-explanation-library), used as written. |
+| **Edited by you** | Wording a doctor or nurse changed. |
+| **Built from the lab values** | The **Your results** table. It cannot be edited. |
+
+### Editing the draft
+
+For each section you can:
+
+- Select **Edit**, change the text, then **Done**.
+- Select **Regenerate…** to rewrite that section only. You can add an **Instruction (optional)**, such as "simpler, shorter, mention diet". This replaces any edits you made to the section.
+- Select **Use library version** to replace the section with approved library wording. If the library has a newer version, the button reads **Update to latest library version**.
+- Select **Save to library** to offer the English wording to the library as a draft. Do not save wording that names the patient or quotes their values.
+
+If you change your input, select **Save draft**. The bottom bar shows **Unsaved changes** or **All changes saved**. To delete the draft, select **Discard draft**. The results stay as they are.
+
+To see the printed version, select the **Preview PDF** tab. The preview is the saved draft, marked PREVIEW. Save your changes first to see them in it.
+
+### Translations
+
+Each language has a tab. Select **Add Chinese (Simplified)** to add it. If the patient's record lists Chinese as a language, the button is highlighted. A number on a language tab shows sections that still need translating. Select **Translate 1 section** (or more) to bring them up to date. Each translated section is marked **Machine translation**, **Out of date**, or **Not translated**.
+
+### Checks
+
+Medbot checks every draft and lists what it finds at the top and on each section. For example, it flags a number that is not a result value or from your plan, an abnormal result the text does not mention, reassuring wording about an abnormal result, a dose your plan does not give, a follow-up date that differs from the sign-off, or text that reads above the chosen level.
+
+| Badge | What to do |
+| --- | --- |
+| **Fix before approval** | Edit the text, or select **Keep, it's correct**, give a reason, and select **Keep**. |
+| **Needed first** | Fix the cause, for example sign off the result. You cannot keep it. |
+| **Check** | Read it. It does not stop approval. |
+| **Note** | For information only. |
+| **Kept** | You kept it with a reason. The reason is recorded when the explanation is approved. |
+
+If a result is not signed off, a doctor can select **Sign off** on the check itself. A nurse sees "A doctor needs to sign this result off."
+
+### Approving
+
+Only a doctor can approve. Select one of:
+
+- **Approve**: saves the PDF to the patient's chart.
+- **Approve & print**: approves, then opens the print dialog.
+- **Approve & send**: approves, then sends it to the patient in Medbot Health.
+
+If approval is not possible yet, the bottom bar says why after "Approve is not available yet:". For example, the result needs signing off, checks need fixing or keeping, changes need saving, or your account has no clinician profile. A nurse sees "A doctor approves explanations."
+
+If the document includes a computer translation, tick the statement "I approve the English text. I understand the Chinese (Simplified) text is a computer translation of it, and the document will say so." before you approve.
+
+After approval the page shows who approved it and when, and a **Version code** that is printed in the footer of the PDF. The PDF also appears in the patient's **Documents** as a **Result explanation**. Any staff member can open or print it there.
+
+### Sending and printing
+
+On an approved explanation, a doctor can select **Send to Medbot Health**. To also send a text message, tick "Also text the patient that it is ready. Sent only if they have agreed to text messages." The patient is notified in Medbot Health and can read it once their account is linked to the clinic.
+
+Select **Print** to print the stored PDF and hand it to the patient. Select **Open PDF** to open it in a new tab.
+
+Sending is refused, but printing still works, when:
+
+- The result is critical and Medbot Health holds it back after the sign-off. Print the explanation and give it to the patient in person.
+- A result in the explanation is not signed off.
+- A result in the explanation was withdrawn. You cannot print this one either. Withdraw the explanation.
+
+While it sends, the page lists each step and updates by itself. If sending stops, the page shows **Not finished** with the step that failed. A doctor can select **Retry** to continue where it stopped.
+
+### Statuses
+
+The explanation's status shows next to its title and in the **Explanations for the patient** list in the patient's **Results** section.
+
+| Status | Meaning |
+| --- | --- |
+| **Draft** | Being written. Only doctors and nurses can see it. |
+| **Approved** | Approved and saved to the chart, but not sent or printed. |
+| **Sent to Medbot Health** | The patient can read it in Medbot Health. |
+| **Printed** | Approved and printed. |
+| **Withdrawn** | Taken back. It can no longer be opened or printed. |
+| **Delivery unfinished** | Sending, approving, or withdrawing did not finish. Open it and select **Retry**. |
+| **Result withdrawn** | A result it covers was withdrawn as entered in error. It must be withdrawn. |
+
+Doctors and nurses select **Continue** or **Open** in the list to go to an explanation. Other staff see only approved explanations in the list. They open them from the patient's **Documents**.
+
+### Changing an approved explanation
+
+An approved explanation cannot be edited. Select **Start a revision** to make a new draft version. If the earlier version was sent, the patient keeps reading it until you send the revision, which then replaces it.
+
+### Withdrawing an explanation
+
+A doctor can withdraw an approved explanation. Open it, select **Withdraw**, and answer "Why is it being withdrawn?". Then select **Withdraw**. The explanation can no longer be printed, and its chart record is marked as entered in error. If it was sent, the patient's copy in Medbot Health is withdrawn too. To correct it instead, start a revision.
+
+If a result was withdrawn but its explanation is still live, the **Explanations for the patient** list says so. A doctor or a Clinic Admin can select **Withdraw** on that row.
+
+### Messages you may see
+
+| Message | What to do |
+| --- | --- |
+| These results have no individual values to explain yet. | Key in the result values first. |
+| A result that was withdrawn as entered in error cannot be explained. | Choose another result. |
+| Your organisation has run out of AI credits, so this could not be written. Ask an administrator to add credits. | Ask a Clinic Admin to add credits. |
+| The drafting service did not return a usable draft, so nothing was created. Try again in a moment. | Try again. Nothing was saved. |
+| Drafting explanations for patients is limited to doctors and nurses. | Ask a doctor or nurse to draft it. |
+| The PDF cannot print some of the text | Edit the wording it names, save the draft, and try again. |
+| Delivery of an earlier version of this explanation is not finished yet. | Open the earlier version and select **Retry**. |
+
+## The explanation library
+
+The library holds approved wording that explanations reuse as written, without asking the drafting model. It covers three sections for each test: **What the test measures**, **When to get help sooner**, and **Looking after yourself**, in English and Chinese. Clinic Admins and doctors find it at **Patients → Explanation library** (`/explanation-library`).
+
+Medbot supplies starter wording for each test. It has not been reviewed by a clinician, so it shows as **Unreviewed draft** and explanations do not use it. If no starter wording is loaded, a Clinic Admin sees **Load starter wording**.
+
+To make wording your clinic's own:
+
+1. Filter by **Topic**, **Language**, or **State**, then select **Open** on a row.
+2. On starter wording, select **Fork to edit**. This copies it into your clinic as a **Draft**.
+3. Select **Edit wording**, change the text, then **Save wording**.
+4. A doctor sets **Review by (optional)** and selects **Approve**. Without a date, the wording is due for review a year after approval.
+
+To write wording from scratch, select **New wording**. To change approved wording, select **New version**. Approving the new version replaces the one in use. To add Chinese, select **Translate to Chinese**. This saves a computer translation as a draft. A Clinic Admin or doctor who reads both languages can then tick "I read this translation against the English, and it says the same thing." and select **Record bilingual review**.
+
+Approved wording past its review date is marked **Due for review** and is still used. Tick **Due for review** to list only those. A doctor can select **Retire** to stop new explanations using wording.
+
 ## The review rota
 
 The rota decides who is responsible for results that arrive each day at one clinic location. Only a Clinic Admin sees the **Review rota** button on the results page. It opens `/results/roster`. Others can open the page by its address but cannot change it.
@@ -120,10 +287,11 @@ To change a day, select **Edit** beside it and tick the doctors. Each tick saves
 
 ## What the patient sees
 
-A patient sees nothing that reads like a conclusion until a doctor has signed the result off. A **Critical** flag is hidden from the patient after a recall, repeat test, or referral, so they hear it from a clinician first. The signed-off text appears as "What this means". See [Patient](/patient) for the patient's side.
+A patient sees nothing that reads like a conclusion until a doctor has signed the result off. A **Critical** flag is hidden from the patient after a recall, repeat test, or referral, so they hear it from a clinician first. The signed-off text appears as "What this means". A result explanation reaches the patient only after a doctor approves it and sends it to Medbot Health, or prints it. Drafts are never shown to the patient. See [Patient](/patient) for the patient's side.
 
 ## Related
 
 - [Patient Records & Consent](/cms/patient-records): the chart where results sit.
 - [Clinic Messaging](/cms/messaging): contacting a patient about a result.
+- [Documents & Certificates](/cms/documents-and-certificates): where approved explanations are kept in the chart.
 - [Roles & Permissions](/cms/roles-and-permissions): what each role can do across the CMS.

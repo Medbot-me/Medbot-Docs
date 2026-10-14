@@ -15,7 +15,7 @@ This page is for engineers working on the Medbot API. It describes how `apps/api
 | `apps/api/src/smartcms/outbox/` | The submission outbox, dispatch, the stale-submission sweep and the lost-invoice sweep. |
 | `apps/api/src/smartcms/events/` | Domain-event handlers and the gate every handler passes. |
 | `apps/api/src/smartcms/services/` | One folder per service family (`chas`, `cdmp`, `cidc`, `derom`, `mwh`, `nehr`, `nir`, `diagnoses`): mappers, report and claim services, controllers. |
-| `apps/api/src/smartcms/claims/` | The claims queue and CHAS claim status polling. |
+| `apps/api/src/smartcms/claims/` | The claims queue, CHAS claim status polling, re-preparing and resubmitting claims, and the claims day view with what each visit owes. |
 | `apps/api/src/smartcms/evidence/` | The encrypted message log and SIT evidence export. |
 | `apps/api/src/smartcms/entitlements/` | Per-location entitlements, the module guard and the entitlement sync. |
 | `apps/api/src/smartcms/settings/` | The API behind the SmartCMS settings page. |
@@ -154,7 +154,8 @@ The client throws only for local problems: SmartCMS is disabled, or the service 
 Every submission goes through `smartcms_submissions`. `SmartcmsSubmissionService` is the only write path, shared by staff screens, domain-event handlers, MCP tools and jobs.
 
 - **One live row per business key**, for example `chas:{encounterId}:ACT`, `nir:{immunizationId}` or `derom:{encounterId}:{disease}`. A replayed event or a second prepare finds the existing row. This is Medbot's layer of double-claim prevention.
-- **States:** `prepared`, `pending`, `dispatching`, `acknowledged`, `completed`, `failed_retryable`, `failed_terminal`, `outcome_unknown` and `cancelled`.
+- **States:** `prepared`, `pending`, `dispatching`, `acknowledged`, `completed`, `failed_retryable`, `failed_terminal`, `outcome_unknown`, `cancelled` and `superseded`.
+- **Resubmission.** A claim MHCP rejected is never sent again from its own row. `POST /smartcms/claims/:id/resubmit` (admin only, `SMARTCMS_RESUBMIT_ROLES`; never an agent or job) prepares the claim again from the visit's current bill as a new row under `{key}@{n}`, and moves the rejected row from `completed` to `superseded`, keeping its adjudication. Agents and jobs keep finding the rejected row under the unsuffixed key, so they never prepare the visit's claim again. A resubmission and an appeal of one rejection exclude each other, and both take a per-claim decision lock. A voided bill's claims are released attempt by attempt (`{key}@2`, `@3`, …); a `superseded` row is left alone.
 - **Who may promote.** A person's Submit, or an agent under `auto_submit` for CHAS, CDMP, NIR and MW Health, moves `prepared` to `pending`. **DEROM and CIDC rows are only ever promoted from their report form, by a doctor.** A row whose draft lists issues is refused with `draft_incomplete`.
 - **Entitlement is not checked on write.** A row may exist while its location is `off`; dispatch checks again.
 
@@ -184,7 +185,8 @@ The client itself never retries: each attempt needs a new `msgID`, and `SCG_03` 
 - reclaims expired leases: `outcome_unknown` if the attempt's request may have left (its evidence row exists), else `pending` again;
 - offers `pending` rows idle for ten minutes, and `failed_retryable` rows overdue by ten, to dispatch again (this is how parked rows are retried);
 - cancels claims (CHAS, CDMP, SFL) an **agent** prepared and nobody touched for seven days. A person's or a job's rows are never cancelled, and no report or registry row is;
-- alerts once on a report waiting `prepared` past its deadline (DEROM a day; CIDC, MW Health, held NIR rows and held NEHR letters a week), on `outcome_unknown` rows a working day old, and on rows parked by entitlement for a working day.
+- alerts once on a report waiting `prepared` past its deadline (DEROM a day; CIDC, MW Health, held NIR rows and held NEHR letters a week), on `outcome_unknown` rows a working day old, and on rows parked by entitlement for a working day;
+- then, as its own step (`cdmp-advice-monitor`), runs the **30-day CPF advice monitor** (`SmartcmsCdmpAdviceMonitor`). SCG keeps a CPFADV for 30 days, so a Medisave claim (S/N 12) still `acknowledged` with no advice or error matched to it is marked `lastErrorCode` `CPF_ADVICE_OVERDUE` 20 days after it was sent and `CPF_ADVICE_ESCALATED` at 25, each once, with alert kinds `cpf_advice_overdue` and `cpf_advice_escalated`. The claims queue lists both under needs-attention. CPF's answer replaces the code, or clears it for `AI` and `PN`.
 
 ### Domain events
 
@@ -222,15 +224,36 @@ All times are Singapore time (SGT).
 | Function | Schedule | What it does |
 | --- | --- | --- |
 | `smartcms-chas-status-poll` | Every 4 hours, 08:00 to 20:00, daily | Asks MHCP about every CHAS claim whose own cadence says it is due. |
-| `smartcms-cdmp-status-pull` | 09:00, 13:00 and 18:00, Monday to Friday | Pulls CPF's advice (CPFADV) on Medisave claims from every CDMP mailbox. |
+| `smartcms-cdmp-status-pull` | 09:00, 13:00 and 18:00, Monday to Friday | Pulls CPF's advice (CPFADV) on Medisave claims from every CDMP mailbox. A message that matches no claim is kept `unmatched` for staff (see [below](#cdmp-mailbox)). |
 | `smartcms-cdmp-recon-pull` | 10:00, Monday to Friday | Pulls CPF's payment files (CPFPAY, CPFSUM, CPFIBG) for each Hospital Code. |
-| `smartcms-agent-daily` | 19:00, Monday to Saturday | The nightly claims agent, at each location whose agent policy is on. Also runs on demand (**Run now**). |
+| `smartcms-agent-daily` | 19:00, Monday to Saturday | The nightly claims agent, at each location whose agent policy is on, over issued and paid (`issued,balanced`) bills. It also prepares VSS and CDS claims whose `invoice.issued` was missed (`prepareMissedVcdssClaims`, which is not an MCP tool). Also runs on demand (**Run now**). |
 | `smartcms-invoice-claims-sweep` | 02:30 daily | Replays `medbot/invoice.issued` for a week's issued bills whose claim never reached the outbox, and alerts on a bill already replayed that still has none. |
 | `smartcms-nehr-reconciliation` | 00:15 daily | Queues the previous day's NEHR reconciliation file for every location connected for NEHR referral contribution, even one that sent nothing. |
 | `smartcms-oauth-cleanup` | 03:00 daily | Deletes OAuth codes expired over a day ago, and clients registered over 30 days ago that never got a credential. |
-| `smartcms-stale-submission-sweep` | Hourly at :15 | See [the sweep](#the-stale-submission-sweep). |
+| `smartcms-stale-submission-sweep` | Hourly at :15 | See [the sweep](#the-stale-submission-sweep), including the 30-day CPF advice monitor. |
 
 Event-driven functions: `smartcms-dispatch` (one per pending submission, one at a time per submission), the `smartcms-on-*` domain-event subscribers, `smartcms-entitlements-sync`, and `smartcms-agent-prepare` ("Prepare today's claims").
+
+## CDMP mailbox
+
+CPF answers Medisave claims through the CDMP mailbox (S/N 13). `SmartcmsCdmpStatusService` stores each message once, raw, then matches it: a CPFADV by HRN, submission type and the submission date and time CPF echoes; an ERRMSG by the `UNH` reference of the UCFMSG it refuses. A message that matches no claim is kept `unmatched`; one that cannot be read, `error`.
+
+Staff settle `unmatched` messages from the Medisave payments page, through `smartcms/cdmp/mailbox` (`SMARTCMS_MEDISAVE_ROLES`, module guard):
+
+| Route | What it does |
+| --- | --- |
+| `POST /smartcms/cdmp/mailbox/pull` | "Check CPF now": pulls one location's mailbox outside the schedule. |
+| `GET /smartcms/cdmp/mailbox/unmatched` | The unmatched messages, newest first, each with up to 25 candidate claims (`MedisaveUnmatchedMessage`). An advice's candidates are the location's sent claims under its HRN and of its submission type; an error notice's, the location's latest. Optional `clinicLocationId`. |
+| `POST /smartcms/cdmp/mailbox/unmatched/:messageId/match` | `{submissionId}`: applies the message to that claim exactly as a pulled one (`ClaimResponse` first, then the claim status row and outbox state). Refused unless the claim is a sent Medisave claim of the message's location and, for an advice, under its HRN and submission type. If applying fails, the message goes back to `unmatched` (503). |
+| `POST /smartcms/cdmp/mailbox/unmatched/:messageId/dismiss` | Marks the message `dismissed` as not Medbot's. It is kept. |
+
+Match and dismiss are scoped to the organisation and audited (`cdmp_message.match`, `cdmp_message.dismiss`). A second settle of the same message answers 409.
+
+**Tie-outs.** `tieOuts()` (`cdmp-recon.service.ts`) ties out every submission type CPFSUM or CPFPAY names, in the order `FS`, `AM`, `CA`, then any other. `AM` and `CA` refunds are negative. A type in only one file is tied out against zero, so it shows as a difference rather than not at all.
+
+## Claims day view
+
+`GET /smartcms/claims/day?locationId=&date=` (`SMARTCMS_CLAIMS_VIEW_ROLES`) returns `ClaimsDay`: every visit checked in at the location on that Singapore date, with its live bill, the bill's claims as the queue shows them (resubmissions included), what the patient owes (`owed`) and their payments. `paymentsVisible` is true only for `QUEUE_RECEPTION_ROLES`; for anyone else the rows carry no payments. What a visit owes is computed once, by `visitOwedOf` in `@repo/smartcms-contract` (`claims-owed.ts`), which the counter's Take payment and the CMS day view share. A claim's amount is the bill's figure for its business key, never the cleared draft.
 
 ## MCP claims server
 
@@ -238,7 +261,7 @@ Event-driven functions: `smartcms-dispatch` (one per pending submission, one at 
 
 - **Who may call it.** An agent credential, checked by `SmartcmsAgentGuard`, or a staff session with the admin or receptionist role in a Singapore organisation with a SmartCMS module. Every refused token answers 401 with a `WWW-Authenticate` bearer challenge.
 - **OAuth.** A connector discovers the CMS as authorisation server through `/.well-known/oauth-protected-resource/mcp/smartcms`, registers a public client, and sends an admin to a consent page. The approved code (PKCE `S256`) is exchanged for an ordinary location-bound agent credential lasting 7, 14 or 30 days. There are no refresh tokens. A replayed code revokes the credential it produced. Public OAuth routes are throttled, and each caller's CHAS and Medisave enquiries are rate-limited.
-- **Agent rules.** DEROM and CIDC always wait for a doctor, and appeals are never offered to an agent.
+- **Agent rules.** DEROM and CIDC always wait for a doctor, and appeals and resubmissions are never offered to an agent.
 
 For the user side, see [Claims Agent](/cms/smartcms/claims-agent).
 
@@ -286,8 +309,11 @@ Loopback only:
 | `POST /__mock/mhcp/adjudicate` | Apply every submitted VSS and CDS claim's computed verdict. |
 | `POST /__mock/mhcp/legacy-statuses` | `{enabled}`: answer status queries with pre-2019 codes. |
 | `POST /__mock/mhcp/msb-envelope` | `{enabled}`: answer MHCP, eCHAS and EISS inside the MSB envelope (on after reset). |
+| `POST /__mock/cdmp/claims/:hrn/withhold` | CPF never answers the HRN's claims, to exercise the 30-day monitor. |
+| `POST /__mock/cdmp/claims/:hrn/stray-advice` | Withhold, and leave an approval in the mailbox that echoes a submission date the claim was not sent on (`{subDate?}`, `CCYYMMDD`), so it lands unmatched. |
 | `GET /__mock/received` | Every request received, in order. |
-| `GET /__mock/mhcp/claims` | Claims accepted. |
+| `GET /__mock/mhcp/claims` | Claims accepted. A rejected claim does not count toward RC001 (one claim per patient, claim type and visit date) or Screen for Life's history rules, so a resubmission is accepted. |
+| `GET /__mock/cdmp/claims` | Medisave claims SCG queued for CPF, with their HRNs. |
 | `GET /__mock/mwh/records` | Migrant worker health records accepted. |
 | `GET /__mock/nir/records` | NIR vaccination records accepted. |
 | `GET /__mock/nehr/compositions` | NEHR referral compositions held, with their statuses. |

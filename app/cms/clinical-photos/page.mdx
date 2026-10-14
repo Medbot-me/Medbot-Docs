@@ -1,0 +1,156 @@
+# Clinical Photos
+
+Clinical photos are pictures added to a patient's record from a phone: a wound at each dressing change, a rash, an injury, an ulcer followed over weeks, or the pages of a paper report the patient hands over. Find them in the patient's chart under **Photos** (`/patients/[id]/photos`), listed in the sidebar after **Results**. To take photos on a phone without opening the chart first, use **Patients → Photo capture** (`/capture`).
+
+There is no separate phone app. You take photos in the staff app in your phone's browser, and each photo goes into the patient's record as soon as it uploads.
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| See photos and their details | Yes | Yes | Yes | Yes |
+| Take or upload photos | Yes | Yes | Yes | Yes |
+| Open a Sensitive photo and see its details | No | No | Yes | Yes |
+| Mark a photo Sensitive | Yes | Own photos | Yes | Yes |
+| Turn Sensitive off | No | No | Yes | Yes |
+| Edit a photo's details | Yes | Own photos | Yes | Yes |
+| Void a photo | Yes | Own photos | Yes | Yes |
+| File a photo of a paper report as a result | Yes | Yes | Yes | Yes |
+
+"Own photos" means photos you uploaded yourself. Anyone can edit or void the photos they uploaded, whatever role they used.
+
+A Clinic Admin or Receptionist sees a Sensitive photo only as a locked tile. They cannot open it or edit it, but they can still void it from the tile (a Receptionist only if they uploaded it). This lets them take a photo filed under the wrong patient out of the chart without opening it.
+
+## Taking photos for a patient
+
+Start from either place:
+
+- **From the chart.** Open the patient's chart, select **Photos**, then **Add photos**. On a phone, the camera button at the top of any patient page ("Add photos for this patient") does the same.
+- **From Photo capture.** Select **Patients → Photo capture**. Choose the patient from **In clinic today**, **Recently used**, or by typing at least two characters in **Search by name or ID**. **In clinic today** lists today's queue, with each patient's stage, such as **With the doctor** or **Seen today**. **Recently used** lasts only as long as the browser tab. To switch patients later, select **Change patient**.
+
+The patient's name, age, sex and masked ID stay pinned at the top of the screen the whole time. Check them before you upload.
+
+1. Select **Take photo** to open the phone's camera, or **Choose from album** to pick one or more photos already on the phone. After the first photo, the camera button reads **Take another**.
+2. Add the details below. One set of details covers every photo in the batch, so photograph two separate wounds as two batches.
+3. Select the upload button. It names the count and the patient, for example **Upload 3 photos to TAN AH KOW**.
+4. Keep the page open until every photo shows **Uploaded**. Medbot then confirms with a message such as "Uploaded 3 photos to TAN AH KOW" and opens the patient's **Photos**.
+
+A batch holds up to 20 photos. Before a photo uploads, your phone shrinks it and removes location and device details. Medbot does not keep a copy on the phone. If you picked photos from the album, the confirmation adds "Delete the originals from your photo album."
+
+You can install the staff app on your phone's home screen from the browser's menu (for example **Add to Home Screen**). It then opens straight to **Photo capture**.
+
+### Photo details
+
+| Field | What to enter |
+| --- | --- |
+| **What is it?** | **Clinical photo** (the patient) or **Paper document** (a report or letter). |
+| **What does it show?** | For a clinical photo: **Wound**, **Skin**, **Injury**, **Ulcer**, **Treatment response** or **Other**. Required. |
+| **Which document?** | For a paper document: **Paper report**, **Referral letter** or **Other document**. Required. |
+| **Body site (optional)** | Clinical photos only. Choose from the list, such as **Knee** or **Sacrum**. For a body site with sides, choose the **Side**: **Left**, **Right** or **Both**. |
+| **Where exactly (optional)** | Extra detail about the site, for example "medial side". Up to 200 characters. |
+| **Note (optional)** | Up to 1000 characters, for example "day 5 after debridement, less slough". |
+| **Time taken** | Starts as now. For album photos, Medbot suggests the time the photo was saved on the phone. Change it if it is wrong. |
+| **Visit** | Starts as the patient's current encounter, the one **In Progress**. Choose another recent encounter or **Not linked to a visit**. See [Encounters & Clinical Notes](/cms/encounters). |
+| **Sensitive photo** | See [Sensitive photos](#sensitive-photos). |
+
+For a paper document with several pages, use the arrows on each thumbnail to put the pages in order before you upload. To drop a photo from the batch, use the remove button on its thumbnail.
+
+### Consent
+
+For a clinical photo you must tick "The patient agreed to this photo being taken and kept in their record." Until you do, the upload button stays disabled and the screen says "Confirm that the patient agreed to this photo." The photo's details later show **Consent** as **Recorded**. A paper document needs no consent tick.
+
+This is separate from the patient's communication consent on the chart **Overview**. See [Patient Records & Consent](/cms/patient-records).
+
+### If an upload fails
+
+Each photo shows its own progress. A photo that fails shows the reason and a button to fix it:
+
+- **Retry** sends it again. With two or more failures, **Retry all failed** retries them together.
+- **Edit details** takes you back to the details when the server refused one of them, such as a time in the future. Correct it, then select **Retry**.
+- **Sign in again** opens sign-in in a new tab when your session has ended. Sign in there, close that tab ("You are signed in again"), and select **Retry** on your photos.
+- **Remove** takes out a photo that cannot be uploaded. Take or choose it again.
+
+If you try to leave or close with photos that have not uploaded, Medbot asks first, for example "Discard these photos?" or "Leave and discard 2 photos?". Select **Keep photos** to stay. Photos that already uploaded stay in the record either way.
+
+| Message | What it means |
+| --- | --- |
+| This photo is in HEIC format, which this browser can't open. Set the camera to 'Most Compatible' (iPhone: Settings, Camera, Formats) and take it again. | Change the camera setting, then retake the photo. |
+| This photo is larger than 40 MB and cannot be used. | Choose a smaller photo. |
+| A batch holds up to 20 photos. … Upload this batch, then add the rest. | Upload, then add the remaining photos as a new batch. |
+| Enter a time that is after 1900 and not in the future. | Correct **Time taken**. If it looks right, check the phone's date and time. |
+| That visit does not belong to this patient. Choose another visit, or Not linked to a visit. | Choose another **Visit**. |
+
+## Viewing photos
+
+**Photos** groups photos by the day they were taken, newest first, in Singapore time. Photos uploaded together on the same day stack into one tile. A stack of clinical photos shows a count, and a stack of document pages is labelled, for example **Report · 3 pages**.
+
+Narrow the list with **All**, **Clinical** or **Documents**, and then by category, such as **Wound**. Voided photos are hidden until you select **Show voided (n)**. If there are more photos, select **Load more**.
+
+Select a tile to open the full-screen viewer:
+
+- Swipe, or use the arrow keys or arrow buttons, to move between photos. Pinch to zoom on a phone.
+- The title bar shows the category and, for example, "2 of 12" and the time taken.
+- Select **Details** (the info button) to see the type, category, body site, when the photo was taken and uploaded, who uploaded it, the linked encounter, the note, consent, and the image size.
+
+If a thumbnail cannot load, its tile says **Not available** with a **Retry** button. You can still open it.
+
+## Sensitive photos
+
+Turn on **Sensitive photo** for a photo that should be seen only by doctors and nurses. When you choose **Breast**, **Genital area** or **Perineum** as the body site, it turns on by itself, and the switch says "On for this body site. Only a doctor or nurse can turn it off."
+
+In **Photos**, a Sensitive photo shows as a locked tile marked **Sensitive**, with no image:
+
+- **Doctors and nurses** see **Tap to reveal**. Select the tile to reveal it, then select it again to open it. Swiping in the viewer never reveals one: each Sensitive photo stays locked until you select **Tap to reveal** on it. Medbot records every time a Sensitive photo is opened.
+- **Clinic Admins and Receptionists** see a locked tile they cannot open. The viewer says "Only a doctor or nurse can open it." Its body site, category, note and uploader are not shown, and the category filters leave it out.
+
+Anyone who can edit a photo can turn **Sensitive photo** on. Only a doctor or nurse can turn it off.
+
+The switch says what it covers: "Hides the photo in Photos from roles that cannot reveal it; it is not an access control elsewhere in Medbot."
+
+## Editing a photo's details
+
+1. Open the photo and select **Edit details** (the pencil button).
+2. Change the category, body site, note, time taken, visit, or **Sensitive photo**.
+3. Select **Save changes**. Medbot confirms "Photo details saved".
+
+The picture itself, whether it is a clinical photo or a paper document, and the consent tick cannot be changed. To replace a wrong photo, void it and take a new one. If someone else changed the photo while you were editing, you see a message asking you to reload. Close the dialog, open the photo again, and redo your change.
+
+## Voiding a photo
+
+Voiding marks a photo as made in error. Use it for a photo filed under the wrong patient, a duplicate, a poor-quality photo, or one taken by mistake.
+
+1. Open the photo and select **Void photo** (the bin button). For a Sensitive photo you cannot open, select **Void** on its locked tile. For a locked stack, the button reads, for example, **Void all 3 pages**.
+2. Under **Reason**, select a quick reason (**Filed under the wrong patient**, **Duplicate**, **Poor quality** or **Taken by mistake**) or type one. A reason is required.
+3. Select **Void photo**, or **Void all 3 pages**.
+
+Voiding cannot be undone. The photo leaves the chart. It stays in the record as voided, with who voided it, when, and the reason, and its image can no longer be opened. Select **Show voided (n)** to see voided photos, and select one to see its details, including the reason. A voided Sensitive photo opens only for doctors and nurses.
+
+You cannot void a photo that has been filed as a result. You see "This photo is filed as a result, so it cannot be voided until that result is voided." Withdraw the result first. See [Diagnostic Results](/cms/diagnostic-results).
+
+## Filing a paper report as a result
+
+A photographed paper report can become a result for a doctor to review, without uploading the file again. Do this on a computer: **File as result** does not appear at phone width.
+
+1. Open a photo of a paper document in the viewer and select **File as result**.
+2. The **File result** form opens with the pages under **Photographed report (n pages)**, in the order they were uploaded. Every page of that upload is included. **Collected / performed** starts as the day the photo was taken.
+3. Complete the rest of the form as for any incoming result, then select **File result**. See [Diagnostic Results](/cms/diagnostic-results#filing-an-incoming-result).
+
+If a page is missing or out of order, close the form and fix it in **Photos** first. The photos stay in **Photos**. Their tiles show **Filed**, and the details show **Filed as a result** with an **Open results** link. When the result is open, each page has its own **Page 1 of 3** link.
+
+**File as result** appears only for a paper-document photo that is not Sensitive, not voided and not already filed. You may see:
+
+| Message | What to do |
+| --- | --- |
+| A photo marked Sensitive cannot be filed as a result, because results are open to everyone who reads results. A doctor or nurse can clear the flag first. | Ask a doctor or nurse to turn **Sensitive photo** off, if that is appropriate. |
+| This photo is already filed as a result. Withdraw that result first if it was filed by mistake. | Select **Open result** to see it. |
+| A photo was changed while this result was being filed. Reload the photos and try again. | Reload **Photos** and file again. |
+
+## What the patient sees
+
+Nothing. Clinical photos are not copied into the patient's own health record, so they do not appear in the patient app. A paper report filed as a result reaches the patient's record as part of that result, like any scanned report.
+
+## Related
+
+- [Encounters & Clinical Notes](/cms/encounters): the visit a photo is linked to.
+- [Diagnostic Results](/cms/diagnostic-results): filing and withdrawing results.
+- [Patient Records & Consent](/cms/patient-records): the patient's chart.

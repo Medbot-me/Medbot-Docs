@@ -37,7 +37,7 @@ Each group below says what Medbot does with it today. Everything has been tested
 
 Module: `CHAS`
 
-In Medbot: all seven are used. S/N 1 verifies the CHAS card at check-in; S/N 2 sends CHAS, PHPC, vaccination (VSS), developmental screening (CDS) and Screen for Life claims from the issued bill; S/N 3 polls claim status on a schedule; S/N 4 appeals a rejected claim; S/N 7 checks accreditation and is the connection test; S/N 8 and 9 read a patient's vaccination and CDS claim history, which the bill's subsidy claims are built from. See [Claims Workflow](/cms/smartcms/claims).
+In Medbot: all seven are used. S/N 1 verifies the CHAS card at check-in; S/N 2 sends CHAS, PHPC, vaccination (VSS), developmental screening (CDS) and Screen for Life claims from the issued bill, and an admin's resubmission of a rejected one; S/N 3 polls claim status on a schedule; S/N 4 appeals a rejected claim; S/N 7 checks accreditation and is the connection test; S/N 8 and 9 read a patient's vaccination and CDS claim history, which the bill's subsidy claims are built from. See [Claims Workflow](/cms/smartcms/claims).
 
 | S/N | Service type | Route | Format | Kind | Phase |
 | --- | --- | --- | --- | --- | --- |
@@ -64,7 +64,7 @@ In Medbot: both are used, to ask whether a patient is due for screening (S/N 11,
 
 Module: `CDMP`
 
-In Medbot: all four are used. S/N 15 checks the payer's Medisave balance (with the once-off consent); S/N 12 submits, amends and cancels Medisave claims; S/N 13 pulls CPF's advice from the CDMP mailbox; S/N 14 pulls CPF's payment files for reconciliation.
+In Medbot: all four are used. S/N 15 checks the payer's Medisave balance (with the once-off consent); S/N 12 submits, amends and cancels Medisave claims; S/N 13 pulls CPF's advice from the CDMP mailbox, and staff match or dismiss what matches no claim; S/N 14 pulls CPF's payment files for reconciliation.
 
 | S/N | Service type | Route | Format | Kind | Phase |
 | --- | --- | --- | --- | --- | --- |
@@ -213,12 +213,13 @@ Module: None
 | --- | --- |
 | `envelope.ts` | Zod schemas for the control header, `SCG_RequestInfo` and `SCG_ResponseInfo` (strict on documented fields, passing unknown keys through); `SCG_STATUS_CODES` with HTTP status, error type and retry flag; `formatMsgDateTime` / `parseMsgDateTime` for Singapore-time timestamps. |
 | `modules.ts` | `SMARTCMS_MODULES` (label, description, badge, status, service groups, "needs" chips, presets), `modulesForPreset('gp-starter')` and `SMARTCMS_BADGE_LABELS`. See [Modules & Gating](/cms/smartcms/modules). |
-| `vocab.ts` | Submission states, actor kinds (member, agent, job), gateway outcome kinds, business-error categories and entitlement environments (`off`, `uat`, `prod`). |
+| `vocab.ts` | Submission states (including `superseded`, a rejected claim replaced by its resubmission), actor kinds (member, agent, job), gateway outcome kinds, business-error categories and entitlement environments (`off`, `uat`, `prod`). |
 | `codesets/` | Code tables for MHCP (CHAS, Screen for Life, VSS and CDS), MCAF and Mediclaim (Medisave), HSAR ValueSet 7.3, NIR, MW Health, CIDC (including its ICD-10-AM mapping), DEROM (including the notifiable diseases) and NEHR, with crosswalks between them. Date-aware `lookup(setId, code, onDate)` and `activeEntries(setId, onDate)`. |
 | `fhir-urls.ts` | `urn:gov:sg:nric` and Medbot's `http://medbot.me/fhir/.../smartcms-*` StructureDefinition, CodeSystem and NamingSystem URLs. |
 | `schema-version.ts` | `SCHEMA_VERSION`, the version of the knowledge base the contract was transcribed from (`kb-2026-09`). |
+| `claims-owed.ts` | `visitOwedOf`: what a patient owes on a visit once the payers have answered, shared by the counter's Take payment (through `apps/api`) and the claims day view. Also `claimStatusMeaning` (MHCP and CPF statuses as approved, refused or pending), `claimSharesOf`, `claimSchemeOf`, `claimCategoryOf` and `medisaveSubmissionType`. |
 | `identifiers.ts` | `isValidNric`, `isValidFin` and `isValidNricOrFin`: the one NRIC and FIN check-letter implementation every Medbot surface uses, including M-series FINs. |
 | `fhir/` | Helpers that build and read Medbot's SmartCMS FHIR shapes: national demographics on `Patient`, coded ICD-10-AM encounter diagnoses (with search), CDS screening `Procedure`s, and the CHAS, Screen for Life, VSS/CDS and Medisave choices on an `Invoice`. |
-| `dto/` | The wire shapes `apps/api` returns and the CMS parses, with their validation rules where the back-end has them: `coverage.ts` (CHAS card verification, S/N 1), `claims.ts` (the claims queue and review), `sfl.ts` (Screen for Life), `vcdss.ts` (VSS and CDS), `cdmp.ts` (Medisave balance, consent and claims), `registry.ts` (CIDC reports), `derom.ts` (DEROM notifications, with DROM's error codes), `mwh.ts` (MW Health records, with MOM's first-error check), `demographics.ts` (national demographics) and `settings.ts` (the SmartCMS settings page). `hsg.ts` is an empty placeholder for Healthier SG. |
+| `dto/` | The wire shapes `apps/api` returns and the CMS parses, with their validation rules where the back-end has them: `coverage.ts` (CHAS card verification, S/N 1), `claims.ts` (the claims queue and review, appeal and resubmission blockers), `claims-day.ts` (the claims day view), `sfl.ts` (Screen for Life), `vcdss.ts` (VSS and CDS), `cdmp.ts` (Medisave balance, consent and claims, unmatched CPF messages and the 30-day advice codes), `registry.ts` (CIDC reports), `derom.ts` (DEROM notifications, with DROM's error codes), `mwh.ts` (MW Health records, with MOM's first-error check), `demographics.ts` (national demographics) and `settings.ts` (the SmartCMS settings page). `hsg.ts` is an empty placeholder for Healthier SG. |
 
 Run the package's tests with `pnpm --filter @repo/smartcms-contract test`.
