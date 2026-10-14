@@ -92,6 +92,8 @@ When the bill carries a SmartCMS claim, the totals continue with what each claim
 
 Only lines with an amount appear. Subsidies are estimates until the payer answers. These lines are on screen only, not on the PDF.
 
+**Patient pays (cash)** is what the counter asks the patient for when taking payment. See [Taking payment at the counter](#taking-payment-at-the-counter).
+
 ### If the invoice was not fully issued
 
 Sometimes the invoice is created but a later step fails.
@@ -152,8 +154,15 @@ The **Invoices** tab lists each invoice with its **Invoice** number (the receipt
 
 What the patient sees: a completed visit's invoice is also available to the patient in their portal. See [Visits in the Patient tab](/patient/visits).
 
+## Taking payment at the counter
+
+Payments are taken from the **Bill** column of the [Reception Queue](/cms/reception-queue#taking-payment), not from this page. The **Take payment** dialog shows the bill's cash due, plus anything a payer refused or paid short, and records each payment with its method. Medbot marks the visit paid once the payments cover what is owed on the issued bill. A payment taken before the visit is billed is kept, but the visit is not marked paid until the bill is issued.
+
+Taking payment does not change the invoice's **Status** on the **Invoices** tab, and it does not print a receipt. For a receipt, print the invoice. See [Finding and reprinting invoices](#finding-and-reprinting-invoices).
+
 ## Related
 
+- [Reception Queue](/cms/reception-queue#taking-payment): take payment for a visit.
 - [Billable Catalog](/cms/billable-catalog): the priced items you bill, and their bill categories.
 - [Services & Consumables](/cms/services-and-consumables): the clinical services that carry prices.
 - [Singapore Registration](/cms/smartcms/registration): the GST registration the bill uses.
