@@ -1,6 +1,6 @@
 # Claims Agent
 
-The **claims agent** prepares SmartCMS claims and reports so front-desk staff do not have to build each one by hand. It works from bills that have already been issued and visits that are complete. It never decides what to bill, never appeals, and never sends a disease notification or CIDC report: those always wait for a doctor.
+The **claims agent** prepares SmartCMS claims and reports so front-desk staff do not have to build each one by hand. It works from bills that have already been issued, paid or not, and visits that are complete. It never decides what to bill, never appeals or resubmits a rejected claim, and never sends a disease notification or CIDC report: those always wait for a doctor.
 
 There are three ways an agent can work on a clinic's claims:
 
@@ -28,7 +28,7 @@ Each clinic location can override the organisation's policy with **Agent policy 
 
 ## What the agent prepares
 
-- **Claims** for issued bills: CHAS and Medisave. Vaccination, CDS and Screen for Life claims are prepared from the bill itself when it is issued.
+- **Claims** for issued bills: CHAS and Medisave. Vaccination, CDS and Screen for Life claims are prepared from the bill itself when it is issued. If a vaccination or CDS subsidy claim was missed then, the nightly run prepares it. Under **Prepare only** it waits for review; under **Auto-submit routine claims** a ready one is sent.
 - **Reports** for completed visits: National Immunisation Registry notifications, disease notifications (DEROM), chronic disease indicators (CIDC) and migrant worker health reports. DEROM and CIDC always wait for a doctor to confirm them in [Reports](/cms/smartcms/reports).
 - **Notes for staff** for anything it could not prepare, and why. They appear under **Notes for staff** on the **Claims** page. Take each one up by hand, then select **Resolve**.
 

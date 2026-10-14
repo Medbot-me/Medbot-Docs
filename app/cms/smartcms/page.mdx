@@ -29,6 +29,7 @@ SmartCMS is enabled **per organisation** and only for organisations whose countr
 | **Regulatory identity** | The organisation's UEN and GST details, each location's HE code and Hospital Code, and each practitioner's MCR or SNB number. |
 | **Entitlement** | Synapxe's approval for **one location** to use **one service group** in **one environment** (UAT or production). An admin records it in [SmartCMS Settings](/cms/smartcms/settings). Nothing is sent for a location that is not switched on. |
 | **Claims queue** | Every claim the organisation has prepared, with its status at MHCP or CPF. See [Claims Workflow](/cms/smartcms/claims). |
+| **Claims today** | One clinic day's patients, with each bill, its claims and what the patient still owes. See [Claims today](/cms/smartcms/claims#claims-today). |
 | **Agent policy** | How far an AI agent may take a claim: off, prepare only, or auto-submit. See [Claims Agent](/cms/smartcms/claims-agent). |
 | **Evidence log** | An encrypted record of every message Medbot sends to SmartCMS and every reply, kept for audit and certification. |
 
@@ -43,7 +44,8 @@ SmartCMS is enabled **per organisation** and only for organisations whose countr
 | **Coded diagnoses** (ICD-10-AM) on the visit | Available |
 | **Singapore billing**: one bill per visit, receipt numbers, GST, bill categories, void and correct | Available |
 | **Claims**: CHAS, PHPC, vaccination and CDS subsidies, Screen for Life, Medisave | Available |
-| **Claims queue**: submit, re-prepare, discard, status tracking, CHAS appeals, Medisave amend and cancel, CPF payment reconciliation | Available |
+| **Claims queue**: submit, re-prepare, discard, status tracking, CHAS appeals, resubmitting rejected claims, Medisave amend and cancel, CPF payment reconciliation, matching CPF messages, the 30-day CPF answer check | Available |
+| **Claims today**: each patient's bill, claims and what they owe, by location and day | Available |
 | **Claims agent**: nightly run, "Prepare today's claims", AI assistant connections over MCP | Available |
 | **Reports**: NIR, disease notification (DEROM), CIDC, NEHR referral letters, migrant worker health | Available |
 | Sending to Synapxe UAT or production | Waiting on Synapxe's approval of each location |
@@ -55,7 +57,7 @@ A Singapore organisation with a matching module gets a **SmartCMS** group in the
 
 | Screen | What it is for |
 | --- | --- |
-| **Claims** (`/claims`) | The claims queue, the claims agent, notes for staff, and Medisave payments. See [Claims Workflow](/cms/smartcms/claims). |
+| **Claims** (`/claims`) | The claims queue, **Claims today**, the claims agent, notes for staff, and Medisave payments. See [Claims Workflow](/cms/smartcms/claims). |
 | **Reports** (`/reports`) | National registry notifications and reports. See [Reports](/cms/smartcms/reports). |
 
 SmartCMS also adds to screens staff already use:
