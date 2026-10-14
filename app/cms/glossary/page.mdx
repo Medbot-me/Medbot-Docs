@@ -6,8 +6,8 @@ Terms used across the CMS documentation, each with one meaning. Where a term is 
 | --- | --- |
 | **Organization** | A clinic's account: its staff, locations, and patients. The screen spells it **Organisation**. A person's role is set per organization. |
 | **Clinic location** | One physical site of an organization. Sessions, rooms, and the queue are scoped to one location at a time. |
-| **Member** | A person's place in one organization, with one role there. |
-| **Role** | Clinic Admin, Receptionist, Doctor, or Nurse, held per organization. See [Roles & Permissions](/cms/roles-and-permissions). |
+| **Member** | A person's place in one organization in one role. Someone with two roles in the same organization, such as Doctor and Clinic Admin, has two memberships. |
+| **Role** | Clinic Admin, Receptionist, Doctor, or Nurse, held per organization. A person can hold more than one role in an organization and works as one at a time, switching from the **Working as** menu. See [Roles & Permissions](/cms/roles-and-permissions) and [Switching role](/cms/switching#switching-role). |
 | **Session** | A clinic location's working day: which staff are on duty and which rooms are open. Opened from [Session Setup](/cms/session-setup). |
 | **Shift** | One rostered block of work for one staff member. See [Rostering](/cms/rostering). |
 | **Queue ticket** | The number a checked-in patient is called by. See [Reception Queue](/cms/reception-queue). |
@@ -17,10 +17,20 @@ Terms used across the CMS documentation, each with one meaning. Where a term is 
 | **Encounter** | The clinical record of one visit, started from the chart or the queue. See [Encounters & Clinical Notes](/cms/encounters). |
 | **Chart** | Everything the CMS shows for one patient, split into sections. See [Patient Records & Consent](/cms/patient-records). |
 | **Void** | Mark a record as made in error while keeping it for the history. Different from deleting it. |
+| **Owed** | What a patient still has to pay on a visit: the bill's cash due, plus anything a payer refused or paid short, less the payments taken. Shown in the queue's **Take payment** dialog and on **Claims today**. See [Taking payment](/cms/reception-queue#taking-payment). |
+| **Sensitive photo** | A clinical photo only doctors and nurses can open. Other roles see a locked tile. Turned on by hand or by a breast, genital or perineal body site. See [Clinical Photos](/cms/clinical-photos#sensitive-photos). |
+| **Result explanation** | A plain-language explanation of one or more results for the patient, drafted with AI and approved by a doctor before it is sent to the patient or printed. See [Diagnostic Results](/cms/diagnostic-results#explaining-results-to-the-patient). |
+| **Explanation library** | Approved wording, by test, that result explanations reuse as written. See [Diagnostic Results](/cms/diagnostic-results#the-explanation-library). |
 | **Publish (roster)** | Make a draft week of shifts official. Only a Clinic Admin can publish. |
 | **Finalize (attendance)** | Lock a day's attendance records. See [Attendance](/cms/attendance). |
 | **Order set** | A saved group of orders a clinician can apply to an encounter at once. See [Orders & Order Sets](/cms/orders-and-order-sets). |
 | **Formulary** | The clinic's list of medications it can prescribe. See [Formulary](/cms/formulary). |
+| **Ingredient (RxNorm)** | An active ingredient of a formulary medication, as RxNorm names it. Allergy and duplicate checks match medications on their ingredients. See [Ingredients and ATC classes](/cms/formulary#ingredients-and-atc-classes). |
+| **ATC class** | A group from the Anatomical Therapeutic Chemical classification, which sorts medicines by the body system they act on and how they work, for example J01CA, Penicillins with extended spectrum. See [Formulary](/cms/formulary#ingredients-and-atc-classes). |
+| **Allergy group** | A family of related drugs, such as Penicillins or NSAIDs, recorded as one allergy so every drug in it is checked. See [Allergies & Medication Safety](/cms/allergies-and-medication-safety#adding-an-allergy). |
+| **No known drug allergies** | A recorded statement that the patient was asked and has no drug allergies. Different from allergy status not recorded. |
+| **Allergy alert** | A message shown when a prescribed drug matches a patient's allergy. **Stop:** alerts block signing until the order is amended or overridden; **Warning:** alerts only inform. See [Allergies & Medication Safety](/cms/allergies-and-medication-safety#allergy-alerts-when-prescribing). |
+| **Override reason** | The prescriber's recorded reason for going ahead with a prescription despite a **Stop:** alert. It is shown on the signed prescription. |
 | **Lot** | A batch of stock received into inventory, with its own quantity and expiry. See [Inventory & Stock](/cms/inventory-and-stock). |
 | **Ping** | A short task or message sent to a staff member. See [Tasks & Staff Pings](/cms/tasks). |
 | **Patient portal** | A separate, patient-facing app where a clinic's patients manage their care. See [Patient Portal](/cms/patient-portal). |

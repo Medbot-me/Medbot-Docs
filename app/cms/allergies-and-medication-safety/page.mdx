@@ -1,0 +1,163 @@
+# Allergies & Medication Safety
+
+Record a patient's drug allergies on the **Allergies** card at the top of the chart **Overview** (`/patients/[id]`). When your clinic prescribes in Medbot, every prescription is checked against those allergies. A prescription that matches an allergy cannot be signed until the prescriber changes it or overrides the alert with a reason. Clinic Admins can see how alerts are answered at **Pharmacy → Medication safety** (`/reports/medication-safety`).
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| See a patient's allergies | Yes | No | Yes | Yes |
+| Add an allergy or record "No known drug allergies" | No | No | Yes | Yes |
+| Edit, resolve or mark an allergy entered in error | No | No | Yes | No |
+| Draft a prescription and see its allergy alerts | Yes | No | Yes | Yes |
+| Override an allergy alert and sign a prescription | Yes | No | Yes | No |
+| See the **Allergy alert overridden** badge on an order | Yes | Yes | Yes | Yes |
+| Open the Medication safety report | Yes | No | No | No |
+
+Receptionists do not see the **Allergies** card. Clinic Admins see it read-only. Nurses can add allergies but have no **Edit**, **Resolve** or **Entered in error** buttons.
+
+## The Allergies card
+
+The card always says where the patient's drug allergies stand:
+
+- **Allergy status not recorded**: nobody has recorded allergies or "No known drug allergies" yet. Doctors and nurses see "Ask the patient about drug allergies, then add them or confirm there are none." If only non-drug allergies (for example a food allergy) are listed, it says **Drug allergy status not recorded**.
+- **No known drug allergies**: the patient was asked and has none, with who recorded it and when.
+- The list of current allergies.
+
+Each allergy shows its name, a risk badge (**High risk**, **Low risk** or **Risk not assessed**), and whether it is **Unconfirmed** or **Confirmed**. Below that are its type, how it is coded, its category, **Reactions**, **Onset**, who **Recorded** it and when, and any notes. An allergy entered as free text is marked **Free text, may not be matched automatically**.
+
+Select **Show resolved and entered in error** to see records that no longer count.
+
+If the card shows **Allergies could not be loaded**, it also says "Do not assume this patient has no allergies." Select **Try again**.
+
+## Adding an allergy
+
+1. On the chart **Overview**, select **Add allergy** on the **Allergies** card.
+2. Under **Allergen**, start typing a drug, a drug group or the allergen. Results come in three lists:
+   - **Allergy groups**: a family of related drugs, such as **Penicillins** or **NSAIDs (including aspirin)**. Each shows some of the drugs it includes.
+   - **Drug names (RxNorm ingredients)**: single active ingredients from RxNorm, the standard US drug naming system, so some names are the US ones.
+   - **Free text**: **Use "…" as typed**. Use this only when nothing above fits.
+3. For free text, choose at least one **Category**: **Medication**, **Food**, **Environment** or **Biologic**.
+4. Set **Type** (**Allergy** or **Intolerance**), **Criticality** (**High**, **Low**, **Unable to assess** or **Not specified**) and **Verification** (**Unconfirmed** or **Confirmed**). New allergies start as **Unconfirmed**.
+5. Under **Reactions**, select **Add reaction**. Choose what happened, for example **Anaphylaxis**, **Rash** or **Nausea**, or **Other (type it)**. Then choose the severity: **Mild**, **Moderate** or **Severe**. You can add up to 10 reactions.
+6. Optionally enter the **Onset** (a year, month or date, for example 2019 or 2019-03), the **Date recorded** (leave it blank for now) and a **Note**.
+7. Select **Save allergy**.
+
+Choose a group or a drug name whenever you can. The prescribing check can always match those. Free text is saved without a code. The check compares it with drug names only, and may not match it at all.
+
+The allergy groups are **Penicillins**, **Cephalosporins**, **Carbapenems**, **Sulfonamide antibiotics**, **NSAIDs (including aspirin)**, **Macrolides**, **Fluoroquinolones**, **Tetracyclines**, **Opioids**, **ACE inhibitors**, **Aromatic anticonvulsants**, **Allopurinol**, **Iodinated contrast media**, **Amide local anesthetics** and **Ester local anesthetics**.
+
+If drug name search is down, the picker says "Drug name search is unavailable right now. Choose an allergy group or enter the allergen as text."
+
+If your account is not linked to a clinical profile, saving fails with "Your account is not linked to a practitioner record, so this change cannot be attributed to you. Ask an administrator to link your account, then try again."
+
+## Recording "No known drug allergies"
+
+When the card says **Allergy status not recorded**, ask the patient. If they have no drug allergies, select **No known drug allergies**. The card then shows **No known drug allergies** with who recorded it and when.
+
+You do not need to remove it if a drug allergy turns up later. Saving a drug allergy resolves it automatically, and the form says "Saving this resolves the recorded "No known drug allergies" statement."
+
+A doctor can select **Entered in error** on a "No known drug allergies" that was recorded by mistake. The card goes back to **Allergy status not recorded**.
+
+## Allergies the patient reported at registration
+
+When a patient [registered themselves](/cms/patient-records#inviting-a-patient-to-register-themselves) and said they have drug allergies, the card shows their words under **Patient-reported at intake, not verified** until a drug allergy is recorded. If "No known drug allergies" is also recorded, the card says "This conflicts with the recorded "No known drug allergies". Check with the patient."
+
+1. Confirm the allergy with the patient.
+2. Select **Record this allergy**. The **Add allergy** form opens with the patient's words as a free text allergen, the **Medication** category and a note that it came from the intake form.
+3. Replace the free text with a group or drug name where you can, add the reactions, and select **Save allergy**.
+
+Until then, the prescribing check also reads the patient's words, and labels any match "Reported by the patient on the intake form, not verified".
+
+## Correcting an allergy
+
+Doctors see three buttons on each current allergy.
+
+- **Edit** opens **Edit allergy**. Change what is wrong, optionally **Add a note**, and select **Save changes**. What changed, and who changed it, is added to the record's notes. You can also set **Verification** to **Refuted** here.
+- **Resolve** opens **Resolve allergy**, for an allergy the patient no longer has. Optionally give a **Reason (optional)** and select **Resolve allergy**.
+- **Entered in error** opens **Mark entered in error**, for a record that should not have been made. Optionally say **What was wrong (optional)** and select **Mark entered in error**.
+
+Resolved and entered-in-error records stay in the history and no longer count as allergies. If a colleague changed the allergy after you opened it, you see "This record changed since you opened it. The list was reloaded; check it and try again."
+
+## Allergy alerts when prescribing
+
+> **Note:** Prescribing happens in the **Medications** tab of the bottom dock in the [Patient Notes Workspace](/cms/patient-notes). Your deployment must turn that dock on. It is off by default.
+
+### The allergy strip
+
+The top of the **Medications** tab shows the patient's allergies, with **high risk** on high-risk ones. Otherwise it says **No known drug allergies** with the date it was recorded, or **Allergy status not recorded**. Doctors and nurses can then select **No known drug allergies** in the strip.
+
+### Choosing a drug
+
+When you choose a medication, Medbot checks it and lists what it found. Alerts that block start with **Stop:**. Alerts that only inform start with **Warning:**. Below them a line says what was checked, for example "Checked against allergies and current medications. Drug interactions were not checked." Each alert says what matched what and whose record it came from, such as "Matched by an allergy group. Recorded by a clinician."
+
+| What Medbot found | Alert |
+| --- | --- |
+| The drug contains the allergen, belongs to the allergen's group, or matches the name of a free text or patient-reported allergy | **Stop:** |
+| The same match, for an intolerance with only mild reactions and low criticality | **Warning:** |
+| Possible cross-reactivity, for example a cephalosporin for a patient with a penicillin allergy | **Warning:** |
+| A free text allergy that names no drug or group Medbot knows ("… can't be checked automatically") | **Warning:** |
+| Allergy status is not recorded for this patient | **Warning:** |
+| The drug's formulary entry has no coded ingredients ("This drug can't be checked") | Information |
+| The check could not run ("Allergies could not be checked for …") | **Stop:** |
+
+A drug can be checked fully only when its [formulary](/cms/formulary) entry has coded ingredients.
+
+### When a Stop alert appears
+
+**Add to drafts** is replaced by these choices:
+
+- **Amend order** returns you to the drug field so you can choose a different drug.
+- **Override** (Clinic Admins and Doctors) shows **Reason for going ahead**. Choose a reason, fill in **Explain** if it is required, then select **Override and add to drafts**.
+- **Leave for the prescriber** (Nurses) adds the draft with the alert still open. The draft is marked **Needs prescriber review**, and a doctor gives the reason before signing.
+- **Cancel** clears the prescription.
+
+An override reason is the prescriber's record of why they went ahead despite the alert. The reasons are:
+
+- **The patient has taken this drug before without a reaction**
+- **The allergy record is wrong, or describes an intolerance**
+- **The benefit outweighs the risk, and the patient will be monitored**
+- **Specialist advice, or desensitization**
+- **Other**
+
+**Explain** is always required for **Other**. It is also required for any reason when the alert is high severity. That means the allergy is high risk, a reaction was severe, or a reaction was anaphylaxis, angioedema, Stevens-Johnson syndrome or toxic epidermal necrolysis. Keep the explanation under 500 characters.
+
+When the check could not run, the only reason accepted is **Allergies checked manually with the patient**. If the composer says "Checks didn't run. Review allergies and current medications yourself.", select **Try again**.
+
+### Reviewing and signing
+
+1. Under **Unsigned medications**, select **Review and sign**. Medbot checks the drafts again ("Checking for allergy alerts…").
+2. The **Sign … orders?** dialog lists each draft with its alerts.
+   - A reason you gave while drafting shows as **Reason given while drafting**.
+   - An alert with no reason yet asks you for one, in the same way as when drafting. This includes drafts a nurse left for you.
+3. Select **Sign**. The button may read **Sign and close visit**, **Sign and finish encounter** or **Sign and send to …** instead, depending on what you chose to do after signing. It stays off until every **Stop:** alert has a reason. The dialog says how many still need one, for example "1 alert needs a reason before you can sign."
+
+If the check does not run, the dialog says "The allergy check didn't run." Select **Try again**. You cannot sign until it has run. A nurse sees "A prescriber must review this alert." and cannot sign a draft with an open alert. Select **Keep as drafts** to leave without signing.
+
+Medbot checks again when you sign. If an alert appears that was not there before, for example because an allergy was added after the draft, nothing is signed. The new alert appears in the dialog for you to answer. An override covers only the allergy as it stood. If the allergy's reactions or risk change later, the alert appears again.
+
+### After signing
+
+A signed prescription with an overridden alert shows an **Allergy alert overridden** badge. You see it in the **Orders** card on the patient's **Encounters** page and in the encounter preview in the notes workspace. Hover over or select the badge to see the reason, any explanation, and who overrode the alert and when. A number on the badge shows when more than one alert was overridden.
+
+## Medication safety report
+
+Clinic Admins open **Pharmacy → Medication safety** (`/reports/medication-safety`) to see how allergy alerts are answered. Other roles see "This action requires one of the following roles: admin."
+
+The report covers the last 90 days. To change the period, set **From** and **To** and select **Apply**. Select **Last 90 days** to go back. A period can be up to 366 days. An alert is counted once it has an outcome, so alerts on drafts that are still open are left out.
+
+| Section | What it shows |
+| --- | --- |
+| **Summary** | **Alerts per 100 prescriptions**, **Override rate**, **Amend rate** and **Median time to decide**, then counts of alerts shown, overridden, amended (**Order amended**) and **Abandoned** (the prescription was cancelled or discarded) |
+| **Alerts by rule** | Each kind of alert with its tier, how often it was shown, overridden, amended and abandoned, and the median time to decide |
+| **Alerts by prescriber** | The same counts and override rate for each prescriber |
+| **What the check can see** | **Formulary items with a coded ingredient** and **Patients seen with an allergy status** |
+
+A kind of alert that was shown at least 20 times and overridden more than 90% of the time is marked "Overridden more than 90% of the time: clinical review". An alert that is almost always overridden may be firing when it should not. Ask your clinical lead to look at it. A rate based on a few alerts says little, so read it with the counts.
+
+## Related
+
+- [Patient Records & Consent](/cms/patient-records): the chart overview and the patient-reported intake.
+- [Patient Notes Workspace](/cms/patient-notes): where prescriptions are drafted and signed.
+- [Orders & Order Sets](/cms/orders-and-order-sets): the **Orders** card where signed prescriptions appear.
+- [Formulary](/cms/formulary): the medications that are checked.

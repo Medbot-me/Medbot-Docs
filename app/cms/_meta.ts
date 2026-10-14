@@ -9,6 +9,7 @@ export default {
   "patient-records": "Patient Records & Consent",
   encounters: "Encounters & Clinical Notes",
   vitals: "Vitals",
+  "allergies-and-medication-safety": "Allergies & Medication Safety",
   vaccinations: "Vaccinations",
   "orders-and-order-sets": "Orders & Order Sets",
   "diagnostic-results": "Diagnostic Results",

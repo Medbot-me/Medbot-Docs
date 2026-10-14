@@ -11,13 +11,13 @@ A patient's **Documents** section lists their letters, memos, referral letters, 
 | See documents, and download, print, or email them | Yes | Yes | Yes | Yes |
 | Compose a letter or memo | Yes | No | Yes | Yes |
 | Compose a referral letter | Yes | No | Yes | No |
-| Issue a medical certificate | Yes | No | Yes | No |
+| Issue a medical certificate | No | No | Yes | No |
 | Void a letter or memo | Yes | No | Yes | Yes |
 | Void a referral letter or medical certificate | Yes | No | Yes | No |
 
 You can void only the kinds of document you are allowed to compose. A nurse can void a memo but not a referral.
 
-To issue a medical certificate, your staff record needs a medical license number. A Clinic Admin's record does not normally have one, so a Clinic Admin sees **Issue medical certificate** but the request is refused. See [Staff](/cms/staff).
+A medical certificate prints the issuing doctor's MCR number, so it can only be issued while working as a Doctor. A Clinic Admin does not see **Issue medical certificate**. Someone who is both a Clinic Admin and a Doctor switches to their Doctor role first (see [Switching role](/cms/switching#switching-role)). Otherwise the request is refused with "A medical certificate carries the issuing doctor's MCR number, so it can only be issued while working as a doctor. Switch to your Doctor role to issue one." A Clinic Admin can still void a medical certificate.
 
 <ImageZoom src="/images/cms/documents-and-certificates/01-documents-tab.png" alt="The Documents section of a patient chart listing a medical certificate, a referral letter, and a voided letter" />
 _The Documents section_
