@@ -4,15 +4,15 @@ export default {
     type: 'page'
   },
   docs: {
-    title: 'Documentation',
+    title: 'Medbot app',
     type: 'page'
   },
   patient: {
-    title: 'Patient',
+    title: 'Medbot Health',
     type: 'page'
   },
   cms: {
-    title: 'CMS',
+    title: 'Medbot CMS',
     type: 'page'
   },
   about: {
