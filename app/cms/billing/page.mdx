@@ -152,11 +152,11 @@ See [Voiding and correcting a bill](/cms/smartcms/claims#voiding-and-correcting-
 
 The **Invoices** tab lists each invoice with its **Invoice** number (the receipt number when it has one), **Patient**, **Date**, **Status**, and **Total**. Open **Actions for invoice** on a row to choose **Download PDF** or **Print**, or to void it. Select **Refresh** to reload the list.
 
-What the patient sees: a completed visit's invoice is also available to the patient in their portal. See [Visits in the Patient tab](/patient/visits).
+What the patient sees: a completed visit's invoice is also available to the patient in their portal. See [Visits in Medbot Health](/patient/visits).
 
 ## Taking payment at the counter
 
-Payments are taken from the **Bill** column of the [Reception Queue](/cms/reception-queue#taking-payment), not from this page. The **Take payment** dialog shows the bill's cash due, plus anything a payer refused or paid short, and records each payment with its method. Medbot marks the visit paid once the payments cover what is owed on the issued bill. A payment taken before the visit is billed is kept, but the visit is not marked paid until the bill is issued.
+Payments are taken from the **Bill** column of the [Reception Queue](/cms/reception-queue#taking-payment), not from this page. The **Take payment** dialog shows the bill's cash due, plus anything a payer refused or paid short, and records each payment with its method. Medbot marks the visit paid once the payments cover what is owed on the issued bill. If a payer later refuses a claim or pays short, the queue shows an amber **Owes $X** button to reception and Clinic Admins until the balance is taken. A payment taken before the visit is billed is kept, but the visit is not marked paid until the bill is issued.
 
 Taking payment does not change the invoice's **Status** on the **Invoices** tab, and it does not print a receipt. For a receipt, print the invoice. See [Finding and reprinting invoices](#finding-and-reprinting-invoices).
 

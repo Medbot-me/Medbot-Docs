@@ -213,7 +213,7 @@ A few more statuses come from Medbot itself:
 
 Choose the **Clinic** and the **Date**. It opens on today at the organisation's default location. For an earlier day the heading reads **Claims by day**. The page refreshes itself every 20 seconds.
 
-Tiles at the top total the day: **Patients billed**, **Claimed**, **Approved so far**, **Cash due**, **Cash collected** and **Need attention**. Filter the rows by **All**, **Needs attention**, **Awaiting payer**, **Settled** or **No claim**.
+Tiles at the top total the day: **Patients billed**, **Claimed**, **Approved so far**, **Cash due**, **Cash collected**, **Need attention** and **Paid, still owing**. **Paid, still owing** counts the patients whose visit reception marked paid but who now owe money again because a payer refused or paid short. It turns amber when it is above zero. Filter the rows by **All**, **Needs attention**, **Awaiting payer**, **Settled**, **No claim** or **Owes after paid**. **Owes after paid** shows just those patients.
 
 | Column | What it shows |
 | --- | --- |
@@ -223,9 +223,11 @@ Tiles at the top total the day: **Patients billed**, **Claimed**, **Approved so 
 | **Claims** | Each claim on the bill, such as **CHAS ACT**, **VSS**, **CDS**, **Screen for Life**, **Medisave** or **Medisave amendment**, with its amount and status. Select one to open the queue. |
 | **Patient pays** | What the patient owes. "est." marks a figure that can still change. |
 | **Paid** | What the patient paid and how, for example "$20.00 · PayNow", or **Unpaid**, "owes …", "overpaid …", **Nothing to pay** or **Paid (amount not recorded)**. |
-| **Status** | **Needs attention**, **Awaiting payer**, **Settled**, **No claim** or **Not billed yet**. |
+| **Status** | **Needs attention**, **Awaiting payer**, **Settled**, **No claim** or **Not billed yet**. A visit marked paid that now owes money also shows **Marked paid, owes $X** under it. |
 
-Doctors see the page without the **Paid** column and the **Cash collected** tile.
+Doctors see the page without the **Paid** column, the **Cash collected** and **Paid, still owing** tiles, and the **Owes after paid** filter.
+
+When you open the row of such a patient, a note says "The queue shows this visit as paid, but $X is still owed. Take it from the Bill column of the queue." The queue shows the same figure as an amber **Owes $X** button; see [Reception Queue](/cms/reception-queue#when-the-visit-is-marked-paid).
 
 To take a balance for one of today's patients, use **Take payment** in the [Reception Queue](/cms/reception-queue#taking-payment). Its dialog starts from the same owed figure as **Patient pays**.
 

@@ -1,3 +1,5 @@
+import { ImageZoom } from "nextra/components";
+
 # Seeding Staff & Patients
 
 An admin can bring a clinic's staff and patients into an organisation **in bulk from one CSV file**, instead of adding them one at a time.
@@ -9,13 +11,23 @@ An admin can bring a clinic's staff and patients into an organisation **in bulk 
 
 Only an **admin** of the organisation can use it.
 
+<ImageZoom src="/images/cms/seed-data/01-seed-page.png" alt="The Seed staff & patients page on staging, with the Download template and Choose CSV file buttons" />
+
 ## Steps
 
 1. **Download template** to get a CSV with the expected header (and, on staging, sample rows).
 2. Fill it in, then **Choose CSV file**.
 3. Check the **preview**. Every row is validated by the server before anything is created, and problems are shown per row.
+
 4. Confirm, then click **Seed N people**.
+
 5. Watch progress row by row. When it finishes, the result table shows what was created, invited, skipped or failed, and can be downloaded. **Seed another file** starts again.
+
+<ImageZoom src="/images/cms/seed-data/02-preview.png" alt="The preview of an uploaded file: one row Ready and one row Failed with the reason, the optional Shared password field and the Seed 1 person button" />
+
+<ImageZoom src="/images/cms/seed-data/03-confirm.png" alt="A preview with every row Ready, the optional Shared password field and the Seed button" />
+
+<ImageZoom src="/images/cms/seed-data/04-result.png" alt="Seeding finished: the shared password shown once (hidden here), each person with Created and where they sign in, and Previous runs with Tear down" />
 
 **Re-running is safe.** People who already exist are skipped, and an existing account that seeding did not create is never touched.
 

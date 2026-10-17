@@ -23,7 +23,7 @@ Doctors see only the patients assigned to them. Nurses see every patient at the 
 
 ## Reading the queue
 
-The page header shows the location, today's session with an **Open** or **Closed** badge, how many doctors are on duty, and a **Self check-in code**. If nobody has opened a session yet, it says **No session yet today**. Select **Create session** to open one, or see [Session Setup](/cms/session-setup).
+The page header shows the location, today's session with an **Open** or **Closed** badge, how many doctors are on duty, and sometimes a **Self check-in code**. Patients no longer need that code: they register from the portal with one button. If nobody has opened a session yet, it says **No session yet today**. Select **Create session** to open one, or see [Session Setup](/cms/session-setup).
 
 The table lists patients in this order:
 
@@ -57,7 +57,7 @@ Check-in records the arrival time, gives the patient a queue ticket from the loc
 
 Check-in has no time window. A patient booked for later in the day can be checked in as soon as they arrive.
 
-Patients can also check themselves in from the [patient portal](/patient/visits). They either share their location or type the six digit **Self check-in code** shown in the page header. A self check-in works like a staff check-in, and the row appears in the queue with a ticket.
+Patients can also register themselves from the [patient portal](/patient/visits). On the day of the appointment they choose how they expect to pay under **Paying with** and select **Register and get my queue number**. They do not share their location or type a code. A self check-in works like a staff check-in, and the row appears in the queue with a ticket.
 
 ### CHAS verification at check-in (Singapore)
 
@@ -102,7 +102,7 @@ The **Route…** menu on a checked-in row moves the patient through the clinic: 
 
 ## Taking payment
 
-Take payment from the **Bill** column. It has a button on rows that are **Waiting**, **Consultation**, or **Done**, so a patient can pay on the way out after the doctor has finished. **Done** rows are hidden by default; set the status filter to **All** to see them. The button reads **Take payment** until the visit is paid, then **✓ Paid**.
+Take payment from the **Bill** column. It has a button on rows that are **Waiting**, **Consultation**, or **Done**, so a patient can pay on the way out after the doctor has finished. **Done** rows are hidden by default; set the status filter to **All** to see them. The button reads **Take payment** until the visit is paid, then **✓ Paid**. Reception and Clinic Admins see an amber **Owes $X** instead if the visit was marked paid but now owes money (see [When the visit is marked paid](#when-the-visit-is-marked-paid)).
 
 1. Select **Take payment** (or **✓ Paid**) on the patient's row. The **Payment from** dialog opens with the patient's name.
 2. Check what is owed. See [What the patient owes](#what-the-patient-owes).
@@ -142,7 +142,15 @@ Medbot marks the visit paid itself when the payments cover what is owed on an is
 - **Bill could not be read.** The payment is kept and the paid status is left as it was. The dialog says so, for example "Payment recorded. The bill could not be read just now, so the visit is not marked paid: check it once the bill can be read." Open the dialog again later.
 - **Payments already cover the bill.** When the bill is issued after the patient paid, or the bill leaves nothing for the patient to pay (for example, a scheme pays it in full), the dialog says "The payments taken already cover the bill." or "Nothing is due on this bill." Select **Mark visit paid**. It is refused if the payments do not cover the bill, for example "The payments taken do not cover the bill: SGD 12.00 is still owed."
 
-The paid status is checked again only when someone records or voids a payment, or selects **Mark visit paid**. If a payer refuses a claim after the visit was marked paid, the row still shows **✓ Paid**. Open the dialog to see whether anything is still owed.
+Medbot marks a visit paid when someone records or voids a payment, or selects **Mark visit paid**. If a payer then refuses a claim or pays short, the visit stays marked paid, and the patient still sees it as paid. Reception and Clinic Admins, however, see an amber **Owes $X** button in the **Bill** column instead of **✓ Paid**. On a narrow window the **Bill** column is hidden, and the same warning appears under the patient's name as **Marked paid, owes $X**.
+
+<ImageZoom src="/images/cms/reception-queue/07-owes-after-paid.png" alt="Today's Queue with an amber Owes $18.50 button in the Bill column of a visit marked paid, and Take payment on another row" />
+
+Select it to open the **Payment from** dialog. A notice at the top says "This visit is marked paid, but a payer refused or paid short on a claim. Take the balance below, or correct the claim in Claims." If no payer fell short, it says "This visit is marked paid, but its bill now asks for more than was paid. Take the balance below." <ImageZoom src="/images/cms/reception-queue/08-owes-dialog.png" alt="The Payment from dialog with the notice that the visit is marked paid but a payer refused or paid short on a claim, a Subsidy whose claim was discarded line, and Still owed $18.50" />
+
+Take the balance as usual. The button goes back to **✓ Paid** at the next refresh once the payments cover what is owed.
+
+The amount may still change while another payer has yet to answer a claim. The button's tooltip then adds "It may still change." It can take about a minute for the button to follow a payer's answer. Doctors and nurses do not see it, because they do not see the **Bill** column.
 
 ### Voiding a payment
 
