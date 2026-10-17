@@ -1,41 +1,57 @@
+import { ImageZoom } from "nextra/components";
+
 # Advanced
 
-## Custom settings
+## Settings
 
-You can customize the behavior of the [autocomplete](/docs/workspace/editor#autocomplete) feature and the [text refining](/docs/workspace/editor#text-refining) feature by visiting [medbot.me/settings](https://www.medbot.me/settings).
+Open **Settings** from the gear in the account menu at the bottom of the sidebar, or go to [medbot.me/settings](https://www.medbot.me/settings). The page has four tabs:
+
+| Tab | What it holds |
+| --- | --- |
+| **My Account** | Your personal and professional details. |
+| **Appearance** | Light or dark theme. You can also switch from **Theme** in the account menu. |
+| **Autocompleting with AI** | Settings for [autocomplete](/docs/workspace/editor#autocomplete). |
+| **Refining with AI** | Settings for [text refining](/docs/workspace/editor#text-refining). |
+
+Platform administrators also see an **Admin Panel** button at the top right. See [Platform administration](/docs/admin).
+
+If a model you chose for autocomplete or refine has been retired by your administrator, the tab shows a **Model deactivated** or **Model deleted** alert and Medbot uses the default instead. See [AI Usage & Credits](/docs/ai-usage#when-a-model-you-chose-is-retired).
 
 ### Autocomplete settings
 
-The following table describes each autocomplete setting.
+The following table describes each setting on the **Autocompleting with AI** tab. Select **Save Changes** to apply them.
 
-| Setting                            | Description                                                                                                  |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| Enabled                            | Whether to enable autocomplete.                                                                              |
-| Previous Word Length               | The number of words immediately before the cursor that autocomplete AI will process to suggest continuation. |
-| Suggestion Debounce Length (ms)    | The amount of inactivity time, in milliseconds, before the autocomplete displays suggestions.                |
-| Autocomplete Length (words)        | Number of words that autocomplete will suggest as continuation.                                              |
-| Model                              | The LLM model to use for autocomplete.                                                                       |
-| Temperature (0-1)                  | Temperature parameter for the LLM model.                                                                     |
-| Create Embeddings for Autocomplete | Whether to create embeddings for autocomplete.                                                               |
+| Setting                         | Description                                                                                                  |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Enabled                         | Whether to enable autocomplete.                                                                              |
+| Previous Word Length            | The number of words immediately before the cursor that autocomplete AI will process to suggest continuation. |
+| Suggestion Debounce Length (ms) | The amount of inactivity time, in milliseconds, before the autocomplete displays suggestions.                |
+| Autocomplete Length (words)     | Number of words that autocomplete will suggest as continuation.                                              |
+| Model                           | The model to use for autocomplete, from those your administrator has made available.                         |
+| Temperature (0-1)               | How varied the suggestions are. Lower values are more predictable.                                           |
 
 ### Text Refining settings
 
-These settings apply to the [Quick Refine](/docs/workspace/editor#text-refining) feature in the workspace bubble menu. Following is a description of each available setting.
+These settings, on the **Refining with AI** tab, apply to the [Quick Refine](/docs/workspace/editor#text-refining) feature in the workspace bubble menu.
 
 | Setting        | Description                                         |
-| -------------- | --------------------------------------------------- | --- |
-| Default Prompt | The prompt to be used for the Quick Refine feature. |     |
-| Default Model  | The model to be used for the Quick Refine feature.  |
+| -------------- | --------------------------------------------------- |
+| Default Prompt | The prompt to be used for the Quick Refine feature. |
+| Model          | The model to be used for the Quick Refine feature.  |
 
 ### Account Settings
 
-Your account settings allow you to manage your personal and professional information associated with your Medbot account. Keeping these details up to date ensures a personalized and secure experience. The table below outlines each available setting and its purpose:
+The **My Account** tab lets you manage the personal and professional information associated with your Medbot account. Select **Update** to save changes, or **Cancel** to discard them.
 
-| Setting    | Description                                                 |
-| ---------- | ----------------------------------------------------------- |
-| First Name | Edit your first name as it appears on your account.         |
-| Last Name  | Edit your last name as it appears on your account.          |
-| Email      | View your registered email address. This cannot be changed. |
-| Country    | Specify or update your country of residence.                |
-| Occupation | Indicate your current professional occupation.              |
-| Practice   | Provide or update your practice or area of specialization.  |
+| Setting         | Description                                                 |
+| --------------- | ----------------------------------------------------------- |
+| First name      | Edit your first name as it appears on your account.         |
+| Last name       | Edit your last name as it appears on your account.          |
+| Email           | Your registered email address.                              |
+| Country         | Specify or update your country of residence.                |
+| Occupation      | Indicate your current professional occupation.              |
+| Practice / Clinic | Provide or update your practice or clinic.                |
+
+## Report a bug
+
+Choose **Report a bug** in the account menu to tell the Medbot team about a problem.

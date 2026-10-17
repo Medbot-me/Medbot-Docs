@@ -1,19 +1,53 @@
+import { ImageZoom } from "nextra/components";
+
 # Workspace
 
 ## Introduction
 
-The workspace is the most essential part of the Medbot application. This is where you write your clinical notes, have agents assist you in your writing, and chat with Medbot AI.
+The workspace is where you write your clinical notes, have agents assist your writing, and chat with Medbot. Open it from **Notes** in the sidebar, or choose **Create Notes** on [Home](/docs/getting-started/home). A note opens in the editor with a panel on each side.
 
 ## Walkthrough
 
-Following is a tour of the workspace, as shown in the image below.
+<ImageZoom src="/images/docs/workspace/01-note-open-workbench.png" alt="A note open in the workspace, with the Notes panel on the left, the editor in the middle and the AI panel on the right" />
 
-1. The sidebar to the left has tabs for your Files, Chat, Deep Research, Templates, Clinical Resources, and Agents.
-2. The toolbar at the top has text editing tools for the editor and a drop down to assign labels to your notes.
-3. The title bar shows the title of your note.
-4. The editor.
+1. **Header.** Shows where you are, the note's folder path and title, and whether it is saved. See [Saving](/docs/workspace/notes#saving-a-note). The layout controls at the right of the header show or hide the panels.
+2. **Notes panel (left).** Has three tabs:
+   - **Notes**: your folders and notes, to move between notes.
+   - **Templates**: [templates](/docs/workspace/templates) you can insert.
+   - **Resources**: **My Clinical Resources**, your uploaded [documents](/docs/clinical_resources).
+3. **The editor (centre).** Rich text with [autocomplete](/docs/workspace/editor#autocomplete), a [command palette](/docs/workspace/editor#command-palette) and a [bubble menu](/docs/workspace/editor#bubble-menu). Learn more [here](/docs/workspace/editor).
+4. **AI panel (right).** Has four tabs:
+   - **Chat**: talk to Medbot about your note. See [Chat](/docs/workspace/chat).
+   - **Agents**: run [agents](/docs/agents/types/non-form) on the open note.
+   - **Deep research**: ask a clinical question or start a [review](/docs/deep-research/start-a-review#from-the-notes-editor).
+   - **Transcript**: the live transcript when you record a consultation.
 
-![Medbot Workspace](/images/workspace.png)
-_Medbot Workspace_
+## Make room to write
 
-The editor in the workspace features a rich experience complete with [autocomplete](/docs/workspace/editor#autocomplete), a [command palette](/docs/workspace/editor#command-palette), and a [bubble menu](/docs/workspace/editor/#bubble-menu) to edit your selections. Learn more about the editor [here](/docs/workspace/editor).
+The layout controls in the header let you hide what you do not need.
+
+| Control | Shortcut |
+| --- | --- |
+| **Hide notes panel** / **Show notes panel** | `Ctrl` + `\` (`Cmd` + `\` on Mac) |
+| **Hide ai panel** / **Show ai panel** | `Ctrl` + `Alt` + `\` |
+| **Focus the note, hide every panel** (leave with **Leave focus mode**) | `Ctrl` + `Shift` + `\` |
+
+On a phone, the panels open as sheets over the note instead of beside it.
+
+## Recording a consultation
+
+In the workspace you can record a consultation and have Medbot draft a note from it:
+
+- **Record encounter** records the consultation. The **Transcript** tab shows what is being said, with controls to pause, resume and stop.
+- The arrow beside it opens **Previous sessions**.
+- When you stop, an **Encounter summary** appears with a **Proposed clinical note**. Choose **Add to note** for each section you want.
+- **Quick dictation** transcribes a short phrase straight into the note.
+
+Recording is described in more detail under [Encounter Recording](/docs/services/encounter-recording).
+
+## Where next
+
+- [Notes and folders](/docs/workspace/notes): the notes browser, organising and saving.
+- [Editor](/docs/workspace/editor): autocomplete, command palette, bubble menu.
+- [Chat](/docs/workspace/chat): ask Medbot about your note.
+- [Templates](/docs/workspace/templates): reusable text.

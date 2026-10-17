@@ -1,3 +1,5 @@
+import { ImageZoom } from "nextra/components";
+
 # AI Usage & Credits
 
 Medbot tracks the AI you use with **credits**. Your credit balance and the history behind it are on the **Usage Dashboard**.
@@ -6,7 +8,7 @@ Medbot tracks the AI you use with **credits**. Your credit balance and the histo
 
 The Usage Dashboard is at [medbot.me/ai-usage](https://www.medbot.me/ai-usage). It has no sidebar entry. You reach it from **Home**:
 
-1. Open **Home** from the sidebar.
+1. Open **Home** from the sidebar. (Home is in your **Personal** space; if you are inside an organisation, switch to **Personal** first.)
 2. Find the **Credits Remaining** card. It shows your current balance and how many credits you have used to date.
 3. Select **View Usage**.
 
@@ -23,7 +25,7 @@ The page is headed **Usage Dashboard** and names the account it belongs to (**Ac
 
 ### Summary cards
 
-Three cards sit across the top. All three cover the lifetime of your account; there is no date-range filter.
+Three cards sit across the top. All three cover the lifetime of your account. For a breakdown over a chosen period, see [AI usage](#ai-usage) below.
 
 | Card | What it counts |
 | --- | --- |
@@ -74,9 +76,20 @@ Select **Top up credits** on the Usage Dashboard to see the credit packs:
 
 One credit is worth **US$0.01**. A generation is priced from the number of input and output tokens it used and the model that produced it, rounded up to a whole credit (at least one).
 
-> **Metering is being rolled out.** Today, AI features, including Deep Research, are not yet charged per generation, so you will not see **Usage** rows for them yet. Your balance changes only through grants, adjustments and purchases until metering is switched on.
+Every AI call is recorded. Medbot does not yet stop AI features when your balance reaches zero, but the **Credits Remaining** card turns to **Out of Credits**. On deployments that do enforce limits, you see an **Out of credits** message with a **Top up** action instead.
 
-Medbot no longer shows a per-request trace of model cost, tokens or latency. The **Underlying Model Cost** panel that used to appear on this page has been removed. The credit ledger is now the single record of your AI usage.
+## AI usage
+
+Below the three cards, the **AI usage** section lists "Every AI call billed to you" for a period you choose.
+
+<ImageZoom src="/images/docs/ai-usage/01-usage-dashboard.png" alt="The Usage Dashboard with the credits cards and the AI usage section for the last 30 days" />
+
+- **Period** chooses the time range: **Last 7 days**, **Last 30 days** (the default), **This month**, **Last 90 days** or **All time**.
+- Four tiles summarise the period: **Model cost** (what the providers charged, with margin), **Credits charged** (whole credits taken from the balance), **AI calls** (with how many did not complete) and **Tokens** (in and out, plus minutes of audio).
+- **By feature** and **By model** tables break the period down by calls, tokens and cost. Features include Autocomplete, Refine text, Continue note, Deep Research, Agent run, Resource ingestion, Encounter transcription and Dictation.
+- The **AI calls** table lists each call with **Time**, **Feature**, **Model**, tokens in and out, **Cost**, **Credits** and **Status** (Completed, Failed, Stopped or In progress), 25 per page. Credits leave your balance in whole numbers once the fractions add up to one.
+
+After paying through checkout, a **Payment received** or **Top-up canceled** message appears.
 
 ## When a model you chose is retired
 
@@ -85,7 +98,7 @@ Agents, tools, care contexts and your [refine and autocomplete settings](/docs/a
 - **Your work keeps running.** The feature falls back to the platform default model.
 - **An alert explains it.** Wherever the model is chosen, a **Model deactivated** or **Model deleted** alert says which model is now used instead, for example: _"X" has been deactivated by an administrator. This agent now runs on the platform default, "Y", until it is reactivated._ A deleted model also tells you to choose another model if you want a specific one.
 - **A badge marks it.** Agent cards, tool and care-context lists, and a service's agents show a badge.
-- **You are notified.** A notification such as _Your agent "N" uses a deactivated model_ appears in the **Notifications** bell on **Agents**, linking to the agent's edit page or to **Settings**.
+- **You are notified.** A notification such as _Your agent "N" uses a deactivated model_ appears in the **Notifications** bell on **Agents**, linking to the agent's edit page or to **Settings**. The same applies to your refine and autocomplete settings.
 
 In a model picker, a retired choice stays visible as "(deactivated)" or "Deleted model" so you can see what was selected before you change it.
 
@@ -93,8 +106,8 @@ In a model picker, a retired choice stays visible as "(deactivated)" or "Deleted
 
 ## For administrators
 
-Medbot administrators see platform-wide numbers in the **Admin Panel**, reached from the **Admin Panel** button on **Settings**:
+Medbot platform administrators see platform-wide numbers in the **Admin Panel**, reached from the **Admin Panel** button on **Settings**. See [Platform administration](/docs/admin) for the rest of the console.
 
-- **Platform overview** (`/admin`): totals for users, agents and bug reports, and an **Agent usage** card with total, completed and background runs, a **Top agents by usage** table (**Agent**, **Runs**, **Last run**) and recent executions. These count runs, not credits or tokens.
-- **Users** (`/admin/users`, superadmins only): a **Credits** column for each user, and a **Top up credits** row action. It opens **Grant credits** with an **Amount** and an optional **Reason**, recorded as an **Adjustment** in that user's ledger.
-- **Models** (`/admin/models`): before you deactivate or delete a model, the confirmation lists what currently uses it (agents, tools, refine and autocomplete settings, care contexts, service agents, AI threads and research reviews). Everyone who chose it is notified when you go ahead. A model that is the default cannot be deleted until another model is made the default.
+- **Platform overview**: totals for users, agents and bug reports, and an **Agent usage** card with total, completed and background runs, a **Top agents by usage** table (**Agent**, **Runs**, **Last run**) and recent executions. These count runs, not credits or tokens.
+- **Users** (superadmins only): a **Credits** column for each user, and a **Top up credits** row action that opens **Grant credits** with an **Amount** and an optional **Reason**, recorded as an **Adjustment** in that user's ledger. A **Usage** row action opens a side sheet with that user's AI usage for the period.
+- **Models**: before you deactivate or delete a model, the confirmation lists what currently uses it (agents, tools, refine and autocomplete settings, care contexts, service agents, AI threads and research reviews). Everyone who chose it is notified when you go ahead. A model that is the default cannot be deleted until another model is made the default.

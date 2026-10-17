@@ -1,3 +1,5 @@
+import { ImageZoom } from "nextra/components";
+
 # Note Agents
 
 Note agents (previously called non-form agents) process clinical notes rather than a whole patient record or a form. You define what a note agent does with its **System instructions** and **Expert knowledge** when you [create the agent](/docs/agents/create-an-agent).
@@ -9,19 +11,16 @@ Agents called on the **Whole patient record** read a patient's record through FH
 
 ## Using Note Agents
 ### From the workspace
-Note agents can be used from the sidebar or from the [bubble menu](/docs/workspace/editor#bubble-menu) in the [workspace](/docs/workspace), depending on the type of the agent. In the context of the workspace, there are two types of note agents:
+Note agents can be used from the AI panel or from the [bubble menu](/docs/workspace/editor#bubble-menu) in the [workspace](/docs/workspace), depending on the type of the agent. In the context of the workspace, there are two types of note agents:
 1. Full-text agents
 2. Selection agents
 
-Full-text agents (called on **A single note**) process the whole content of an open note in the workspace. They can be used from the My Agents tab in the workspace sidebar. You only need to have the note that you want to process open in the workspace to use a full-text agent.
+Full-text agents (called on **A single note**) process the whole content of an open note in the workspace. They can be used from the **Agents** tab of the **AI** panel on the right. You only need to have the note that you want to process open in the workspace to use a full-text agent.
 
 Selection agents work by processing a selection from an open note in the workspace. They can be used from the bubble menu. You need to select text in the workspace to use a selection agent.
 
-The image below shows (1) selection agents in the bubble menu and (2) full-text agents in the My Agents tab of the sidebar.
+The image below shows (1) selection agents in the bubble menu and (2) full-text agents in the **Agents** tab of the AI panel.
 
-![Workspace Agents](/images/workspace-agents.png)
+<ImageZoom src="/images/docs/workspace/08-workspace-agents.png" alt="A note open with the Agents tab of the AI panel listing agents, each with a model choice and a Run button" />
 
-### From the file browser
-Note agents can be used to process notes in a folder in a similar manner to [form agents](/docs/agents/types/form#from-the-file-browser). Visit [medbot.me/notes](https://www.medbot.me/notes) and click the `Agents` button under `Actions` on a folder of your choice. This will bring up a dialog where you can select the agent you want to use.
-
-The results will be shown in the dialog itself and will follow the agent's system instructions and expert knowledge you defined while creating the agent.
+If you try a selection agent without selecting text, Medbot says "Selection agents can only be used with selected text from the editor."

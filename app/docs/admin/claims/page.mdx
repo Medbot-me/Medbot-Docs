@@ -1,0 +1,29 @@
+import { ImageZoom } from "nextra/components";
+
+# Claims Review
+
+> **For Medbot platform superadmins only.** Platform admins without the superadmin role do not see **Claims**.
+
+When someone [claims an organisation](/docs/getting-started/claim-an-organisation), a superadmin checks the claim. Open **Claims** in the [Admin Panel](/docs/admin).
+
+## The list
+
+The tabs are **Open**, **Submitted**, **Being reviewed**, **Verified**, **On Medbot**, **Rejected**, **Cancelled** and **All**. The table shows **Organisation**, **Status**, **Checks**, **Medplum** and **Submitted**. Open a claim to review it.
+
+<ImageZoom src="/images/docs/admin/01-claims-review.png" alt="A claim under review with the Verification checklist and Decision card" />
+
+## Review a claim
+
+1. Select **Take this claim** (or **Take over** if a colleague has it). **Release** gives it back.
+2. In **Verification checklist**, mark each check **Confirmed**, **No match** or **Clear**:
+   - Work email belongs to the organisation (pre-filled from the listing's website or referral email).
+   - UEN matches the registered business.
+   - Confirmed by phone with the organisation.
+   - Clinic or practitioner licence checked.
+3. Write what you did under **How you checked** and select **Save**.
+4. Decide, under **Decision**:
+   - **Verify** (confirm "Verify this claim?"). For a self-managed claimant, they then finish setup themselves. For a hosted organisation, set up the Medplum project (see [Platform administration in Medbot CMS](/cms/platform-administration)) and then select **Create organisation**.
+   - **Reject**, with a **Reason** that the claimant will see.
+5. After setup, **Resend ready email** sends the claimant the "ready" email again.
+
+**Admin notes** are never shown to the claimant.

@@ -1,0 +1,58 @@
+import { ImageZoom } from "nextra/components";
+
+# Organisations and Roles
+
+If you work for a clinic or a hospital group, you can use Medbot inside an **organisation**. Services, patients, members and organisation settings live there. Your own notes, agents and research stay in your **Personal** space.
+
+## Personal space and organisation space
+
+The sidebar changes depending on where you are.
+
+- **Personal** shows Home, Inbox, Agents, Datasets, Notes, Deep Research, Templates and Clinical Resources.
+- **An organisation** shows a group named after the organisation, with Overview, Tasks, Services, Agents, Patients, Members and Organisation settings.
+- **A service** (opened from **Services**) shows that service's own pages. See [Services](/docs/services).
+
+Personal tools disappear while you are inside an organisation. Switch back to **Personal** to use them.
+
+## Switch organisation
+
+At the top of the sidebar, the switcher shows your organisation's name with **Organisation** beneath it, or **Personal** with **Medbot**.
+
+1. Select the switcher. A menu headed **Organisations** opens.
+2. Choose **Personal** or one of your organisations.
+
+You land on the organisation's overview, or on [Home](/docs/getting-started/home) for Personal.
+
+The menu also has **Create organisation** and **Join with code**. If you are not in any organisation yet, Medbot says so and suggests you create one or join with a code from your admin.
+
+<ImageZoom src="/images/docs/organisations/01-switcher-and-role.png" alt="The organisation switcher open, listing the organisations with Create organisation and Join with code, and the current role shown in the top bar" />
+
+## Join with a code
+
+1. In the switcher, select **Join with code**.
+2. Enter the **Join code** from your organisation's admin, and optionally a **Message (optional)**.
+3. Select **Request to join**. An admin of the organisation approves it.
+
+## Create an organisation
+
+1. In the switcher, select **Create organisation**.
+2. On **Create an organisation**, enter the **Organisation name** and **Country**.
+3. Enter the organisation's **Medplum client ID** and **Medplum client secret**, and the **Medplum base URL** if it is not the default. Medbot checks them by signing in before anything is created.
+4. Select **Create organisation**. When it succeeds, you are switched into the new organisation.
+
+If your clinic is already listed in Medbot's directory, claim it instead: see [Claim an organisation](/docs/getting-started/claim-an-organisation).
+
+## Roles and "Act as"
+
+In an organisation you can hold one or more roles: Admin, Doctor, Receptionist, Nurse or Superuser. The top bar shows **Role:** followed by your active role, and what you see and can do follows that role.
+
+If you hold more than one role, **Role** is a menu headed **Act as**. Choose a role to switch to it; no need to sign out.
+
+You can also pick a role when switching from Home: the **Switch to an organisation** card has a role list and a **Switch** button for each organisation.
+
+### Giving someone more roles (organisation admins)
+
+1. Open **Members** in the organisation.
+2. Open the member and select **Edit member**.
+3. Tick the **Roles** they should hold. A registration number is required for doctors.
+4. Select **Save changes**.

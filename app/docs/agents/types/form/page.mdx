@@ -1,23 +1,18 @@
+import { ImageZoom } from "nextra/components";
+
 # Form Agents
 
-Form agents provide a convenient way to fill out medical forms based on a patient record. You can use them on individual notes in the workspace, or on an entire folder in the file browser.
+Form agents provide a convenient way to fill out medical forms based on a patient record. You can use them on individual notes in the workspace.
 
 ## Creating Form Agents
 To create a form agent, choose **A form the clinician fills in** under **How the agent is called** in step 2 of the [agent wizard](/docs/agents/create-an-agent#how-the-agent-is-called).
 
 ## Using Form Agents
 ### From the workspace
-To use form agents from the [workspace](/docs/workspace), open a note, select the My Agents tab and click `Run` on a form agent. You will be presented with a dialog as shown below where you must select a form to be filled out by the agent.
+To use form agents from the [workspace](/docs/workspace), open a note, select the **Agents** tab in the **AI** panel on the right and choose **Run** on a form agent (each agent also has a **Default** / **Algo** processing choice). A dialog opens with the agent's name, where you choose the form to fill in and select **Apply Agent**.
 
-![Form Agent Dialog](/images/form-agent.png)
+The form can be a PDF, Word (.docx), Excel (.xlsx) or CSV file. Medbot reads the form's text ("Reading the form…", then "Extracted the form's text."); only the first 200,000 characters are used.
+
 *Form Agent Dialog for the default **Insurance Form Processor** agent in the Workspace*
 
-Once the agent has finished processing, click the `Click here to view result` button to go to the results page.
-
-### From the file browser
-The file browser can be used to apply a form agent to an entire folder. Click the `Agents` button under `Actions` in the file browser as shown below.
-
-!['Agents' Action](/images/agents-action.png)
-***Agents** action in the file browser*
-
-This will open up a dialog where you can select the form agent you want to use and upload a form. The agent will process the folder you selected to fill out the uploaded form.
+Once the agent has finished processing, select **Click here to view result** to go to the results page.

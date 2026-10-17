@@ -1,0 +1,50 @@
+import { ImageZoom } from "nextra/components";
+
+# Claim an Organisation
+
+Medbot keeps a directory of clinics and services that are not on Medbot yet. If your organisation is listed, you can **claim** it. A Medbot administrator checks your claim, and once it is verified you become the organisation's first admin.
+
+Anyone signed in can make a claim. If your organisation is not listed, [create it](/docs/getting-started/organisations#create-an-organisation) instead.
+
+## Make a claim
+
+1. Open **Organisations** and select **Claim an existing organisation**.
+2. On **Claim an organisation**, type a name, postal code or specialty into the **Search by name, postal code or specialty** box and select **Search**.
+3. Find your organisation in the results and select **Claim**. If someone else's claim is already open, the result shows **Claim under review** instead.
+4. Under **Show that it is yours**, fill in the form:
+   - **Your role at the organisation**, for example Clinic manager or Medical director.
+   - **Your work email**. An address at the organisation's own domain is the quickest to check.
+   - **Phone**. Medbot may call the organisation to confirm.
+   - **UEN**, the business registration number.
+   - **Clinic or practitioner licence number**.
+   - **Links that show your connection** (optional, up to five, one per line).
+   - **Anything else we should know**.
+   - **Medplum**: choose **Our own Medplum project** (the default) or **Medbot hosts it for us**.
+5. Select **Submit claim**.
+
+<ImageZoom src="/images/docs/organisations/02-claim-form.png" alt="The claim form filled in for a listed clinic" />
+
+## Follow your claim
+
+Open **Organisations**, where **Your claims** lists your claims, or open the claim directly. The **Your claim** page shows a status:
+
+| Status | Meaning |
+| --- | --- |
+| **Submitted** | Waiting for a Medbot administrator. You are emailed when it is verified. |
+| **Being reviewed** | An administrator is checking it. |
+| **Verified** | Your claim is accepted. A setup step may be waiting for you. |
+| **On Medbot** | The organisation is set up. |
+| **Not approved** | The claim was rejected. The reason is shown. |
+| **Cancelled** | You or an administrator cancelled it. |
+
+While a claim is open you can select **Cancel claim**.
+
+## Finish setup
+
+If you chose **Our own Medplum project**, a **Finish setup** card appears once the claim is **Verified**. Enter your Medplum **Client ID** and **Client secret**, and optionally the **Medplum base URL (optional)**, then select **Finish setup**.
+
+If you chose **Medbot hosts it for us**, Medbot sets up the Medplum project and emails you when it is ready.
+
+<ImageZoom src="/images/docs/organisations/03-claim-status.png" alt="A verified claim for a Medbot-hosted organisation, waiting for Medbot to set up its Medplum project" />
+
+When setup is complete, the page says the organisation is on Medbot. Select **Open it** to start as its first admin.

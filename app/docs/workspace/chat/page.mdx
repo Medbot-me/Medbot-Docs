@@ -1,0 +1,39 @@
+import { ImageZoom } from "nextra/components";
+
+# Chat
+
+The **Chat** tab of the AI panel lets you ask Medbot questions while you write. It can see the text you attach and can propose edits to the open note. Any signed-in user can use it.
+
+<ImageZoom src="/images/docs/workspace/02-ai-dock-chat.png" alt="The AI panel with the Chat tab open showing a short conversation" />
+
+## Start a chat
+
+1. Open a note in the [workspace](/docs/workspace). If the right-hand panel is hidden, select **Show ai panel**.
+2. Select the **Chat** tab.
+3. Type in the box ("Ask Medbot! Hit enter to send.") and press `Enter`.
+
+To chat about selected text, select it in the note and choose **Ask AI** in the [bubble menu](/docs/workspace/editor#ask-ai). The text is attached to your message as context; you can dismiss it before sending.
+
+## Your chats
+
+The chat picker at the top shows the current conversation (**New chat** for a fresh one). Use the buttons beside it to **Start a new chat**, **Rename this chat** or **Delete this chat**.
+
+## Choose a model
+
+The model button opens **Select a model**. Search with **Search models...** and pick one. The first entry is the platform default. Which models you see depends on what your administrator has made available.
+
+## Tools
+
+The settings button (**View available tools**) opens **Tools for this chat**. These are the things the assistant can decide to use. They depend on where the chat was opened and on your role. Tools that work on the note are marked **Editor**.
+
+## Chatting about a patient
+
+If you attach a dataset and a patient with the **Dataset** and **Patient** pickers (**No patient** or **Choose a patient**), the box becomes "Ask about &lt;patient&gt;. Hit enter to send." A button, **Run an agent on this patient**, lets you start an [agent](/docs/agents/running-agents) on them.
+
+## Edits to your note
+
+Medbot can propose a change to the open note. The proposal appears in the editor with the same accept or reject choice as [Refine](/docs/workspace/editor#text-refining), and a **Regenerate** option. Your decision is sent back to the chat.
+
+## Running out of credits
+
+Chat uses [credits](/docs/ai-usage). If you run out and your deployment enforces limits, an **Out of credits** message appears with a **Top up** action.
