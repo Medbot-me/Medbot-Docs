@@ -1,38 +1,46 @@
 # Messages
 
-The **Messages** tab is a hub of threads. Three kinds live side by side, each with its own identity, and each thread opens into the same conversation view.
+The **Messages** tab lists all your conversations in one place. Open any of them to read it and reply.
 
-## Thread kinds
+The screen has four groups: **Clinic**, **Care team**, **Ask Medbot** and **Assistants**.
 
-### The clinic front desk
+## Clinic
 
-One thread per connected clinic. With a single clinic connected it is simply "The clinic"; once there is more than one, each thread is named for its clinic.
+One thread for each clinic you are connected to. With one clinic it is called "The clinic". With more than one, each thread is named after its clinic.
 
-This is the non-urgent channel to the clinic's staff — the same conversation staff see and answer from the CMS's [Clinic Messaging](/cms/messaging) screen. Read the existing thread before adding to it, and keep each message to one request with enough context (an appointment or visit date) for staff to act on it.
+Use it for non-urgent questions to the clinic's staff. Staff see and answer it in their own app. Read what is already there before you add to it. Keep each message to one request, and say the date of the visit or appointment if it helps.
 
-Staff identity is deliberately not exposed on the patient's side of the thread.
+You do not see staff members' names in this thread.
 
-### Care-team threads
+## Care team
 
-One thread per care program the patient is enrolled in, talking to that program's agent. Threads are named by the program itself — the name staff gave it — rather than by an agent persona.
+If a clinic enrolled you in a service, such as a diabetes service, you get a thread for it. Each thread is named for the service's assistant. Under the name you see the organisation that runs it, for example "Sunrise Clinic · AI assistant".
 
-A care-team thread may contain individual **check-in** conversations (encounters) reached from the thread.
+The thread explains what the assistant can and cannot do: "This assistant is run by the organisation that provides this service. It can look up your service details and hand off to a member of your care team for anything it can't answer. It can't diagnose. For anything urgent, please call the clinic."
 
-### Guided care sessions
+To reach a person, select **Message the clinic**.
 
-One thread per [guided care session](/patient/ask-medbot#guided-care-sessions) the patient has consented to, carrying the matching agent's name and icon for its kind.
+Each message names who sent it. A thread may also hold short check-in conversations that you open from it.
 
-A session thread that has **ended** is read-only and shows a badge on the hub instead of inviting more reading. In place of the composer it offers either:
+## Ask Medbot
 
-- a link to the session's [summary](/patient/health-records), when the session completed; or
-- a **Start a new session** form for the same kind, with the same consent copy shown before the first one started, when the session was cancelled or swept away as abandoned.
+Your three most recent [Ask Medbot](/patient/ask-medbot) chats. Select **See all** to see the rest.
 
-An abandoned session writes no summary.
+## Assistants
 
-## Escalations
+Guided care sessions that you agreed to, such as a [pre-visit history](/patient/pre-visit-history). Each thread shows its own name and icon. Select **AI encounters** to see them all, grouped as waiting for you, completed and ended.
 
-A red flag raised by Ask Medbot or inside a guided session lands in the clinic front-desk thread. With several clinics connected, it is sent to every one of them rather than guessing which should see it.
+An ended session is read-only, with a badge on the list: **New**, **Completed**, **Expired** or **Ended**. In place of the message box you see one of these:
+
+- A link to the session's summary, if it was completed. See [Health Records](/patient/health-records).
+- A **Start a new session** form, if it was cancelled or left unfinished. It shows the same consent wording as before.
+
+An unfinished session does not save a summary. A finished pre-visit history has a **Review and send** button (or **See what was sent**) in its thread.
+
+## Red flags
+
+If Ask Medbot or a session picks up a warning sign, it goes to your clinic's thread. If you are connected to several clinics, it goes to all of them.
 
 ## What Messages is not
 
-Messaging the clinic is for non-urgent contact. The portal points patients to local emergency services or to the clinic directly for anything urgent.
+Messages is not for emergencies. For anything urgent, call the clinic or your local emergency number.
