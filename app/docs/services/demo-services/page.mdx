@@ -1,0 +1,61 @@
+import { ImageZoom } from "nextra/components";
+
+# Demo Services
+
+A **demo service** is a fully configured service filled with made-up patients, so you can show how a service runs, or learn it yourself, without touching real records. Demo patients have no phone, email or ID number, so nothing is ever sent to them.
+
+You'd use one to explore the Workstation, agents and patient portal safely, to train staff, or to show a colleague what a finished service looks like.
+
+## Create a service from a template
+
+1. In the sidebar, open **Services** and click **New Service**.
+2. Under **How to start this service**, choose a template:
+
+   | Template | Specialty | What it sets up |
+   | --- | --- | --- |
+   | **Chronic disease management** | Family medicine | Pre-visit history before each review, red flags for low and high blood sugar, chest pain and stroke signs, foot and eye screening steps, and education and financial counselling agents for chronic care. |
+   | **Joint replacement and recovery** | Orthopaedic surgery | Post-op reviews with wound check, X-ray and physiotherapy steps, red flags for wound infection, calf swelling and breathlessness, education on weight-bearing, exercises and pain relief, and pre-op readiness questions. |
+   | **Medical retina clinic** | Ophthalmology | Visual acuity, pressure and dilation steps, red flags for sudden vision loss, flashes and floaters, and a painful red eye after injection, injection interval reminders, and a pre-visit history on vision changes. |
+   | **IVF and assisted reproduction** | Reproductive medicine | Monitoring visits with scan and hormone blood-test steps, red flags for OHSS and for bleeding or pain in early pregnancy, injection-technique and cycle-stage education, and financial counselling for cycles. |
+
+3. The **Name** is pre-filled with the template's name; change it if you like. The template sets the specialty, protocols, referral criteria, AI encounters, red flags, agents and visit steps. You can change any of them afterwards.
+4. Click **Create from template**.
+
+<ImageZoom src="/images/docs/services/demo-services/01-new-service-template-picker.png" alt="The New Service page with the template cards and the Medical retina clinic template selected" />
+
+The service is published straight away, with no setup wizard, and shows an amber **Demo** chip beside its status ("Demo data - synthetic, not a real patient record"). Any member of the organisation can create one.
+
+## Load demo patients
+
+The **Demo patients** panel (with a **Synthetic data** chip) sits at the top of a demo service's **Overview**. For a service you made without a template, owners and organisation admins find it at the bottom of **Settings**, above the **Danger zone**. Everyone with access to the service can see the panel; only the service owner or an organisation admin sees the buttons that change it.
+
+1. Click **Load demo patients**.
+2. In **Load demo patients**, choose a **Demo patient set**. Each shows a name, a **Bundled** or **From Medbot-Simulation** badge, and a description. A set already loaded in another service is greyed out.
+
+   The bundled sets are **Chronic disease clinic — core six**, **Joint replacement — pre-op to 3 months**, **IVF cycles in progress** and **Medical retina clinic — injection list**.
+3. Choose which patients to load. If the set has several conditions, archetypes or sites, filter with **Condition**, **Archetype** and **Site**. Quick buttons choose **One per archetype**, **Two per archetype**, **All shown** or **None**; or tick patients individually under **Patients (N shown)**.
+4. Click **Load N patient(s)**.
+
+<ImageZoom src="/images/docs/services/demo-services/02-load-demo-patients-dialog.png" alt="The Load demo patients dialog with the bundled set, the Condition filter, All shown and None, the patient list and the Load 6 patients button" />
+
+Patients are dated relative to today, so their story is current whenever you load them. The panel's status line tracks progress ("Loading demo patients - N of M ready.") and ends with "N demo patients loaded." If some steps fail it says so, and you can try again.
+
+Each loaded patient shows their name (a link to their patient page), a summary and tags. An **In patient portal** badge appears once their portal copy is ready. Demo patients carry a **Demo** chip in the cohort roster, on their patient page, and on the Workstation boards. Use the link at the foot of the panel to see them in today's queue on the Workstation.
+
+<ImageZoom src="/images/docs/services/demo-services/03-demo-panel-loaded.png" alt="The Demo patients panel with loaded patients, View as patient buttons and the reset and remove buttons" />
+
+## View as patient
+
+Any care team member can see what a demo patient sees. Once a patient shows **In patient portal**, click **View as patient**. The patient portal opens in a new tab as that demo patient, signed in as you. The first time, it asks you to complete a short sign-up.
+
+If it fails, a message says "Could not open the patient portal".
+
+## Remove or reset the demo
+
+These buttons are for the service owner and organisation admins:
+
+- **Refresh portal copies**: re-syncs the patient portal copies.
+- **Reset and reload**: after you confirm **Reset and reload the demo?**, deletes everything the demo patients have (charts, appointments, visits, notes and portal copies, including anything you added while demoing) and reloads them dated from today.
+- **Remove demo patients**: after you confirm **Remove the demo patients?**, deletes the demo patients and everything they touched. If removal does not finish, the panel says so and offers **Retry removal**.
+
+A service that still has demo patients cannot be deleted. Remove them first, so their records are deleted from the patient portal too.

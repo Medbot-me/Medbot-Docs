@@ -1,32 +1,34 @@
 # Service Context & Content
 
-Two things tell a service's AI what it needs to know: **service context**, a plain-language description of how the service runs, and the **content library**, the documents agents and AI encounters can draw on.
+Two things tell a service's AI what it needs to know: **SOP and Instructions**, a plain-language description of how the service runs, and the **content library**, the documents agents and AI encounters can draw on.
 
-## Service context
+## SOP and Instructions
 
-The **Service context** tab (the **Agent context** step in the setup wizard) holds free text that is **given to every service agent run**. Describe:
+The **SOP and Instructions** card on the service's **Overview** (and step 2 of the setup wizard) holds free text that Medbot turns into the **agent context** given to every service agent run. Describe:
 
 - how the service runs and the steps patients and staff go through
 - who does what, and when
 - when to escalate, and to whom
 - how to use the content library, e.g. "Answer dietary questions from the 'Post-op nutrition' handout in the content library"
 
-There is no graph or builder: it is saved as text with **Save agent context**. It replaces the old program **Workflow** text.
+A starting set of protocols is filled in for a new service. To change it:
 
-### Drafting it with AI
+1. On **Overview**, click **Edit protocols and instructions**.
+2. Edit the text.
+3. Click **Save**. The button reads "Saving and generating agent context…" while Medbot rebuilds the agent context, and a "Protocols saved" message confirms it.
 
-Paste anything unstructured into **Notes on how this service runs** (a workflow write-up, an SOP, handover notes, escalation rules) and click **Generate context with AI**. Review and edit the draft before saving.
+The generated agent context sits collapsed under the text, so you can check what agents will actually be given. There is no graph or builder; it is just text. It replaces the old program **Workflow** text.
 
 ### Other context agents receive
 
-Service context is one layer. Agents also receive:
+The SOP is one layer. Agents also receive:
 
 - each **care team member's** agent context, built from their preferences (see [Care Team](/docs/services/care-team#members))
 - each **patient's** context, built from their encounter notes (see [Patients & Cohort](/docs/services/patients#encounter-notes))
 
 ## Content library
 
-The **Content** tab (the wizard's **Content library** step) holds the clinical resources this service's agents and AI encounters can use.
+The **Content library** item in the sidebar (and the wizard's **Content library** step) holds the clinical resources this service's agents and AI encounters can use.
 
 ### Adding a document
 
@@ -41,6 +43,6 @@ A new document is processed before it can be used; until then it shows as pendin
 
 ### Where the library is used
 
-- **AI encounters** can have documents attached by default, attach the best matches automatically, and let the assistant search the library. See [AI Encounters & Kiosk](/docs/services/encounters#settings).
+- **AI encounters** can have documents attached by default, attach the best matches automatically, and let the assistant search the library. See [AI Encounters](/docs/services/encounters#settings).
 - **Service agents** with the **Clinical resources** tool can look things up in it.
-- The **patient agent** answers health-education questions from it.
+- The **patient agent** answers health-education questions from it, and walks patients through counselling protocols with its **Education & counselling sessions** tool.

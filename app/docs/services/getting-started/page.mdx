@@ -2,50 +2,60 @@
 
 ## 1. Start a new service
 
-With an organisation selected, open **Services** in the sidebar (`/services`). The list shows each service's name, specialty, setting and status, with a **Continue setup** link next to any of your own drafts.
+With an organisation selected, open **Services** in the sidebar. The list shows each service's name, specialty, setting, **Mode** and status, with a **Continue setup** link next to any of your own drafts. Demo services carry a **Demo** chip.
 
-Click **New Service** and fill in:
+Click **New Service**. Under **How to start this service**, choose:
+
+- **Blank service**: start empty and set up your care team, protocols, agents and settings step by step.
+- **A template** (Chronic disease management, Joint replacement and recovery, Medical retina clinic, or IVF and assisted reproduction): comes fully configured for one clinical area and can be filled with made-up patients. See [Demo Services](/docs/services/demo-services).
+
+For a blank service, fill in:
 
 - **Name**: required, e.g. "Colorectal SOC: Referral to Discharge".
 - **Specialty**: optional, e.g. "Colorectal Surgery".
+- **Mode of care**: **Clinic**, **Inpatient** or **Remote**. This sets what the Workstation shows. See [Modes of Care](/docs/services/modes-of-care).
 - **Setting**: optional, e.g. "SOC, inpatient, primary care".
 
 Click **Create Service**. Any member of the organisation can create one. The service is created as a `draft`, with:
 
-- a default **Onboarding agent**, already bound to run when a patient is added (see [Service Agents](/docs/services/agents#the-onboarding-agent))
+- four default agents: **Onboarding**, **Health education**, **Financial counselling** and **Patient agent** (see [Service Agents](/docs/services/agents#default-agents))
 - default AI encounter settings
 
-and you go straight into the setup wizard.
+and you go straight into the setup wizard. A service created from a template skips the wizard and opens its page, already published.
 
 ## 2. Walk through the setup wizard
 
-The wizard at `/services/[serviceId]/setup` has six steps, shown as numbered pills you can jump between freely. Every step is optional, and you can click **Skip setup for now** at any point and come back later. Only the service's owner (or a Medbot platform administrator) can open the wizard.
+The wizard has seven steps, shown as numbered pills you can jump between freely. Every step is optional, and you can click **Skip setup for now** at any point and come back later. Only the service's owner (or a Medbot platform administrator) can open the wizard.
 
 ### Step 1: Care team
 
-Add people from your organisation to the service. Each joins with the role they already hold in the organisation; there is no role to choose. See [Care Team](/docs/services/care-team).
+Add people from your organisation to the service. Each joins with the role or roles they already hold in the organisation; there is no role to choose. See [Care Team](/docs/services/care-team).
 
-### Step 2: Agent context
+### Step 2: SOP and Instructions
 
-Describe, in plain language, what every agent in this service should know before it acts: how the service runs, who does what, when to escalate, and how to use the content library. It is given to every service agent run. You can also have AI draft it from your notes. See [Service Context & Content](/docs/services/context-and-content).
+Describe, in plain language, how this service runs: who does what, when to escalate, and how to use the content library. A starting set of protocols is filled in for you. Adjust it and click **Save**; Medbot then turns it into the agent context that every service agent run is given. See [Service Context & Content](/docs/services/context-and-content).
 
-### Step 3: Agents
+### Step 3: Referral criteria
 
-Create AI agents for this service, each with an audience (Staff, Patient or Onboarding), tools and instructions. The default onboarding agent is already here; rewrite its instructions or add agents alongside it. See [Service Agents](/docs/services/agents).
+Describe which referrals this service accepts and at what thresholds. Medbot's screening agent checks each incoming referral against this text and drafts a verdict; a person always decides. See [Referrals](/docs/services/referrals#referral-criteria).
 
-### Step 4: Settings
+### Step 4: Agents
 
-- **Patient agent**: bind a Patient-audience agent so patients can chat with it over SMS or WhatsApp. See [Patient Agent](/docs/services/patient-agent).
-- **AI encounters**: which encounters the service offers and how each is set up. See [AI Encounters & Kiosk](/docs/services/encounters#settings).
-- **On patient added**: an optional welcome message and the onboarding agent. See [Patients & Cohort](/docs/services/patients#what-happens-when-a-patient-is-added).
+The four default agents are already here, shown as **Default agents** cards. Rewrite their instructions, or add agents alongside them. Services created before the defaults existed have an **Add missing default agents** button. See [Service Agents](/docs/services/agents).
 
-### Step 5: Content library
+### Step 5: Settings
+
+- **Patient agent**: whether enrolled patients can chat with the service's patient agent in the patient portal (on by default). See [Patient Agent](/docs/services/patient-agent).
+- **AI encounters**: which encounters the service offers and how each is set up. See [AI Encounters](/docs/services/encounters#settings).
+- **On patient added**: the enrolment notice and the onboarding agent. See [Patients & Cohort](/docs/services/patients#what-happens-when-a-patient-is-added).
+
+### Step 6: Content library
 
 Upload counselling protocols and reference material for the service's agents, or attach documents already uploaded elsewhere. See [Service Context & Content](/docs/services/context-and-content#content-library).
 
-### Step 6: Patients
+### Step 7: Patients
 
-Add patients to the cohort from the organisation's Medplum patient directory. This step is deliberately **last**, so the agents, context, content and care team are in place before real patients start receiving invites and messages. See [Patients & Cohort](/docs/services/patients).
+Add patients to the cohort from the organisation's Medplum patient directory. This step is deliberately **last**, so the agents, protocols, content and care team are in place before real patients start receiving notices. See [Patients & Cohort](/docs/services/patients).
 
 Use **← Back** and **Next: &lt;step&gt; →** to move between steps. On the last step, click **Finish setup** to publish the service (from `draft` to `published`). Every step remains editable afterwards.
 
@@ -55,22 +65,24 @@ If you skipped the wizard, the **Services** list shows a **Continue setup** link
 
 ## 4. The service page
 
-A service's page (`/services/[serviceId]`) organises everything into tabs:
+A service's page has no tab bar. While you are inside a service, the sidebar lists its sections, and the breadcrumb has a service switcher ("Find service…", **All services**, **New service**). The page also shows the service's status and **Mode of care** as badges.
 
-| Tab | What it holds |
+| Sidebar item | What it holds |
 | --- | --- |
-| **General** | Open **Tasks** for this service. When the patient agent is on, a summary card: turns in the last 7 days, pending drafts, open escalations, upcoming appointments, and patients whose choice the agent is waiting on. |
+| **Overview** | The **Demo patients** panel (demo services only), open **Tasks** for this service, the **Patient agent** summary card, **SOP and Instructions** and **Referral intake criteria**. When the patient agent is on, the summary card shows **Turns (7 days)**, **Pending drafts**, **Open escalations**, **Upcoming appointments** and **Waiting on a patient's choice**. |
+| **Referrals** | Incoming referrals for the service. See [Referrals](/docs/services/referrals). |
+| **Workstation** | The day's working board and consult screen. See [Workstation](/docs/services/workstation). |
 | **Patients** | The cohort roster. |
-| **Agents** | Agent runs, daily agent schedules, and the service's agents. |
-| **Service context** | The agent context text, and an AI helper to draft it. |
-| **Content** | The content library. |
-| **Care team** | Members, coverage, and availability. |
-| **Settings** | Patient agent, AI encounters, Channel, On patient added, and (owner only) the danger zone. |
+| **Agents** | **Agent runs**, **Daily agent schedules**, the **Default agents** cards and the **Agents** table. |
+| **Content library** | The service's documents. |
+| **Care team** | **Care team**, **Coverage / rota** and **Availability**. |
+| **Patient notifications** | Which events alert patients, and over which channel. See [Patient Notifications](/docs/services/patient-notifications). |
+| **Settings** | **Concerns from patients not booked here**, **Patient agent**, **AI encounters**, **Red-flag rules**, **Channel**, **Patient notifications**, **On patient added**, a **Demo patients** panel (non-demo services, owner or admin) and the **Danger zone** (owner). |
 
-Inside a service, the sidebar also lists **Overview**, **Workstation**, **Patients**, **Agents**, **Service context**, **Content library**, **Care team**, **Patient channels** and **Settings**. The breadcrumb has a service switcher ("Find service…", **All services**, **New service**).
-
-The owner can change the name, specialty and setting with **Edit service details**.
+The owner can change the name, specialty, mode of care and setting with **Edit service details**.
 
 ## 5. Deleting a service
 
 The owner can delete a service from **Settings → Danger zone**. This permanently removes it with its care team, agents, cohort membership, encounter notes and message history. It cannot be undone. Patients stay in the organisation's patient directory.
+
+A service that still has demo patients cannot be deleted until you remove them first. See [Demo Services](/docs/services/demo-services#remove-or-reset-the-demo).

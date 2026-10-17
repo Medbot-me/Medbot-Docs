@@ -1,0 +1,39 @@
+# Kiosk Self-Service
+
+A **kiosk** is a clinic device, such as a tablet in the waiting area, that patients use themselves to check in and to complete the sessions arranged for their visit. It is separate from handing a device to one patient during a consult, which is covered in [AI Encounters](/docs/services/encounters#in-the-clinic-the-kiosk).
+
+Who does what: a member of staff signs in on the device and sets it up. After that, patients use it without signing in to anything.
+
+## Set up a kiosk
+
+1. On the device, open the kiosk sign-in page ("Medbot kiosk - staff sign-in"), sign in, and click **Continue to kiosk setup**.
+2. On **Set up this kiosk session**, complete the numbered form:
+   - **1 - Organisation**: choose the organisation.
+   - **2 - Service this kiosk serves today**: choose a service. Each service card lists the kiosk sessions turned on for it (for example "Pre-visit history and Health education"), or says "No kiosk sessions turned on for this service."
+   - **3 - Kiosk name**: e.g. "Kiosk 2 - Level 3 waiting area".
+   - **4 - Languages offered**: Medbot speaks with the patient in the language they choose.
+   - **5 - Session ends**: when you sign out, or at this time today.
+3. Click **Start kiosk session**.
+
+A service only offers a session at the kiosk if you turned it on. For a pre-visit history, turn on **Offer it at the clinic kiosk on the day** (see [Pre-visit History & Escalations](/docs/services/pre-visit-and-escalations#offering-a-pre-visit-history)). Sessions that staff arrange for a patient's visit also appear.
+
+## What patients see
+
+The kiosk home has two choices:
+
+- **Check in for today**: "Get your queue number — appointments and walk-ins".
+- **Start a session**: "One your doctor arranged for you today".
+
+### Checking in
+
+On **Check in for today** the patient enters their NRIC, FIN or passport number and their date of birth, then clicks **Check in and get my queue number**. The kiosk shows their queue number and asks them to take a seat and watch the screen. They then appear on the [Workstation](/docs/services/workstation) queue.
+
+### Starting a session
+
+On **Start a session** the patient first enters their particulars to see the sessions their doctor arranged (the last four characters of their ID). They click **Find my sessions**, check "Matched: &lt;name&gt;", choose a session, then answer by typing or speaking (**Type** or **Speak**). **Ask for a staff member** is always available.
+
+When the session is done, the kiosk shows "This kiosk session has ended".
+
+## Ending a kiosk session
+
+Staff can use **Staff: sign out and set up a new session** on the kiosk to end the session and return to setup, for example to switch the device to a different service.

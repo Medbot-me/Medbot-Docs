@@ -1,0 +1,25 @@
+# Patient Notifications
+
+Patient notifications are the email, WhatsApp and SMS messages Medbot sends to tell a patient that **something new is waiting in the patient portal**. They carry a pointer, not the content: the conversation and the details stay in the portal. Every notification opens with a sender line naming your organisation and the service.
+
+Find them in the service's sidebar as **Patient notifications**, or as the **Patient notifications** card on **Settings**.
+
+## Settings
+
+- **Sender line**: shown for reference ("Organisation · Service"). It is taken from your organisation and service names.
+- **Use the patient's preferred channel first**: when on, Medbot tries the channel the patient prefers before the others.
+- **Then try, in order**: the channel order (**WhatsApp**, **SMS**, **Email** by default). Use the up and down arrows to reorder. If a message cannot be delivered, Medbot tries the next channel. Channels with no contact on file are skipped.
+- **Alert patients when**: a switch for each event:
+  - They are added to this service (the enrolment notice)
+  - The care team sends a message
+  - A health education session is handed over
+  - A counselling encounter is ready
+  - The patient agent replies after they leave the portal
+
+Click **Save notification settings**.
+
+## Good to know
+
+- Replies to a notification are not read by the patient agent. The patient gets an automatic pointer to the portal, and the message lands in the Inbox for the care team. See [Patient Agent](/docs/services/patient-agent).
+- When you add a patient to a service, the enrolment preview tells you which channel will be used and shows the exact message. See [Patients & Cohort](/docs/services/patients#the-enrolment-preview).
+- Appointment reminders are set separately on the **Channel** card. See [Appointments](/docs/services/appointments#reminders).

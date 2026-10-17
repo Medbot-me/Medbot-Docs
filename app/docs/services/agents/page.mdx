@@ -1,6 +1,8 @@
+import { ImageZoom } from "nextra/components";
+
 # Service Agents
 
-Service agents are AI agents you author for one service, on its **Agents** tab. An agent is never a person: it works for, or alongside, the care team, and it always receives the [service context](/docs/services/context-and-content), the relevant care team and patient context, and the tools you give it.
+Service agents are AI agents you author for one service, on its **Agents** item. An agent is never a person: it works for, or alongside, the care team, and it always receives the [service context](/docs/services/context-and-content), the relevant care team and patient context, the tools you give it, and any subagents you link to it.
 
 ## Audiences
 
@@ -9,24 +11,43 @@ Every agent has an **audience**, which decides who it serves and which tools it 
 | Audience | What it is for | How it runs |
 | --- | --- | --- |
 | **Staff** | Work on behalf of the care team: chasing patients, preparing summaries, requesting reviews. | On demand, scheduled once, or daily. |
-| **Patient** | A patient-facing conversational agent over SMS/WhatsApp. Badged **Patient-facing**. | Only in reply to a patient's message, once bound in Settings. See [Patient Agent](/docs/services/patient-agent). |
+| **Patient** | A patient-facing conversational agent in the patient portal. Badged **Patient-facing**. | Only in reply to a patient's message, once bound in Settings. See [Patient Agent](/docs/services/patient-agent). |
 | **Onboarding** | Assess each patient as they join the cohort. Badged **Runs on add**. | Automatically when a patient is added, once bound in Settings. Can also be run on demand. |
+
+## Default agents
+
+Every service is created with four default agents, shown as **Default agents** cards at the top of the Agents page ("Created with every service. Rewrite their instructions from the list below."). Each card has a **Default** badge, a status (**Active**, **Inactive** or **Missing**), chips for its subagents and an **Add subagents** link, which reads **Manage subagents** once the agent has any.
+
+| Agent | When it runs |
+| --- | --- |
+| **Onboarding** | When a patient is added to the cohort. |
+| **Health education** | When the care team runs it, or on a schedule. |
+| **Financial counselling** | When the care team runs it, or on a schedule. |
+| **Patient agent** | Chats with patients in the patient portal. |
+
+A service created before the defaults existed may show a **Missing** card. Click **Add missing default agents** to create them. Edit a default agent like any other from the **Agents** table below the cards.
+
+Each default card and table row also has a **Latest run** panel: "Latest run · when · status", with a dialog ("&lt;agent&gt; · latest run") that shows what the run did, or "No runs yet".
+
+<ImageZoom src="/images/docs/services/agents/01-default-agent-cards.png" alt="The Default agents cards on a service's Agents page" />
 
 ## Creating an agent
 
-On the Agents tab, click **Add agent**. In **Add an agent**:
+On the Agents page, click **Add agent**. This opens a full-page editor with two sections, **Agent** and **Subagents**, and a footer with **Cancel** and **Create agent**. Editing an existing agent opens the same page from **Edit** on its row, and the footer button reads **Save agent**.
+
+In the **Agent** section:
 
 - **Name**: e.g. "Dietitian follow-up agent".
 - **Audience**: Staff, Patient or Onboarding.
 - **Status**: Active or Inactive.
-- **Preferred LLM**: the organisation's default model, or a specific one.
-- **Tools**: what the agent may call while it runs. The list depends on the audience (below).
+- **Model**: the organisation's default model, or a specific one.
+- **MCP tools** (Staff and Onboarding) or **Patient agent tools** (Patient): what the agent may call while it runs. The list depends on the audience (below).
 - **Description**: a short summary of what it does.
 - **Agent markdown**: its instructions, in markdown.
 
-Save with **Add agent**. **Edit** (**Edit agent**, **Save changes**) and delete (**Delete agent?**, **Delete agent**) are on each row.
+To delete an agent, click **Delete agent** on its row and confirm in **Delete agent?**.
 
-The table shows each agent's name, audience, status, tools and preferred LLM. Agents created before tools were standardised may show their old freeform skills as dashed **Legacy tag** badges; edit the agent to pick proper tools instead.
+The table shows each agent's name, audience, status, tools, model and **Subagents** (**Manage** or **Add subagents**). Agents created before tools were standardised may show their old freeform skills as dashed **Legacy tag** badges; edit the agent to pick proper tools instead.
 
 ### Staff and onboarding tools ("MCP tools")
 
@@ -36,8 +57,17 @@ The table shows each agent's name, audience, status, tools and preferred LLM. Ag
 | **Send email** | Send an email notification. |
 | **Clinical resources** | Search, browse and read the service's content library. |
 | **Request human task** | Hand off to a human when it needs input, review or approval. The task appears in the Task Inbox of everyone on the care team, and on the service page. |
+| **Notify patient** | Send the patient a short message from the care team. It appears in the service's chat in their patient portal; WhatsApp, SMS or email only tell them something is waiting. |
+| **Email staff** | Email whoever covers a care team role today, falling back to the service owner. |
+| **Hand over a session** | Offer the patient a health education or counselling session in their patient portal, with the content it should cover. |
 
-Tasks raised by agents are not assigned to a role: the whole care team sees them.
+Tasks raised with **Request human task** are not assigned to a role: the whole care team sees them.
+
+#### Review before sending
+
+When you tick **Notify patient**, **Email staff** or **Hand over a session**, a section appears with a **Review before sending** switch. With it on, patient notices, staff emails and session handovers wait in the Task Inbox until the care team approves them. Each review task is assigned (an email to staff goes to the role it targets), shows an editable draft, and can be approved with **Approve and send** or rejected. Rejecting sends nothing.
+
+For **Email staff**, choose which roles the agent may email under **Staff it may email**.
 
 ### Patient agent tools
 
@@ -50,11 +80,27 @@ Tasks raised by agents are not assigned to a role: the whole care team sees them
 | **Education & counselling sessions** | Walk the patient through a counselling or education protocol step by step, recording consent and what they understood or agreed. |
 | **Hand over for a full encounter** | Send the patient a link to a full [AI encounter](/docs/services/encounters) (history taking, education or counselling) when SMS turns are not enough. |
 
-A fixed platform safety preamble is always layered on top of a patient agent's instructions and cannot be removed by them.
+A fixed safety preamble is always layered on top of a patient agent's instructions and cannot be removed by them.
+
+## Subagents
+
+An agent can call **subagents**: DAG agents (workflow agents) from your organisation's or your own library. The agent calls them for each patient, reads what they return, and decides what happens next.
+
+Open the **Subagents** section of the agent editor (or **Manage** / **Add subagents** on the agent's row, or **Add subagents** / **Manage subagents** on a default agent card):
+
+1. Browse the **Agent library**. It lists DAG agents the agent can call; only agents with a published workflow can be linked, and drafts show a **Draft** badge and cannot be chosen. Use the **Organisation**, **Mine**, **Shared with you** and **All** filters or **Search by name or description**. Suggestions are ranked by how often clinicians agreed with them.
+2. Select a subagent to link it. For each one, choose when it is called: **Every run**, or let the agent decide, and fill in **When to call &lt;name&gt;** so the agent knows when it applies. Remove a link with its remove button.
+3. Under **Choosing subagents**, pick **Let the agent choose** (subagents set to **Every run** are always called) or **Call every subagent** (slower and costs more, but nothing is skipped).
+4. Optionally write **Decision rules**, for example "If eligible is no, open a task for the care coordinator."
+5. Save with **Create agent** or **Save agent**. On the standalone subagents page the button is **Save subagents**.
+
+<ImageZoom src="/images/docs/services/agents/02-agent-editor-subagents.png" alt="The agent editor's Subagents section with an empty Agent library, the Choosing subagents options and Decision rules" />
+
+An agent can have up to 10 subagents, and a Patient agent cannot use **Every run**. Any care team member can link their own or the organisation's agents; linking shared, public or default agents from elsewhere needs an organisation admin. A linked agent that has no live version shows **Skipped on runs**.
 
 ## The onboarding agent
 
-Every new service is created with an **Onboarding agent**, already bound in **Settings → On patient added**. Each time a patient is added to the cohort, it reviews them against the service and raises a task **only when the patient clearly looks out of scope**, so staff are not flooded with a task per patient.
+The **Onboarding** default agent is already bound in **Settings → On patient added**. Each time a patient is added to the cohort, it reviews them against the service and raises a task **only when the patient clearly looks out of scope**, so staff are not flooded with a task per patient. It does not message the patient: Medbot sends the single [enrolment notice](/docs/services/patients#what-happens-when-a-patient-is-added) itself.
 
 Rewrite its instructions for your service, switch it off, or bind a different onboarding agent from **Settings → On patient added** ("Assess the patient with the onboarding agent"). The bound agent carries a **Bound** badge.
 
@@ -70,11 +116,11 @@ A patient agent has no Run button, since it only ever replies to a patient. It h
 
 ## Runs and schedules
 
-Above the agent list on the Agents tab:
+Above the agent list on the Agents page:
 
 - **Agent runs**: every run against this service's cohort, manual or scheduled.
 - **Daily agent schedules**: every active daily schedule, with its agent and time. Cancel one here.
 
 ## Service agents and the Agents library
 
-Service agents belong to one service. They are separate from the web app's general **Agents** library (`/agents`), where agents can be personal or shared with the whole organisation (and a personal, public or default agent can be copied into the organisation with **Claim for &lt;organisation&gt;**).
+Service agents belong to one service. They are separate from the Medbot app's general **Agents** library, where agents can be personal or shared with the whole organisation, and a personal, public or default agent can be copied into the organisation.
