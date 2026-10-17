@@ -1,47 +1,66 @@
+import { ImageZoom } from "nextra/components";
+
 # Patients & Cohort
 
 ## The organisation's patient directory
 
 A service's patients come from **the organisation's own Medplum patient directory**, the same patients the clinic sees in the CMS. They are not owned by any one service, and the same patient can be in several services' cohorts.
 
-New patients are added to the organisation, not to a service. An organisation **admin** does this from `/patients` with **Add a patient** (first and last name, email, phone, date of birth, gender, ID type such as NRIC or passport, address and postal code), or in bulk by [seeding from a CSV file](/cms/seed-data).
+New patients are added to the organisation, not to a service. An organisation **admin** does this from the organisation's patient list with **Add a patient** (first and last name, email, phone, date of birth, gender, ID type such as NRIC or passport, address and postal code), or in bulk by [seeding from a CSV file](/cms/seed-data).
 
 ## Adding a patient to the cohort
 
-From the service's **Patients** tab (or the wizard's last step, or `/services/[serviceId]/board`), click **Add patient to cohort**:
+From the service's **Patients** item (or the wizard's last step), click **Add patient to cohort**. In **Add patient to cohort**:
 
-1. **Search by name** among the organisation's Medplum patients. Patients already in this cohort are not offered.
-2. Optionally add **Clinical notes**: referral letters, consult notes, discharge summaries. They are saved as the patient's **first encounter note** for this service, and their **patient context** is generated from it.
-3. Click **Add to cohort**.
+1. **Search by name…** among the organisation's Medplum patients. Patients already in this cohort are not offered.
+2. Check the enrolment preview (below), which shows how Medbot will tell the patient.
+3. Optionally add **Clinical notes**: referral letters, consult notes, discharge summaries. They are saved as the patient's **first encounter note** for this service, and their **patient context** is generated from it.
+4. Click **Add to cohort**.
+
+A toast says "Patient added to service" and "Medbot is sending them the enrolment notice."
 
 To take a patient out of the cohort, use the **X** on their row and confirm. They stay in the organisation's directory and in any other service.
+
+### The enrolment preview
+
+Once you choose a patient, the dialog shows two columns. On the left:
+
+- whether the patient **Has a patient portal account** or has **No patient portal account**
+- **Notify by**: the channels Medbot will try (WhatsApp, SMS, email), with the patient's preferred one marked "preferred"
+- **After you add** the patient: what happens next
+
+<ImageZoom src="/images/docs/services/patients/01-add-patient-enrolment-preview.png" alt="The Add patient to cohort dialog with a patient chosen, the Notify by channels, what happens after you add them and a preview of the notice" />
+
+On the right, **Preview** shows the exact message for the channel. It also warns you if nothing will be sent, for example when enrolment notices are off for the service ("Turn them on in Patient notifications"), when the patient has opted out of messages, or when there is no phone number or email on file.
 
 ### What happens when a patient is added
 
 Configured on **Settings → On patient added**:
 
-- **Patient portal invite.** If the patient has no patient-portal account yet, Medbot creates a 7-day invite link for them. The link is **sent as part of the welcome message** ("You can also view your care plan and message your care team here: …"), so turn the welcome message on if new patients should receive it.
-- **Welcome message** ("Send a welcome message when a patient is added to the cohort"). Type the **Message** inline, with `{{variables}}` such as `{{firstName}}`, and choose the **Channel**: SMS, WhatsApp or **Patient portal**.
-- **Onboarding agent** ("Assess the patient with the onboarding agent"). Runs the chosen onboarding agent against the new patient. The default one raises a task only when the patient clearly does not belong in the service. See [Service Agents](/docs/services/agents#the-onboarding-agent).
-
-A toast confirms what happened.
+- **One enrolment notice.** Medbot sends the patient a single notice by their preferred channel (WhatsApp, SMS or email), naming your organisation and the service. If they have no patient portal account, it links to portal sign-in. If they do, it points them to their portal notifications. Which channels are used, and whether this notice is sent at all, is set in [Patient Notifications](/docs/services/patient-notifications).
+- **A note from the care team** (**Add a note from the care team to the enrolment notice**). Turn this on and type the **Message**; it is added to the notice. You can use `{{firstName}}`.
+- **Onboarding agent** (**Assess the patient with the onboarding agent**). Runs the chosen **Onboarding agent** against the new patient. The default one raises a task only when the patient clearly does not belong in the service. It no longer messages the patient itself. See [Service Agents](/docs/services/agents#the-onboarding-agent).
 
 ## The cohort roster
 
-The roster shows, per patient: **Pending tasks**, **Notes**, **Messages** and **Last message**, so you can see who needs attention without leaving the page. Click a name (or the eye icon) to open the patient's page.
+The roster shows, per patient: **Patient**, **Pending tasks**, **Notes**, **Messages** and **Last message**, so you can see who needs attention without leaving the page. Click a name (or the eye icon) to open the patient's page. Made-up patients in a [demo service](/docs/services/demo-services) carry a **Demo** chip.
+
+### Patient identifiers
+
+Each patient's ID number (such as NRIC) is masked everywhere it appears. Click the eye button (**Show patient identifiers**) to reveal it; click again (**Hide patient identifiers**) to mask it. The full view lists each identifier and the **Patient ID** Medbot uses internally, each with a copy button. The same control appears on the patient page, the Workstation boards, the visit panel and the referrals list. It is available to anyone who can open the service.
 
 ## A patient's page
 
-Each patient has a page per service, `/services/[serviceId]/patients/[patientId]`:
+Each patient has a page per service:
 
-- **Header**: name, gender, phone, age and address.
-- **Draft awaiting review**: pinned above the tabs when the [patient agent](/docs/services/patient-agent) has a reply waiting for approval.
+- **Header**: name, gender, phone, age and address, with the masked **NRIC / ID** and the **Patient ID** (use the eye button to reveal), and a **Demo** chip for demo patients.
+- **Draft awaiting review**: pinned above the tabs if the patient has a stored reply waiting for approval. See [Patient Agent](/docs/services/patient-agent#drafts-awaiting-review).
 
 | Tab | What it holds |
 | --- | --- |
-| **General** | **Escalations** from the patient agent, **AI encounters** (see [AI Encounters & Kiosk](/docs/services/encounters)), and **Encounter notes**. |
+| **General** | **Escalations** from the patient agent, **AI encounters** (see [AI Encounters](/docs/services/encounters)), **Encounter notes**, and for [Inpatient services](/docs/services/modes-of-care#inpatient) an **Admission** card. |
 | **Patient Context** | The AI-maintained **agent context** for this patient, which can be edited or regenerated. |
-| **Messages** | The SMS/WhatsApp thread, and a box to send a message. |
+| **Messages** | The message thread, and a box to send a message. |
 | **Appointments** | Upcoming and past bookings, and **Book for this patient**. See [Appointments](/docs/services/appointments). |
 | **Settings** | **Messaging settings**: who shares this patient's phone number and how their replies are routed. |
 

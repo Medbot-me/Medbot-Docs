@@ -1,47 +1,58 @@
+import { ImageZoom } from "nextra/components";
+
 # Getting Started
 
-Three things have to happen before a patient sees their own clinical data: a Medbot account, a one-time onboarding step, and at least one **account link** to a clinic. They happen in that order.
+To see your own health information, you need three things: a Medbot account, a short set-up step, and a link to at least one clinic. You can use some parts of Medbot Health before you link a clinic, such as the [Health Log](/patient/health-log).
 
 ## 1. Create an account or sign in
 
-The portal uses an ordinary email-and-password (or social) sign-in. Signing up creates a **Medbot account** and nothing more — a brand-new account has no clinical data behind it and is not yet known to any clinic.
+Open **health.medbot.me**. If you are not signed in, you see the Medbot Health welcome page, with the headline "All your health, in one place you control".
+
+- New to Medbot Health? Select **Get the app** to create an account.
+- Already have an account? Select **Sign in**.
+
+Creating an account does not connect you to a clinic, and a new account has no health information in it yet.
+
+<ImageZoom src="/images/patient/getting-started/01-landing-page.png" alt="The Medbot Health welcome page for someone who is not signed in, with the Get the app and Sign in buttons" />
 
 ## 2. Onboarding
 
-Every account passes through a one-time onboarding screen that asks for three fields:
+The first time you sign in, Medbot Health asks you to confirm who you are. It asks for three things:
 
-- First / given name
-- Last / family name
+- First name
+- Last name
 - Date of birth
 
-For a self-registered patient every field starts blank. For a patient whose account arrived through a clinic invite, the fields are pre-filled from the clinic's chart — which may be out of date, so confirming or correcting them is the point either way.
+If you signed up from a clinic's invite, these are filled in from the clinic's chart. They may be out of date, so check them and correct anything wrong. If you signed up yourself, they start blank.
 
 ## 3. Connect a clinic
 
-Linking is not required to open the portal, but an account with no link has no clinic records behind it, so its tabs stay empty until one exists. Connect from **Profile → Connected clinics**. There are two ways to get a link.
+You do not have to connect a clinic to open the app. But until you do, your visits, results and messages stay empty. Some other parts, like the Health Log, work without one.
 
-### Self-service: identifier, date of birth, and a code
+Go to **Profile**, then **Connected clinics**, or use **Connect another clinic**. There are two ways to connect.
 
-1. Pick the clinic from the list of clinics available to connect to.
-2. Enter the identifier that clinic holds on the patient's chart (NRIC, FIN, or passport number) together with the date of birth.
-3. Enter the six-digit code sent to the contact detail on that clinic's chart.
+### Connect it yourself
 
-The first step answers the same way whether or not a record matched, so the form cannot be used to probe whether someone is a patient of a given clinic. An expired code means starting the step again.
+1. On the **Connect a clinic** page, pick your **Clinic** from the list. If yours is not there, select **Browse the directory** in "Can't find your clinic?". See [Find Care](/patient/find-care).
+2. Enter your **NRIC / FIN / Passport number** and your **Date of birth**.
+3. Enter the **6-digit code** the clinic sends to the contact details it has for you.
 
-### Clinic-issued invite
+The form gives the same answer whether or not a record was found, so no one can use it to check if someone is a patient. If the code runs out, start the step again.
 
-Staff can issue an invite from the CMS ("Send portal invite" on a patient's record). The invite is a link the patient opens while signed in; opening it consumes the token and links the account immediately. If the token has already been used or has expired, the self-service form above is offered as the fallback.
+### Use an invite from the clinic
 
-A patient who signs up from the invite link is brought back to it automatically once the account exists, so the link completes in one pass.
+Clinic staff can send you an invite link. Open it while signed in and your account is linked straight away. If the link has been used or has expired, use the form above instead.
 
-## After linking
+If you sign up from an invite link, you come back to it automatically once your account is ready.
 
-Once one link exists, every tab has real data behind it. The link itself still needs the patient's **consent** before that clinic's records start syncing — see [Connected Clinics](/patient/connected-clinics), which also covers adding a second and third clinic.
+## After you connect
 
-## No chart yet?
+Connecting needs your **permission** before the clinic's records start to arrive. See [Connected Clinics](/patient/connected-clinics).
 
-A patient who has never been seen at the clinic does not have a chart to link to. Staff issue a **self-registration** invite instead, which collects the patient's details first and creates the chart. See [Invites & Join Links](/patient/invites).
+## No chart at the clinic yet?
+
+If you have never been seen at the clinic, there is no chart to connect to. Ask the clinic for a **self-registration** link. See [Invites & Join Links](/patient/invites).
 
 ## Invited as a caregiver?
 
-Someone who has been invited to help with another person's record signs in or creates an account the same way, then opens the **caregiver invite** link. A caregiver does not need a clinic link of their own to act for the person they care for: the record they see is the dependant's. See [Caregivers & Family Access](/patient/caregivers).
+Sign in or create an account, then open the caregiver invite link. You do not need to connect a clinic of your own to help someone. You see their record. See [Caregivers & Family Access](/patient/caregivers).

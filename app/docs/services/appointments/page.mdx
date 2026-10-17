@@ -1,6 +1,6 @@
 # Appointments
 
-Each service has its own lightweight appointment book. Care team members publish recurring weekly availability, and staff, the patient agent and encounter notes all book, move and cancel appointments against the same open slots. What shows as free is always what can actually be booked, for a person and the agent alike.
+Each service has its own appointment book. Care team members publish recurring weekly availability, and staff, patients in the portal, the patient agent and encounter notes all book, move and cancel appointments against the same open slots. What shows as free is always what can actually be booked.
 
 ## 1. Publish availability
 
@@ -17,20 +17,24 @@ On the patient's page, **Appointments** tab, click **Book for this patient**. In
 
 The appointment appears straight away under **Upcoming**.
 
-## 3. Booking through the patient agent
+## 3. Patients booking for themselves
 
-If the [patient agent](/docs/services/patient-agent) is on, a patient can ask it for a new appointment, to move one, or to cancel one. It reads the same open slots as the staff flow and books directly; a confirmed booking is immediate, not a request. These appointments are labelled **booked by patient agent**.
+Patients can book an appointment with the service from the patient portal. They see the same open slots as staff do, for the next two weeks. These appointments are labelled **booked by the patient in the portal**. See [Visits](/patient/visits#booking-or-asking-for-an-appointment) in Medbot Health for the patient's side. They pick **Book with** the service, choose a time, and are confirmed straight away.
+
+## 4. Booking through the patient agent
+
+If the [patient agent](/docs/services/patient-agent) is on, a patient can ask it for a new appointment, to move one, or to cancel one. It reads the same open slots and books directly; a confirmed booking is immediate, not a request. These appointments are labelled **booked by patient agent**.
 
 Appointments arranged from a clinician's encounter note are labelled **booked from an encounter note**.
 
-## 4. Managing appointments
+## 5. Managing appointments
 
 - **Upcoming** appointments can be **Cancel**led from the patient's Appointments tab.
-- **Past** appointments show their final status: confirmed, **Completed**, **Cancelled** or **No show**.
+- **Past** appointments show their final status.
 
 ## Reminders
 
-On the service's **Settings** tab, the **Channel** card:
+On the service's **Settings**, the **Channel** card:
 
 - **Send appointment reminders**: turn reminders on.
 - **Hours before the appointment**: up to three, comma-separated, e.g. `24, 2`.
@@ -39,6 +43,8 @@ Reminders go out on the service's **Default channel** (WhatsApp or SMS, falling 
 
 ## How it works
 
-- Availability windows are **recurring and weekly**, in UTC (e.g. "Tuesdays 09:00–17:00, 30-minute slots"). There are no per-date overrides for holidays or leave yet: switch the window's **Active** toggle off and on again, or cancel the affected appointments.
+- Availability windows are **recurring and weekly**, in **clinic time** (your organisation's timezone, or Singapore time if none is set), e.g. "Tuesdays 09:00–17:00, 30-minute slots". There are no per-date overrides for holidays or leave yet: switch the window's **Active** toggle off and on again, or cancel the affected appointments.
 - A slot is open when no confirmed appointment holds it for that care team member. This is checked again at the moment of booking, so a slot that looked free a few seconds ago is still booked safely.
-- This booking system belongs to the service and is independent of the clinic's appointments in Medbot CMS.
+- Slots are only offered for care team members who have a practitioner record in the clinic's schedule (see [Not bookable](/docs/services/care-team#availability)).
+- Every service booking, however it was made, is also written to the clinic's schedule. The Workstation, the queue, check-in and the calendar in Medbot CMS all see it. If the clinic schedule refuses a booking, it is undone and the patient is told the slot is not available.
+- A booked patient appears on the Workstation queue as **Not yet arrived**, ready for **Mark arrived** (see [Workstation](/docs/services/workstation)). A booking can also trigger an offer of a [pre-visit history](/docs/services/pre-visit-and-escalations).

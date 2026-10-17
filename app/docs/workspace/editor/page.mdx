@@ -4,7 +4,7 @@ import { ImageZoom } from "nextra/components";
 
 ## Introduction
 
-The Medbot workspace featuers a rich text editor with various features to assist your writing. The primary features are autocomplete, command palette, and bubble menu.
+The Medbot workspace features a rich text editor with various features to assist your writing. The primary features are autocomplete, command palette, and bubble menu.
 
 ## Editor Features
 
@@ -15,11 +15,11 @@ The autocomplete feature assists in your clinical note writing by providing sugg
 ![Medbot Editor Autocomplete](/images/autocomplete.png)
 _Editor Autocomplete_
 
-You can customize the behavior of autocomplete in settings. Visit [medbot.me/settings](https://www.medbot.me/settings) to see what customization options are available.
+You can customise the behaviour of autocomplete in [settings](/docs/advanced#autocomplete-settings).
 
 ### Command Palette
 
-The Command Palette provides quick access to text Editing tools, Agents, Templates, and Continue with AI features. Activate the Command Palette by pressing the `/` key when prompted on a new line.
+The Command Palette provides quick access to **Editing tools**, **Agents**, **Templates** and **Continue with AI**. Continue with AI can continue a note in a chosen style, such as History, Investigations, Physical Exam, Diagnosis or Management. Activate the Command Palette by pressing the `/` key when prompted on a new line.
 
 <br />
 <div
@@ -43,26 +43,28 @@ The Command Palette provides quick access to text Editing tools, Agents, Templat
 
 ### Bubble Menu
 
-The Bubble Menu gives you access to editing tools, text refining features, ask AI feature, and [selection agents](/docs/agents/types/non-form#from-the-workspace) to process selected text in the editor.
+Select some text and the Bubble Menu appears. It gives you access to editing tools, text refining (**Quick Refine** and **Refine**), **Ask AI**, and **Agents** ([selection agents](/docs/agents/types/non-form#from-the-workspace) to process the selected text).
 
-![Medbot Editor Bubble Menu](/images/bubble-menu.png)
+<ImageZoom src="/images/docs/workspace/04-bubble-menu.png" alt="The bubble menu above selected text, showing Quick Refine, Refine, Ask AI and Agents" />
 _Editor Bubble Menu_
 
 #### Text Refining
 
 The Bubble Menu provides text refining features for selected text in the editor. You can use text refining in two ways:
 
-1. Quick Refine to use default settings to quickly refine selected text.
-2. Prompt Refine to instruct the text refining AI on how to proceed.
+1. **Quick Refine** uses your default settings to refine the selected text straight away (the button reads **Refining...** while it works).
+2. **Refine** opens a box ("Prompt to refine...") where you tell the AI how to proceed. A model list beside it starts at **My default**.
+
+Either way, you can accept or reject the result.
 
 ![Medbot Text Refining](/images/bubble-menu-refine.png)
 _Editor Text Refining_
 
-You can customize text refining behavior in [settings](https://www.medbot.me/settings).
+You can customise text refining behaviour in [settings](/docs/advanced#text-refining-settings).
 
 #### Ask AI
 
-The Ask AI feature lets you ask the chat AI about text in your editor. To use it, simply select some text in the editor and click `Ask AI` in the bubble menu. This will open up the chat window in the sidebar with your selected text attached as context. You can write a prompt and ask the AI about the selected text.
+The Ask AI feature lets you ask the chat AI about text in your editor. To use it, simply select some text in the editor and click `Ask AI` in the bubble menu. This opens the **Chat** tab of the AI panel on the right, with your selected text attached as context. See [Chat](/docs/workspace/chat). You can write a prompt and ask the AI about the selected text.
 
 <br />
 <div
@@ -86,7 +88,7 @@ The Ask AI feature lets you ask the chat AI about text in your editor. To use it
 
 #### Selection Agents
 
-You can use the Bubble Menu to invoke selection agents in the editor. These agents will process your selected text and stream their outputs into the editor itself. The final output from selection agents will be highlighted once the agents have finished streaming.
+Choose **Agents** in the Bubble Menu (it opens **Select an agent**) to invoke selection agents. These agents will process your selected text and stream their outputs into the editor itself. The final output from selection agents will be highlighted once the agents have finished streaming.
 
 ![Medbot Selection Agents](/images/bubble-menu-agents.png)
 _Editor Selection Agents_

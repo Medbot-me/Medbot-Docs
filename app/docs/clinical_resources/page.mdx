@@ -1,14 +1,38 @@
+# Clinical Resources
+
 ## Introduction
 
-The Clinical Resources feature allows healthcare professionals to securely upload their own medical documents such as guidelines, hospital protocols, PDFs, and reference materials into Medbot. 
-These resources are then processed using Retrieval-Augmented Generation (RAG), enabling clinicians to instantly retrieve relevant information and generate context-aware AI responses tailored to their clinical workflows.
-This ensures that AI responses are more authentic and based on a resource you upload.
+Clinical Resources let you upload your own reference documents, such as guidelines, hospital protocols and spreadsheets of local data, so that Medbot's AI can draw on them. Answers that rely on a resource are grounded in the document you supplied rather than in general knowledge.
 
-1. Upload Clinical Resources
+Your resources are private to you. Other users cannot open them.
 
-Healthcare professionals can upload a variety of clinical documents in PDF format.
+## What you can upload
 
-2. Generate Embeddings
+| Format | Largest file |
+| --- | --- |
+| PDF | 25 MB |
+| Word (.docx) | 25 MB |
+| Excel (.xlsx) | 10 MB |
+| CSV | 5 MB |
 
-After uploading, users can break down the documents into smaller, meaningful chunks. These chunks are then converted into embeddings.
-The system uses these embeddings to quickly retrieve relevant sections from large documents, provide context-aware AI responses tailored to your clinical queries and enhance decision-making by ensuring responses are grounded in your own uploaded resources
+Older Word and Excel files (.doc, .xls) are not supported: save them as .docx or .xlsx first. Macro-enabled files and template files (for example .docm, .xlsm, .dotx) are also refused.
+
+## What happens after you upload
+
+Medbot reads and divides the document into sections automatically. There is nothing to configure. The resource page shows a status:
+
+| Status | Meaning |
+| --- | --- |
+| **Waiting to process** | Queued. |
+| **Processing…** | Being read and split into sections. |
+| **Ready** | Agents and chats can use it. |
+| **Processing failed** | Something went wrong. The error is shown, and you can select **Reprocess**. |
+
+PDF and Word documents are divided into sections by AI, which uses a few [credits](/docs/ai-usage). Excel and CSV files are divided into tables of rows (for example "Sheet: Wards, rows 1 to 50", plus an overview of the workbook), which uses no AI credits. For spreadsheets, questions about a particular sheet or row work best.
+
+## Where resources are used
+
+- **Agents** can search and read your resources as tools. See [Tools](/docs/agents/tools).
+- In the [workspace](/docs/workspace), the **Resources** tab of the notes panel lists **My Clinical Resources** so you can refer to them while writing.
+
+To add your first resource, follow [Setup Resources](/docs/clinical_resources/set-up).

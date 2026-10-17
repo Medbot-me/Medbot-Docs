@@ -1,0 +1,26 @@
+import { ImageZoom } from "nextra/components";
+
+# Referral Requests
+
+> **For Medbot platform administrators only** (admin and superadmin).
+
+When a patient asks, through Medbot, to be referred to a provider in the [directory](/docs/admin/directory), the request appears here. Open **Referral requests** in the [Admin Panel](/docs/admin).
+
+The provider is emailed automatically when the listing or service has a referral email. The email carries a link, never the patient's reason.
+
+## Work a request
+
+The tabs are **Open**, **New**, **Sent**, **Contacted**, **Closed** and **Withdrawn**. Open a request to see its detail page.
+
+<ImageZoom src="/images/docs/admin/02-referral-request.png" alt="A referral request with the Next step card and the Close this request dialog showing outcome choices" />
+
+1. In **Next step**, select **Take this one** so colleagues know you are handling it. **Release** hands it back.
+2. Once the provider has been told, select **Mark as passed on**. In the dialog, enter **Sent to**: an email address, or something like "Phoned reception".
+3. When the provider has been in touch with the patient, select **Mark as contacted**.
+4. Select **Close** to finish. In **Close this request**, choose an **Outcome**: Referred, Declined by the provider, Could not reach the patient, Duplicate request, No reply in time or Other, with an optional **Note (optional)**.
+
+Use **Admin notes** and **Save** for internal comments. A request marked "Now on Medbot" means the provider has since been claimed.
+
+## What the patient sees
+
+The patient sees a simpler status in Medbot Health: **Received**, **Passed to the clinic**, **In touch**, **Closed** or **Withdrawn**.

@@ -1,16 +1,20 @@
+import { ImageZoom } from "nextra/components";
+
 # Platform Administration
 
 > **Note:** Only Medbot platform superadmins see these screens. No clinic role, including Clinic Admin, gives access.
 
-Platform administration is where Medbot operations staff handle requests for Medbot-hosted organizations, look after those organizations, and decide who else is a platform superadmin. The screens appear in the sidebar under **Platform**. A clinic that wants a hosted organization starts from [Medbot-Hosted Organizations](/cms/hosted-organisations).
+Platform administration is where Medbot operations staff handle requests for Medbot-hosted organisations, look after those organisations, look up caregiver access, and handle paid record-service requests. The screens appear in the sidebar under **Platform**, which has four items: **Provisioning requests**, **Hosted organisations**, **Caregiver access** and **Record services**. Some of the same queues are also in the admin area of the Medbot web app. A clinic that wants a hosted organisation starts from [Medbot-Hosted Organisations](/cms/hosted-organisations).
 
 If a person without the superadmin role opens these addresses, the page says **404 | This page could not be found.** The screens are hidden on purpose.
 
 ## Provisioning requests
 
-Open **Platform → Provisioning requests** (`/admin/provisioning`). The page is headed **PLATFORM ADMINISTRATION** and lists every request for a Medbot-hosted organization. Tabs group them by status: **Pending**, **In progress**, **Fulfilled**, **Rejected**, and **Cancelled**. Each row shows the **Requester**, **Organisation**, **Country**, **Requested** date, and who it is **Assigned to**. When a tab is empty the page says "No requests in this status."
+Open **Platform → Provisioning requests** (`/admin/provisioning`). The page is headed **PLATFORM ADMINISTRATION** and lists every request for a Medbot-hosted organisation. Tabs group them by status: **Pending**, **In progress**, **Fulfilled**, **Rejected**, and **Cancelled**. Each row shows the **Requester**, **Organisation**, **Country**, **Requested** date, and who it is **Assigned to**. When a tab is empty the page says "No requests in this status."
 
-Select a request to open it. The page shows the requester, the requested time, country, time zone, the slug the requester asked for, who claimed it, and any message or rejection reason. A history of what happened to the request is at the bottom.
+<ImageZoom src="/images/cms/platform-administration/01-provisioning-list.png" alt="The Provisioning requests list with one request under the Pending tab" />
+
+Select a request to open it. The page shows the requester, the requested time, country, **Timezone**, the slug the requester asked for, who claimed it, the **Medplum project** once one exists, and any message or rejection reason. A history of what happened to the request is at the bottom.
 
 ### Claim a request
 
@@ -26,28 +30,45 @@ Type in **Admin notes** and select **Save note**. Notes are never shown to the r
 2. Write a reason. The reason is emailed to the requester exactly as you write it.
 3. Confirm. The request moves to **Rejected**.
 
-### Fulfil a request
+### Create the organisation
 
-Provision the organization's medical record server first. That step happens outside the CMS. Then:
+A request has two ways to be completed. The page shows both as cards.
+
+<ImageZoom src="/images/cms/platform-administration/02-request-detail.png" alt="A pending request showing the Claim and Reject buttons and the Provision automatically and Fulfil cards" />
+
+**Provision automatically** creates the Medplum project and its credentials for you, then creates the organisation with the requester as its first administrator. Use it whenever it is available. It is available only when the deployment is set up for it. If it is not, the button is greyed out and the card says "Automatic provisioning is not configured on this deployment. Use Fulfil with a project made by hand."
+
+1. Select **Provision automatically**.
+2. In the **Provision &lt;name&gt;?** dialog, check the **Organisation name** and the optional **Slug**.
+3. Turn on **Force — override another administrator's claim** only if you need to override another administrator's claim.
+4. Select **Provision**. A message shows **Organisation provisioned** with the join code and the Medplum project.
+
+<ImageZoom src="/images/cms/platform-administration/03-provision-automatically.png" alt="The Provision dialog with the organisation name, the optional slug, the Force checkbox and the Provision button" />
+
+If an attempt fails part-way, the project it already created is kept. The card then says "An earlier attempt created the Medplum project. Provisioning again reuses it.", so you can select the button again.
+
+**Fulfil** is the manual route, for deployments without automatic provisioning. Create the Medplum project and its client application by hand first, outside the CMS. Then:
 
 1. Select **Fulfil**.
-2. Check the **Organisation name** and slug, and enter the **Medplum base URL** (optional), **Medplum client ID**, and **Medplum client secret**.
+2. Check the **Organisation name** and **Slug**, and enter the **Medplum base URL** (optional), **Medplum client ID**, and **Medplum client secret**.
 3. Turn on **Force** only if you need to override another administrator's claim.
-4. Confirm. A message shows **Organisation provisioned** with the organization's join code.
+4. Select **Fulfil**. A message shows **Organisation provisioned** with the organisation's join code.
 
-The requester is emailed that the organization is ready. On a fulfilled request, **Resend email** sends that message again. The card shows when it was last sent, or why sending failed.
+<ImageZoom src="/images/cms/platform-administration/04-provisioned.png" alt="A fulfilled request showing its Medplum project id and the history of what happened" />
 
-## Hosted organizations
+The requester is emailed that the organisation is ready. On a fulfilled request, **Resend email** sends that message again. The card shows when it was last sent, or why sending failed.
 
-Open **Platform → Hosted organisations** (`/admin/organisations`). The page lists every organization Medbot provisioned and holds credentials for. If there are none it says **No hosted organisations yet.** Each entry shows whether it is **Active** or **Offboarded**, and the request it came from ("No originating request on record" when there is none).
+## Hosted organisations
 
-- **Set credentials** or **Rotate credentials** saves a new Medplum client ID and secret (and an optional base URL). A **Credentials updated** message confirms it. An organization's own Clinic Admin cannot change credentials for a hosted organization.
+Open **Platform → Hosted organisations** (`/admin/organisations`). The page lists every organisation Medbot provisioned and holds credentials for. If there are none it says **No hosted organisations yet.** Each entry shows whether it is **Active** or **Offboarded**, and the request it came from ("No originating request on record" when there is none).
+
+- **Set credentials** or **Rotate credentials** saves a new Medplum client ID and secret (and an optional base URL). A **Credentials updated** message confirms it. An organisation's own Clinic Admin cannot change credentials for a hosted organisation.
 - **Offboard** ends access: "Its staff can no longer sign in and every active PHR link is discharged. This can be reversed."
 - **Reactivate** restores it: "Its staff will be able to sign in again immediately."
 
 ## Platform admins
 
-At the bottom of the hosted organizations page, **Platform admins** grants or removes the superadmin role by email.
+At the bottom of the hosted organisations page, **Platform admins** grants or removes the superadmin role by email.
 
 1. Enter the person's **Email** and select **Search**.
 2. If they have never signed in, you see "No account found for that email yet". They must sign in once before they can be promoted.
@@ -63,7 +84,24 @@ Open **Platform → Caregiver access** (`/admin/caregivers`) to look up [caregiv
 
 The same screen is also in the Medbot web app's admin area, under **Caregiver Access**.
 
+## Record services
+
+Open **Platform → Record services** (`/admin/record-services`). Patients can pay the Medbot team to upload their documents or reconcile their history into their health record. This queue is where that work is done. The page explains: claiming a request opens that patient's record to you until you mark it ready, and every view is shown to the patient.
+
+Tabs show the requests by status, each with a count: **Paid, unclaimed**, **In progress**, **With the patient**, **Completed** and **Refunded**. The table has the columns **Request**, **Services**, **Paid**, **Since** and **Assigned**. The services are **Upload documents** and **Reconcile history**.
+
+Select a request to open it. It shows what the patient asked for and has these steps:
+
+1. Read the patient's message under **From the patient**. Use **Admin notes** and **Save note** for your own notes. The patient never sees them.
+2. Select **Claim**. The card says "Claim it to open this patient’s record. The patient sees that you did." Once claimed it says "Claimed by you. Your access to this record ends &lt;time&gt;." **Release** hands the request back.
+3. Under **Files the patient attached**, select **Open** to view a file, or **Add to record** to put it into the record. Medbot then reads it, and the file shows **In record**.
+4. Under **The patient's record**, load the record to see conditions, medicines, allergies and documents. Add anything missing under **Upload a document into the record** or **Add a reconciled item**. Reconciled items are added as drafts, listed under **Drafts waiting for the patient**.
+5. When everything is uploaded and every draft added, select **Mark ready for review**. The dialog **Send to the patient?** warns that your access to the record ends now. Select **Mark ready**, or **Not yet** to go back.
+
+The request then moves to **With the patient**. **History and access log** at the bottom records who did what.
+
 ## Related
 
-- [Medbot-Hosted Organizations](/cms/hosted-organisations): the clinic's side of a request.
+- [Medbot-Hosted Organisations](/cms/hosted-organisations): the clinic's side of a request.
+- [Seeding Staff & Patients](/cms/seed-data): how a new organisation's staff and patients are brought in.
 - [Roles & Permissions](/cms/roles-and-permissions): clinic roles, which are separate from the superadmin role.

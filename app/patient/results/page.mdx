@@ -1,46 +1,73 @@
+import { ImageZoom } from "nextra/components";
+
 # Results & Records
 
-The **Results** tab is the patient's view of their clinical record: laboratory and imaging reports first, the other record kinds behind them, and an export of the whole thing.
+The **Results** tab is where you read your test results and the rest of your health record. Records show which clinic they came from.
 
 ## Results list
 
-Reports appear newest first with an **All / Laboratory / Imaging** filter. Any follow-ups the clinic has asked for sit above the list so they are not buried under history.
+Reports are listed newest first. Use **All**, **Laboratory** or **Imaging** to filter. If the clinic has asked you to do something about a result, it shows above the list.
 
-Each report carries a conclusion badge: **Normal**, **Abnormal**, or **Critical**.
+Each report has a badge: **Normal**, **Abnormal** or **Critical**.
 
-## What is released, and when
+## When you see a result
 
-The portal never shows a patient a verdict the clinic has not released.
+You only see a result once the clinic has released it.
 
-- Nothing that reads as a conclusion is shown before a doctor has signed the result off.
-- A **critical** flag is withheld while the clinic is still trying to recall the patient — so the patient hears it from a clinician, not from a badge.
-- **"What this means"** is the clinician's own patient-facing note. It is never staff shorthand repurposed for the patient.
+- A result is not shown as good or bad until a doctor has signed it off.
+- A **Critical** flag is held back while the clinic is still trying to reach you, so you hear it from a person first.
+- **What this means** is a note written by your clinician for you. It is not staff shorthand.
 
-## Result detail
+If a report says "Your doctor hasn't reviewed this report yet. It will be explained here in plain language once they have.", check again later. If the clinic withdrew a report, it says so. Message the clinic if you have questions.
 
-Opening a report shows the badge, "What this means", the report details (including which clinic issued it), the follow-up banner where one applies, the individual analytes once the result has been reviewed, and clear exits — back to the list, to the clinic thread, or to an appointment request.
+## Opening a report
 
-## The other record kinds
+A report shows its badge, **What this means**, the clinic that issued it, and any follow-up. After review, you also see each individual test result. Each shows **Normal**, **High**, **Low**, **Critically high**, **Critically low** or **Abnormal**. You can go back to the list, message the clinic, or ask for an appointment from here.
 
-Beyond reports, the record covers:
+A report your doctor has explained shows a **Reviewed by your doctor** badge and a link, **Read your doctor's full explanation**.
 
-| Kind | What it holds |
+## Your doctor's explanation
+
+Sometimes your doctor writes a plain-language explanation of your results and approves it. You find it in three places:
+
+- A notification: **Your doctor has explained your results**, or **Your doctor updated the explanation of your results**.
+- A section on the Results tab called **Explained by your doctor**. Each row says "Explained by your doctor on" and a date.
+- The link on a report, **Read your doctor's full explanation**.
+
+The page is called **Your test results, explained**. It shows the clinic and "Reviewed and approved by" your doctor and the date. It has these parts:
+
+- **In short**
+- **Your results**: each test with your result, the normal range, and whether you are below, within or above the range. It also shows if you are up, down or the same as last time.
+- **What each test measures**
+- **What your results mean**
+- **What to do next**: a checklist. Ticks stay on your device and are not sent to the clinic. It also has **Healthy habits**.
+- **When to get help sooner**: warning signs. "In an emergency, call 995 now."
+- **Learn more**
+
+At the bottom you can choose **Download PDF**, **Ask Medbot about this explanation**, or **Message the clinic**.
+
+If your clinic offers other languages, a language switcher appears on the page. A computer translation says "Translated by computer from the English your doctor approved." A checked translation says "Translation reviewed by bilingual clinic staff."
+
+If your doctor replaces an explanation, old links open the new one. If the clinic withdraws one, the row says **Explanation withdrawn**. The page says not to rely on it, with a **Message the clinic** button.
+
+## More from your record
+
+Under **More from your record**, the Results tab lists:
+
+| Row | What it holds |
 | --- | --- |
-| **Lab & imaging reports** | Reports issued by the lab or imaging centre |
+| **Conditions** | Diagnoses, and the history you added yourself |
+| **Medicines** | Prescriptions and medicines you take |
+| **Allergies** | Allergies on your record |
 | **Results & measurements** | Individual results, vitals and readings |
-| **Immunisations** | Vaccines recorded by the clinic |
-| **Documents** | Letters, referrals and uploaded files |
+| **Immunisations** | Vaccines the clinic recorded |
+| **Documents & letters** | Letters, referrals and uploaded files |
+| **Session summaries** | Summaries of your guided care sessions. See [Health Records](/patient/health-records). |
 
-Every row notes which clinic it came from and whether that clinic is still syncing, so a patient can tell a current record from a historical one.
-
-Guided-session summaries are kept out of this list and shown separately under [Health Records](/patient/health-records) — they are the patient's own notes, not a clinic's chart.
+Things you add yourself, for example with [Medical History](/patient/medical-history), are marked as reported by you until a clinician confirms them. Each row says which clinic it came from, and whether that clinic is still adding to your record.
 
 ## Download my summary
 
-**Download my summary** exports the whole health record as an **International Patient Summary (IPS)** — a standard, portable document a patient can hand to another clinician.
+**Download my summary** saves your whole record as an International Patient Summary. This is a standard document you can give to another clinician.
 
-The export is assembled from the patient's problems, immunisations, results and procedures, plus two reconciled lists:
-
-- **Medications** and **allergies**, deduplicated across every connected clinic so the same drug recorded at two clinics appears once. The reconciled lists are regenerated after each clinic's sync run, and the patient can mark an entry **verified** or **disputed**.
-
-There is no separate reconciliation screen today; the export is where reconciled medications and allergies surface to the patient.
+It covers your problems, immunisations, results and procedures. Medicines and allergies are combined across all your clinics, so a medicine recorded at two clinics appears once.

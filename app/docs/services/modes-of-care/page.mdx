@@ -1,0 +1,67 @@
+import { ImageZoom } from "nextra/components";
+
+# Modes of Care
+
+A service's **Mode of care** says how it delivers care, and decides which boards the [Workstation](/docs/services/workstation) shows. Set it when you create a service, or change it later with **Edit service details**. The mode appears as a badge next to the service's status, and as the **Mode** column in the Services list.
+
+| Mode | What it means | Main board |
+| --- | --- | --- |
+| **Clinic** | Patients book or walk in, join a queue for the day, and are seen in a consult. | **Queue** |
+| **Inpatient** | Patients are admitted to a ward, reviewed on ward rounds, and discharged. | **Census** (and **Rounds**) |
+| **Remote** | Patients are followed remotely: messages, portal sessions and video reviews, with no queue. | **Caseload** |
+
+Services that existed before modes were introduced are **Clinic**. Every mode also has an **Escalations** view; see [Pre-visit History & Escalations](/docs/services/pre-visit-and-escalations#concerns-from-patients-not-booked-here).
+
+## Clinic
+
+The Queue, Progress and Pre-visit views are covered on the [Workstation](/docs/services/workstation) page.
+
+## Inpatient
+
+The **Census** board lists the service's admitted patients. Columns: **Bed**, **Patient**, **Admitted**, **Attending**, **Last round** and **Flags** (a **For discharge** badge marks patients expected to go home).
+
+The toolbar has:
+
+- **Show**: **This service's patients** or **Everyone admitted**
+- a ward select (**All wards** by default)
+- a filter: **All patients**, **Not seen today**, **Round in progress**, **Escalated** or **For discharge**
+
+A banner says how many patients on the ward have not been seen today.
+
+<ImageZoom src="/images/docs/services/modes-of-care/01-inpatient-census.png" alt="The Inpatient census with the Census, Rounds and Escalations tabs, the Admit patient button, three patients by bed and a For discharge flag" />
+
+### Admit, transfer and discharge
+
+- **Admit patient** (on the board, or **Admit** on the patient's page): search for the **Patient**, choose the **Ward** and **Bed**, and optionally an **Expected discharge**. A bed can be left as "Not assigned yet". Click **Admit**.
+- **Transfer** on a row opens **Transfer or update**: change **Ward**, **Bed** or **Expected discharge** and click **Save**.
+- **Discharge** on a row asks **Discharged to** (for example Home, Transferred to another facility, Rehabilitation, Long-term care) and then **Discharge**.
+
+On the patient's page, the **General** tab shows an **Admission** card ("Not admitted" until the patient is admitted) with **Admit**, **Today's ward round** and **Draft discharge summary**. The draft summary is written for you to review in the notes before you discharge.
+
+### Ward rounds
+
+**Start round** (or **Resume round**) on a census row opens the consult screen, titled **Ward round**. It works like a clinic consult, including recording. Click **End round** when finished ("Ward round ended").
+
+The **Rounds** view is a grid of patients by day showing **Rounded**, **In progress**, **No round** or **Not admitted**, with a **Today** column.
+
+### Settings
+
+In the Workstation settings:
+
+- **Wards this service rounds on**: leave none selected to include every ward.
+- **Census order**: **By ward, then bed** or **Longest stay first**.
+- **Unanswered message needs attention after (hours)**.
+
+A **Wards** section lets you define the wards themselves; click **Save wards** to keep changes.
+
+## Remote
+
+The **Caseload** board ranks patients by how much attention they need. The **Show** filter offers **Needs attention**, **Scheduled today**, **Active sessions** and **All patients**.
+
+Columns: **Patient**, **Flags**, **Scheduled** (for example a video review with a clinician, or a visit), **Last contact** and **Last review** (**In progress** or **Reviewed**).
+
+<ImageZoom src="/images/docs/services/modes-of-care/02-remote-caseload.png" alt="The Remote caseload with patients needing attention, their flags, scheduled contacts and the Start review and Message buttons" />
+
+Flags include **Escalation**, **Unanswered message**, **Session needs a person**, **Task overdue**, **Task due**, **Scheduled today**, **Waiting on patient**, **Review in progress** and **No contact for a while**.
+
+**Start review** (or **Resume review**) on a row opens the consult screen, titled **Remote review** (**Video consultation** when it belongs to an appointment). Click **End review** when finished. The **Unanswered message needs attention after (hours)** setting decides when an unanswered patient message raises a flag.

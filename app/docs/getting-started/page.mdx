@@ -4,34 +4,85 @@ import { ImageZoom } from "nextra/components";
 
 ## Create an account
 
-To create an account, head over to [medbot.me/login](https://www.medbot.me/login). You have the option to create your account using an email address and a password, or log-in using a Google account.
+To create an account, head over to [medbot.me/login](https://www.medbot.me/login). You can create your account with an email address and a password, or log in with a Google account.
 
 ## Onboarding
 
-Upon sign-up (or first log-in using a Google account), you will be presented with an onboarding setup. Here, you can customize your profile before you start using Medbot. You can <br/> (1) Confirm you email address and name. <br /> (2) Confirm your country and professional background.<br/> (3) Select default clinical notes to import. <br/> (4) Select default agents to load.
+The first time you sign in, a four-step setup opens. It takes about a minute. A **Help** panel at the side offers **Guides**, **Report a problem** and **Running a clinic?** if you get stuck.
 
-<br />
-<div style={{ display: "flex", gap: "16px" }}>
-  <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
-    <ImageZoom src="/images/Onboarding-1.png" alt="Onboarding Stage One" />
-    <span>*1. Onboarding - Basic Details*</span>
-  </div>
-  <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
-    <ImageZoom src="/images/Onboarding-2.png" alt="Onboarding Stage One" />
-    <span>*2. Onboarding - Professional Details*</span>
-  </div>
-  <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
-    <ImageZoom src="/images/Onboarding-3.png" alt="Onboarding Stage Two" />
-    <span>*3. Onboarding - Import Default Notes*</span>
-  </div>
-  <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
-    <ImageZoom src="/images/Onboarding-4.png" alt="Onboarding Stage Three" />
-    <span>*4. Onboarding - Load Default Agents*</span>
-  </div>
-</div>
+### Step 1: About you
 
-Once you finish onboarding, you will be redirected to the workspace and you can start using Medbot right away!
+Under the heading **Welcome to Medbot**, check your **First name**, **Last name** and **Email**, then select **Continue**.
+
+<ImageZoom src="/images/docs/getting-started/01-about-you.png" alt="The About you step of the Medbot setup, with first name, last name and email filled in" />
+
+### Step 2: Your practice
+
+Choose your **Country** and your role. Pick the one that fits from the **Your role** list:
+
+- Doctor
+- Nurse
+- Pharmacist
+- Allied health professional
+- Medical student
+- Researcher
+- Clinic manager or administrator
+- Other (a **Tell us your role** box appears so you can describe it)
+
+Then enter your **Practice or clinic**.
+
+<ImageZoom src="/images/docs/getting-started/02-your-practice.png" alt="The Your practice step, showing country, role and practice or clinic" />
+
+### Step 3: AI preferences
+
+Under **How much should Medbot help while you write?**, choose how the writing assistant behaves. You can change all of these later in [Settings](/docs/advanced).
+
+| Setting | What it does |
+| --- | --- |
+| **Autocomplete while you write** | Medbot suggests the next few words as you type a note. Press `Tab` to accept a suggestion, or keep typing to ignore it. |
+| **Suggestion length** | How much text each suggestion offers: **Short**, **Medium** or **Long**. |
+| **Pause before suggesting** | How long Medbot waits after you stop typing: **Quick**, **Balanced** or **Relaxed**. Quicker feels more responsive; slower is less distracting. |
+| **Match my writing style** | Lets Medbot learn from the notes you write so suggestions sound like you. It uses your own notes only. |
+
+<ImageZoom src="/images/docs/getting-started/03-ai-preferences.png" alt="The AI preferences step with autocomplete, suggestion length, pause before suggesting and match my writing style" />
+
+### Step 4: Review
+
+**Ready to set up your workspace** summarises your answers. Select **Edit** beside any section to change it, or **Back** to return to an earlier step. When you are happy, select **Finish setup**.
+
+<ImageZoom src="/images/docs/getting-started/04-review.png" alt="The Review step listing the details entered, each with an Edit button" />
+
+Medbot then works through a short list, showing progress as it goes: **Creating your account**, **Adding starter notes, templates and research reviews** and **Applying your AI preferences**. If you arrived through an invitation link, you also see **Applying your invitation**.
+
+When it is done, select **Go to Medbot**. You land on [Home](/docs/getting-started/home).
+
+<ImageZoom src="/images/docs/getting-started/05-all-set.png" alt="The all-set screen with the Go to Medbot button" />
+
+If setup fails, choose **Try again**, **Edit my details** to correct your answers, or **Sign in again**.
+
+> Starter notes, templates and example Deep Research reviews are added for you automatically. Agents are not added during setup: create your own from [Agents](/docs/agents).
 
 ## Credits
 
 Finishing onboarding adds a **500-credit signup bonus** to your account. Your balance is shown on the **Credits Remaining** card on **Home**; select **View Usage** to open the Usage Dashboard. See [AI Usage & Credits](/docs/ai-usage).
+
+## Finding your way around
+
+The sidebar on the left is how you move between the tools in your personal space:
+
+| Sidebar item | What it opens |
+| --- | --- |
+| **Home** | Your dashboard. See [Home](/docs/getting-started/home). |
+| **Inbox** | Tasks assigned to you. |
+| **Agents** | Build and run [agents](/docs/agents). |
+| **Datasets** | Patient data for agents. See [Patient Data](/docs/agents/datasets). |
+| **Notes** | Your notes and the [workspace](/docs/workspace). |
+| **Deep Research** | [Systematic reviews](/docs/deep-research). |
+| **Templates** | [Templates](/docs/workspace/templates) you insert into notes. |
+| **Clinical Resources** | Your own [documents](/docs/clinical_resources) for AI to draw on. |
+
+At the bottom of the sidebar, select your name to open the account menu: the **Settings** gear, **Theme** (light or dark), **Documentation**, **Report a bug** and **Log out**.
+
+On a phone, the sidebar is hidden. Open it with the menu button at the top left.
+
+If you belong to an organisation, the sidebar changes while you are working inside it. Use the switcher at the top of the sidebar to return to **Personal**. See [Organisations and roles](/docs/getting-started/organisations).

@@ -1,4 +1,4 @@
-# AI Encounters & Kiosk
+# AI Encounters
 
 An **AI encounter** is a structured conversation between a patient and an AI assistant, set up by the service. There are three kinds:
 
@@ -12,7 +12,7 @@ A patient completes an encounter either **remotely on the patient portal**, from
 
 ## Settings
 
-On the service's **Settings** tab, the **AI encounters** card sets up each kind the service offers. For each kind:
+On the service's **Settings**, the **AI encounters** card sets up each kind the service offers. For each kind:
 
 - **Enabled**: whether the service offers this kind.
 - **Instructions**: anything specific to add to this encounter's conversation.
@@ -20,6 +20,7 @@ On the service's **Settings** tab, the **AI encounters** card sets up each kind 
 - **Share the care team's latest note with the assistant**: folded into the assistant's context when the patient opens the encounter.
 - **Auto-attach relevant library documents**: searches the library when the encounter starts and attaches the best matches (up to three) alongside the defaults.
 - **Let the assistant search the service library** during the conversation.
+- For **History taking** only, a **Before a booked visit** block that offers the history to patients before their appointment. See [Pre-visit History & Escalations](/docs/services/pre-visit-and-escalations#offering-a-pre-visit-history).
 
 Encounters no longer need an agent bound to them: the assistant is set up from these settings, the service context and the patient's own context.
 
@@ -28,7 +29,7 @@ Encounters no longer need an agent bound to them: the assistant is set up from t
 On the patient's page, **General** tab, the **AI encounters** card:
 
 1. Click **Start encounter**.
-2. In **Start an AI encounter**, choose the **Kind**, optionally say **Why this encounter** (it "gives the assistant a head start instead of asking the patient to explain from scratch"), and adjust the **References & protocols** (pre-ticked from Settings).
+2. In **Start an AI encounter**, choose the **Kind**, optionally say **Why this encounter (optional)** (it "gives the assistant a head start instead of asking the patient to explain from scratch"), and adjust the **References & protocols** (pre-ticked from Settings).
 3. Click **Send link**.
 
 The link goes out on the service's default channel (see [Channel](#channel-settings)). If sending fails, **Encounter started — link not sent** shows the link with a **Copy** button so you can pass it on yourself.
@@ -87,7 +88,11 @@ The device switches to a full-screen kiosk (`/kiosk/...`) with no staff app arou
 
 ### Requirements for voice
 
-Voice mode needs a default **realtime model** (set by an administrator under **Realtime Models**, `/admin/realtime-models`) and the AI Gateway to be configured. If either is missing, the dialog says why voice is unavailable and text still works.
+Voice mode needs a default **realtime model** (set by an administrator under **Realtime Models**) and the AI Gateway to be configured. If either is missing, the dialog says why voice is unavailable and text still works.
+
+### A dedicated kiosk
+
+A clinic can also leave a device permanently in kiosk mode, where patients check in and start the sessions arranged for them without staff handing the device over. See [Kiosk Self-Service](/docs/services/kiosk).
 
 ## Channel settings
 
@@ -95,3 +100,5 @@ On **Settings**, the **Channel** card sets how this service reaches patients:
 
 - **Default channel**: WhatsApp or SMS, for AI-encounter invites and appointment reminders. SMS is used automatically if WhatsApp is not configured or a send fails.
 - **Send appointment reminders** and **Hours before the appointment** (e.g. `24`). See [Appointments](/docs/services/appointments#reminders).
+
+The **Patient notifications** card next to it controls the email, WhatsApp and SMS messages that tell patients something is waiting in the portal. See [Patient Notifications](/docs/services/patient-notifications).

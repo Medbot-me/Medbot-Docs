@@ -1,13 +1,16 @@
+import { ImageZoom } from "nextra/components";
+
 # Visits & Appointments
 
 The **Visits** tab covers your visits from start to finish:
 
 - [past visits and their summaries](#visit-list-and-summaries)
-- [today's visit](#todays-visit): registering your arrival and following the queue
+- [today's visit](#todays-visit): registering when you arrive and following the queue
 - [after your visit](#after-your-visit): the summary your clinician sends and the steps they arranged
 - [appointment requests](#appointment-requests) you send to the clinic
 - [appointments your clinic offers you](#offers-from-your-clinic)
 - [the check-in before an offered appointment](#pre-visit-check-in)
+- [telling Medbot about your visit](#telling-medbot-about-your-visit) before a booked one
 
 ## Visit list and summaries
 
@@ -33,7 +36,7 @@ On the day of an appointment, the **Today's visit** card appears at the top of *
 
 | Card says | Where you are |
 | --- | --- |
-| **Register your arrival** | You have not checked in yet. |
+| **Register your arrival** | You have not registered yet. |
 | **Track your queue number** | You are checked in and waiting. |
 | **It is your turn** | Reception has called you to a room. |
 | **View your visit summary** | Your visit is complete. |
@@ -42,32 +45,12 @@ The card shows your earliest appointment of the day (Singapore time) at any conn
 
 ### Registering your arrival
 
-When you reach the clinic, open **Today's visit**. The **Register your arrival** card shows the clinic and location. You can check in in one of two ways:
+When you reach the clinic, open **Today's visit**. It is on **Home** and at the top of **Visits**. The card says "Your appointment today at" and the time. Under it you see your doctor, the clinic and the location.
 
-- **Register my arrival** uses your phone's location. It works when you are within about 300 metres of the clinic, with a little extra allowance for how accurate your phone's location is.
-- **Scan or enter the code at the counter instead** lets you type a 6-digit code. The code changes every day. Ask at the counter, or look for it on the waiting-room screen: "Checking in on your phone? Enter code … in the patient portal."
+1. Under **Paying with**, choose how you expect to pay: **Pay at the counter**, **Insurance / MediSave on file**, **Subsidy scheme** or **Company / corporate account**. The first is already chosen.
+2. Select **Register and get my queue number**.
 
-The clinic decides which of these it offers. If it offers neither, the card says "Self check-in is not set up for this clinic yet. Please register at the counter."
-
-Then confirm your details:
-
-1. **Who you are** shows your **Name**, your **Appointment** time and your **Doctor**. If you chose the code, enter it under **Code from the counter**.
-2. Under **Paying with**, choose **Pay at the counter**, **Insurance / MediSave on file**, **Subsidy scheme** or **Company / corporate account**.
-3. Tick "The details above are correct and I have no new allergies or medications to report".
-4. Select **Register and get my queue number**.
-
-If something goes wrong, the screen tells you:
-
-| Message | What to do |
-| --- | --- |
-| "Could not get your location. Use the code at the counter instead." | Your phone did not share its location. Use the code. |
-| "This device cannot share its location. Use the code at the counter instead." | Use the code. |
-| "You do not appear to be at the clinic yet." | Move closer, or use the code. |
-| "This clinic has not set up location-based check-in. Use the code at the counter instead." | Use the code. |
-| "That code is not valid. Ask at the counter for today's code." | Check the code with the counter. |
-| "Enter the 6-digit code from the counter." | The code must be 6 digits. |
-| "Confirm the details above to continue." | Tick the confirmation box. |
-| "This appointment is no longer active." | The appointment was cancelled or closed. Ask at the counter. |
+That is all. You do not need to scan anything, share your location or enter a code. If something goes wrong, the screen shows the clinic's message. If it does not work, register at the counter.
 
 ### Following the queue
 
@@ -82,13 +65,7 @@ A panel tells you where to go, for example **Waiting area**: "Please take a seat
 
 When reception calls you, the screen changes to a banner: **It is your turn**, with the room to go to, for example "Please proceed to Consult Room 2."
 
-Below that, a step list shows how far through the visit you are:
-
-1. **Registered**
-2. **Consultation**
-3. **Investigations**, only if tests or procedures were ordered today
-4. **Payment and medicines**
-5. **Visit summary**
+Below that, a step list shows how far through the visit you are. It starts with **Registered**. If the service has its own visit steps, they follow, and the current one says "Happening now". Otherwise you see **Consultation**, **Investigations** (only if tests or procedures were ordered today), **Payment and medicines** and **Visit summary**.
 
 ### Getting told when it is your turn
 
@@ -130,21 +107,34 @@ Appointment requests have their own screen. Select the **Appointment requests** 
 
 The screen lists your requests. With none, it says "No appointment requests".
 
-### Making a request
+### Booking or asking for an appointment
 
-Select **New request**. The **Request an appointment** form asks for:
+Select **New request**. The **Request an appointment** form starts with **Clinic**. Pick one of your connected clinics ("Select a clinic").
 
-1. **Clinic**: which connected clinic. This only appears if you have more than one.
-2. **Location**: a location of that clinic. With one clinic, this field is called **Clinic**.
-3. **Preferred date**
-4. **Time of day**: **Morning**, **Afternoon** or **Evening**
-5. **Reason for the visit**: "Briefly, so the clinic can allow enough time…"
+If you are enrolled in services at that clinic, a **Book with** choice appears. Pick **General appointment (clinic confirms)** or one of your services.
 
-Select **Submit request**. Only clinics you are actively connected to are offered.
+**Book with a service.** Medbot shows "Finding open times…", then **Pick a time**. Open times are grouped by day, and hovering a time shows who you will see. Add a **Reason for the visit (optional)**, then select **Book appointment**. Your appointment is confirmed as soon as you book it. You can cancel it later from your appointments. If the service has nothing free in the next two weeks, the form says "This service has no open times in the next two weeks. Ask the clinic for a general appointment instead."
 
-### A request is not a booking
+**General appointment.** Fill in:
 
-Submitting a request does not book an appointment. The form says so: "This is a request, not a confirmed booking. The clinic will respond in the portal."
+1. **Location**, if the clinic has more than one
+2. **Preferred date**
+3. **Time of day**: **Morning**, **Afternoon** or **Evening**
+4. **Reason for the visit**
+
+Select **Submit request**. This is a request, not a confirmed booking. The clinic will answer in the portal.
+
+### Booked with your services
+
+Appointments you booked yourself with a service are listed on **Appointment requests** under **Booked with your services**. Each shows the service, the date and time, who you will see, and a **Confirmed** badge. To cancel, select **Cancel**, then **Cancel appointment** (or **Keep it**). A caregiver needs "Can make changes" access to cancel.
+
+### Before your visit
+
+If a service you booked asks questions first, a **Before your visit** section on this screen has **Start** or **Continue**. See [Telling Medbot about your visit](#telling-medbot-about-your-visit). Do not confuse it with the five-question [check-in](#pre-visit-check-in) that has the same title.
+
+### What happens to a general request
+
+A general request does not book anything until the clinic answers.
 
 Staff review it from the CMS's [Appointments → Booking requests](/cms/appointments#responding-to-portal-booking-requests) screen. Each request shows where it stands:
 
@@ -235,6 +225,10 @@ If an answer is not accepted, the screen tells you why:
 - "Readings should be numbers between 1 and 35, like 6.8."
 - "The lowest reading cannot be higher than the highest."
 
+## Telling Medbot about your visit
+
+When you book a visit with a service that asks for it, Medbot invites you to answer a few questions beforehand, so your care team can read them before you arrive. This is covered on its own page: [Pre-visit History](/patient/pre-visit-history).
+
 ## Caregivers
 
 A [caregiver](/patient/caregivers) sees the same Visits screens for the person they care for.
@@ -244,7 +238,8 @@ A [caregiver](/patient/caregivers) sees the same Visits screens for the person t
 | See visits, visit summaries and steps from a visit | Yes | Yes |
 | See the queue tracker | Yes | Yes |
 | Turn on **Notify me when it is my turn** | No | Yes |
-| Register an arrival | No | Yes |
+| Register when you arrive | No | Yes |
+| Book with a service, or cancel a booking | No | Yes |
 | Make an appointment request, or accept or decline a proposed time | No | Yes |
 | Answer an offer from the clinic | No | Yes |
 | Fill in a pre-visit check-in | No | Yes |

@@ -1,14 +1,27 @@
+import { ImageZoom } from "nextra/components";
+
 # Workstation
 
-The **Workstation** is a service's view of **today's clinic queue**. It shows who has arrived, where each patient is in their visit, and what needs attention. From it, staff move patients through the visit journey and run the clinical consult.
+The **Workstation** is a service's working view of the day. It shows who needs attention, where each patient is in their visit, and what needs doing next. From it, staff move patients through the visit journey and run the consult.
 
-Open it from **Workstation** in the service's sidebar group (`/services/[serviceId]/workstation`). Anyone who can open the service can use it.
+What the Workstation shows depends on the service's **Mode of care**. This page covers a **Clinic** service, where it shows **today's clinic queue**. For ward rounds see [Inpatient](/docs/services/modes-of-care#inpatient), and for remote follow-up see [Remote](/docs/services/modes-of-care#remote).
+
+Open it from **Workstation** in the service's sidebar. A strip of **Workstation views** at the top switches between boards:
+
+| Mode of care | Views |
+| --- | --- |
+| **Clinic** | **Queue**, **Progress**, **Pre-visit**, **Escalations** |
+| **Inpatient** | **Census**, **Rounds**, **Escalations** |
+| **Remote** | **Caseload**, **Escalations** |
+
+The **Pre-visit** and **Escalations** views are described in [Pre-visit History & Escalations](/docs/services/pre-visit-and-escalations).
 
 ## How it connects to the clinic
 
 The Workstation does not keep its own queue. It reads the **Medbot CMS queue** for the service's clinic location, the same queue the front desk runs, so:
 
-- a patient checked in at reception, or who **checked themselves in** on the patient portal, appears here
+- a patient checked in at reception, who **checked themselves in** on the patient portal, or who checked in at the [self-service kiosk](/docs/services/kiosk), appears here
+- a patient with a booked appointment (including one booked by the patient in the portal) appears as **Not yet arrived**
 - starting a step that maps to a CMS queue stage (nurse, doctor, dispensary) moves the patient to that stage in the CMS
 - completing every step of the journey completes the visit in the CMS
 
@@ -21,33 +34,46 @@ On the day of the visit, patients follow the same journey on the patient portal:
 - **Sessions your clinician arranged**: AI financial counselling or health education sessions that staff arrange for this visit.
 - A **visit outcome** screen at the end: what was found, medicines started, next steps and billing.
 
-In the CMS, the front desk can **Arrange session** for a patient and **Complete visit** with findings, medicines started and next steps (pre-drafted by AI). See [Reception Queue](/docs/medbot-cms/reception-queue).
+In the CMS, the front desk can **Arrange session** for a patient and **Complete visit** with findings, medicines started and next steps (pre-drafted by AI). See [Reception Queue](/cms/reception-queue).
 
-## The board
+## The board (Queue)
 
-The board refreshes itself every few seconds; **Refresh** reloads it immediately.
+The board refreshes itself every few seconds, and shows how fresh it is. **Refresh** reloads it immediately.
 
 | Control | Options |
 | --- | --- |
-| **Show** | **This service's patients** (the cohort) or **Everyone in today's queue** |
-| **Status** | All patients, Waiting, In progress, Escalated, Completed, Not arrived |
-| **Sort** | Queue number, or appointment time |
+| **Day** | **Today** or **Tomorrow**. Tomorrow is a read-only list of who is booked, with their appointment, doctor and pre-visit status. |
+| **Show** | **This service's patients** (the cohort) or **Everyone in today's queue** (**Everyone booked tomorrow** on the Tomorrow view) |
+| **Filter** | **All patients**, **Waiting**, **In progress**, **Escalated**, **Completed**, **Not arrived**, each with a count |
+| **My room** | Appears when the clinic has rooms. Choose the room you are working in. |
+
+Click the **Queue** or **Appointment** column header to sort.
 
 | Column | Shows |
 | --- | --- |
 | **Queue** | The patient's queue number. |
-| **Patient** | Name. |
+| **Patient** | Name, with the masked ID and a **Demo** chip for demo patients. |
+| **Appointment** | The booked time. |
 | **Notifications** | An **Urgent** or **Acknowledged** escalation, and unanswered portal **Message**s. |
+| **Pre-visit** | The state of the patient's pre-visit history. |
 | **Progress** | How many journey steps are left, of how many. Hover for the breakdown. |
 | **Now and next** | The current and next step. |
 
-A banner at the top says when patients have raised an issue through the patient portal.
+Banners at the top say when:
+
+- patients have raised an issue through the patient portal and need acknowledging
+- patients on today's list did not answer the pre-visit check-in ("Ask about how they have been before the consult.")
 
 Row actions:
 
 - **Mark arrived** checks in a patient who is booked but not yet here.
 - **Add to service** enrols a patient from the queue into this service's cohort.
 - **Open visit** opens the patient panel.
+- **Call** (then **Call again**) calls the patient to your room. Choose **My room** first, otherwise the button explains "Choose "My room" above to call patients to it".
+
+### The Progress view
+
+**Progress** shows each of today's patients against the service's journey steps, one column per step, including education and counselling sessions running on the portal or the kiosk. Tiles count **Needs a person**, **Session in progress**, **Steps left** and **Visit complete**; click a session cell to open its details and step in.
 
 ## The patient panel
 
@@ -55,42 +81,56 @@ Row actions:
 
 - **Escalation**, if there is one, with **Acknowledge** and **Resolve**.
 - **Unanswered portal message**, if the patient is waiting on a reply.
-- **Today's journey**: every step of the visit with its status. For each step: **Start &lt;step&gt;**, **Mark complete** or **Skip**.
+- **Today's journey**: every step of the visit with its status. For each step: **Start** followed by the step name in lower case (for example **Start vitals**), **Mark complete** or **Skip**.
   - A step that runs as an **AI encounter** (history taking, health education, financial counselling) opens the in-clinic encounter dialog, so the patient can do it on a clinic device. See [AI Encounters & Kiosk](/docs/services/encounters#in-the-clinic-the-kiosk).
-  - The consult step has **Start clinical consult**, or **Resume clinical consult** once started.
+  - The consult step has **Start clinical consult**, or **Resume clinical consult** once started. If you have chosen **My room** and the consult has not started, **Start consult and call in** also calls the patient.
 
 ## The clinical consult
 
-**Start clinical consult** opens the consult screen for the visit: Medbot's notes editor, with the patient's note for this visit, under the service's breadcrumb.
+**Start clinical consult** opens the consult screen for the visit: Medbot's notes editor, with the patient's note for this visit, under the service's breadcrumb. Beside the note are the patient's chart and **Orders** and **Medications** tabs, where you draft and sign prescriptions, lab and imaging orders and service orders (see [Orders & Order Sets](/cms/orders-and-order-sets)). If the patient did a pre-visit history, a **Pre-visit history** section offers **Add to note** and **Open full note**, and a pre-visit check-in summary offers **Add to note**.
 
 - The note **saves automatically**.
 - **Record** the consult with the [encounter recorder](/docs/services/encounter-recording). On this screen it transcribes every 45 seconds, and a **Transcript** pane beside the note shows the conversation almost live. Pause and resume without losing the microphone.
 - When the recording ends, review the AI-drafted note section by section and add what you want.
 
-Click **End consult** when you are done. The AI reads the plan in the note, decides which of the service's other journey steps it calls for (for example financial counselling, health education, medications collection or a follow-up appointment), adds them to the visit, completes the consult step and **notifies the patient** of what was arranged. The toast "Consult ended" explains what was added and why. If the AI or the notification fails, the consult still ends.
+### Ending the consult
+
+Click **End consult** when you are done. Medbot reads your plan in the note and proposes next steps, but **nothing reaches the patient until you confirm**. The dialog **End consult: next steps for &lt;patient&gt;** shows:
+
+- the rationale, and a checklist of proposed steps. Each carries a badge: **Portal**, **Kiosk**, **In clinic** or **Task**. Untick anything that should not happen.
+- **Add another step**, to add one of the service's other journey steps yourself.
+- **Unsigned orders**: any prescription, lab, imaging or service drafts. "Drafts are not sent. Sign them on the Orders and Medications tabs before you end the consult."
+- **Tell the patient by SMS or WhatsApp that steps are waiting, with a portal link only.** This is disabled if the patient is not on the portal. Its starting value comes from your Workstation settings.
+
+<ImageZoom src="/images/docs/services/workstation/01-end-consult-dialog.png" alt="The End consult dialog where Medbot read the plan and proposes next steps, each marked In clinic or Kiosk" />
+
+Click **Confirm &lt;N&gt; step(s) and end consult** (or **End consult with no new steps**). Medbot adds the steps, completes the consult step and shows "Consult ended". If notifying the patient fails, the consult still ends.
 
 ## Settings
 
-**Workstation settings** (`/services/[serviceId]/workstation/settings`):
+**Workstation settings** (from the Workstation):
 
 - **Clinic location**: whose queue to show, or **Organisation default**.
 - **Default to only my assigned patients**.
-- **Show next steps on the patient portal by default**.
+- **When ending a consult, tell the patient about new steps by default**.
+- For an Inpatient service: **Wards this service rounds on**, **Census order** and **Unanswered message needs attention after (hours)**. See [Modes of Care](/docs/services/modes-of-care).
 
 Click **Save settings**.
 
 ### The visit journey
 
-The same page defines the service's **visit journey**: the steps every visit goes through. The defaults are:
+The same page defines the service's **visit journey**: the steps a visit can go through. The standard steps are:
 
-1. Registration
-2. Vitals
+1. Registration (included by default)
+2. Vitals (included by default)
 3. Investigations
-4. Consult
+4. Consult (included by default)
 5. Financial counselling
 6. Health education
 7. Medications collection
 8. Follow-up appointment
+
+Only the steps marked **Included by default** start every visit. The others are added when needed, for example by **End consult**.
 
 For each step:
 
@@ -99,9 +139,9 @@ For each step:
 | **Name** | Shown to staff, e.g. "Vitals". |
 | **Key** | A short identifier, e.g. `vitals`. Every step needs one. |
 | **Order** | Position in the journey. |
-| **CMS queue stage** | Nurse, Doctor or Dispensary queue, or none. Starting the step moves the patient to that stage in the CMS. |
-| **AI encounter kind** | For a step the patient does with the AI assistant: History taking, Health education or Financial counselling. |
-| **Included by default** | Whether every visit starts with this step, or it is only added when needed (for example by **End consult**). |
+| **CMS queue stage** | **None**, **Nurse queue**, **Doctor queue**, **Investigations**, **Dispensary queue** or **Completed**. Starting the step moves the patient to that stage in the CMS. |
+| **AI encounter kind** | For a step the patient does with the AI assistant: **History taking (AI)**, **Health education (AI)** or **Financial counselling (AI)**. |
+| **Included by default** | Whether every visit starts with this step, or it is only added when needed. |
 | **Active** | Turn a step off without deleting it. |
 
-**Add step** adds a custom step; **Save steps** saves the journey. Changes apply to new visits. A visit already under way keeps the steps it started with.
+**Add step** adds a custom step; **Save steps** saves the journey ("Steps saved."). Changes apply to new visits. A visit already under way keeps the steps it started with.

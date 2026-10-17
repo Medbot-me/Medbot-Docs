@@ -1,3 +1,5 @@
+import { ImageZoom } from "nextra/components";
+
 # Reports
 
 **Reports** lists the notifications and reports Medbot sends to national registries through SmartCMS. Find it at **SmartCMS → Reports** (`/reports`). The page says "National registry notifications and reports for" and your organisation's name.
@@ -7,7 +9,7 @@ The page has one section per module:
 | Section | Module | What it holds |
 | --- | --- | --- |
 | **NIR vaccination notifications** | National Immunisation Registry (`NIR`) | One notification per vaccination given at the clinic. |
-| **Disease notifications (DEROM)** | Disease notification (`DEROM`) | One notification per notifiable disease diagnosed at a visit. |
+| **Disease notifications (DEROM)** | Disease notification (`DEROM`) | One notification per notifiable disease diagnosed at a visit and, for tuberculosis, a progress report per later visit. |
 | **Chronic disease indicators (CIDC)** | Chronic disease indicators (`CIDC`) | One report per chronic visit, with its updates and deletion. |
 | **MW Health consult reports** | Migrant worker health reporting (`MW_HEALTH`) | One report per completed visit of a migrant worker. |
 | **NEHR referral letters** | Referral contribution to NEHR (`NEHR_REFERRAL`) | Each referral letter issued, its cancellation, and the daily reconciliation file. |
@@ -91,15 +93,15 @@ When a vaccination given at the clinic is recorded with an SDD product code, Med
 
 ## Disease notifications (DEROM)
 
-"Prepared when a visit’s diagnosis is a notifiable disease. A doctor completes and confirms each one for MOH."
+"Prepared when a visit’s diagnosis is a notifiable disease, and, for a notified tuberculosis case, at each later visit. A doctor completes and confirms each one for MOH." When there are none, the list says "No notifications yet."
 
 ### When a notification is prepared
 
 - A doctor codes a visit diagnosis (ICD-10-AM) that is a notifiable disease. See [Claims Workflow](/cms/smartcms/claims) for coding diagnoses.
 - There is one notification per disease per visit.
-- If the same patient already has a notification for the same disease from the last **90 days**, no second one is prepared. A discarded notification does not count.
+- If the same patient already has a notification for the same disease from the last **90 days**, no second one is prepared. A discarded notification does not count. Tuberculosis is the exception; see [Tuberculosis cases and progress reports](#tuberculosis-cases-and-progress-reports).
 - Diseases that only laboratories must notify are not prepared.
-- **Tuberculosis** is prepared but held. It says: "Tuberculosis is notified on DROM’s TB form, which Medbot does not send yet: notify it there, then discard this notification."
+- **Tuberculosis** (ICD-10-AM A15 to A19) is notified on its own form, with TB questions. The 90-day rule does not apply: the patient's TB case is followed for as long as it runs.
 - **Sexually transmitted infections** are notified without the patient's identity. The list shows "Not identified (STI)", and the form asks for ethnic group and residential status instead of name and ID.
 
 ### The list
@@ -113,8 +115,9 @@ Columns: **Disease**, **Patient**, **Status** and **To do**. Select the disease 
 | **Sent** | SmartCMS accepted it. |
 | **Notified** | DROM holds the notification. |
 | **Not accepted** | DROM refused or failed it. **To do** shows "Correct and send again" or "Send again". |
-| **Not confirmed** | DROM's answer was lost. **To do** shows "Send again". |
-| **Discarded** | The doctor discarded it. |
+| **Not confirmed** | DROM's answer was lost or could not be read. **To do** shows "Check with DROM". |
+| **Discarded** | The doctor discarded it. A discard stays: a replayed event or the nightly run does not bring it back. |
+| **Replaced** | A newer record took its place. |
 
 ### Completing and confirming a notification
 
@@ -133,14 +136,54 @@ A progress card at the top says either "Everything DROM requires is filled in." 
 At the bottom, a bar says "Ready to send to MOH." or how many fields are left, with:
 
 - **Save draft**: keeps your changes. You see "Notification saved."
-- **Confirm and send**: available once nothing is left to fix. It asks "Confirm the notification and send it to MOH’s DROM?", or, with unsaved changes, "Save your changes, confirm the notification and send it to MOH’s DROM?". You see "Notification confirmed."
-- **Discard**: asks "Why is this notification discarded?".
+- **Confirm and send**: available once nothing is left to fix. A dialog, **Send this notification to MOH?**, says "The notification goes to MOH’s DROM, which has no amendment: any correction after that is made with MOH directly." With unsaved changes it begins "Your changes are saved first." Select **Confirm and send**, or **Cancel**. You see "Notification confirmed."
+- **Discard**: opens **Discard this notification?** with a line saying what the discard does, a list of reasons and a note box. For an ordinary disease the reasons are **Entered in error** and **Another reason**. Choosing **Another reason** makes the box a required **Reason**; otherwise it is **Note (optional)**, and the box shows how many characters are left. Select **Discard**, or **Keep it** to go back. You see "Notification discarded."
 
 ### After DROM answers
 
 - **Refused for its content.** The form shows DROM's message and field errors. Select **Correct** ("Reopened for correction.") to reopen it with the same answers and DROM's errors marked, then confirm it again.
-- **Failed, or the answer was lost.** Select **Send again**. If the answer was lost, it first asks "DROM’s answer was lost. Send the notification again?". You see "Queued to send again."
+- **Failed.** Select **Send again**. You see "Queued to send again."
+- **Not confirmed (the answer was lost).** The form shows "DROM may already hold this": "DROM’s answer was lost or could not be read, so Medbot does not know whether DROM has it." Check with DROM first, then select the button on that notice to open **What did DROM tell you?** It says "Ask DROM whether it holds this notification. Medbot cannot look it up." and offers two choices:
+  - **DROM received it: I have DROM’s id**. Enter **DROM’s id**, then select **Record DROM’s id**. The notification closes: "Recorded DROM’s id. The notification is closed." Medbot checks the id has the shape of the disease's ids. If it looks unusual, it is recorded as typed with a notice to check it against DROM.
+  - **DROM did not receive it: send it again**. Tick the box that confirms you have checked that DROM does not hold it (sending twice creates a duplicate DROM cannot retract), then select **Send again**.
+
+  **Not now** closes the dialog without doing anything.
+
+<ImageZoom src="/images/cms/smartcms-reports/03-what-did-drom-tell-you.png" alt="The What did DROM tell you dialog with DROM did not receive it: send it again chosen, the box confirming DROM does not hold the notification ticked, and the Send again button" />
 - **Notified.** "DROM holds this notification. Medbot keeps no copy once it is sent, and DROM has no amendment: send any correction to MOH directly."
+
+### Tuberculosis cases and progress reports
+
+<ImageZoom src="/images/cms/smartcms-reports/01-tb-case-form.png" alt="The top of a tuberculosis case notification form with the progress card and the case and symptoms blocks" />
+
+Tuberculosis has two kinds of record. Only a doctor can complete, confirm or discard them. A Clinic Admin sees them read only. Nurses and receptionists do not see DEROM.
+
+1. A doctor codes a tuberculosis diagnosis (A15 to A19) on the visit, under the **Diagnoses (ICD-10-AM)** card. Medbot prepares a case notification, listed as **Tuberculosis (Notification)**.
+2. Open it from **SmartCMS → Reports**, in the DEROM section. Besides the usual steps, the case form asks about tuberculosis:
+   - **The case**: **Patient category**, **Year previously treated**, **Case diagnosed through**, **HIV test done** and **Concurrent medical conditions**.
+   - **Symptoms and chest X-ray**: **Cough**, **Cough duration (weeks)**, **Chest X-ray**, its date and any other finding.
+   - **Sites of disease**.
+   - **Treatment**: where the patient's chemotherapy stands, why treatment has not started if so, the medication, the **Date started**, the treatment centre and delivery mode, and any transfer or appointment. This block is not asked of a patient who has died.
+   - On the patient step, **Pass type** and **Country of birth**.
+3. The form warns "Already notified elsewhere?": Medbot cannot look cases up on DROM. If another clinic or a hospital has already notified this case, discard it and follow the case up with MOH on DROM's own form.
+4. **Save draft**, then **Confirm and send**, as for any notification.
+5. Once DROM holds the case, the form says **DROM holds this case**, with the date and DROM's id. From then on, every later visit coded with tuberculosis prepares a **Tuberculosis: treatment progress report** in the list. If later visits were coded while the case still waited for the doctor, their reports appear once the case is sent, and the case shows "Progress reports are waiting for this case" until then. If preparing them failed, the case shows **Later visits have no progress report yet** with **Prepare the progress reports**.
+
+A progress report opens at the same address and is headed **Tuberculosis treatment progress report**, with a link **All reports** back to the list. A **Check the case** notice names the case it follows and asks whether this is a relapse, a new episode or a case notified elsewhere. If it is, discard the report and notify MOH on DROM's own form. The report has three steps:
+
+| Step | What it holds |
+| --- | --- |
+| **Treatment decision** | Your own answers: **Management plan**, **Treatment**, **Transfer** and **Treatment ended**. Fields appear only when they apply to the answers you chose. |
+| **Patient** | Filled from the patient's record. Check it is right. |
+| **Clinic** | **Reporting doctor** (name, MCR number and contact number) and the clinic. |
+
+<ImageZoom src="/images/cms/smartcms-reports/02-tb-progress-report.png" alt="A tuberculosis treatment progress report that follows a notified case: the Check the case notice, the required-answers progress, the Management plan question and the bottom action bar" />
+
+The progress card, **Save draft**, **Confirm and send** and **Discard** work as for other notifications. For a report, **Discard** offers the reasons **Notified elsewhere**, **Not a follow-up of this case** and **Entered in error**, as well as **Another reason**.
+
+**Acknowledge before sending.** In two situations an amber card asks you to tick "This visit is a follow-up of that case. It is not a relapse, a new episode or a case notified elsewhere." before **Confirm and send** works. They are: the case was notified 12 months or more ago, or an earlier report of the case recorded that treatment was completed. The list's **To do** then reads "Acknowledge, then confirm".
+
+Agents never send either kind of tuberculosis record. A doctor always confirms them.
 
 ## Chronic disease indicators (CIDC)
 

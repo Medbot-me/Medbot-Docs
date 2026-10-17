@@ -1,0 +1,48 @@
+# Referrals
+
+The **Referrals** page tracks every referral to a service from the moment it arrives to a confirmed visit. It is a pipeline, not a queue: once a patient's visit is confirmed they reach the [Workstation](/docs/services/workstation) on the day, through the clinic queue.
+
+Open it from **Referrals** in the service's sidebar.
+
+## Referral criteria
+
+Each service describes which referrals it accepts. Medbot's screening agent checks every incoming referral against this text and drafts a verdict. **The verdict is a draft: a person always decides.**
+
+Edit the criteria in either place:
+
+- step 3 of the setup wizard, **Referral criteria**
+- the **Referral intake criteria** card on the service's **Overview**
+
+A general set of criteria is used until you save your own, scoped to the service's name and specialty. Click **Edit referral criteria**, adjust the conditions and thresholds the service accepts, and click **Save referral criteria**. Clear the text and save to return to the default.
+
+## Adding a referral
+
+Click **Add referral** and fill in the form for a patient who is already in your clinic's records:
+
+- **Patient** (search by name)
+- **Referred by** and **Referring clinic**
+- **Referrer email**, used if the referral is returned
+- **Reason for referral**
+- **Referral letter**: paste the letter text. The screening agent reads it.
+
+Click **Add referral**. It joins the list as awaiting screening.
+
+## Working the list
+
+Tiles across the top count referrals at each stage: **Awaiting screening**, **Needs clinician check**, **Waiting on patient**, **Ready for visit** and **No reply to check-in**. Click a tile to filter, and use **Search patient or referrer**.
+
+Columns include **Received**, **Patient**, **Referred by**, **Screening**, **Portal**, **Appointment** and **Check-in**. The **Screening** badge is **Not screened**, **Appropriate**, **Flagged**, **With clinician**, **Returned to referrer** or **Approved after review**.
+
+The button at the end of each row is the next step: **Run screening**, **Review flag**, **Offer slot**, **Confirm** or **Open**. To screen everything new at once, click **Run screening on N new referrals**.
+
+If patients have not answered their pre-visit check-in, a banner says a follow-up call task is in the Task Inbox for each, with **Show them**.
+
+## Deciding on a referral
+
+Click a row to open it. You see the screening agent's verdict (marked unsigned), the criteria met and its confidence. Then choose:
+
+- **Send to clinician for a final check**: creates a task in the clinician's inbox, whose decision moves the referral on.
+- **Accept and book anyway**
+- **Return to referrer without booking**: add an optional note, which is returned with the referral.
+
+Once accepted, **Offer a slot** suggests a time (using any dates the patient asked for), and **Offer this slot** sends the patient a link to the portal to confirm. If they accept by phone, use **Confirm, the patient accepted by phone**. Slot finding and screening are suggestions: nothing is sent to the referrer without your decision.

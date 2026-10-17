@@ -1,3 +1,5 @@
+import { ImageZoom } from "nextra/components";
+
 # Ask Medbot
 
 **Chat** is the portal's landing tab. Its centre is the Ask Medbot box ("Ask Medbot about your health…"), with cards above it for anything the clinic is waiting on — see [Home screen and notifications](#home-screen-and-notifications).
@@ -23,6 +25,23 @@ Before any model call, every message passes a deterministic red-flag screen. A m
 
 This is why the portal is not an emergency service — the screen exists to get the patient to a human quickly, not to triage them.
 
+## Sharing a concern with a clinic
+
+Some worries are not an emergency but are worth a clinic seeing. When Medbot notices one in your chat, a card appears under its answer: **Would you like a clinic to see this?** It says what Medbot noticed and "Nothing has been shared with anyone."
+
+Choose **Share with a clinic** or **Not now**. This is your choice. Medbot does not send anything until you agree.
+
+1. After **Share with a clinic**, read "Share this with a clinic?". It lists what the clinic will receive: a short summary of what you told Medbot, your name, date of birth and phone number, and medicines and allergies from your record. It does not get the rest of the chat. Select **Read the summary before sharing** to see the summary first.
+2. Tick the consent box, then select **Choose a clinic**. To keep it private, select **Not now, keep it in my record**.
+3. On **Choose a clinic**, search by clinic or service. Your own clinics are listed first. Select **Send to** the clinic you want.
+4. Follow it on the **Escalation** page. It shows whether the concern was sent, is being reviewed, or has a reply, and what the clinic suggests: book an appointment, try another service, go to the emergency department, or no action needed.
+
+You can **Add something to the summary**. You can also select **Withdraw sharing with this clinic** at any time. This stops the clinic contacting you, and a copy stays in your record. A draft you never send expires after 7 days. Shared concerns also appear in [Health Records](/patient/health-records).
+
+This is separate from red-flag screening above, which always alerts your clinics. A caregiver cannot share a concern for you.
+
+<ImageZoom src="/images/patient/ask-medbot/01-concern-card.png" alt="An Ask Medbot answer with the card 'Would you like a clinic to see this?' and the buttons Share with a clinic and Not now" />
+
 ## Guided care sessions
 
 Alongside answering, Ask Medbot classifies the question for whether a **guided care session** would help. When one would, a consent card appears below the answer offering it. The three kinds are:
@@ -42,6 +61,10 @@ The **Chat** tab opens on **Home**. Besides the Ask Medbot box, Home shows cards
 - **An appointment offer or check-in.** For example "Sunrise Diabetes Service has offered you an appointment", with an **Open** button. See [Offers from your clinic](/patient/visits#offers-from-your-clinic).
 - **Steps from your visit.** Steps your doctor confirmed at the end of your latest consultation. See [Steps from your visit](/patient/visits#steps-from-your-visit).
 - **A session from your care team.** For example "Your care team at Sunrise Clinic would like to go through a history taking with you", with a **Start** button.
+- **Today's visit.** On the day of an appointment, a card reads "Your appointment today at" and the time. It has a **Register and get my queue number** button. See [Today's visit](/patient/visits#todays-visit).
+- **Your stay.** If you are in hospital, a card shows where you are admitted: the organisation, ward and bed, the date you were admitted, which day of your stay it is, and your expected discharge date.
+- **Add your medical history.** Shown while your record has no conditions, medicines or allergies. See [Medical History](/patient/medical-history).
+- **Tell Medbot about your visit.** A reminder to answer a few questions before a booked visit. See [Pre-visit History](/patient/pre-visit-history).
 - **Continue asking.** Your most recent Ask Medbot conversation. With none yet, Home shows **Try asking** suggestions instead.
 
 ### The notification bell
@@ -55,4 +78,11 @@ The bell at the top of Home shows how many notifications you have not read. Sele
 | **It is your turn** | Reception called you, and you turned on **Notify me when it is my turn**. See [Today's visit](/patient/visits#getting-told-when-it-is-your-turn). |
 | **Your visit summary is ready** | Your clinician sent the summary of today's visit. See [Your visit summary](/patient/visits#your-visit-summary). |
 | **Your care team replied** | A member of your care team replied in one of your sessions. |
+| **Tell Medbot about your visit** | You booked a visit with a service that asks a few questions first. See [Pre-visit History](/patient/pre-visit-history). |
+| **Your visit is coming up** | A reminder to answer those questions. |
+| **Review your pre-visit history** | Medbot finished your questions. Check them, then choose whether to send them to the clinic. |
+| **Your clinic saw your red flag** | The clinic has seen a warning sign you told Medbot about. |
+| **Sent to** a clinic | A concern you chose to share has been sent. See [Sharing a concern with a clinic](#sharing-a-concern-with-a-clinic). |
+| A clinic replied (**&lt;clinic&gt; replied**) | The clinic answered a concern you shared. |
+| **Your doctor has explained your results** (or **Your doctor updated the explanation of your results**) | A doctor-approved explanation is ready. See [Your doctor's explanation](/patient/results#your-doctors-explanation). |
 | Caregiver access changes | Someone was given or lost access to your record, or your access to someone else's changed. See [Caregivers](/patient/caregivers#notifications). |
