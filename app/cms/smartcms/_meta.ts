@@ -3,6 +3,7 @@ export default {
   claims: "Claims Workflow",
   "claims-agent": "Claims Agent",
   reports: "Reports",
+  outages: "Gateway Outages & Deadlines",
   modules: "Modules & Gating",
   registration: "Singapore Registration",
   settings: "SmartCMS Settings",

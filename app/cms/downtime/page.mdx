@@ -1,0 +1,62 @@
+# Outages & Downtime
+
+Medbot CMS needs its servers to open charts, save notes and run the queue. When those servers, or the clinic's own internet, stop answering, the clinic keeps working on **downtime laptops**: computers that hold an encrypted copy of the charts their desk needs and let staff record what they do. When Medbot is back, what was recorded is uploaded, checked by the people who wrote it, and joins the chart.
+
+This section covers the whole cycle: preparing laptops before anything goes wrong, working through an outage, and recovering afterwards. For how Medbot tells you something is wrong in the first place, see [System Status](/cms/system-status).
+
+## The cycle at a glance
+
+| Stage | What happens | Who | See |
+| --- | --- | --- | --- |
+| **Before an outage** | An administrator enrolls a laptop at each desk that needs one, chooses its desk profile, and sets how long laptops wait before they switch over. Each person signs in on the laptop once, while it is online, and chooses an offline passphrase. | Clinic Admin enrolls. Every role signs in. | [Downtime Laptops](/cms/downtime/devices), [Working During an Outage](/cms/downtime/working-offline#before-an-outage) |
+| **Medbot slows or stops** | A banner appears in the CMS, and a page that cannot load names the service that is down. On a laptop, the Medbot CMS desktop app shows the downtime workspace by itself once Medbot has not answered for the organisation's wait (5 minutes unless changed). | Automatic | [System Status](/cms/system-status), [Medbot CMS Desktop App](/cms/downtime/cms-desktop) |
+| **During downtime** | Staff unlock the laptop with their passphrase, look up charts, print forms, register walk-ins and record vitals, allergies, notes and visit times. Each entry is signed on the laptop. Without a laptop, the clinic uses paper. | Every role, within what their role and the laptop's profile allow | [Working During an Outage](/cms/downtime/working-offline) |
+| **Ending downtime** | A doctor or administrator ends downtime on each laptop, and ends the outage in the CMS once the laptops have uploaded what they hold. Downtime never ends by itself. | Doctor or Clinic Admin | [Ending downtime](/cms/downtime/working-offline#ending-downtime), [Ending an outage](/cms/downtime/recovery#ending-an-outage) |
+| **Recovery** | Authors verify their uploaded entries within 72 hours. Reception matches walk-ins. Paper notes and paper prescriptions are entered. An administrator works through everything the outage affected until it is reconciled, and prints the outage report. | Clinicians verify. Clinic Admin and Receptionist match walk-ins. Clinic Admin reconciles. | [Recovery After an Outage](/cms/downtime/recovery) |
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| Enroll, revoke and configure downtime laptops (`/downtime-devices`) | Yes | No | No | No |
+| Sign in to a downtime laptop and look up charts | Yes | Yes | Yes | Yes |
+| Declare or end downtime on a laptop | Yes | No | Yes | No |
+| Record vitals and allergies on a laptop | Yes | No | Yes | Yes |
+| Write a note on a laptop | Yes | No | Yes | Yes |
+| Register a walk-in or mark a patient arrived on a laptop | Yes | Yes | Yes | Yes |
+| Verify your own uploaded entries | Yes | No | Yes | Yes |
+| Verify or withdraw an absent author's entry | Yes | No | No | No |
+| Match walk-ins | Yes | Yes | No | No |
+| Match visits started on a laptop | Yes | Yes | Yes | Yes |
+| End an outage in the CMS | Yes | No | Yes | No |
+| See what an outage affected, close items, print the outage report | Yes | No | No | No |
+| Open **System status** (`/status`) | Yes | No | No | No |
+
+What a person can record on a laptop also depends on the laptop's [desk profile](/cms/downtime/devices#desk-profiles). A reception laptop records no clinical entries, whoever signs in.
+
+## Key terms
+
+| Term | Meaning |
+| --- | --- |
+| **Medbot CMS desktop app** | The installed app for clinic laptops. It shows Medbot CMS while Medbot answers, and the downtime workspace when it does not. See [Medbot CMS Desktop App](/cms/downtime/cms-desktop). |
+| **Downtime workspace** | The part of the desktop app that works offline: chart lookup, printing and recording on the laptop. |
+| **Downtime laptop** | A computer enrolled for the organisation, at one clinic location, with a desk profile. Also called a downtime device. |
+| **Desk profile** | What a laptop may hold and record: **Consultation room**, **Reception** or **Dispensary**. |
+| **Copy (replica)** | The encrypted copy of the charts a laptop holds, kept up to date while it is online. |
+| **Offline passphrase** | What each person types to unlock the laptop when Medbot cannot be reached. It is not their Medbot password and never leaves the laptop. |
+| **Offline grant** | A person's permission to unlock one laptop offline. It lasts the organisation's grant lifetime (7 days unless changed) and is renewed while the laptop is online. |
+| **Entry** | One thing recorded on a laptop: vitals, an allergy, a note, a visit record or a walk-in. It is signed by its author and cannot be changed after signing. |
+| **Verify** | The author confirming, back in the CMS, that an uploaded entry is an accurate record of care. Until then the entry is in the chart marked as not yet verified. |
+| **Walk-in** | A patient registered on a laptop because they were not in its copy. They are matched to a patient record during recovery. |
+| **Break-glass guest** | A colleague with no access on a laptop, let in by someone who has it. View only, for up to 12 hours. |
+| **Outage** | Medbot's record of one period of downtime for the organisation, from when it began to when a doctor or administrator ended it. |
+| **Reconciled** | An ended outage whose every list is clear or closed with a reason. |
+
+## Where to go next
+
+- Installing and using the desktop app: [Medbot CMS Desktop App](/cms/downtime/cms-desktop).
+- Enrolling and managing laptops: [Downtime Laptops](/cms/downtime/devices).
+- What to do when Medbot is down: [Working During an Outage](/cms/downtime/working-offline).
+- What to do when Medbot is back: [Recovery After an Outage](/cms/downtime/recovery).
+- Banners, error pages and the status page: [System Status](/cms/system-status).
+- How SmartCMS claims and reports wait out a national gateway outage: [Gateway Outages & Deadlines](/cms/smartcms/outages).

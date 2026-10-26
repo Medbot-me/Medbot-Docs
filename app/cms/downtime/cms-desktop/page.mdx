@@ -1,0 +1,68 @@
+# Medbot CMS Desktop App
+
+**Medbot CMS** for desktop is one installed app for clinic laptops. While Medbot answers, it shows Medbot CMS, the same clinic app you use in a browser. When Medbot cannot be reached, it brings forward the **downtime workspace**, where you can keep looking up charts and recording care on the laptop. Staff do not have to remember to open a second program when the CMS stops working.
+
+> **Status: not yet available to download.** The app is built for macOS and Windows and is being tested on clinic hardware before its first release. It is not offered for download yet. Ask Medbot when it will be available for your clinic.
+
+## Two windows in one app
+
+The app has two windows and shows one at a time. Switching keeps the same position and size, so it feels like one window.
+
+| Window | What it shows |
+| --- | --- |
+| **Medbot CMS** | The hosted Medbot CMS. You sign in and work exactly as in a browser. Files you save, such as a medical certificate, a letter, an invoice or a timesheet, go to your **Downloads** folder and the folder opens with the file selected. |
+| **Downtime workspace** | The offline workspace of an enrolled laptop: chart lookup, printing and recording. See [Working During an Outage](/cms/downtime/working-offline). |
+
+When the app starts, it opens the Medbot CMS window, unless the laptop is already in downtime or has something only the downtime workspace can show. Only one copy of the app runs at a time: opening it again brings back the window it had.
+
+## The tray icon
+
+The app keeps an icon in the system tray (the menu bar on macOS). Its menu has:
+
+| Item | What it does |
+| --- | --- |
+| **Open Medbot CMS** | Shows the Medbot CMS window. |
+| **Open downtime workspace** | Shows the downtime workspace. On a laptop that is not enrolled yet, this is where you enroll it. |
+| **Lock now** | Locks the downtime workspace. |
+| **Quit** | Closes the app. A closed app does not keep its copy of the charts up to date. |
+
+On an enrolled laptop the app starts by itself when anyone logs in to the computer, in the tray, so its copy stays fresh. See [Keeping the laptop fresh](/cms/downtime/working-offline#keeping-the-laptop-fresh).
+
+## When Medbot CMS cannot be reached
+
+If the CMS does not answer when the window opens, the window shows **Medbot CMS can't be reached from this computer right now** instead of a browser error. The page says that nothing has been lost and that the downtime workspace still works.
+
+- Select **Try again** to check now. The app also checks every 30 seconds and opens the CMS as soon as it answers.
+- Select **Open the downtime workspace** to switch over straight away.
+
+If a page inside the CMS cannot load because a service behind it is down, the CMS shows which service it cannot reach (see [System Status](/cms/system-status#when-a-page-cannot-load)). Inside the desktop app, that page also has an **Open the downtime workspace** button.
+
+## Switching to the downtime workspace automatically
+
+An enrolled laptop checks once a minute whether Medbot answers. When Medbot has not answered for the organisation's wait (5 minutes unless an administrator changed it on [Downtime Laptops](/cms/downtime/devices#automatic-downtime)), the laptop enters downtime by itself and the app brings the downtime workspace forward. It does this once for each time downtime starts, so you can go back to the CMS window without it jumping forward again.
+
+To go back to the CMS at any time, use **Open Medbot CMS** in the tray menu or on the downtime workspace's **Session** tab. When a doctor or administrator ends downtime, the workspace shows **Downtime ended** with an **Open Medbot CMS** button. Leaving downtime never switches windows by itself.
+
+## Signing in to the downtime workspace
+
+Before anyone can use a laptop offline, they sign in to it once while it is online (see [Before an outage](/cms/downtime/working-offline#before-an-outage)). In the desktop app, that sign-in happens in the Medbot CMS window, where you are usually signed in already. If the CMS cannot be reached, the app opens your web browser for it instead.
+
+The CMS shows **Sign in to the downtime workspace**, with the **Workstation**, its **Location**, and who you are **Signing in as**.
+
+1. Check that the workstation and the name are right. Continue only if you just started sign-in in the downtime workspace on this computer.
+2. Select **Continue**. If you have not signed in to Medbot recently, you are asked to sign in again first, then brought back to this page.
+3. The app returns you to the downtime workspace with the outcome: "Returning you to the downtime workspace."
+
+On a shared workstation the CMS window may be signed in as a colleague. Select **Sign in as someone else** under the name ("Not *name*?"). This signs that person out of Medbot CMS on this computer and brings you back to the same sign-in request, where you sign in as yourself.
+
+If the page says **This workstation cannot sign you in**, the laptop's downtime access was revoked, or it belongs to another clinic you work at: switch to the clinic that enrolled it and start again. If it says **This sign-in link is not valid**, start sign-in again from the downtime workspace. Each of these pages has **Return to the downtime workspace**, which cancels the sign-in.
+
+## Links that only work in the app
+
+The CMS has two links meant for the desktop app: one opens the downtime workspace, the other tries to reach the CMS again. Opened in a browser, they show **This link is for the Medbot CMS desktop app** and explain what to do instead.
+
+## Related
+
+- [Downtime Laptops](/cms/downtime/devices): enrolling the laptop the app runs on.
+- [Working During an Outage](/cms/downtime/working-offline): using the downtime workspace.
+- [System Status](/cms/system-status): banners, error pages and the status page.

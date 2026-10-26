@@ -1,0 +1,196 @@
+# Recovery After an Outage
+
+When Medbot is back, everything recorded on downtime laptops is uploaded and written to the chart **marked as not yet verified**. Recovery is checking that work, matching patients and visits that started on a laptop, entering what was kept on paper, and confirming that nothing the outage touched was missed. It all happens at **Administration → Downtime recovery** (`/downtime-recovery`).
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| Open **Downtime recovery** | Yes | Yes | Yes | Yes |
+| See and verify, amend or withdraw your own entries | Yes | No | Yes | Yes |
+| See every author's entries, and act for an absent author | Yes | No | No | No |
+| Review an entry flagged for authorization (not your own) | Yes | No | No | No |
+| Match walk-ins | Yes | Yes | No | No |
+| Match visits started on a laptop | Yes | Yes | Yes | Yes |
+| Log a paper prescription | Yes | No | Yes | Yes |
+| Enter a note kept on paper | Yes | No | Yes | Yes |
+| See outages and end an open outage | Yes | No | Yes | No |
+| See what an outage affected, close items, adjust the window, print the report | Yes | No | No | No |
+| Acknowledge an entry the server refused | Yes | Its author | Yes | Its author |
+
+A receptionist's **Downtime recovery** page shows only **Walk-ins to match** and **Visits to match**.
+
+## The recovery inbox
+
+The inbox lists entries made on a downtime laptop. Check each against the chart as it is now, then verify it, verify it with an amendment, or withdraw it. **Aim to finish within 72 hours of the upload.**
+
+- **My entries** shows the entries you wrote.
+- **Everyone's entries** (Clinic Admin only) shows every author's.
+
+| Column | What it shows |
+| --- | --- |
+| **Patient** | The patient, or "Walk-in, not matched", and what kind of entry it is (**Vitals**, **Allergy**, **Visit record**, **Note** or **Walk-in**) and when it was written. |
+| **Author** | Who wrote it (on **Everyone's entries**). |
+| **State** | Where the entry stands. See below. |
+| **Verify within 72 hours** | Time left, or how long it is overdue. |
+| **Next step** | What has to happen next. |
+
+Select **Review** or **Open** on a row to work on it.
+
+| State | Meaning |
+| --- | --- |
+| **Received** | Uploaded, being written to the chart. |
+| **Written, to verify** | In the chart, waiting for you to verify it. |
+| **Needs a decision** | Held for someone to decide, for example a walk-in or visit to match, or a possible duplicate note. |
+| **Waiting for the chart** | Waiting to be written to the chart. |
+| **Retrying** | Writing it failed for now and is being tried again. |
+| **Failed** | It could not be written. |
+| **Verified** | Done. |
+| **Withdrawn** | Marked as entered in error. |
+
+### Overdue reminders
+
+When you have entries past the 72-hour target, a reminder appears at the top of every CMS page: "*n* downtime entries are waiting for you to verify, past the 3-day target", with **Review them**. You can hide it; it comes back when more entries become overdue. The **Downtime recovery** item in the sidebar also shows a badge with the count.
+
+## Reviewing an entry
+
+The entry page shows the entry **As written on the laptop**, exactly as its author recorded it, beside what is **In the chart now**, including anything changed in the patient's chart since the outage began. Check the entry against them. Any flags on the entry are listed, for example:
+
+| Flag | What to check |
+| --- | --- |
+| **Likely duplicate of a recorded allergy** | The patient already has this allergy in the chart. |
+| **Chart changed online during the outage** | Someone changed the chart online while the laptop was offline. |
+| **Patient was merged online** | The patient record was merged meanwhile. |
+| **A measurement is outside the plausible range** | A vital sign looks implausible. Check it, and amend if it was mistyped. |
+| **Laptop clock was off** or **Laptop clock not verified** | The time on the entry may not be right. |
+| **Author's access needs review** | See [Authorization review](#authorization-review). |
+
+Under **Your decision**, choose one:
+
+| Decision | What happens |
+| --- | --- |
+| **Verify** | You confirm "I confirm this entry is an accurate record of care I provided on …". Select **Verify entry**. |
+| **Verify with amendment** | For vitals only. Enter the corrected values and **Why are you amending it?**, then select **Verify with amendment**. The original stays exactly as written; your corrected values are saved as a separate, linked entry with the reason. A note takes no amendment: add an addendum instead. |
+| **Withdraw** | Enter **Why is it being withdrawn?** and select **Withdraw entry**. The entry is marked as entered in error. It stays in the history, but is no longer a record of care. |
+
+If the chart changed while you were reviewing, the page asks you to **Reload this entry** before you continue, so nobody verifies text they did not see. The **History** at the foot of the page lists every action taken on the entry.
+
+### Acting for an absent author
+
+A Clinic Admin can verify or withdraw the entry of an author who is away or has left. The page asks **Why are you acting for** *name*? (for example "the author has left the clinic"). The entry keeps its original author; your name and the reason are recorded as the verifier's.
+
+### Authorization review
+
+When Medbot cannot establish that the author's access was in force when the entry was written, the entry shows **Needs admin authorization review**. Nobody can verify it, the author included, until a Clinic Admin decides:
+
+1. Enter **Your reason** (for example "the roster shows the author was on duty").
+2. Select **Approve authorization** or **Reject authorization**.
+
+Approved, the entry is verified as usual. Rejected, it can only be withdrawn.
+
+A different administrator must review it: an administrator cannot approve an entry they wrote themselves. If you are the only administrator, add a second one first. Withdrawing the entry is still possible meanwhile.
+
+### Duplicate notes
+
+A note written on a laptop may also have been typed into Medbot from its paper print. The first copy to reach the chart is the record; the second is never filed beside it. If the paper copy was filed first, the laptop's copy is held and the page says **The same note is already in the chart**. The author (or an administrator on their behalf) chooses:
+
+- **Add to the note in the chart**: the laptop's copy is filed as an addendum to the note in the chart and verified like any entry. The note in the chart must be verified first.
+- **Discard this copy**: nothing is filed, and nothing is deleted from the chart.
+
+## Matching walk-ins
+
+**Walk-ins to match** (`/downtime-recovery/walk-ins`) lists patients registered on a downtime laptop. Their entries reach the chart only after they are matched. Clinic Admins and receptionists do this.
+
+1. Select **Find a match**. Medbot proposes patients with the same identifier first, then the same name and date of birth.
+2. Select **Match to this patient** on the right one.
+3. If there is none, select **Confirm as new patient**, then **Create new patient**. A new record is created from what was typed on the laptop. Do this only after looking for an existing record: if a patient already has the same identifier, Medbot refuses and asks you to match instead.
+
+## Matching visits
+
+**Visits to match** (`/downtime-recovery/visits`) lists visits that began on a laptop and have no visit in the chart yet, or match more than one. The notes and vitals written for a visit reach the chart only after it is matched.
+
+1. Select **Find the visit**.
+2. Select **Attach to this visit** on the right one.
+3. If the patient has no visit to attach it to and the visit happened, select **Create the visit**, and confirm.
+
+## Outages
+
+An outage is Medbot's record of one period of downtime. It starts when a downtime laptop enters downtime by itself or a doctor or administrator declares it, when a laptop uploads its first entry, or when Medbot's health checks go red, whichever is earliest.
+
+Open the list with **What an outage affected** (Clinic Admin) or **Outages** (Doctor) on the recovery page. Each outage shows when it started and ended, and is marked **Open**, **End suggested** or **Reconciled**. Administrators also see how many items are left to do.
+
+If only laptops that entered downtime by themselves opened an outage, it says so: "Opened by one laptop entering downtime by itself. Nothing else has confirmed it…". Check that the clinic network or Medbot really was down.
+
+### Ending an outage
+
+An outage ends only when a doctor or an administrator says so. When Medbot has looked healthy again, or a laptop has reported in, the outage shows **End suggested** with the time.
+
+1. Check that every downtime laptop has uploaded what it holds.
+2. Select **End this outage**.
+
+Ending downtime on each laptop is a separate step. See [Ending downtime](/cms/downtime/working-offline#ending-downtime).
+
+## What an outage affected
+
+Select **Open** on an outage (Clinic Admin) to see everything it touched, in lists. Each list shows only what still needs a person, with a count, and how many items were closed or resolved.
+
+| List | What is in it | Where it is dealt with |
+| --- | --- | --- |
+| **Downtime entries** | Entries made on a laptop that are not verified yet. | Their authors verify them in the inbox. |
+| **Visits with no note** | Visits during the outage with no note in the chart. They are probably on paper. | **Enter the note**: see [Entering a note kept on paper](#entering-a-note-kept-on-paper). |
+| **Walk-ins to match** | Walk-ins registered on a laptop. | [Matching walk-ins](#matching-walk-ins). |
+| **Conflicts to review** | Entries that meet something changed online, such as an allergy already recorded, or a possible duplicate. | The entry's page. |
+| **Held national submissions** | SmartCMS claims, NEHR referrals and notifications that waited during the outage. | See [Gateway Outages & Deadlines](/cms/smartcms/outages). |
+| **Prints made offline** | Patient summaries and entries printed on a laptop. | Confirm the paper copies are filed or destroyed, then close. |
+| **Paper prescriptions to enter** | Prescriptions written on paper and logged, not yet entered in the chart. | **Mark entered** once entered. |
+| **Unplaced entries** | Entries uploaded after the outage whose own time is outside it, usually because a laptop clock was far off. | Decide whether each belongs to the outage, then close it with a reason. |
+| **Rejected uploads** | Entries a laptop sent that the server refused, so they are not in the chart. | Check the paper print or the laptop, enter the note again if needed, then **Acknowledge**. |
+
+To close items that need no further work, tick them and select **Close selected**, or **Close all**, then enter a **Reason** (for example "paper notes filed in the folder") and select **Close with this reason**. Items that arrive later are still open.
+
+An ended outage whose every list is clear or closed is **Reconciled**. If something comes back, for example a late rejected upload, it is no longer reconciled until that is dealt with. When a list is longer than Medbot could read in full, its count is a floor, **Close all** is off, and the outage cannot be reconciled until those items are closed individually.
+
+### Adjusting the window
+
+If the outage's start or end is wrong, select **Adjust the window**, change **Started** or **Ended**, give a reason, and select **Save window**. The lists are built from this window, so moving it changes what they show. The change and your reason are recorded.
+
+## Entering a note kept on paper
+
+A visit seen on paper is entered on **Enter a note kept on paper**, which opens from **Enter the note** on an outage's **Visits with no note** list. Clinic Admins, doctors and nurses can file a note there. The note is filed **under the name of the person who enters it**.
+
+1. Choose the **Kind of note**: a doctor or administrator files a **Consultation note** or a **Progress note**, a nurse a **Progress note**.
+2. Enter the **Day patient was seen**, and when care **Started** and **Ended**. The chart shows this as the note's date. Medbot records separately when you entered it.
+3. Type **The note, as written on paper**.
+4. If the paper is a print from a downtime laptop, type the **Entry id on the print**, found under the QR code. Medbot then recognises the laptop's copy, so the two are not filed as two notes.
+5. Optionally attach a **Scan of the paper**: a PDF, PNG or JPEG of up to 8 MB.
+6. Select **File the note**.
+
+If the visit already has a note, the page says so. Enter another only if the paper is a different note, such as a nurse's after a doctor's. If the same note is already in the chart, for example from the laptop, choose **Add mine to it as an addendum** or **Discard what I typed**. The note in the chart must be verified before you can add to it.
+
+## Logging a paper prescription
+
+A prescription written on paper during an outage has to be entered in the chart afterwards. Log it so it is not missed:
+
+1. On **Downtime recovery**, select **Log a paper prescription**.
+2. Enter the **Patient** (name, or the pad and page number), **What it says** (medicine and dose, as written), and **When it was written**.
+3. Select **Log prescription**.
+
+It stays on the outage's **Paper prescriptions to enter** list until an administrator marks it entered.
+
+## The outage report
+
+From an outage's page, select **Outage report** to open **Downtime outage report**, ready to print and file. It has counts and times only, with no patient, author or entry names:
+
+- when the outage started and ended, and how long it lasted
+- **Entries made on laptops**: by kind, verified, withdrawn, still unverified, and how many are past the 72-hour target
+- **Patients affected**: patients with a downtime entry, walk-ins registered on a laptop, and walk-ins still to match
+- **Paper records still to back-enter**: visits with no note, paper prescriptions not yet entered, and printed copies to file or destroy
+- every list's open, closed and resolved counts, and whether the outage is reconciled
+
+Select **Print**. The printout leaves out the sidebar and header. Where a list was too long to read in full, its figures are printed as "at least".
+
+## Related
+
+- [Working During an Outage](/cms/downtime/working-offline): recording on the laptop.
+- [Downtime Laptops](/cms/downtime/devices): laptops, profiles and revocation.
+- [System Status](/cms/system-status): the verification backlog on **System status**.

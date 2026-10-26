@@ -1,0 +1,101 @@
+# System Status
+
+Medbot CMS tells you when something it depends on is slow or down, what that affects, and what still works. You see it in four places: a banner at the top of every page, the page you land on when something cannot load, the message on a form that could not save, and, for administrators, the **System status** page. Medbot also posts incidents on a public status page that stays up when Medbot does not.
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| See the status banner | Yes | Yes | Yes | Yes |
+| Open **System status** (`/status`) | Yes | No | No | No |
+| Open the public status page | Yes | Yes | Yes | Yes |
+
+## The status banner
+
+When Medbot is degraded or down, every signed-in staff member sees a strip across the top of the CMS. It says what is affected in plain words and, when true, what still works. While everything is working, there is no banner.
+
+| Colour | Meaning | Example |
+| --- | --- | --- |
+| **Amber** | Some services are degraded. | "Claims and national submissions may be delayed. Patient records and sign-in are working." |
+| **Red** | A major outage. | "Medbot is having problems: patient records may not load or save. Use your downtime procedure for anything that cannot wait." |
+
+What the banner can name:
+
+| Affected | What it says |
+| --- | --- |
+| Database | records and settings may be slow or unavailable |
+| Patient records | patient records may not load or save |
+| This organisation's patient records | this organisation's patient records may not load or save |
+| Sign-in | sign-in may fail |
+| Background jobs and reminders | reminders and background jobs may be delayed |
+| National integrations (SmartCMS) | claims and national submissions may be delayed |
+| Downtime laptops | downtime laptops may not hold a current copy of the charts, or uploaded entries are waiting to reach the chart |
+
+If Medbot cannot reach its own services at all, the banner says "Medbot cannot reach its services, so pages may fail or load slowly. Use your downtime procedure for anything that cannot wait."
+
+Incidents Medbot has posted on its public status page are added to the banner, for example "Open incident on the Medbot status page: *title* (investigating)." A major or critical incident turns the banner red. The banner then has a **Status page** link.
+
+Clinic Admins also get a **System status** link in the banner.
+
+## When a page cannot load
+
+If a page cannot load because a service behind it is down, the CMS shows which one instead of "not found" or signing you out. The page reads **Medbot cannot reach** *the service*, for example "the Medbot server", "the clinical records server", "its database" or "the sign-in service", and says: "Patient records cannot be opened or saved right now. Nothing has been lost or deleted: this is an outage, not a missing record."
+
+Under **If this continues**, it tells you what to do:
+
+- In a browser: switch to your clinic's downtime laptop if it has one, and open the downtime workspace in the Medbot CMS desktop app. Without one, follow your clinic's downtime procedure on paper, then enter what you wrote once Medbot is back.
+- In the [Medbot CMS desktop app](/cms/downtime/cms-desktop): switch to the downtime workspace on this computer, with an **Open the downtime workspace** button.
+
+Select **Try again** to reload. When Medbot has a public status page, a **Medbot status** button opens it.
+
+For a problem that is not an outage, the page says **This page could not be loaded**. Try again in a moment, and tell your administrator if it keeps happening.
+
+## When a form cannot save
+
+If you save a form while a service is down, the form keeps what you typed and tells you what happened:
+
+| Message | What it means | What to do |
+| --- | --- | --- |
+| "Your changes were not saved, and what you typed is still here." | The save never reached Medbot. | Try again in a moment, or write it on paper under your clinic's downtime procedure. |
+| "We could not confirm this was saved." | The save may have reached Medbot before the answer was lost. | Check the record before trying again, so nothing is entered twice. |
+| "Nothing was sent, and what you typed is still here." | A message to a patient or another party stopped before it went out. | Try again in a moment, or send it another way. |
+| "We could not confirm this was sent." | The message may have gone out. Medbot never sends it again by itself. | Check with the recipient before sending it again, so nothing is sent twice. |
+
+Each message starts by naming the service, for example "Medbot cannot reach the clinical records server." or "Medbot gave up waiting for its database."
+
+## The System status page
+
+**Administration → System status** (`/status`) shows the services Medbot depends on, as Medbot's server sees them right now. Only Clinic Admins can open it. It refreshes itself every 30 seconds while it is open.
+
+From top to bottom:
+
+1. **Open incidents** from the public status page, each with its status (**Investigating**, **Identified** or **Monitoring**), its impact, the latest update, what it affects, and when it started and was last updated. **Open the status page** opens the public page. This section appears only when your deployment has a public status page.
+2. **The overall status**: **All systems operational**, **Some services are degraded** or **Major outage**, with when it was checked.
+3. **Components**: each service with its **Status**, **Latency**, **Detail** and **Last checked** time (Singapore time).
+4. **National submissions** (Singapore organisations with a SmartCMS module): what is waiting to reach CHAS, DEROM and the other national systems. See [The backlog on System status](/cms/smartcms/outages#the-backlog-on-system-status).
+5. **Downtime laptops**: each location's laptops, how many hold a **Current**, **Behind** or **Stale** copy of the charts, when Medbot **Last heard from** one, and the **Oldest copy**. **Manage downtime laptops** opens [Downtime Laptops](/cms/downtime/devices).
+6. **Downtime entries awaiting verification**: by author, how many entries are **Open**, **Ready to verify** and **Overdue** (past the 72-hour target), and the oldest. **Open the recovery inbox** opens [Downtime recovery](/cms/downtime/recovery).
+
+| Component status | Meaning |
+| --- | --- |
+| **Operational** | Working. |
+| **Degraded** | Working, but slow or partly failing. |
+| **Major outage** | Not working. |
+| **Unknown** | The last check could not tell whether this is working. |
+| **Not monitored** | Nothing checks this component, so its health is not known. |
+
+A section that cannot be read says so, for example "The downtime laptop fleet could not be read just now", and never reads as all clear.
+
+If the page itself cannot reach Medbot's server, it says **Medbot cannot reach its API** or **Medbot is having problems** with the services that are down, and to use your downtime procedure for anything that cannot wait.
+
+## The public status page
+
+Medbot runs a public status page, hosted separately from Medbot so it can still be read when Medbot is down. It shows, in words a clinic uses, whether **Sign-in**, **Patient records**, **Queue and appointments**, **Billing and documents**, **Downtime sync**, the **Patient portal**, **Appointment reminders and messages** and the national integrations are working, with incidents, planned maintenance and the last 90 days of history.
+
+When your deployment has one, links to it appear in the status banner, on the page you see when something cannot load, and on **System status**. Downtime laptops can read it too, and show open incidents and planned maintenance in the downtime workspace.
+
+## Related
+
+- [Outages & Downtime](/cms/downtime): keeping the clinic working when Medbot is down.
+- [Gateway Outages & Deadlines](/cms/smartcms/outages): how SmartCMS submissions wait out a national gateway outage.
+- [Troubleshooting](/cms/troubleshooting).

@@ -1,0 +1,163 @@
+# Working During an Outage
+
+When Medbot cannot be reached, an enrolled laptop's **downtime workspace** lets you look up charts, print forms and record the care you give. What you record is signed on the laptop, sent to Medbot when it answers again, and checked in the [recovery inbox](/cms/downtime/recovery) before it becomes part of the record. Without a laptop, follow your clinic's downtime procedure on paper and enter it afterwards.
+
+The downtime workspace is part of the [Medbot CMS desktop app](/cms/downtime/cms-desktop).
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| Unlock a laptop, find patients, read charts, print | Yes | Yes | Yes | Yes |
+| Register a walk-in, mark a patient arrived, enter visit times | Yes | Yes | Yes | Yes |
+| Mark a patient seen | Yes | No | Yes | Yes |
+| Record vitals, report an allergy | Yes | No | Yes | Yes |
+| Write a consultation note | Yes | No | Yes | No |
+| Write a nurse note | No | No | No | Yes |
+| Write a progress note | Yes | No | Yes | Yes |
+| Declare or end downtime | Yes | No | Yes | No |
+| Vouch for a colleague as a break-glass guest | Yes | Yes | Yes | Yes |
+| Re-enroll a colleague who is locked out | Yes | No | No | No |
+| Turn **Start at login** back on, or change **Update while locked** | Yes | No | No | No |
+
+The laptop's [desk profile](/cms/downtime/devices#desk-profiles) narrows this further: only a **Consultation room** laptop records vitals, allergies and notes. You can vouch only for a colleague whose role is at or below your own. A receptionist cannot record that a patient was seen or finished.
+
+## Before an outage
+
+Everyone who might need a laptop during an outage sets up access on it **while it is online**. It only takes a minute, and it cannot be done once Medbot is down.
+
+1. On the laptop's **Session** tab, a colleague who is signed in selects **Add a colleague**. (The first person on a new laptop selects **Set up the first user** instead.)
+2. Choose an **Offline passphrase** of at least 10 characters. Avoid common passwords and sequences such as 1234567890 or qwerty; a few unrelated words work well. It is not your Medbot password, and it never leaves the laptop.
+3. Select **Sign in with Medbot** and sign in to Medbot as yourself. In the desktop app this happens in the Medbot CMS window. If the CMS window is signed in as someone else, select **Sign in as someone else** there. See [Signing in to the downtime workspace](/cms/downtime/cms-desktop#signing-in-to-the-downtime-workspace).
+
+Your offline access lasts the organisation's grant lifetime (7 days unless an administrator changed it). While the laptop is online it is renewed for you in the background. Medbot also asks everyone to sign in again at least every 30 days: from three days before, the laptop shows **Sign in again by** a date, with **Sign in again now**. Do it while the laptop is online.
+
+## Unlocking the laptop
+
+The lock screen, **Unlock the downtime workspace**, lists the **People on this device**. Select your name, enter your offline passphrase, and unlock. This works without a network.
+
+If you type the wrong passphrase:
+
+- The first three attempts carry no wait. After that, each wrong attempt makes you wait longer, from 30 seconds up to 15 minutes.
+- The lock screen says how many attempts are left.
+- At the 10th wrong passphrase in a row you are locked out until an administrator re-enrolls you. Nothing on the laptop is erased, and entries you already signed are kept and still sent.
+
+To re-enroll a colleague, an administrator unlocks the laptop, opens **Session**, finds them under **Waiting to be re-enrolled** and selects **Re-enroll**. The colleague chooses a new passphrase and signs in to Medbot as themselves.
+
+If your access has expired, the lock screen offers **Renew access** while the laptop is online. Otherwise a colleague can vouch for you as a [break-glass guest](#break-glass-guests).
+
+## When the laptop enters downtime
+
+The laptop checks once a minute whether Medbot answers.
+
+- **By itself.** When Medbot has not answered for the organisation's wait (5 minutes unless changed), the laptop enters downtime, locked or not. A banner says **Downtime: this laptop entered downtime by itself**, when Medbot stopped answering, and whether Medbot has been told yet. In the desktop app the downtime workspace comes forward on its own.
+- **Declared.** After 10 minutes without Medbot, if the laptop is not already in downtime, a signed-in doctor or administrator sees **Medbot has not been reachable for … minutes**. Select **Declare downtime from** *time* to declare it from when Medbot stopped answering, or **Not now** to hide the prompt for 30 minutes. A doctor or administrator can also declare it on the **Entries** tab with **Declare downtime started**, and withdraw a declaration that has not been sent yet. The start can be up to 14 days back.
+
+Declaring is a record of when downtime began, so recovery counts from the right time. Nothing is declared until someone chooses to.
+
+## The workspace
+
+| Tab | What it is for |
+| --- | --- |
+| **Today** | Today's appointment list, on a laptop whose profile holds it. Patients registered or marked on this laptop show whether they were sent to Medbot. |
+| **Find a patient** | Search the laptop's copy, and **Register a walk-in**. |
+| **Entries** | Everything written on this laptop, how many are still **to send**, and declaring or ending downtime. |
+| **Session** | Who is signed in, switching user, adding colleagues, vouching, and the laptop's settings. |
+
+A status bar and a status panel show whether the trouble looks like Medbot or this computer's network, how old the laptop's copy is, any incident or maintenance posted on Medbot's status page, and when the laptop last brought its copy up to date. If the computer cannot connect at all, the panel suggests opening the status page on a phone.
+
+### Finding a patient
+
+Search by name, birth date, phone or NRIC, for example "lee boon", "1971-02-03", "9123" or "567A". Identifiers are masked; select **Show** on a result to see one, and that is recorded. If nobody matches, the patient may be outside what this laptop holds: check the CMS when it is back, or use paper.
+
+### Reading a chart
+
+The chart opens with a **Summary**: allergies and alerts, current medications, active problems, latest vitals, abnormal results, immunizations and anything entered in error. Depending on the desk profile it also has **Notes**, **Documents** (letters, referrals and certificates, shown as text), **Visit summaries**, **Medications** and **Results**, as well as open orders, the patient's intake form and their CHAS card.
+
+Everything you see is the laptop's copy, as of its last update. "No allergy recorded in this copy" is not a confirmed "no known allergies". Open orders were open when the copy was last updated; a result may already be back in the CMS.
+
+### Printing
+
+On a chart, select **Print summary**, **Print prescription form** or **Print MC form**. Prescription and MC forms are pre-filled from the copy for you to complete by hand, sign and enter in Medbot when it is back. Every print is recorded, and prints made during an outage appear on its recovery list so the paper copies are filed or destroyed.
+
+## Recording care
+
+Open a patient's chart and use **Record on this laptop**:
+
+| Action | What it records |
+| --- | --- |
+| **Record vitals** | What you measured. Leave the rest empty. |
+| **Write a note** | A consultation, nurse or progress note, depending on your role. |
+| **Report allergy** | What the patient or family reports. It shows as an alert on the laptop at once and is confirmed by a clinician once it reaches Medbot. |
+| **Mark arrived** | The patient has arrived. |
+| **Mark seen** | A clinician has seen the patient. |
+| **Enter visit times** | Arrived, seen and finished times, for example from the paper queue sheet. They must be in order. |
+
+Drafts are saved on the laptop as you type. Select **Close, keep draft** to come back later, or **Discard draft**. Before you sign, the form lists anything to check. Once you sign an entry it is read only: to correct it, add an addendum. Nothing leaves the laptop until you sign.
+
+If the note's author has left the clinic, only an administrator can add an addendum to it.
+
+### Registering a walk-in
+
+For a patient who is not in the laptop's copy, select **Register a walk-in** on **Find a patient**. Registering marks them as arrived so clinicians can record for them.
+
+- An NRIC or FIN must pass its check letter: "Is not a valid NRIC or FIN. Check the digits and the last letter against the card."
+- Before registering, the laptop searches its copy for the same patient. If it finds one, it shows **This laptop may already hold this patient** with the possible matches. Select **Open this chart** if it is them, or **Register as a new walk-in anyway**. A second record splits the patient's chart.
+
+Walk-ins are matched to a patient record during [recovery](/cms/downtime/recovery#matching-walk-ins).
+
+### Printing an entry for the paper record
+
+On the **Entries** tab, select **Print for the paper record** on a signed entry. The print carries the entry as signed, its author and device time, and a QR code with the entry's id. If the paper copy is typed into Medbot later, that id lets Medbot recognise the two as one note.
+
+## Sending entries
+
+Signed entries go to Medbot as soon as it can be reached; nobody has to be signed in. The **Entries** tab shows how many are waiting and, for each entry, whether it was received, verified in the clinic record (and so cleared from the laptop), or refused.
+
+If Medbot refused an entry for good, it is not in the chart. Its author, a doctor or an administrator acknowledges it with **Acknowledge** (on the laptop or in the CMS) after checking the paper print or entering the note again. The laptop keeps refused entries, and asks before it wipes them, until then.
+
+## Break-glass guests
+
+A colleague who is not set up on the laptop, or whose access expired, can be let in by someone who is signed in:
+
+1. On **Session**, select **Vouch for a colleague**.
+2. Enter their name and role. You can vouch for roles up to your own.
+3. Set a **Passphrase for them to use now**, and confirm with **Your own passphrase**.
+4. Your colleague signs out of your session and unlocks as a guest with that passphrase.
+
+A guest has **view only** access: they can read charts but cannot record anything. Access lasts at most 12 hours, or until your own access ends if that is sooner, and ends if your access is revoked. A laptop admits at most 5 guests a day. The session shows a **Break-glass session: view only** banner, every guest action is recorded, and the vouch is sent to Medbot for review. You can end a guest's access early from **Break-glass guests on this device**.
+
+## Safety locks
+
+| What you see | Why | What to do |
+| --- | --- | --- |
+| **Read-only: this laptop has not reached Medbot for more than 72 hours** | The laptop cannot tell who was revoked recently. You can read charts, search and print; drafting, signing and new entries are paused. | Select **Connect to Medbot now** once the network is back. Entries already signed are still sent. |
+| **This workstation is locked** | It has not reached Medbot for more than 7 days. | Connect it to Medbot, then unlock. |
+| **The system clock looks wrong** | The computer's clock is earlier than the latest time the laptop recorded, so nobody can unlock. Entries not yet sent are kept. | Set the date and time (automatic time is best), then **Check with Medbot now**. When the laptop can reach Medbot it compares clocks itself and unlocks if they agree. |
+| The copy of the charts is gone | The laptop has not reached Medbot for 14 days, so it removed its copy. Drafts and signed entries are kept. | Connect it to Medbot to load the copy again. |
+| **Local data must be wiped** | An administrator revoked the laptop or a person's access, and the laptop still holds work never sent. | Confirm that paper copies of these entries exist, then wipe. |
+
+## Ending downtime
+
+Downtime never ends by itself, even when Medbot answers again: the banner says "Medbot is answering again. Downtime stays on until a doctor or an administrator ends it."
+
+1. Check that Medbot answers and that the laptop has sent what it holds.
+2. A doctor or administrator signed in on the laptop selects **End downtime** on the banner or the **Entries** tab.
+3. The banner changes to **Downtime ended**, naming who ended it. Select **Open Medbot CMS** to go back to the CMS, or **Dismiss**.
+
+Ending downtime on a laptop does not end the outage in Medbot. A doctor or administrator ends that in the CMS once every laptop has uploaded. See [Ending an outage](/cms/downtime/recovery#ending-an-outage).
+
+## Keeping the laptop fresh
+
+On **Session**, under **Keeping this device fresh**:
+
+- **Start at login** opens the app in the tray when anyone logs in to the computer, so its copy stays fresh. It stays locked until someone signs in. It is on for a newly enrolled laptop. Anyone signed in can turn it off; only an administrator turns it back on.
+- **Update while locked** downloads changes while the app is locked and keeps them sealed on the laptop. They are added to the chart the next time someone unlocks. Only an administrator changes it.
+
+Closing the app stops all updates. **Check with Medbot now** checks for revocations and renews your access straight away.
+
+## Related
+
+- [Downtime Laptops](/cms/downtime/devices): enrolling laptops and the organisation's settings.
+- [Recovery After an Outage](/cms/downtime/recovery): verifying entries and reconciling the outage.
+- [System Status](/cms/system-status): banners and the status page.

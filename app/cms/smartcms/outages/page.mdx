@@ -1,0 +1,70 @@
+# Gateway Outages & Deadlines
+
+Sometimes the SmartCMS gateway itself cannot be reached. When that happens, Medbot holds the clinic's claims and reports instead of letting them fail, sends them by itself when the gateway answers again, and keeps watch over the ones with a legal or scheme deadline. Nothing is lost and staff do not need to resend anything.
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| See held claims in the [Claims queue](/cms/smartcms/claims#5-the-claims-queue) | Yes | Yes | Yes | No |
+| See held reports on [Reports](/cms/smartcms/reports) | Yes | No | Yes | NIR only |
+| See the national submissions backlog on **System status** | Yes | No | No | No |
+
+Holding and resuming are automatic. Nobody has to act on a held submission.
+
+## When the gateway is down
+
+Medbot normally tries a submission that cannot reach SmartCMS again after 1, 5 and 15 minutes. If Medbot fails to reach the gateway **3 times within 30 minutes**, with no answer from it in between, it treats the gateway as down. A short blip of a few minutes never triggers this.
+
+From then on, a submission that cannot be sent is **held**:
+
+- It keeps its place and does not use up its retries.
+- It shows **Waiting for SmartCMS to recover** in the Claims queue and on the NIR, DEROM, CIDC and NEHR lists, **Waiting for SmartCMS** on the MW Health list, and **Appeal waiting for SmartCMS** for a CHAS appeal.
+- It is not listed under **Needs attention**: there is nothing for staff to do.
+
+Any answer from the gateway shows it is up again, even a rejection. A submission that may already have reached the gateway when the connection dropped is never held: it shows **Not confirmed** as usual, so it is not sent twice.
+
+While the gateway is down, Medbot checks it every minute.
+
+## When the gateway is back
+
+As soon as the gateway answers, Medbot sends the held submissions by itself, one after another, **closest deadline first**, then the oldest. They go out a batch at a time so the gateway is not hit by the whole backlog at once. Each then carries on as usual: **Sent**, then MHCP's, CPF's or the registry's own status.
+
+The clinic does not need to resubmit anything. If the clinic was in downtime at the same time, any submission still held appears on that outage's **Held national submissions** list. See [Recovery After an Outage](/cms/downtime/recovery#what-an-outage-affected).
+
+## Deadlines
+
+Some submissions have a deadline. Medbot records it when the submission is prepared and checks every hour how close it is, until the scheme accepts the submission or someone discards it. A held submission keeps its deadline.
+
+| Submission | Deadline | Early warning | Final warning |
+| --- | --- | --- | --- |
+| **CHAS claims** | The end of the 30th Singapore day after the visit. MHCP rejects a later claim as a late submission. | 7 days before | 2 days before |
+| **DEROM disease notifications** (and tuberculosis progress reports) | 24 hours after the diagnosing visit. | 12 hours before | 4 hours before |
+
+At each warning, and once the deadline has passed, Medbot raises an operational alert. The alert says whether the submission is held by a gateway outage or held for an administrator as [nurse-led](/cms/smartcms/claims#claims-on-a-nurse-led-visit), so the right person can follow it up.
+
+- **DEROM.** The 24 hours is a default, not a per-disease period. A disease that must be notified immediately is due at diagnosis. If a notification cannot be sent through SmartCMS in time, notify by the email or PDF fallback.
+- **Other submissions** have no deadline tracked, so they raise no deadline alert.
+
+These windows are Medbot's reading of the scheme and the Infectious Diseases Act rules, and may be refined once confirmed with Synapxe and MOH.
+
+## The backlog on System status
+
+A Clinic Admin of a Singapore organisation with a SmartCMS module sees **National submissions** on [System status](/cms/system-status#the-system-status-page) (`/status`). It shows what is waiting to reach CHAS, DEROM and the other national systems, as Medbot's own outbox sees it.
+
+While the gateway is down, it says: "The national gateway is believed to be down since *time*. Submissions are held, not lost, and are sent when it answers again."
+
+| Column | What it shows |
+| --- | --- |
+| **State** | **Prepared, not yet sent**, **Waiting to send**, **Sending**, **Failed, will retry**, **Failed, needs attention**, **Not confirmed** or **Held while the national system is down**. |
+| **Submissions** | How many are in that state. |
+| **Oldest waiting** | How long the oldest has waited, for example "5 h 30 min". |
+| **Nearest deadline** | The closest deadline among them, with how long is left or how long it is overdue. |
+
+Below it, **Closest deadlines** lists the individual submissions with the nearest deadlines: the **Service**, its **State**, the **Deadline**, how many **Attempts failed**, and the **Last error**. If no submissions are waiting, the card says "No submissions are waiting."
+
+## Related
+
+- [Claims Workflow](/cms/smartcms/claims): claim statuses and the nurse-led hold.
+- [Reports](/cms/smartcms/reports): NIR, DEROM, CIDC, NEHR and MW Health.
+- [System Status](/cms/system-status): the status banner and the System status page.

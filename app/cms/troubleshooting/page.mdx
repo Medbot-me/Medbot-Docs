@@ -42,6 +42,42 @@ A Clinic Admin cannot reopen or correct their own record. Another Clinic Admin h
 
 Voiding keeps the record for the history and marks it as voided, rather than removing it. This is deliberate. See [Documents & Certificates](/cms/documents-and-certificates#voiding-a-document).
 
+## A page says "Medbot cannot reach" a service
+
+A service Medbot depends on is down. Your record is not missing and nothing has been deleted. Select **Try again** in a moment. If it continues, switch to your clinic's downtime laptop, or follow your clinic's downtime procedure on paper. See [System Status](/cms/system-status#when-a-page-cannot-load) and [Working During an Outage](/cms/downtime/working-offline).
+
+## A form says "We could not confirm this was saved"
+
+The save may have reached Medbot before the answer was lost. What you typed is still in the form. Check the record before trying again, so nothing is entered twice. See [When a form cannot save](/cms/system-status#when-a-form-cannot-save).
+
+## An amber or red banner is at the top of every page
+
+Medbot is degraded (amber) or has a major outage (red). The banner says what is affected and what still works. See [The status banner](/cms/system-status#the-status-banner).
+
+## A claim or report shows "Waiting for SmartCMS to recover"
+
+The SmartCMS gateway is down. The submission is held, not lost, and is sent by itself when the gateway answers again. You do not need to resubmit it. See [Gateway Outages & Deadlines](/cms/smartcms/outages).
+
+## A claim is held because the visit is nurse-led
+
+The scheme needs the attending doctor's MCR number, which a nurse-led visit does not have. If a doctor has since taken part in the visit, select **Submit (check visit)**. Otherwise a Clinic Admin decides whether to **Submit as nurse-led**. See [Claims on a nurse-led visit](/cms/smartcms/claims#claims-on-a-nurse-led-visit).
+
+## A downtime laptop is read-only or locked
+
+A laptop that has not reached Medbot for more than 72 hours turns read-only, and after 7 days it locks. Connect it to the network and select **Connect to Medbot now**. A laptop whose clock looks wrong keeps everyone out until its clock agrees with Medbot's. See [Safety locks](/cms/downtime/working-offline#safety-locks).
+
+## I typed my offline passphrase wrong too many times
+
+After the 10th wrong passphrase in a row you are locked out of that laptop until a Clinic Admin re-enrolls you from its **Session** tab. Nothing is erased. See [Unlocking the laptop](/cms/downtime/working-offline#unlocking-the-laptop).
+
+## The downtime laptop is still in downtime although Medbot is back
+
+Downtime never ends by itself. A doctor or Clinic Admin selects **End downtime** on the laptop, and ends the outage in the CMS once the laptops have uploaded. See [Ending downtime](/cms/downtime/working-offline#ending-downtime).
+
+## A reminder says downtime entries are overdue
+
+Entries you wrote on a downtime laptop are waiting for you to verify them, past the 72-hour target. Select **Review them**, or open **Downtime recovery**. See [Recovery After an Outage](/cms/downtime/recovery).
+
 ## Related
 
 - [Roles & Permissions](/cms/roles-and-permissions): the full permissions matrix.
