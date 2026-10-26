@@ -16,4 +16,5 @@ export default {
   language: "Language",
   caregivers: "Caregivers & Family Access",
   invites: "Invites & Join Links",
+  "mobile-app": "Mobile App",
 };

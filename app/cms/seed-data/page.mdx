@@ -53,12 +53,12 @@ A file can hold at most **200** rows. NRICs, dates of birth and licence numbers 
 
 ## Staging and production behave differently
 
-The mode depends on the deployment the organisation lives on. Staging shows an amber **STAGING** banner.
+The mode depends on the deployment the organisation lives on. Staging shows an amber **STAGING** banner. The seed page says which mode applies before you upload: on staging it says mock staff and patients are created with the shared password you choose. A staging deployment that is not set up to create test accounts seeds the production way.
 
 | | Staging ("mock") | Production ("invite") |
 | --- | --- | --- |
-| Accounts | Created straight away with a **shared password** you choose (at least 8 characters). It is shown once at the end. | Each person gets an **invitation email** and sets their own password. Nothing is created for anyone until they accept. |
-| Email addresses | Must be test addresses (`+clerk_test@example.com`), as in the template. | Test addresses are rejected. |
+| Accounts | Created straight away with a **shared password** you choose (at least 8 characters). It is shown once at the end. Seeded people sign in with their test address and that password. | Each person gets an **invitation email** and accepts it by signing in with that email address. Staff are added to the staff list straight away and join when they sign in. A patient's chart is created, and the patient is linked to it when they create their account from the email. A staff member who already has a Medbot account is linked to it at once. A patient whose email already has an account is not emailed: make a [portal invite](/cms/patient-portal#a-patient-who-already-has-a-chart) from their chart instead. |
+| Email addresses | Must be test addresses ending in `+clerk_test@example.com`, as in the template. These addresses never receive email, so seeded people cannot sign in with an email code. | Test addresses (`+clerk_test`, or any `@example.com` address) are rejected. |
 | Confirmation | None. | Tick "I understand invitation emails will be sent to N real people." |
 | `superuser` rows | Allowed, for test accounts. | Skipped. |
 | Undoing a run | **Tear down** deletes every account, staff record and patient that run created. | Not available. |

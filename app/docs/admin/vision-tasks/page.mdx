@@ -1,0 +1,41 @@
+# Vision Tasks
+
+> **For Medbot platform administrators only** (admin and superadmin).
+
+Some features send a photo or a file to an AI model to read. **Vision Tasks** lets you choose which model does each of these jobs. Open it from **Vision Tasks** in the [Admin Panel](/docs/admin), under **AI & content**, next to **Realtime Models**.
+
+Text, transcription and voice keep their own settings under **Models**, **Audio Models** and **Realtime Models**.
+
+## The tasks
+
+| Task | What it reads |
+| --- | --- |
+| **Photo readings** | A photo of a blood pressure monitor, oximeter, thermometer, food label, meal or workout screen, read into a health-log draft that the patient checks before saving. See [Scan a reading](/patient/health-log#scan-a-reading). |
+| **Document reading** | A past medical document that a patient or the Medbot team uploads, as a scanned PDF or a photo, read into history drafts for review. Digital PDFs are sent as text, so this model also needs to read plain documents well. See [Medical History](/patient/medical-history#step-3-documents). |
+| **Chat attachments** | A photo or file sent from the patient chat. The model works out what it shows, and the matching task above then reads it. |
+
+## Choose a model for a task
+
+Each task starts on the **Platform default**, the model that is the default in **Models**, and shows a **Default** badge.
+
+1. Find the task and open its **Model** picker. It lists the models marked as accepting images, plus the platform default.
+2. Choose a model.
+3. Select **Save**. The message "Saved. New reads use this model." appears, and the task's badge changes to **Customised**.
+
+To go back to the platform default, select **Reset to default**.
+
+If the chosen model is not marked as accepting images, a note warns that photos sent to this task may be refused by the provider. Mark the model under **Models**, or choose another one.
+
+## Mark a model as accepting images
+
+Only models marked as accepting images are offered for vision tasks.
+
+1. In the Admin Panel, open **Models**.
+2. Create or edit a model, and tick **Accepts images (can be chosen for vision tasks)**.
+3. Save the model.
+
+In the models list, these models show an **Images** badge.
+
+## When a model is retired
+
+If you deactivate or delete the model a task uses, the task falls back to the platform default. The task shows a **Model deactivated** or **Model deleted** badge until you choose another model, or reactivate a deactivated one. See [When a model you chose is retired](/docs/ai-usage#when-a-model-you-chose-is-retired).

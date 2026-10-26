@@ -31,6 +31,7 @@ SmartCMS is enabled **per organisation** and only for organisations whose countr
 | **Claims queue** | Every claim the organisation has prepared, with its status at MHCP or CPF. See [Claims Workflow](/cms/smartcms/claims). |
 | **Claims today** | One clinic day's patients, with each bill, its claims and what the patient still owes. See [Claims today](/cms/smartcms/claims#claims-today). |
 | **Agent policy** | How far an AI agent may take a claim: off, prepare only, or auto-submit. See [Claims Agent](/cms/smartcms/claims-agent). |
+| **Held submission** | A claim or report waiting out a SmartCMS gateway outage, shown as **Waiting for SmartCMS to recover**. It is sent by itself, closest deadline first, when the gateway answers again. See [Gateway Outages & Deadlines](/cms/smartcms/outages). |
 | **Evidence log** | An encrypted record of every message Medbot sends to SmartCMS and every reply, kept for audit and certification. |
 
 ## What works today
@@ -48,6 +49,8 @@ SmartCMS is enabled **per organisation** and only for organisations whose countr
 | **Claims today**: each patient's bill, claims and what they owe, by location and day | Available |
 | **Claims agent**: nightly run, "Prepare today's claims", AI assistant connections over MCP | Available |
 | **Reports**: NIR, disease notification (DEROM), CIDC, NEHR referral letters, migrant worker health | Available |
+| **Gateway outages**: holding submissions while the gateway is down, resuming closest deadline first, CHAS and DEROM deadline alerts, the backlog on System status | Available |
+| **Nurse-led visits**: claims held for an administrator to decide | Available |
 | Sending to Synapxe UAT or production | Waiting on Synapxe's approval of each location |
 | Medical alerts and allergies (CMIS), Healthier SG | Planned |
 
@@ -75,6 +78,7 @@ SmartCMS also adds to screens staff already use:
 - Following a claim from check-in to payment: [Claims Workflow](/cms/smartcms/claims).
 - Letting an agent prepare claims: [Claims Agent](/cms/smartcms/claims-agent).
 - National registry notifications and reports: [Reports](/cms/smartcms/reports).
+- What happens when the SmartCMS gateway is down, and claim deadlines: [Gateway Outages & Deadlines](/cms/smartcms/outages).
 - Choosing what the clinic subscribes to: [Modules & Gating](/cms/smartcms/modules).
 - Entering the UEN, HE codes and practitioner numbers SmartCMS needs: [Singapore Registration](/cms/smartcms/registration).
 - Switching locations on, accreditation and agent policy: [SmartCMS Settings](/cms/smartcms/settings).

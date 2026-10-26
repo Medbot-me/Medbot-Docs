@@ -50,6 +50,8 @@ The [claims agent](/cms/smartcms/claims-agent) can also prepare claims every eve
 | Match or dismiss a message from CPF that matches no claim | Yes | Yes | No | No |
 | Appeal a rejected CHAS claim | Yes | No | Yes | No |
 | Resubmit a claim MHCP rejected | Yes | No | No | No |
+| Re-check a claim held for a nurse-led visit (**Submit (check visit)**) | Yes | Yes | No | No |
+| Submit a claim on a nurse-led visit anyway (**Submit as nurse-led**) | Yes | No | No | No |
 
 ## 1. Check-in and CHAS verification
 
@@ -145,6 +147,17 @@ A claim with gaps is **held** as **Waiting for review**, with each problem liste
 
 Fix the cause, then select **Re-prepare** on the claim. If any one Screen for Life claim on a visit is held, the visit's whole Screen for Life batch waits.
 
+### Claims on a nurse-led visit
+
+The schemes read the attending doctor's MCR number, and a visit led by a nurse has none. So a CHAS, PHPC, Screen for Life, vaccination, CDS or Medisave claim on a nurse-led visit is prepared but **held for an administrator**, as **Waiting for review**, with the problem "This scheme requires the attending doctor's MCR number, which a nurse-led visit does not have." Nothing is sent until someone acts on it.
+
+The hold is not released in the background. Medbot reads the visit again whenever someone acts on the claim:
+
+- **Submit (check visit)** (Clinic Admin or Receptionist), **Submit all prepared**, or **Re-prepare** for a CHAS claim. If a doctor has taken part in the visit by then, the claim is prepared again from its bill with that doctor's MCR and goes on as any other claim. Otherwise it stays held.
+- **Submit as nurse-led** (Clinic Admin only). If the visit is still nurse-led, an administrator can decide to send the claim anyway. Confirm "This visit is led by a nurse, so the claim has no attending doctor MCR. Submit it anyway? The scheme may refuse it." The claim is queued. If the scheme cannot take it, it comes back to the queue held with the reason.
+
+A held CHAS claim keeps its 30-day [claim deadline](/cms/smartcms/outages#deadlines) while it waits, and the deadline alerts say it is held as nurse-led. Both the hold and the decision are audited.
+
 A daily check at 02:30 (Singapore time) picks up any issued bill from the past week whose claims were not prepared. Where the agent policy is on, the nightly [claims agent](/cms/smartcms/claims-agent) run also prepares any vaccination or CDS subsidy claim that was missed, including on bills already paid.
 
 ## 5. The Claims queue
@@ -173,6 +186,8 @@ From top to bottom, the page shows:
 | **Submit** | A prepared claim with no problems. |
 | **Submit all prepared: … at …** | Every prepared claim for one module at one location. Held claims are left for review: "… claim(s) held with issues were left for review." |
 | **Re-prepare** | A held CHAS claim, after you fix the cause. The result says it is ready to submit, or still held and why. Not offered on a resubmission. |
+| **Submit (check visit)** | A claim held only because its visit is nurse-led. Medbot reads the visit again and sends the claim if a doctor has taken part since. See [Claims on a nurse-led visit](#claims-on-a-nurse-led-visit). |
+| **Submit as nurse-led** | The same claim, when the visit is still nurse-led. Clinic Admins only. |
 | **Discard** | Any claim not yet sent. You are asked "Why is this claim being discarded?" |
 | **Refresh status** | A sent CHAS claim. Asks MHCP for its status now. |
 | **Check CPF now** | A sent Medisave claim. If nothing is back yet: "CPF has not answered this claim yet. Medbot checks again on its own." |
@@ -191,6 +206,7 @@ Before MHCP or CPF decides on it, a claim shows where it is in sending:
 | **Waiting for review** | Prepared, waiting for a person to submit it, or held with problems. |
 | **Queued to send** | Ready. Medbot sends it shortly. |
 | **Sending** / **Sending (retrying)** | Being sent. Medbot retries after 1, 5 and 15 minutes. |
+| **Waiting for SmartCMS to recover** | The SmartCMS gateway is down. The claim is held, not lost, and is sent by itself when the gateway answers again. An appeal shows **Appeal waiting for SmartCMS**. See [Gateway Outages & Deadlines](/cms/smartcms/outages). |
 | **Sent** | The gateway received it. For Medisave this reads **Queued with CPF**. |
 | **Accepted by MHCP** | MHCP accepted it. For Medisave this reads **Approved by CPF**. |
 | **Not sent** | The gateway refused it. The row says why. |
@@ -245,6 +261,7 @@ If nobody checked in: "No patients were checked in here on this day." If the day
 - **Medisave.** CPF answers through files rather than at once. Medbot collects CPF's advice at 09:00, 13:00 and 18:00 and its payment files at 10:00, Monday to Friday. Each answer is matched to its claim by the claim's HRN, submission type and the date and time it was sent.
 - **Medisave claims CPF has not answered.** CPF keeps its answer for 30 days only, so Medbot flags a Medisave claim still waiting 20 days after it was sent. See [When CPF does not answer](#when-cpf-does-not-answer).
 - **A location switched off.** If an admin switches a module off at a location, its claims are parked and nothing is sent.
+- **The SmartCMS gateway is down.** After 3 failures to reach the gateway within 30 minutes, claims that cannot be sent are held as **Waiting for SmartCMS to recover** and sent by themselves, closest deadline first, when it answers again. See [Gateway Outages & Deadlines](/cms/smartcms/outages).
 
 ### Medisave payments
 
@@ -342,4 +359,5 @@ The Invoices table marks the new invoice "Corrects …" and the old one "Voided 
 - [Claims Agent](/cms/smartcms/claims-agent): preparing claims automatically, and connecting AI assistants.
 - [SmartCMS Settings](/cms/smartcms/settings): switching locations on, accreditation and agent policy.
 - [Reports](/cms/smartcms/reports): NIR, disease notification, CIDC, NEHR and migrant worker reports.
+- [Gateway Outages & Deadlines](/cms/smartcms/outages): held claims and claim deadlines.
 - [Billing](/cms/billing): bills, receipts, voids and corrections.

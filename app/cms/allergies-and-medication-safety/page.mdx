@@ -98,10 +98,12 @@ When you choose a medication, Medbot checks it and lists what it found. Alerts t
 | Possible cross-reactivity, for example a cephalosporin for a patient with a penicillin allergy | **Warning:** |
 | A free text allergy that names no drug or group Medbot knows ("… can't be checked automatically") | **Warning:** |
 | Allergy status is not recorded for this patient | **Warning:** |
-| The drug's formulary entry has no coded ingredients ("This drug can't be checked") | Information |
+| The drug has no coded ingredients, but its name or synonyms put it in the allergen's group (the alert ends "Matched by name.") | **Stop:** |
+| The drug has no coded ingredients, and the patient has a current drug allergy its name and synonyms did not match ("… could not be fully checked against 1 allergy: …") | **Warning:** |
+| The drug has no coded ingredients, and the patient has no current drug allergy ("This drug can't be fully checked: …") | Information |
 | The check could not run ("Allergies could not be checked for …") | **Stop:** |
 
-A drug can be checked fully only when its [formulary](/cms/formulary) entry has coded ingredients.
+A drug can be checked fully only when its [formulary](/cms/formulary) entry has coded ingredients. For a drug without them, Medbot matches allergies against the words of its name and synonyms instead, and the alert says so. Finding no match by name does not prove the drug is safe, so when a current drug allergy could not be matched, you are warned to check with the patient before going ahead.
 
 ### When a Stop alert appears
 

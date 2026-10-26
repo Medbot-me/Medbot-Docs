@@ -64,6 +64,7 @@ Medbot never discards a report waiting for a doctor on its own. Prepared claims 
 ### Sending, retries and lost answers
 
 - If a message cannot reach SmartCMS, or the registry asks Medbot to try later, Medbot tries again after 1, 5 and 15 minutes. The row shows as sending meanwhile.
+- If the SmartCMS gateway itself is down (3 failures to reach it within 30 minutes), messages that cannot be sent are held, not failed. The row shows **Waiting for SmartCMS to recover** (**Waiting for SmartCMS** for MW Health), and Medbot sends it by itself when the gateway answers again. A DEROM notification keeps its 24-hour deadline meanwhile. See [Gateway Outages & Deadlines](/cms/smartcms/outages).
 - If SmartCMS may have received a message but its answer was lost, the row shows **Not confirmed**. Medbot does not send it again by itself, because the registry may already have it. Staff decide, using the resend action where the section offers one.
 
 ## NIR vaccination notifications

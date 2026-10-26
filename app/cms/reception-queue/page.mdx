@@ -12,14 +12,16 @@ The reception queue is today's list of booked and checked-in patients at one cli
 | Check a patient in | Yes | Yes | No | No |
 | Call a patient to a room | Yes | Yes | No | No |
 | Route a patient to a stage | Yes | Yes | No | No |
+| Mark a visit **Completed** on the board | Yes | No | No | No |
 | Take payment, void a payment, or mark the visit paid | Yes | Yes | No | No |
 | Assign or change the doctor | Yes | Yes | No | No |
+| Change who leads a visit | Yes | No | No | No |
 | Cancel an appointment, mark a no-show, or reopen | Yes | Yes | No | No |
-| Arrange a session for the patient | No | No | Yes | No |
-| Complete the visit and send the outcome | No | No | Yes | No |
+| Arrange a session for the patient | No | No | Yes | Nurse-led visits they lead |
+| Complete the visit and send the outcome | No | No | Yes | Nurse-led visits they lead |
 | See the CHAS badge and select **Verify now** (Singapore) | Yes | Yes | Yes | Yes |
 
-Doctors see only the patients assigned to them. Nurses see every patient at the location and open the vitals form from their own view. Doctors and nurses do not see the **Bill** column or any payments. The **Arrange session** and **Complete visit** buttons appear on a doctor's row only after a consultation has been started for that appointment.
+Doctors see only the patients assigned to them. Nurses see every patient at the location and open the vitals form from their own view. Doctors and nurses do not see the **Bill** column or any payments. The **Arrange session** and **Complete visit** buttons appear on a doctor's row only after a consultation has been started for that appointment. A nurse sees them only on a [nurse-led visit](#nurse-led-visits) that has been started.
 
 ## Reading the queue
 
@@ -32,7 +34,7 @@ The table lists patients in this order:
 3. Patients who are booked but have not arrived, by appointment time.
 4. Completed and cancelled visits, at the bottom.
 
-Each row shows the ticket, the time, the patient, the NRIC or passport, the reason, the doctor, the workflow controls, the **Bill**, and the status. On a narrow screen some columns, including **Bill**, are hidden. Turn them on from the **View** menu.
+Each row shows the ticket, the time, the patient, the NRIC or passport, the reason, the **Clinician** (the doctor, or the nurse who leads a nurse-led visit), the workflow controls, the **Bill**, and the status. On a narrow screen some columns, including **Bill**, are hidden. Turn them on from the **View** menu.
 
 | Status | What it means |
 | --- | --- |
@@ -53,7 +55,7 @@ Four filters narrow the list: the location, the doctor (**All doctors**, **Unass
 
 A message such as "Kamala Perera checked in" appears, with the ticket number and the doctor, for example "Ticket #1 · Marcus Lim". The row now shows the ticket and the status **Waiting**.
 
-Check-in records the arrival time, gives the patient a queue ticket from the location's open session, and assigns the next doctor marked active in [Session Setup](/cms/session-setup). Doctors take turns in the order they were marked active. If no doctor is marked active, the patient still gets a ticket but no doctor. Checking in a patient who already has a ticket keeps the same ticket and does not move the rotation on.
+Check-in records the arrival time, gives the patient a queue ticket from the location's open session, and assigns the next doctor marked active in [Session Setup](/cms/session-setup). Doctors take turns in the order they were marked active. If no doctor is marked active, the patient still gets a ticket but no doctor. Checking in a patient who already has a ticket keeps the same ticket and does not move the rotation on. A visit booked to a nurse is [nurse-led](#nurse-led-visits): it keeps that nurse, no doctor is assigned, and the rotation does not move on.
 
 Check-in has no time window. A patient booked for later in the day can be checked in as soon as they arrive.
 
@@ -98,7 +100,9 @@ Use the doctor menu on the row to change the doctor. A doctor chosen by hand sho
 
 ## Routing a patient
 
-The **Route…** menu on a checked-in row moves the patient through the clinic: **Nurse**, **Doctor**, **Investigations**, **Dispensary**, **Completed**. Use it to show where the patient is. The nurse's own view shows a patient routed to the nurse as **Vitals now**, and a patient routed on to the doctor as **Ready for doctor**.
+The **Route…** menu on a checked-in row moves the patient through the clinic: **Nurse**, **Doctor**, **Investigations**, **Dispensary**, **Completed**. Use it to show where the patient is.
+
+Marking a visit **Completed** closes it, so only a Clinic Admin sees **Completed** in the menu. A receptionist routes the patient between the other stages, and the doctor, or the lead nurse of a nurse-led visit, closes the visit with **Complete visit**. The nurse's own view shows a patient routed to the nurse as **Vitals now**, and a patient routed on to the doctor as **Ready for doctor**.
 
 ## Taking payment
 
@@ -184,11 +188,33 @@ The patient leaves the active queue. To find the row again, set the status filte
 
 ## What the doctor and nurse see
 
-A doctor opens **Today's Patients**. Each row has **Start consultation**, which opens the patient's chart at **Encounters** for that appointment, or **Continue consultation** once one has started. When the doctor starts the encounter there, the **Start Encounter** dialog says "Create a new encounter for this patient's visit in today's queue." The encounter is linked to that exact queue appointment, which moves the row to **Consultation** and shows **Complete visit**. If the visit already has an open encounter, Medbot reuses it rather than starting a second. A finished visit's row shows **Review** instead. An encounter started later from that chart is not added to the finished visit. It goes to the patient's open visit in the queue, if they have one. See [Encounters & Clinical Notes](/cms/encounters). A nurse opens **Today's Queue**, and the **Vitals** button on each row opens the vitals form. See [Vitals](/cms/vitals). Neither role can check patients in, change the doctor, or call a room.
+A doctor opens **Today's Patients**. Each row has **Start consultation**, which opens the patient's chart at **Encounters** for that appointment, or **Continue consultation** once one has started. When the doctor starts the encounter there, the **Start Encounter** dialog says "Create a new encounter for this patient's visit in today's queue." The encounter is linked to that exact queue appointment, which moves the row to **Consultation** and shows **Complete visit**. If the visit already has an open encounter, Medbot reuses it rather than starting a second. A finished visit's row shows **Review** instead. An encounter started later from that chart is not added to the finished visit. It goes to the patient's open visit in the queue, if they have one. See [Encounters & Clinical Notes](/cms/encounters). A nurse opens **Today's Queue**, and the **Vitals** button on each row opens the vitals form. See [Vitals](/cms/vitals). On a nurse-led visit the button reads **Start nurse visit**, then **Continue nurse visit**, and **Review** once the visit is finished. It opens the patient's chart at **Encounters** for that appointment, in the same way as a doctor's **Start consultation**. Neither role can check patients in, change the doctor, or call a room.
+
+## Nurse-led visits
+
+A visit booked to a nurse is nurse-led. See [Appointments](/cms/appointments#nurse-led-visits). It stays in the queue with that nurse as its clinician, and no doctor is rotated onto it.
+
+- **The lead nurse starts it** with **Start nurse visit**, and closes it with **Complete visit**, as a doctor would.
+- **Whether a visit is nurse-led follows who took part.** If a doctor sees the patient, for example by opening the visit's encounter, signing an order or writing a note, the visit becomes doctor-led, and the nurse's row no longer offers **Complete visit**.
+- **Who can close it.** The lead nurse or any doctor closes a nurse-led visit, and a Clinic Admin can close any visit. Other nurses cannot. On another nurse's visit, **Complete visit** is greyed out with "Led by &lt;name&gt;. Only the lead nurse or a doctor can close this visit." A nurse who tries to close a doctor-led visit is refused with "This visit is led by a doctor. A nurse closes only a visit that she leads; ask the doctor or an administrator to close it."
+- **Marking it Completed on the board** follows the same rule. Only a Clinic Admin sees **Completed** in the **Route…** menu, and a receptionist cannot mark a visit completed.
+
+In Singapore organisations, a scheme claim for a nurse-led visit is held for an administrator to review. See [Claims Workflow](/cms/smartcms/claims).
+
+### Changing who leads a visit
+
+A Clinic Admin can hand an open visit to another doctor or nurse, for example when the lead nurse goes off sick. This works for a visit a nurse has already started.
+
+1. On the queue, select **Change lead** on the patient's row. It appears on rows that are not finished or cancelled.
+2. The **Change who leads &lt;patient&gt;'s visit** dialog says who leads the visit now. Choose the **New lead** from the doctors and nurses who work at this location.
+3. Optionally enter a **Reason (kept in the audit log)**.
+4. Select **Change lead**.
+
+The new lead is the one who can close the visit. **Change lead** is greyed out when no other doctor or nurse works at the location.
 
 ## Arranging a session and completing the visit
 
-Once a doctor has started a consultation for an appointment, two buttons appear on that row.
+Once a doctor has started a consultation for an appointment, two buttons appear on that row. On a nurse-led visit, they appear for the lead nurse once the nurse visit has started.
 
 **Arrange session** offers the patient an assistant session for this visit. Choose **Financial counselling** or **Health education**, add a **Reason (shown to the patient)**, and select **Arrange session**. The row then shows a badge with the session type. The patient starts the session from the portal, and does not need to be enrolled in a service. See [Patient Portal](/cms/patient-portal).
 

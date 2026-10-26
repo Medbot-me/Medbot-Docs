@@ -1,0 +1,132 @@
+# Downtime Laptops
+
+A downtime laptop keeps an encrypted copy of the charts its desk needs, so staff can keep working when Medbot cannot be reached. Administrators enroll and manage them at **Administration → Downtime devices** (`/downtime-devices`). The laptop itself runs the [Medbot CMS desktop app](/cms/downtime/cms-desktop).
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| Open **Downtime devices** | Yes | No | No | No |
+| Create an enrollment code, revoke a device | Yes | No | No | No |
+| End a staff member's offline grants | Yes | No | No | No |
+| Change the replica window, grant lifetime or automatic downtime wait | Yes | No | No | No |
+| Sign in on an enrolled laptop to get offline access | Yes | Yes | Yes | Yes |
+
+## Desk profiles
+
+Each laptop has a profile that decides what it holds and what can be recorded on it. You choose it when you create the enrollment code.
+
+| Profile | What it holds | What can be recorded on it |
+| --- | --- | --- |
+| **Consultation room** | Full clinical scope: demographics, allergies, medications, problems, notes, vitals and results. It also holds documents (letters, referrals and certificates, as text), open orders, visit summaries, intake forms and the CHAS card. | Vitals, allergies, notes, walk-ins and visit times. |
+| **Reception** | Demographics with full identifiers (masked on screen by default), appointments, the queue, allergies and alerts, the CHAS card, and clinical notes read only. | Walk-ins and visit times, such as marking a patient arrived. No vitals, allergies or notes. |
+| **Dispensary** | Allergies and current medications, with minimal demographics. | Walk-ins and visit times. No vitals, allergies or notes. |
+
+What the profiles hold of visit summaries, intake forms and the CHAS card is provisional until the clinical lead confirms it.
+
+## Before you enroll
+
+Check these at the laptop. The app reports them when it enrolls, but Medbot cannot verify them:
+
+- **Disk encryption** is on (FileVault on macOS, BitLocker on Windows).
+- A **screen lock** is set.
+- The laptop can keep a hardware-bound key.
+
+The app checks what it can on the enrollment screen and will not enroll a laptop that does not meet the requirements.
+
+Enroll an administrator and at least one other person on every laptop. If the only person or the only administrator on a laptop is locked out, nobody can open its store, and the laptop has to be revoked and enrolled again.
+
+## Enrolling a laptop
+
+In the CMS:
+
+1. Open **Administration → Downtime devices** and select **Enroll a device**.
+2. Choose the **Location** the laptop belongs to.
+3. Choose its **Profile**. The profile's description shows under the list.
+4. Optionally give it a **Name**, for example "Consult 2 PC".
+5. Select **Create code**. The **Enrollment code** dialog shows the code. It works once, expires on its own, and is not shown again. Use the copy button or write it down, then select **Done**.
+
+Codes not used yet are listed under **Waiting to be used**, with the location, profile and when each expires. If a code is lost, create a new one.
+
+On the laptop, while it is online:
+
+1. Open the Medbot CMS desktop app and choose **Open downtime workspace** from the tray.
+2. Check the **This workstation** list: **Disk encryption**, **Operating system** and **Screen lock**.
+3. Type the **Enrollment code** (twelve letters and digits, for example ABCD-EFGH-JKMN) and a **Name for this workstation**, for example "Consult room 2".
+4. Select **Enroll this device**.
+5. Select **Set up the first user**. Choose an **Offline passphrase** of at least 10 characters (a few unrelated words work well), repeat it, and select **Sign in with Medbot**. Sign in as yourself in the window that opens.
+
+Each colleague then adds themselves from the **Session** tab with **Add a colleague**. See [Before an outage](/cms/downtime/working-offline#before-an-outage).
+
+## The devices list
+
+| Column | What it shows |
+| --- | --- |
+| **Device** | The name, and what the laptop reported about itself at enrollment: operating system, disk encryption, screen lock timeout and where its key is kept. "Reported by the device at enrollment, not verified." |
+| **Location** | The clinic location it belongs to. |
+| **Profile** | Its desk profile. |
+| **Status** | **Active** or **Revoked**, with when it was revoked. |
+| **Replica** | How current its copy of the charts is. See below. |
+| **Last sync** | When it last brought its copy up to date. |
+| **Enrolled** | When, and by whom. |
+| **Staff keys** | How many people have set up access on it. |
+
+### The Replica column
+
+| State | Meaning |
+| --- | --- |
+| **Current** | Brought up to date within the last 15 minutes. |
+| **Behind** | Up to date within the last 24 hours. |
+| **Stale** | Older than 24 hours, or never loaded. |
+| **Revoked** | The device no longer syncs. |
+| **Unknown** | The freshness report could not be read. |
+
+A summary above the table counts the laptops in each state. An active laptop holding entries that have not reached Medbot shows "1 entry only on the device" (or how many) in amber under its state.
+
+## Staff with offline access
+
+This list shows everyone who has signed in on an enrolled laptop: their **Role**, how many **Devices**, their **Live grants**, and when the **Latest grant expires**.
+
+Deactivating a staff member or changing their role ends their offline grants automatically. To end them without changing the account, open the row's menu and select **End offline grants**. Each laptop refuses those grants the next time it is online. The person's account stays active, and they can sign in again on a laptop to get a new grant.
+
+## Settings
+
+Each setting shows the value **In use now**. Choose **Default** to go back to Medbot's default.
+
+### Replica window
+
+How far back a patient's last appointment can be for the patient to be kept on a downtime laptop. Choose from 1 to 36 months. The default is 12 months. A longer window covers more of your patients and makes each laptop's copy larger and slower to load.
+
+Changing the window makes every enrolled laptop download its copy again at its next sync. Do it outside clinic hours. When you select **Save**, confirm with **Change and reload every laptop**. Staff on a laptop keep working while it reloads.
+
+### Offline grant lifetime
+
+How long a grant keeps a staff member working offline, from 1 to 30 days. The default is 7 days. A shorter lifetime limits how long a lost laptop or a removed colleague keeps access while the laptop stays offline. A longer one covers a longer outage. Laptops that are online pick up revocations within minutes either way.
+
+### Automatic downtime
+
+How long a laptop waits for Medbot to come back before it enters downtime by itself, from 1 to 60 minutes. The default is 5 minutes. Laptops pick up a change the next time they contact Medbot. A shorter wait gets staff onto the offline copy sooner. A longer one avoids switching over for a brief interruption.
+
+Leaving downtime is never automatic: a doctor or an administrator ends it on the laptop.
+
+## Revoking a laptop
+
+Revoke a laptop that is lost, stolen or retired.
+
+1. Open the laptop's row menu and select **Revoke device**.
+2. Optionally enter a **Reason**, for example "laptop lost". It is kept in the audit log.
+3. Select **Revoke device**.
+
+The laptop wipes its local data the next time it reaches Medbot, and the staff keys on it are revoked. A laptop that stays offline keeps working until its grants expire.
+
+If the laptop last reported entries that have not reached Medbot, the dialog says so: revoking wipes them. If the laptop can still sync, wait for it and revoke afterwards. If it cannot, check that the printed paper copies of those entries exist, then tick **Paper copies of these entries exist, or I accept that they will be lost** before you revoke. Paper copies are entered later as late entries. See [Recovery After an Outage](/cms/downtime/recovery#entering-a-note-kept-on-paper).
+
+## Checking the fleet
+
+**System status** (`/status`) has a **Downtime laptops** card with each location's laptops, how many are current, behind or stale, when Medbot last heard from one, and how old the oldest copy is. See [System Status](/cms/system-status#the-system-status-page).
+
+## Related
+
+- [Medbot CMS Desktop App](/cms/downtime/cms-desktop): the app the laptops run.
+- [Working During an Outage](/cms/downtime/working-offline): signing in, unlocking and recording.
+- [Recovery After an Outage](/cms/downtime/recovery): what happens to what was recorded.

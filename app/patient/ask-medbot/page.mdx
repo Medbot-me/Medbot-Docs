@@ -2,7 +2,7 @@ import { ImageZoom } from "nextra/components";
 
 # Ask Medbot
 
-**Chat** is the portal's landing tab. Its centre is the Ask Medbot box ("Ask Medbot about your health…"), with cards above it for anything the clinic is waiting on — see [Home screen and notifications](#home-screen-and-notifications).
+The Ask Medbot box ("Ask Medbot about your health…") is on **Home**, the portal's landing tab. Home also has shortcuts to log something, a snapshot of your readings, and cards for anything the clinic is waiting on. See [Home screen and notifications](#home-screen-and-notifications).
 
 ## What it can answer
 
@@ -18,6 +18,28 @@ Each question starts a **conversation** that is saved, so the patient can ask fo
 - On Home, **Continue asking** reopens the latest conversation in place of the try-asking suggestions.
 - The Messages hub shows the three most recent conversations, with **See all**.
 - **Delete conversation** in a conversation's header removes it. Conversations are deleted automatically after 180 days.
+
+## Send a photo or a file
+
+You can send Medbot a photo or a file as well as a question. Select the paper clip (**Send a photo or document**) next to the Ask Medbot box, on Home or in a conversation. Choose a photo (JPEG, PNG or WebP) or a PDF. Anything you have typed in the box is sent with it. The **Vitals**, **Meal** and **Document** cards on Home do the same thing. See [Log something](#log-something).
+
+If you typed a question, Medbot answers it first. Then it deals with the file:
+
+- **A photo of a reading or a meal.** For example, a blood pressure monitor, an oximeter, a thermometer, a food label, your plate or a watch screen. Medbot reads it into a card headed "Medbot read these from your photo". The card holds the same form as the [Health Log](/patient/health-log), already filled in. Check each number against your device, correct anything wrong, then save. Nothing is saved until you do. Calories read from a meal photo are only an estimate. Select **Don't save** if you do not want it. Once saved, the card says **Saved to your log**, and the entry shows **From photo** in your log.
+- **A PDF, or a photo of a letter or report.** Medbot keeps it in your health record as a document and reads it in the background. A document card shows "Reading this document…", then how many items it found, or that it could not read it. Select the card to review what it found on the [Documents step](/patient/medical-history#step-3-documents) of your medical history. Nothing is added to your record until you approve it there.
+
+The photo of a reading or a meal is read once and **not kept**. The conversation shows that you sent a photo, but not the photo itself. A document you send is kept.
+
+If Medbot cannot tell what a photo shows, it says so and reads nothing from it. Try again with a clearer photo: the device's screen for a reading, the plate for a meal, or a straight-on photo of the page for a letter or report. The same happens if a photo sent from the **Vitals** or **Meal** card shows something else.
+
+If your message raises a red flag, Medbot answers with the emergency advice below and does **not** read the file. See [Red-flag screening](#red-flag-screening).
+
+| Message | What it means |
+| --- | --- |
+| "Send a photo (JPEG, PNG or WebP) or a PDF." | Medbot cannot use this kind of file. A PDF cannot be sent from the **Vitals** or **Meal** card. |
+| "That file is too large. Try a smaller one, or photograph each page." | Send a smaller file, or one photo per page. |
+| "You have sent a lot of photos in the last hour. Try again later." | You can send up to 15 photos and files an hour. |
+| "You cannot add to this record." | You are a caregiver with read-only access. |
 
 ## Red-flag screening
 
@@ -56,7 +78,9 @@ A session does not require the patient to be enrolled in any care program. When 
 
 ## Home screen and notifications
 
-The **Chat** tab opens on **Home**. Besides the Ask Medbot box, Home shows cards when there is something for you to do:
+**Home** is the first tab, with a house icon. It opens with a greeting and the **Log something** shortcuts. Below them are cards when there is something for you to do, then the Ask Medbot box, then **Your readings**.
+
+The cards you may see are:
 
 - **An appointment offer or check-in.** For example "Sunrise Diabetes Service has offered you an appointment", with an **Open** button. See [Offers from your clinic](/patient/visits#offers-from-your-clinic).
 - **Steps from your visit.** Steps your doctor confirmed at the end of your latest consultation. See [Steps from your visit](/patient/visits#steps-from-your-visit).
@@ -66,6 +90,31 @@ The **Chat** tab opens on **Home**. Besides the Ask Medbot box, Home shows cards
 - **Add your medical history.** Shown while your record has no conditions, medicines or allergies. See [Medical History](/patient/medical-history).
 - **Tell Medbot about your visit.** A reminder to answer a few questions before a booked visit. See [Pre-visit History](/patient/pre-visit-history).
 - **Continue asking.** Your most recent Ask Medbot conversation. With none yet, Home shows **Try asking** suggestions instead.
+
+### Log something
+
+**Log something** has four cards:
+
+| Card | What it does |
+| --- | --- |
+| **Vitals** | Photograph the screen of a blood pressure monitor, oximeter or thermometer. On a phone, it opens the camera. |
+| **Meal** | Photograph your plate or a food label. On a phone, it opens the camera. |
+| **Symptom** | Opens the symptom form. See [Log a symptom](/patient/health-log#log-a-symptom). |
+| **Document** | Choose a letter, report or PDF, or a photo of one. |
+
+**Vitals**, **Meal** and **Document** start a new Ask Medbot conversation with your photo or file in it. You then check and save what Medbot read. See [Send a photo or a file](#send-a-photo-or-a-file).
+
+A caregiver with read-only access cannot log from these cards.
+
+### Your readings
+
+**Your readings** is a short summary of what you have logged. It states facts only. It never says whether a reading is good or bad.
+
+- **Your streak.** How many days in a row you have logged something, for example "5 day streak". Seven dots show the last seven days, with a filled dot for each day you logged. Today's dot stays hollow until you log something today, and the card says "Not logged yet today". With no streak yet, it says "Log something today to start a streak".
+- **Readings in range.** For each vital you logged in the last 30 days, a line such as "Blood pressure in range 5 of 7 days". It counts the days your last reading of the day fell inside a general adult range, out of the days you took one. The range used is shown under each line. A note explains that these are general adult reference ranges, **not** the targets your doctor set for you. Ask your doctor about your own targets.
+- **Latest.** Your newest reading of each vital, and when you took it.
+
+Select **See your log** to open the [Log](/patient/health-log) tab. With nothing logged in the last 30 days, the card says "No readings in the last 30 days."
 
 ### The notification bell
 
