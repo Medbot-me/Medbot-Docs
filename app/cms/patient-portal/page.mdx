@@ -4,7 +4,7 @@ import { ImageZoom } from "nextra/components";
 
 The patient portal is the patient-facing side of Medbot. A clinic's patients sign in to their own Medbot account to ask questions about their record, message the clinic, request appointments, read visit summaries and results, and keep their details current. It is not an emergency service. Portal messaging is for non-urgent contact only.
 
-The portal is a separate app from Medbot CMS, with its own sign-in. The [Patient](/patient) tab documents it from the patient's point of view. This page covers the CMS side: how staff connect a patient to the portal, and where each portal action reaches staff.
+The portal is a separate app from Medbot CMS, with its own sign-in. Patients sign in with a code texted to their mobile number first, or with an email code, a password, or Google where it is offered. The [Patient](/patient) tab documents it from the patient's point of view. This page covers the CMS side: how staff connect a patient to the portal, and where each portal action reaches staff.
 
 > **If you knew the old portal:** the CMS used to serve patients itself at `/portal`, with its own one-time-code sign-in and its own two-step check for contact changes. That section has been retired. The patient app carries over everything it did. See [What changed](#what-changed).
 
@@ -120,7 +120,7 @@ Three differences matter for staff who knew the old `/portal`.
 
 **A portal patient may not be only your patient.** A patient can connect several clinics to one account. Their record then carries entries from all of them, each tagged with the clinic it came from. Your clinic still sees only its own chart and records in the CMS. The patient sees more than that.
 
-**Contact changes no longer run through the CMS.** The old two-step code check is gone. A patient's contact details follow the verified contacts on their own Medbot account, so staff have nothing to re-verify when a patient changes an email address or phone number.
+**Contact changes no longer run through the CMS.** The old two-step code check is gone. A patient changes their email address or mobile number from **Manage Medbot account** on their profile in the patient app, and confirms the change with a code sent to the new address or number. Their chart then follows the confirmed contacts on their Medbot account, so staff have nothing to re-verify.
 
 ## Related
 

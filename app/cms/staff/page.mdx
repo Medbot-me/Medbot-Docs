@@ -22,7 +22,7 @@ Other roles do not see **Staff** in the sidebar. If they open the address direct
 4. For a Doctor, enter the **Medical License Number** (the MCR number, for example `M12345A`). For a Nurse, enter the **Nursing Registration Number** (the SNB number, for example `N123456`). Both are required for those roles. The number is checked as you type and is shown in capital letters without spaces.
 5. Select **Add staff**. A **Staff added** message confirms it.
 
-If the person already has a Medbot sign-in, they can use it right away. If not, they receive an invitation and must accept it before they can sign in.
+If the person already has a Medbot sign-in with that email address, they can use it right away. If not, they receive an invitation email with a **Sign in to Medbot** link. It opens the CMS sign-in page with their address filled in. They join the organization when they sign in with that same email address. See [Join an Organization](/cms/join-an-organisation#route-1-the-admin-invites-you-by-email).
 
 Adding someone who is already on the staff is refused, and the message says what to do instead:
 
@@ -36,7 +36,7 @@ To let someone in with a join code instead, see [Join an Organization](/cms/join
 
 ## The staff list
 
-The table shows each person's **Name**, **Email**, **Role**, **License** (the registration number for a Doctor or Nurse role, or a dash), and **Status** (**Active** or **Deactivated**). A person who was invited but has not yet joined appears with the name "Invited".
+The table shows each person's **Name**, **Email**, **Role**, **License** (the registration number for a Doctor or Nurse role, or a dash), and **Status** (**Active** or **Deactivated**). A person who was invited but has not yet joined is listed under the name they were added with, or as "Invited" when no name was recorded.
 
 A person who holds more than one role has **one row per role**. The rows are sorted by name, so a person's roles sit together, with the role they were given first at the top. Each row has its own license, status, and actions menu: you change, deactivate, or reactivate one role at a time.
 
@@ -83,7 +83,7 @@ What the confirmation says depends on whether the person has other active roles 
 - **Their only active role**: "Deactivate &lt;name&gt;?" with "They will no longer be able to sign in or be assigned new work. This can be reversed at any time." Select **Deactivate**.
 - **One of several roles**: "Deactivate the &lt;Role&gt; role of &lt;name&gt;?" with "They will lose this role and no longer be assigned work as &lt;Role&gt;. Their &lt;other roles&gt; role stays active, so they can still sign in. This can be reversed at any time." Select **Deactivate role**. They keep working in their other roles.
 
-Deactivating keeps the person's history and ends that role's access at their next request. They are locked out of Medbot entirely only if they have no other active role in any organization.
+Deactivating keeps the person's history and ends that role's access at their next request. They are locked out of Medbot entirely only if they have no other active role in any organization. In that case the lockout is immediate: they are signed out on every device, and if they try to sign in they see "This account has been disabled. Contact your administrator."
 
 To bring a role back, use **Reactivate** on the same row and confirm. For a person with no other active role: "They will be able to sign in again immediately." When they have another active role: "They will be able to work as &lt;Role&gt; again immediately, switching to it from the role menu." Reactivate the existing row rather than adding the person or the role a second time.
 

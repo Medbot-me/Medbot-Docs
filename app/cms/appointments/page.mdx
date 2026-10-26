@@ -36,7 +36,7 @@ Times are always shown in Singapore time, whatever the time zone of your compute
 2. Search for the patient and select them. Their details appear below the search box.
 3. Choose the **Clinic location**, the **Date**, and the **Time**. Times run from 8:00 AM to 5:30 PM in half hour steps.
 4. Choose the **Duration**: 15, 30, 45, 60, or 90 minutes.
-5. Choose the **Practitioner**. Only doctors who can work at the chosen location are listed. See [Session Setup](/cms/session-setup).
+5. Choose the **Practitioner**. Only doctors and nurses who can work at the chosen location are listed, doctors first. A nurse is shown with **(nurse-led visit)** after their name. See [Session Setup](/cms/session-setup) and [Nurse-led visits](#nurse-led-visits).
 6. Choose the **Service type**. You can also choose a **Reason** and add **Notes**.
 7. Select **Book appointment**.
 
@@ -44,9 +44,20 @@ You return to the appointment list. The new appointment shows as **Booked**.
 
 > **Note:** The patient search box in the booking form currently lists only the first 20 patients of your organization. A patient beyond that cannot be found by name there.
 
+### Nurse-led visits
+
+Book a nurse as the **Practitioner** for a visit that a nurse runs without a doctor. The nurse leads the visit:
+
+- At check-in the visit stays with the nurse. No doctor is rotated onto it. See [Reception Queue](/cms/reception-queue#nurse-led-visits).
+- The lead nurse starts the visit and closes it with **Complete visit**.
+- A doctor can also close it. If a doctor sees the patient during the visit, it becomes a doctor-led visit.
+- A Clinic Admin can close any visit, and can hand an open visit to another doctor or nurse with **Change lead** on the queue.
+
+In Singapore organisations, a scheme claim for a nurse-led visit is held for an administrator. See [Claims Workflow](/cms/smartcms/claims).
+
 ### Two bookings at the same time
 
-A booking is refused when the patient or the doctor already has an appointment that overlaps the time. The form stays open and shows a message such as "Marcus Lim already has an appointment that overlaps this time". The message shows the times in UTC, which is eight hours behind Singapore time. Choose a different time. The same check applies when you edit an appointment and when you accept a booking request.
+A booking is refused when the patient or the practitioner already has an appointment that overlaps the time. The form stays open and shows a message such as "Marcus Lim already has an appointment that overlaps this time". The message shows the times in UTC, which is eight hours behind Singapore time. Choose a different time. The same check applies when you edit an appointment and when you accept a booking request.
 
 ### Booking with the agent
 
@@ -58,13 +69,13 @@ Patients can ask for a visit from the [patient portal](/patient/visits). A reque
 
 1. Select **Booking requests**. The page counts the requests waiting.
 2. Read the **Requested date**, the **Time preference**, and the **Reason**.
-3. Under **Exact appointment time**, set the **Date**, **Time**, and **Duration**, and choose the **Assigned doctor**.
+3. Under **Exact appointment time**, set the **Date**, **Time**, and **Duration**, and choose the **Assigned clinician**. As when booking, a nurse is listed with **(nurse-led visit)**.
 4. Choose one of the answers below.
 
 | Answer | What it does |
 | --- | --- |
 | **Accept and book** | Books the appointment at the time you set. |
-| **Counter-propose** | Offers the patient a different time. Fill in the time and the doctor first. A note is optional. |
+| **Counter-propose** | Offers the patient a different time. Fill in the time and the clinician first. A note is optional. |
 | **Reject** | Declines the request. A **Review note** is required. |
 
 What the patient sees: after **Counter-propose**, the patient's request shows **Clinic proposed a new time**, your note, and the buttons **Accept proposed time** and **Decline proposed time**. When the patient accepts, the appointment appears in your list as **Booked** and the request leaves **Booking requests**. The request card does not update by itself, so reload the page to see it go.

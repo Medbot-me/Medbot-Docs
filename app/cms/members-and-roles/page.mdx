@@ -48,7 +48,7 @@ Adding a member creates their Practitioner record on the organisation's own Medp
 
 **Add Staff** is only for people the organisation does not have yet. Adding someone already on the staff, or already invited, is refused with a message pointing to their row: give an existing member a second role with **Add another role** (below), not by adding them again.
 
-If the person already has a Medbot account under that email they are linked immediately; otherwise the membership waits for them to sign up. See [Join an Organisation](/cms/join-an-organisation). To add many people at once, use [Seeding Staff & Patients](/cms/seed-data).
+If the person already has a Medbot account under that email, with the address confirmed, they are linked immediately. Otherwise the membership waits, and they receive an invitation email that links to the CMS sign-in page with their address filled in. The membership is linked when they sign in with that email address and it is confirmed; an account whose email address was never confirmed cannot claim it. See [Join an Organisation](/cms/join-an-organisation). To add many people at once, use [Seeding Staff & Patients](/cms/seed-data).
 
 ## Changing a role, registration or status
 
@@ -63,7 +63,7 @@ Two rules are always enforced:
 - **An organisation always keeps at least one active admin.** Deactivating or demoting the last one is refused.
 - **Nobody deactivates themselves**, in any of their roles.
 
-Deactivating a membership ends that role's access. A person with another active role in the organisation keeps working in it. Their account is only locked out entirely if they have no active membership anywhere else: a doctor who covers two clinics and leaves one keeps working at the other.
+Deactivating a membership ends that role's access. A person with another active role in the organisation keeps working in it. Their account is only locked out entirely if they have no active membership anywhere else: a doctor who covers two clinics and leaves one keeps working at the other. When the last active membership is deactivated, the lockout is immediate: the person is signed out everywhere, and signing in again shows "This account has been disabled. Contact your administrator." Reactivating any of their memberships lets them sign in again straight away.
 
 The steps and messages are on [Staff](/cms/staff#changing-a-role-or-registration-number).
 
