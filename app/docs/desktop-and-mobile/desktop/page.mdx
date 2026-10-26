@@ -2,20 +2,26 @@
 
 The Medbot desktop app puts your personal Medbot workspace in its own window on your computer. It is available for macOS, Windows and Linux.
 
-Use it when you want Medbot open alongside your other work without a browser tab. It uses the same account as the Medbot app on the web, and everything you create shows up in both.
+Use it when you want Medbot open alongside your other work without a browser tab. It uses the same account as the Medbot app on the web, and everything you create shows up in both. It can also keep your notes on your computer to work without a connection, and run AI on models you host yourself.
 
 ## Getting the app
 
-The desktop app is not publicly available yet. There is no download link, and it does not update itself. Your Medbot administrator will tell you how to install it while the app is in early access.
+The desktop app is not publicly available yet. There is no download link. Your Medbot administrator will tell you how to install it while the app is in early access. Once it is installed, the app keeps itself up to date. See [Updates](#updates).
 
 ## Sign in
 
-1. Open the app. It starts on the sign-in screen.
-2. Sign in with your email address and password, or choose **Continue with Google**. Google sign-in opens your default browser; once you approve, you are returned to the app.
+The desktop app signs you in through your web browser.
 
-You stay signed in when you close and reopen the app, until you choose **Log out**.
+1. Open the app. It shows **Sign in to Medbot**.
+2. Select **Sign in with your browser**. Medbot opens in your default browser, and the app shows **Continue in your browser**.
+3. Sign in on that page with an email code, your password or Google. See [Create an account](/docs/getting-started#create-an-account). If you are already signed in to Medbot in that browser, you skip this step.
+4. You are returned to the app, signed in. If your browser asks whether to open Medbot, allow it.
 
-If you are new to Medbot, create your account from the same sign-in form. You will then go through the same setup steps as on the web (see [Getting started](/docs/getting-started)) and land on Home.
+To stop waiting for the browser, select **Cancel**. If sign-in does not finish, the app says why and offers **Try again**.
+
+The app keeps your session in your computer's keychain. You stay signed in when you close and reopen the app, until you choose **Log out**. Signing out of Medbot in your browser does not sign the app out.
+
+If you are new to Medbot, create your account on the page that opens in your browser: signing in with an email code creates it. Back in the app, you go through the same setup steps as on the web (see [Getting started](/docs/getting-started)) and land on Home.
 
 If you would rather use the browser, the sign-in screen has a **Prefer the browser? Open Medbot on the web** link.
 
@@ -33,6 +39,8 @@ The sidebar lists:
 
 Settings, AI usage and credits, and My account are also in the app. Open **Settings** from the account menu. The credits link in the workspace opens **AI usage**, where you can also buy credits (checkout opens in your browser).
 
+**Settings** has the same tabs as on the web, plus three that are only in the desktop app: **Updates**, **Offline** and **Local models**. They are described below.
+
 ## The account menu
 
 Select your name at the bottom of the sidebar to open the account menu:
@@ -43,6 +51,132 @@ Select your name at the bottom of the sidebar to open the account menu:
 - **Documentation**
 - **Report a bug**
 - **Log out**
+
+## Updates
+
+The app checks for a new version by itself, shortly after it opens and every few hours. By default it downloads the update in the background. When it is ready, a banner says the new version is ready and installs when you quit. Select **Restart now** to install it straight away, or **Later** to hide the banner. Your open notes are saved before the app restarts.
+
+To change how updates work, open **Settings**, then **Updates**. It shows the version you have.
+
+| Setting | What it does |
+| --- | --- |
+| **Channel** | **Stable** or **Beta**. Beta gets new versions first, and stable ones too. If you leave beta, the change takes effect at the next stable version. |
+| **Download updates automatically** | On by default. A downloaded update installs when you restart or quit Medbot. Turn it off to choose when: a banner then offers **Download and install** when a new version is out. |
+| **Check for updates** | Checks now. If a new version is out, select **Download** (followed by the version number), then **Restart to update**. The release notes show under **What's new**. |
+
+On Linux, a deb or rpm install updates through your system's package installer, which asks for an administrator password.
+
+### When an update is required
+
+Sometimes an older version of the app can no longer be used. The app then shows **Update Medbot to continue** instead of your workspace, and downloads the update. When it is ready, select **Restart to update**.
+
+While you wait, sync is paused. Notes on your computer and changes waiting to sync are kept, and they sync after the update. To keep working in the meantime, select **Open Medbot on the web meanwhile**.
+
+## Working offline
+
+The app can keep a copy of your notes on your computer, so you can keep working without a connection. This is off until you turn it on. Each person who signs in on a computer chooses for themselves.
+
+1. While you are online, open **Settings**, then **Offline**.
+2. Turn on **Keep my notes on this computer**.
+
+Only turn this on for a computer that you alone use. Notes can include patient information. The copy is encrypted on your computer, and it is deleted when you sign out or turn this off.
+
+### What works offline
+
+| | Offline |
+| --- | --- |
+| Notes and folders | Open, write, move, archive and delete them. Your changes sync when you reconnect. |
+| Datasets and their patients' records | Read only. |
+| Clinical Resources and their files | Read only. A file opens in your computer's own viewer. |
+| Settings, templates and model lists | Show what they showed when you were last online. |
+| Everything else | Needs a connection. |
+
+Datasets and resource files up to 25 MB are downloaded by themselves. For a bigger one, turn on **Keep offline** next to it in **Settings**, then **Offline**. Downloads can take up to 2 GB on your computer. When that space runs out, what you opened least recently is removed first. Anything you keep offline is never removed.
+
+### Seeing your sync status
+
+When you lose your connection, a banner at the top says you are offline and that your notes sync when you reconnect.
+
+While offline notes are on, the bottom of the sidebar shows your sync status, such as **Notes synced**, **Syncing…**, **Offline** or how many changes are waiting to sync. Select it to open **Settings**.
+
+**Settings**, then **Offline** shows when your notes **Last synced**, how many changes are **Waiting to sync**, and how much space downloads take. It also has:
+
+- **Sync now**
+- **Reset offline data**, which deletes the copy and downloads it again from Medbot
+- A list of your datasets and resource files, each with a **Keep offline** switch
+
+### Starting the app without a connection
+
+If the app cannot reach Medbot when it opens, it opens on your notes, as long as you turned on offline notes and signed in online within the last 14 days. When you are back online, select **Reconnect** in the banner.
+
+Otherwise, the app shows **Medbot can't reach its server**. Check your connection and select **Try again**.
+
+### When a note changed in two places
+
+If a note you changed offline was also changed somewhere else before your changes could sync, nothing is lost. The sidebar shows how many changes there are to review. Select it, or **Review** in **Settings**, then **Offline**, to open **Changes to review**.
+
+For each note, choose:
+
+- **Keep both** (the safe choice): the other version stays, and your version is saved as a new note called "&lt;title&gt; (offline copy)".
+- **Keep mine**: your version replaces the other one.
+- **Use theirs**: your changes are discarded.
+- **Compare**: shows **This computer** and **Other version** side by side.
+
+If you deleted a folder offline but something in it changed elsewhere, the folder is kept. Choose **Keep the folder** or **Delete it anyway**. A note that was deleted elsewhere while you were changing it comes back as "&lt;title&gt; (recovered)".
+
+### Signing out and other people
+
+When you sign out, the app saves your open notes, syncs your waiting changes, then deletes the offline copy from your computer. If some changes could not sync, it asks first: choose **Sign out and delete them** or **Stay signed in**. Turning off **Keep my notes on this computer** also deletes the copy, and asks first in the same way if changes have not synced.
+
+If someone else signs in on the computer, offline copies left by other people are deleted. A copy that still has changes waiting to sync is kept for 30 days after its owner last signed in online, and syncs when they sign in again.
+
+## Local models
+
+You can use AI models that you run yourself with **Ollama** or **llama-server** (llama.cpp's server), on this computer or on another computer on your local network. Your prompts go to your own server, not to Medbot's. Calls to local models are never billed and use no credits.
+
+### Connect a server
+
+1. Install and start Ollama or llama-server. For llama-server, start it with `--jinja` so its model can use tools.
+2. In the app, open **Settings**, then **Local models**.
+3. Turn on **Ollama** or **llama.cpp server**. If the app finds one already running on this computer, it says so.
+4. The usual address is filled in. If your server uses a different one, enter it and select **Save**.
+
+When the app reaches the server, it shows **Connected** and the server's version, with its models. Select **Check again** to look again.
+
+Only a server on this computer or your local network can be used. Public internet addresses are refused. If the server is on another computer, the app warns that prompts include patient data, which would leave this computer. Select **Allow this server** to use it.
+
+### Your models
+
+Each model in the list shows what it can do:
+
+| Badge | Meaning |
+| --- | --- |
+| **Tools**, **No tools** or **Tools: unknown** | Whether the model can use tools. Chat and agents need tools to read your notes and patient records. |
+| **Context** | How much text the model can take in at once. Chat and agents need about 32k. |
+
+With Ollama, you can also:
+
+- **Download** a model: enter its name, for example qwen3:8b, and select **Download**. **Cancel** stops it.
+- **Delete** a model.
+- **Make a 32k version** of a model that has tools but a shorter context.
+
+llama-server serves the one model it was started with.
+
+### Chat with a local model
+
+In the workspace [chat](/docs/workspace/chat), open the model picker. Your local models are listed under **On this device**. Pick one, and the chat runs on your server. The conversation is saved as usual, so you also see it on the web.
+
+If the model cannot use tools, the chat tells you that it won't read the note, the chart or the library, or suggest edits.
+
+### Run an agent on this computer
+
+When you [run an agent](/docs/agents/running-agents), the **Run Agent** dialog in the desktop app has a **Run on** choice: **Cloud (the agent's model)** or one of the models on this computer. If you have none set up, it points you to **Settings**, then **Local models**.
+
+- Only **Interface** runs can use a local model. [Background runs](/docs/agents/background-runs) always use the agent's cloud model.
+- A run on patients reads their records through tools, so it needs a model with tools. With a model that has no tools, pick another model or run on a note instead.
+- In a conversation about a patient, picking a local model in the chat's model picker also runs agents on this computer.
+
+Runs on this computer are recorded like any other run. In the agent's [live calls](/docs/agents/live-calls) they are marked **This computer**. A run the app never finishes, for example because you quit it, is marked as failed after an hour.
 
 ## What stays on the web
 
