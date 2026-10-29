@@ -1,41 +1,19 @@
-import { ImageZoom } from "nextra/components";
-
 # Medbot-Hosted Organisations
 
-A clinic that has no Medplum server of its own can ask Medbot to host one. Medbot creates the Medplum project, sets up the organisation, and hands it over with the requester as its first **administrator**. From then on it works exactly like any other organisation, except that Medbot manages its Medplum credentials.
+A clinic that has no Medplum server of its own can have Medbot host one. When you create an organisation and choose **Hosted by Medbot**, Medbot makes a Medplum project for it at once and hands the organisation over with you as its first **administrator**. Nobody at Medbot approves it and nothing waits in a queue. From then on it works exactly like any other organisation, except that Medbot manages its Medplum credentials.
 
-## Requesting one
+> **Where this is offered.** "Hosted by Medbot" appears only on a deployment that runs Medbot's own Medplum server, which is Medbot's production service. A staging or self-run deployment without one does not offer it: there, every organisation brings its own Medplum project, and the create form asks for its client ID and secret. See [Create an Organisation](/cms/create-organisation).
 
-Open **Request a Medbot-hosted organisation** at `/organisations/request`. It is linked from:
+## Creating one
 
-- under the [create-organisation form](/cms/create-organisation): "Don't have a Medplum server? Request a Medbot-hosted one"
-- the join-code form on `/onboarding`
-- the empty state of the [organisations screen](/cms)
+1. Open **Create organisation** from the [organisations screen](/cms), the [welcome screen](/cms/switching#the-welcome-screen), the sidebar switcher or `/organisations/new`.
+2. Enter the **Organisation name**, **Country** and **Time zone**, and for a Singapore clinic choose its SmartCMS modules or skip them.
+3. On the **Medplum server** step, leave **Hosted by Medbot** selected. It says "Medbot makes a Medplum project for this organisation now. Nothing else to enter." The other choice, **My own Medplum project**, asks for a client ID and secret instead.
+4. Select **Create organisation**.
 
-| Field | Required | Notes |
-| --- | --- | --- |
-| **Organisation name** | Yes | e.g. "Orchard Clinic". |
-| **Country** | No | Prefilled from your browser. |
-| **Timezone** | No | Prefilled from your browser. |
-| **Anything else?** | No | Number of staff, expected go-live date, anything that helps Medbot set it up. |
+Medbot creates the Medplum project, its client, the organisation, your `admin` membership and a default "Main Clinic" location, then switches you into the new organisation. If any step fails, whatever was made in Medplum is removed again and the form shows the reason. The Medbot web app's **Create organisation** form offers the same choice.
 
-Click **Submit request**. You go back to `/organisations`, where the request appears in a **Requests** section.
-
-<ImageZoom src="/images/cms/hosted-organisations/01-request-form.png" alt="The Request a Medbot-hosted organisation form, filled in" />
-
-## Following a request
-
-| Status | What you see |
-| --- | --- |
-| Pending or in progress | "Waiting for a Medbot administrator to set this up", with **Cancel**. |
-| Rejected | "Not approved", with the reason and **Request again**. |
-| Fulfilled | The new organisation, in your list of organisations. |
-
-<ImageZoom src="/images/cms/hosted-organisations/02-request-submitted.png" alt="The Organisations page showing the request with the message Waiting for a Medbot administrator to set this up" />
-
-When the organisation is ready you get an email. Its link opens `/organisations?select=<organisation>`, which switches you straight into the new organisation, even if you belong to others. You arrive as its `admin`, with a default "Main Clinic" location and only yourself on the staff list.
-
-<ImageZoom src="/images/cms/hosted-organisations/03-organisation-ready.png" alt="The Organisations page listing the new organisation with Settings and Switch to this" />
+The same **one organisation per person** limit applies as for a self-managed organisation: see [Create an Organisation](/cms/create-organisation#how-many-you-can-create).
 
 ## How a hosted organisation differs
 
@@ -45,30 +23,16 @@ Everything else (staff, join code, patients, every clinic workflow) behaves exac
 
 ## For Medbot platform administrators
 
-Requests are handled in the CMS's **Platform** sidebar group, which appears only for a **platform superadmin**. That is a Medbot-wide role on the user account, separate from any organisation role, and granted by an existing superadmin. For anyone else, `/admin/*` answers **not found**. Some of the same queues are also in the admin area of the Medbot web app.
+Hosted organisations are looked after in the CMS's **Platform** sidebar group, which appears only for a **platform superadmin**. That is a Medbot-wide role on the user account, separate from any organisation role, and granted by an existing superadmin. For anyone else, `/admin/*` answers **not found**. Some of the same queues are also in the admin area of the Medbot web app.
 
-The **Platform** group has four items:
+The **Platform** group has three items:
 
 | Screen | Route | What it does |
 | --- | --- | --- |
-| **Provisioning requests** | `/admin/provisioning` | Requests by status (Pending, In progress, Fulfilled, Rejected, Cancelled). Open one to **Claim** or **Release** it, add a note, **Reject** it with a reason, **Provision automatically**, or **Fulfil** it. |
 | **Hosted organisations** | `/admin/organisations` | Every Medbot-hosted organisation, with its Medplum project. Set or rotate its Medplum credentials, **Offboard** or **Reactivate** it, and grant the platform superadmin role to someone by email. |
 | **Caregiver access** | `/admin/caregivers` | Look up, revoke or invite caregiver access across organisations. |
 | **Record services** | `/admin/record-services` | Paid requests from patients for the Medbot team to upload documents or reconcile history. |
 
 Each screen is described in [Platform Administration](/cms/platform-administration).
 
-### To set up a request
-
-If the request detail page offers **Provision automatically** (it is available when the deployment is set up for it), use it. Medbot creates the Medplum project and its credentials, then the organisation, from one dialog.
-
-1. Open the request and select **Provision automatically**.
-2. In the **Provision &lt;name&gt;?** dialog, check the **Organisation name** and **Slug**, then select **Provision**.
-3. The organisation is created with the requester as its first administrator, and the requester is emailed.
-
-If the button is greyed out, set the project up by hand and use **Fulfil**:
-
-1. In Medbot's own Medplum account, create a **Project** for the clinic, e.g. `medbot-orchard-clinic`. Never share one project between organisations.
-2. In that project, create a **ClientApplication** (e.g. `medbot-api`) with the default project-admin access policy, and note its client id and secret.
-3. In the request, select **Fulfil** and enter the **Medplum base URL** (optional), **Medplum client ID** and **Medplum client secret**. The **Organisation name** and **Slug** are prefilled from the request and can be corrected. The dialog points to Medbot's provisioning runbook for the exact steps.
-4. The credentials are validated against Medplum before anything is created. On success the requester is emailed, and the message shows the new organisation's join code.
+There is no longer a request-and-approve step: the former **Provisioning requests** screen, the "Request a Medbot-hosted organisation" form and the emails around them have been removed. Records of requests made before the change are kept but nothing writes to them now.
