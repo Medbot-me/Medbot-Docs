@@ -11,7 +11,7 @@ SMS, WhatsApp and email do not carry the conversation. They only tell a patient 
 | Capability | What the patient can do | What the agent may do on its own |
 | --- | --- | --- |
 | **Appointments** | Ask for a new appointment, move an existing one, cancel one, ask when their next one is | Read the patient's own appointments; book or move one directly into an open slot on a care team member's published availability; cancel outright |
-| **Health education** | Ask questions about their condition, an upcoming procedure, pre-procedure preparation, or medication they were given | Answer from the service's own content library and the patient's own context only; hand off anything outside that scope |
+| **Health education** | Ask questions about their condition, an upcoming procedure, pre-procedure preparation, or medication they were given | Answer from the service's own content library and the patient's own context only, showing a picture from the library when one helps; hand off anything outside that scope |
 | **Symptom triage** | Report a new or changed symptom between consults | Classify urgency; on a red flag, immediately redirect to emergency services and escalate to whoever covers the escalation role |
 | **Education & counselling** | Go through a counselling or education protocol, step by step | Take consent, walk through the protocol from the content library, and record what the patient understood or agreed (with the **Education & counselling sessions** tool) |
 | **Full encounter** | Need a longer conversation than chat allows | Send a link to a full [AI encounter](/docs/services/encounters) on the patient portal (with the **Hand over for a full encounter** tool) |
@@ -46,6 +46,40 @@ Click **Save**.
 
 A patient agent can call linked workflow subagents, but only those set to let the agent decide; **Every run** is not available to it. See [Service Agents → Subagents](/docs/services/agents#subagents).
 
+## Message approval policy
+
+On the service's **Settings**, the **Message approval policy** card decides "which patient messages an agent may send as drafted, which wait for staff to approve, and which a person always writes." It applies to every agent in the service, the patient agent included. Only the service owner or a clinic admin can change it.
+
+Each kind of message has its own setting:
+
+| Kind of message | What it covers |
+| --- | --- |
+| **Informational answer (T0)** | An answer from the plan and approved clinic content, for example when the next scan is. |
+| **Routine clinical reply (T1)** | A protocolised reply to a routine symptom or question, drafted from the clinic's approved advice. |
+| **Plan-change instruction** | A message that tells the patient what changed in their treatment plan. |
+| **Clinical judgement (T2)** | Anything that needs a nurse's or doctor's judgement. An agent never sends it. |
+| **Results and bad news** | Always given by a person. Cannot be changed. |
+| **Emergency template (T3)** | The fixed emergency message, sent at once when a red-flag rule matches or the assistant flags an emergency. A model never writes it. Cannot be changed. |
+
+The choices are:
+
+- **Follow each agent's "Review before sending"**: nothing changes. Service agents use their own [Review before sending](/docs/services/agents#review-before-sending) switch and the patient agent its reply mode. For **Clinical judgement**, this lasts only until any other kind is set; from then on it waits for approval.
+- **Off: a person writes it**.
+- **Prepare only: staff approve before it is sent**. The draft waits in the Task Inbox.
+- **Auto submit: sent as drafted and logged**.
+
+Next to each setting are the numbers from past review tasks: how many were approved unedited, edited or rejected, and how long staff took to decide. Read them before you let a kind of message go out without review. Saving a change that sends a kind of message with less review than before shows a warning naming it.
+
+**Use the conservative defaults** fills in the recommended settings. **Start from how it works today** copies the patient agent's current reply mode. **Clear the policy** goes back to each agent's own setting. Select **Save policy**.
+
+Templated reminders and notices (enrolment, appointment and dose reminders) are sent by the system whatever is chosen here.
+
+Approving an agent's drafted message is recorded in the audit log under your name, just before the message itself.
+
+## Configuration history
+
+The **Configuration history** card on **Settings** lists every change to the service's agent prompts and settings, approval policy, red-flag rules, content and instructions. Each version shows its number, when it took effect, who made it, and what changed. The first entry is the configuration as it stood when history began. Every agent run and every message an agent sends records the version it ran under, so you can tell which setup produced a given message.
+
 ## Safety design
 
 A few things are true regardless of settings, and are not configurable away:
@@ -71,7 +105,9 @@ The patient agent replies in the portal directly. If a patient has an older stor
 An **Escalations** card on the patient's page (General tab) lists everything the patient agent has flagged: a **Red flag**, an **Agent-flagged triage**, a failed turn (**Agent turn failed**), an **Out of scope hand-off**, or something **Staff flagged** manually. Each shows its severity, status, and timestamp.
 
 - Click **Acknowledge** to mark an open escalation as seen.
-- Click **Resolve** once it's been handled.
+- Click **Resolve** once it's been handled. A **Resolution note (optional)** box opens ("What was done, and what happens next."). Select **Resolve escalation**. The note shows on the card afterwards.
+
+Each escalation also raises a task in the covering role's Task Inbox and on the service page. Resolving either one resolves both. Whoever resolves it is recorded.
 
 If no one was actively covering the configured escalation role at the time, the card notes that the service owner was notified instead as a fallback — a visible signal that the rota needs attention.
 
