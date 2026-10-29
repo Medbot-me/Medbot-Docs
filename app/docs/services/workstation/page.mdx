@@ -10,11 +10,11 @@ Open it from **Workstation** in the service's sidebar. A strip of **Workstation 
 
 | Mode of care | Views |
 | --- | --- |
-| **Clinic** | **Queue**, **Progress**, **Pre-visit**, **Escalations** |
-| **Inpatient** | **Census**, **Rounds**, **Escalations** |
-| **Remote** | **Caseload**, **Escalations** |
+| **Clinic** | **Queue**, **Progress**, **Pre-visit**, **Escalations**, **Health plans** |
+| **Inpatient** | **Census**, **Rounds**, **Escalations**, **Health plans** |
+| **Remote** | **Caseload**, **Escalations**, **Health plans** |
 
-The **Pre-visit** and **Escalations** views are described in [Pre-visit History & Escalations](/docs/services/pre-visit-and-escalations).
+The **Pre-visit** and **Escalations** views are described in [Pre-visit History & Escalations](/docs/services/pre-visit-and-escalations). **Health plans** holds plans patients sent for review: see [Health Plans](/docs/services/health-plans). A service with IVF cycles turned on also has a **Cycles** view: see [IVF Cycles](/docs/services/ivf-cycles).
 
 ## How it connects to the clinic
 
@@ -79,7 +79,7 @@ Row actions:
 
 **Open visit** opens a side panel for that patient's visit:
 
-- **Escalation**, if there is one, with **Acknowledge** and **Resolve**.
+- **Escalation**, if there is one, with **Acknowledge** and **Resolve**. Resolving asks for an optional resolution note.
 - **Unanswered portal message**, if the patient is waiting on a reply.
 - **Today's journey**: every step of the visit with its status. For each step: **Start** followed by the step name in lower case (for example **Start vitals**), **Mark complete** or **Skip**.
   - A step that runs as an **AI encounter** (history taking, health education, financial counselling) opens the in-clinic encounter dialog, so the patient can do it on a clinic device. See [AI Encounters & Kiosk](/docs/services/encounters#in-the-clinic-the-kiosk).
@@ -101,6 +101,7 @@ Click **End consult** when you are done. Medbot reads your plan in the note and 
 - **Add another step**, to add one of the service's other journey steps yourself.
 - **Unsigned orders**: any prescription, lab, imaging or service drafts. "Drafts are not sent. Sign them on the Orders and Medications tabs before you end the consult."
 - **Tell the patient by SMS or WhatsApp that steps are waiting, with a portal link only.** This is disabled if the patient is not on the portal. Its starting value comes from your Workstation settings.
+- **Propose a health plan next**, when the patient is on the portal. Ending the consult then opens the patient's **Health plan** tab with targets suggested from their recent results, to check and send. See [Health Plans](/docs/services/health-plans#from-the-end-of-a-consult).
 
 <ImageZoom src="/images/docs/services/workstation/01-end-consult-dialog.png" alt="The End consult dialog where Medbot read the plan and proposes next steps, each marked In clinic or Kiosk" />
 

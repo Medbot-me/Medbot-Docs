@@ -28,21 +28,32 @@ The SOP is one layer. Agents also receive:
 
 ## Content library
 
-The **Content library** item in the sidebar (and the wizard's **Content library** step) holds the clinical resources this service's agents and AI encounters can use.
+The **Content library** item in the sidebar (and the wizard's **Content library** step) holds the clinical resources this service's agents and AI encounters can use: documents, and pictures that agents can show patients.
 
 ### Adding a document
 
-- **Upload a document**: choose a PDF, give it a **Title** and an optional **Description**, and pick its type:
+- **Upload a document or picture**: choose a PDF, Word, Excel or CSV file, give it a **Title** and an optional **Description**, and pick its type:
   - **Reference material**: background the assistant can quote from, such as a handout or guideline.
-  - **Counselling protocol**: a structured script for a counselling or education session.
+  - **Counselling protocol**: a structured script for a counselling or education session. A spreadsheet is split into tables of rows, not session steps, so it usually belongs under reference material.
 
   Click **Upload & add to library**.
 - **Attach an existing resource**: pick a document you have already uploaded elsewhere in Medbot.
 
-A new document is processed before it can be used; until then it shows as pending or processing. **Remove** takes a document out of this service's library.
+A new document is processed before it can be used; until then it shows as pending or processing. **Remove** takes a document out of this service's library, and **Mark as reference** or **Mark as protocol** changes its type.
+
+### Adding a picture
+
+A picture is reference material an agent can **show the patient** while it explains: a diagram, a device, a breakdown of costs. Use the same **Upload a document or picture** form:
+
+1. Choose a JPEG, PNG or WebP file. A preview appears, and the type selector disappears: a picture is always reference material.
+2. Give it a **Title** and a **Caption**: "what the picture shows (patients see this)". The caption is required. It is what the agent reads to decide whether to show the picture, and what the patient reads under it.
+3. Click **Upload & add to library**. Camera details such as location are removed on upload.
+
+In the **Reference material** list the picture shows as a thumbnail with its title, caption and a picture badge. It cannot be marked as a protocol.
 
 ### Where the library is used
 
 - **AI encounters** can have documents attached by default, attach the best matches automatically, and let the assistant search the library. See [AI Encounters](/docs/services/encounters#settings).
 - **Service agents** with the **Clinical resources** tool can look things up in it.
 - The **patient agent** answers health-education questions from it, and walks patients through counselling protocols with its **Education & counselling sessions** tool.
+- **Session agents** on the patient portal (history taking, health education and financial counselling) can show a picture from the library under their reply, with its title and caption. Patients tap it to open it full size, on the web and in the mobile app.

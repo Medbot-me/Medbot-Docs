@@ -5,6 +5,7 @@ export default {
   "ask-medbot": "Ask Medbot",
   messages: "Messages",
   "health-log": "Health Log",
+  "health-plan": "Health Plan",
   visits: "Visits & Appointments",
   "pre-visit-history": "Pre-visit History",
   results: "Results & Records",

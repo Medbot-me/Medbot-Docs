@@ -15,5 +15,7 @@ export default {
   "encounter-recording": "Encounter Recording",
   workstation: "Workstation",
   "pre-visit-and-escalations": "Pre-visit History & Escalations",
+  "health-plans": "Health Plans",
+  "ivf-cycles": "IVF Cycles (Preview)",
   appointments: "Appointments",
 };
