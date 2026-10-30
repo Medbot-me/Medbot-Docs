@@ -4,7 +4,7 @@
 
 An **organisation** is a clinic as a tenant of Medbot CMS: its own staff, its own locations, its own patients, and, crucially, **its own Medplum server**. Everything the CMS does happens inside exactly one organisation at a time.
 
-Medbot CMS is multi-organisation. Any signed-in user can create an organisation (or ask Medbot to host one), add staff to it with roles, and run every clinic workflow (patients, queue, sessions, results, documents, rostering, inventory, billing) scoped to the organisation they have chosen for this sign-in. A user who belongs to more than one switches between them.
+Medbot CMS is multi-organisation. Any signed-in user can create an organisation (hosted by Medbot, or on their own Medplum project), add staff to it with roles, and run every clinic workflow (patients, queue, sessions, results, documents, rostering, inventory, billing) scoped to the organisation they have chosen for this sign-in. A user who belongs to more than one switches between them.
 
 > This is a change from the single-tenant CMS. There is no "first admin" bootstrap step and no Medplum credentials in environment variables any more: the first admin is whoever creates the organisation, and each organisation's Medplum credentials are entered through the app (or set up by Medbot) and stored encrypted.
 
@@ -23,8 +23,8 @@ Medbot CMS is multi-organisation. Any signed-in user can create an organisation 
 
 ## What you can do
 
-1. **Create an organisation** with your own Medplum server and become its first administrator: [Create an Organisation](/cms/create-organisation).
-2. **Ask Medbot to host one** if you have no Medplum server: [Medbot-Hosted Organisations](/cms/hosted-organisations).
+1. **Create an organisation** and become its first administrator: [Create an Organisation](/cms/create-organisation).
+2. **Let Medbot host it** if you have no Medplum server, by choosing **Hosted by Medbot** on the same form: [Medbot-Hosted Organisations](/cms/hosted-organisations).
 3. **Join an existing one** with a join code, or have an admin invite you by email: [Join an Organisation](/cms/join-an-organisation).
 4. **Belong to several** and choose which one to work in: [Choosing & Switching](/cms/switching).
 5. **Bring in staff and patients**, one at a time or in bulk from a CSV file: [Members & Roles](/cms/members-and-roles) and [Seeding Staff & Patients](/cms/seed-data).
@@ -33,9 +33,9 @@ Medbot CMS is multi-organisation. Any signed-in user can create an organisation 
 
 ## The organisations screen
 
-`/organisations` lists every organisation the signed-in user belongs to, with their role in each and a **Current** badge on the active one. From it they can switch to another, open **Settings** on any they administer, or **Create organisation**. A **Requests** section above the list shows any [Medbot-hosted organisation requests](/cms/hosted-organisations) they have made.
+`/organisations` lists every organisation the signed-in user belongs to, with their role in each and a **Current** badge on the active one. From it they can switch to another, open **Settings** on any they administer, or **Create organisation**.
 
-Unlike every other staff page, this one does not require an organisation to be chosen: a brand-new user with no memberships lands here. With no memberships at all, the empty state suggests creating one with your own Medplum server, asking Medbot to host one, or asking an administrator for a join code.
+Unlike every other staff page, this one does not require an organisation to be chosen: a brand-new user with no memberships lands here. With no memberships at all, the empty state says "You don't belong to any organisation yet. Create one or ask an administrator for a join code."
 
 ## Where to go next
 

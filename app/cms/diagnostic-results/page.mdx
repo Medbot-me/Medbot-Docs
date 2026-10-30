@@ -289,6 +289,20 @@ To change a day, select **Edit** beside it and tick the doctors. Each tick saves
 
 A patient sees nothing that reads like a conclusion until a doctor has signed the result off. A **Critical** flag is hidden from the patient after a recall, repeat test, or referral, so they hear it from a clinician first. The signed-off text appears as "What this means". A result explanation reaches the patient only after a doctor approves it and sends it to Medbot Health, or prints it. Drafts are never shown to the patient. See [Patient](/patient) for the patient's side.
 
+## Prior history from outside records
+
+Doctors and nurses can enter a patient's earlier results and medicines, for example from a previous fertility cycle at another centre, so they sit alongside the clinic's own.
+
+1. In the patient's **Results** section, select **Import prior history**.
+2. Choose a CSV or Excel **File**: one row per result or medicine, with a Date and either a Test (with Value and Unit) or a Medication (with Dose and Dose unit). Up to 1,000 rows and 2 MB. **Download a template** gives you the columns.
+3. Say **Why is this being entered?**, for example "prior cycle at another centre, brought by the patient", and optionally the **Source**.
+4. Choose how dates are written: **3 April 2025 (day first)** or **March 4, 2025 (month first)**.
+5. Check the preview, which says what the file holds and lists each row with its status, then import.
+
+Imported entries are saved as reported history from an outside record. They do not raise alerts, and they appear on the stimulation chart of any IVF cycle their dates fall in. A file already imported adds nothing again.
+
+They are listed on the Results page under the clinic's own results, in a **Prior history** card: "Entered from outside records: reported, not ordered by this clinic." Each entry shows its date, what it is, its value, its source and its status: **Reported**, **Needs review** or **Withdrawn**. An entry that needs review is not coded and does not count on a cycle until someone checks it against the source.
+
 ## Related
 
 - [Patient Records & Consent](/cms/patient-records): the chart where results sit.

@@ -20,6 +20,15 @@ The page has these sections, in order:
 
 A Singapore organisation with SmartCMS modules cannot change its country until the modules are cleared: "Clear the SmartCMS modules under Integrations before changing the country."
 
+## Patient branding
+
+How your patients see the clinic on the patient portal and in the notices they receive. Leave a field empty to use the default; "Powered by Medbot" stays under your name on the portal.
+
+- **Clinic display name**: shown on the portal and in notice text. Default: the organisation's name.
+- **Notification sender name**: opens every notice, before the service name, for example "Orchard Clinic · IVF". It does not change the phone number or WhatsApp sender.
+- **Save branding** saves both.
+- **Logo**: PNG, JPEG or WebP, up to 512 KB and 4096 pixels a side; a square image works best. Choose a file to upload it ("Logo saved"), or **Remove logo**.
+
 ## Integrations
 
 Country-specific national services, at `#integrations`.
@@ -45,6 +54,14 @@ The short code an admin hands to a new hire so they can request access before be
 **Regenerate join code** issues a new one. The previous code stops working immediately; use it if a code has been shared too widely or has leaked. Regenerating does not affect anyone who has already joined.
 
 The full flow around this code is described in [Join an Organisation](/cms/join-an-organisation).
+
+## AI credits
+
+"The organisation's AI work is paid from its own credit balance." The card links to the balance, usage and credit purchase.
+
+## Data location
+
+"Where this organisation's data is kept and which processors handle it, as far as this deployment's configuration shows." **See where your data lives** opens `/organisations/[id]/data-location`, a report generated from the deployment's configuration each time it opens. It lists, under **Where your data is kept**, each store that holds the organisation's records, and under **Who handles it**, each service that processes data on its behalf, with who operates it and where. Items under **In progress** are listed so the page does not read as complete. Only an administrator of the organisation can open it.
 
 ## Seed data
 

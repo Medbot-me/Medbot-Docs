@@ -19,7 +19,19 @@ Doctors and nurses who open `/patients/new` or `/patients/invite` see the messag
 
 ## Finding a patient
 
-The list shows each patient's name, contact details, birth date, gender, address and status. Search by name only. Phone, email and identifier numbers are not searched. Use the status filter to show **Active**, **Inactive** or **Deceased** patients. The newest updates appear first, 20 patients per page.
+The list shows each patient's name, contact details, birth date, gender, address and status. Under each name is the masked NRIC, FIN or passport number (for example `S****345D`), so you can tell same-named patients apart; on a narrow screen their age and sex show there too.
+
+The search box ("Search name, NRIC/FIN, phone or DOB") takes any of these, in any combination, and every part must match:
+
+- a name, or part of one, in any order
+- a full NRIC or FIN
+- the last four characters of an NRIC or FIN, typed or as shown masked (`345D` or `S****345D`)
+- a phone number, or at least four digits of one
+- a date of birth, day first (`14/03/1992`) or as `1992-03-14`
+
+For example "Tan Mei Lin 345D" or "14/03/1992 Tan". The last four characters of an NRIC or FIN are not enough on their own: add the name, phone number or date of birth, and if too many patients match, add more of the name or the date of birth. The page says so when that happens. The same search is used by the appointment booking and notes workspace patient pickers. Email addresses are not searched.
+
+Use the status filter to show **Active**, **Inactive** or **Deceased** patients. The newest updates appear first, 20 patients per page.
 
 <ImageZoom src="/images/cms/patient-records/01-patients-list.png" alt="The Patients page with the name search box, the status filter and a table of patients" />
 _The Patients page_
@@ -57,6 +69,7 @@ The chart opens on **Overview**. Cards on the overview:
 | --- | --- |
 | **Allergies** | Drug allergies and intolerances, or "No known drug allergies". Not shown to Receptionists. See [Allergies & Medication Safety](/cms/allergies-and-medication-safety) |
 | **Patient-reported intake** | Answers from a self-registration, only for patients who registered themselves |
+| **Problem list** and **Medications** | The patient's conditions, with a count of active ones, and their medicines, with a filter between active and all. Read only, and shown to doctors, nurses and Clinic Admins. If a list cannot be loaded, the card says so ("Do not assume this patient has no problems.") with **Try again**, never an empty list |
 | **Demographics** | Birth date, gender, and marital status, preferred language and date of death when recorded |
 | **Contact** | Phone and email with a **Preferred** badge, plus **Portal invite**, **Caregivers** and **Edit contact**. See [Caregiver access](/cms/patient-portal#caregiver-access) |
 | **Address** | Addresses on file |
@@ -65,7 +78,7 @@ The chart opens on **Overview**. Cards on the overview:
 | **Vitals** | See [Vitals](/cms/vitals) |
 | **Clinical notes** | See [Encounters & Clinical Notes](/cms/encounters) |
 
-The sidebar lists the other chart sections under the patient's name: **Overview**, **Accounts**, **Encounters**, **Notes**, **Results**, **Photos**, **Vaccinations**, **Documents** and **Messages**. **Notes** appears only when your deployment has turned the [notes workspace](/cms/patient-notes) on. **Photos** holds [clinical photos](/cms/clinical-photos). **Accounts** is visible to Clinic Admins and Receptionists only. **Ping staff** at the top of every chart sends a staff ping.
+The sidebar lists the other chart sections under the patient's name: **Overview**, **Accounts**, **Encounters**, **Notes**, **Results**, **Photos**, **Vaccinations**, **Documents** and **Messages**. **Notes** appears only when your deployment has turned the [notes workspace](/cms/patient-notes) on. **Photos** holds [clinical photos](/cms/clinical-photos). **Accounts** is visible to Clinic Admins and Receptionists only. **Audit log** is visible to Clinic Admins only (see [Audit log](#audit-log)). **Ping staff** at the top of every chart sends a staff ping.
 
 <ImageZoom src="/images/cms/patient-records/04-chart-overview.png" alt="A patient chart overview with demographics, contact, address, identifiers, consent, vitals and clinical notes cards" />
 _A patient chart overview_
@@ -122,6 +135,14 @@ The patient's history stays intact and the status becomes **Inactive**. An inact
 
 <ImageZoom src="/images/cms/patient-records/06-deactivate-patient.png" alt="The Deactivate patient record confirmation dialog" />
 _The deactivate confirmation_
+
+## Audit log
+
+A Clinic Admin can see who read, changed, sent or approved anything in a patient's record. Open **Audit log** in the chart sidebar. For every other role the section does not exist.
+
+The list shows chart reads, record changes, messages sent and approvals, newest first, with the time, who did it, the action, the resource and the outcome. When an event carries one, columns show the plan version and the service configuration version in force. Filter by **Action** (for example `chart.read`) and a **From** and **To** date, then **Apply**, or **Clear**. Older events load with **Load older events**.
+
+To see everything one staff member did, open [Staff](/cms/staff), open the person's actions menu and select **Audit log**.
 
 ## Related
 

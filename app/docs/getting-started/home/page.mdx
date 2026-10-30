@@ -24,3 +24,17 @@ Home only exists in your **Personal** space. If you are working inside an organi
 ## Inbox
 
 **Inbox** in the sidebar opens the **Task Inbox**. It lists tasks assigned to you directly, and unclaimed tasks assigned to a role you hold in a [service](/docs/services). Pending tasks appear under **Pending**. Inside an organisation the same page is called **Tasks** in the sidebar.
+
+### Redirect to a doctor
+
+A nurse can pass a patient's task to the attending doctor when it needs a doctor's decision.
+
+1. On the task, select **Redirect to doctor**.
+2. Choose the **Doctor**. Medbot suggests one when the care team makes it clear: the patient's assigned doctor, else whoever is covering the service today, else the only doctor on the care team. If more than one could take it, it asks you to choose. With no doctor on the care team, add one first.
+3. Say **Why does this need a doctor?**, for example "missed antagonist dose last night, lead follicle 16 mm. Needs a decision on timing."
+4. Select **Redirect to doctor**.
+
+The task moves to the doctor's Task Inbox with a **Redirected to you** badge. Others see "With &lt;doctor&gt;" and the reason. The doctor sees who sent it and why, the latest messages with the patient, the latest results, and links to the plan context and the full message history. They can:
+
+- **Reply to the patient** and **Send reply**. It goes to the patient's portal thread, and closes the task. An agent's drafted message, if there is one, is there to edit.
+- **Hand back** with a note for the nurse, for example "in theatre until 3 pm; Dr Ng is covering". The nurse sees "Handed back by &lt;doctor&gt;" with the note, and can redirect it again.

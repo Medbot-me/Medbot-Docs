@@ -1,14 +1,18 @@
 # Create an Organisation
 
-Any signed-in user can create an organisation at any time, whether it is their first or their fifth. The creator becomes its first **administrator** automatically.
+Any signed-in user can create an organisation. The creator becomes its first **administrator** automatically.
 
 Reach the form from `/organisations/new`, from **Create organisation** on the [organisations screen](/cms), on the [welcome screen](/cms/switching#the-welcome-screen) or in the sidebar's organisation switcher.
 
-> **No Medplum server?** Use the link under the form, "Don't have a Medplum server? Request a Medbot-hosted one", and Medbot will set one up for you. A Medbot administrator sets the organisation up, often automatically, and you are emailed when it is ready. See [Medbot-Hosted Organisations](/cms/hosted-organisations).
+> **No Medplum server?** On Medbot's production service you do not need one: the form's last step offers **Hosted by Medbot**, which makes a Medplum project for the organisation as you create it. See [Medbot-Hosted Organisations](/cms/hosted-organisations). A deployment without Medbot's own Medplum server does not offer it, and a note under the form points you to app.medplum.com to create a project and a client for it.
+
+## How many you can create
+
+Each person may create **one** organisation (the deployment can raise this). The limit counts the active organisations you created yourself, hosted or self-managed; a [demo organisation](/docs/services/demo-services#your-demo-organisation) does not count, and organisations you joined are not yours. Past the limit the form shows the reason the server gave and creates nothing. Medbot platform superadmins have no limit.
 
 ## Before you start
 
-You need an OAuth client on the Medplum server this clinic will use:
+Skip this section if you will choose **Hosted by Medbot**. For **My own Medplum project**, you need an OAuth client on the Medplum server this clinic will use:
 
 1. Sign up at [Medplum](https://app.medplum.com/signin) if the clinic has no project yet.
 2. Create an OAuth client in Medplum.
@@ -38,17 +42,24 @@ Choosing a module does not connect anything by itself: each clinic location stil
 
 ### Step 3: Medplum server
 
+Where the deployment hosts Medplum projects, the step opens with two choices:
+
+- **Hosted by Medbot** (selected by default): "Medbot makes a Medplum project for this organisation now. Nothing else to enter."
+- **My own Medplum project**: "Enter its client ID and secret." The fields below appear.
+
+On a deployment without hosting, only the fields are shown.
+
 | Field | Required | Notes |
 | --- | --- | --- |
 | **Medplum base URL** | No | Defaults to `https://api.medplum.com`. Set it for a self-hosted Medplum. |
 | **Medplum client ID** | Yes | From step 2 of "Before you start". |
 | **Medplum client secret** | Yes | Write-only: it is never shown back to you. |
 
-Click **Create organisation**.
+Click **Create organisation**. If the server refuses, for example because you are past your limit or it cannot store credentials just now, the form shows **Could not create organisation** with the reason.
 
 ## What happens on submit
 
-The credentials are **validated against Medplum before anything is created**, so a bad client id or secret fails the form rather than leaving a half-built organisation behind. Once they check out, the backend creates, in one transaction:
+For a hosted organisation, Medbot first creates the Medplum project, its owner membership and a client for it; if the organisation then cannot be created, those are deleted again. For your own project, the credentials are **validated against Medplum before anything is created**, so a bad client id or secret fails the form rather than leaving a half-built organisation behind. Either way, the backend then creates, in one transaction:
 
 - the **organisation** itself, with a generated slug and join code, its country, time zone and any SmartCMS modules
 - the creator's **membership** as `admin`, with their name and email

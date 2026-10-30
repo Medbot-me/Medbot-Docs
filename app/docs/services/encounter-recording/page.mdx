@@ -4,6 +4,18 @@ A clinician can **record a consultation for up to an hour** and have AI draft a 
 
 Recording is available wherever Medbot's notes editor is used: the web app's notes workspace, the [Workstation](/docs/services/workstation) consult screen, and the patient notes editor in Medbot CMS. On the Workstation the same recorder is used for ward rounds in an Inpatient service and remote reviews in a Remote service. Quick dictation is still available next to it.
 
+## Patient consent
+
+Before the recorder or dictation captures anything, Medbot asks you to confirm the patient's consent. The **Patient consent to record** dialog says: "Before recording, ask the patient whether they agree to this consultation being recorded and transcribed to draft the clinical note. Their consent is saved to the record."
+
+1. Ask the patient.
+2. Tick "The patient has given verbal consent to record this consultation."
+3. Select **Confirm and record** (or **Confirm** for dictation).
+
+Nothing records until the consent is saved. If it cannot be saved, the dialog says so and nothing records. **Cancel** stops without recording. One confirmation covers both the recorder and dictation on the same note for one clinic session; the recorder then shows "Verbal consent to record confirmed at" and the time.
+
+Dictation that is not about a patient, such as teaching a protocol by voice, asks for your own confirmation instead: "I agree to this dictation being recorded and transcribed."
+
 ## Recording
 
 1. In the editor, click **Record encounter** ("Record the consultation and draft a clinical note from it"). Allow microphone access if the browser asks.

@@ -15,7 +15,7 @@ Every fresh sign-in starts at **Welcome back** (`/welcome`): "Choose the organis
 
 Until you choose, any staff page redirects to the welcome screen and then returns you to that page. The organisations screen, onboarding, sign-in, patient-facing displays and public pages do not need a choice.
 
-A signed-in user with **no memberships** at all is sent to the [organisations screen](/cms) instead, to create an organisation, request a Medbot-hosted one, or join with a code.
+A signed-in user with **no memberships** at all is sent to the [organisations screen](/cms) instead, to create an organisation (hosted by Medbot or on its own Medplum project) or join with a code.
 
 ### Why you choose every time
 
@@ -37,9 +37,9 @@ Choosing a different organisation re-renders the entire app under it: the queue,
 
 ## From the organisations screen
 
-`/organisations` lists every organisation the user belongs to, once each, with the role they would enter it as, a **Current** badge on the active one, a **Switch to this** button on the others, and a **Settings** link where that role is Clinic Admin. It also shows any pending [Medbot-hosted organisation requests](/cms/hosted-organisations).
+`/organisations` lists every organisation the user belongs to, once each, with the role they would enter it as, a **Current** badge on the active one, a **Switch to this** button on the others, and a **Settings** link where that role is Clinic Admin.
 
-A link to `/organisations?select=<organisation>`, such as the one in a hosted organisation's "ready" email, switches straight into that organisation if you are a member.
+A link to `/organisations?select=<organisation>` switches straight into that organisation if you are a member.
 
 ## Switching role
 

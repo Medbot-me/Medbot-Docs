@@ -9,14 +9,14 @@ If you work for a clinic or a hospital group, you can use Medbot inside an **org
 The sidebar changes depending on where you are.
 
 - **Personal** shows Home, Inbox, Agents, Datasets, Notes, Deep Research, Templates and Clinical Resources.
-- **An organisation** shows a group named after the organisation, with Overview, Tasks, Services, Agents, Patients, Members and Organisation settings.
+- **An organisation** shows a group named after the organisation, with Overview, Tasks, Services, Agents, Patients, Members and Organisation settings, plus **AI policy** for admins.
 - **A service** (opened from **Services**) shows that service's own pages. See [Services](/docs/services).
 
 Personal tools disappear while you are inside an organisation. Switch back to **Personal** to use them.
 
 ## Switch organisation
 
-At the top of the sidebar, the switcher shows your organisation's name with **Organisation** beneath it, or **Personal** with **Medbot**.
+At the top of the sidebar, the switcher shows your organisation's name with **Organisation** beneath it (**Demo organisation** for a demo one), or **Personal** with **Medbot**.
 
 1. Select the switcher. A menu headed **Organisations** opens.
 2. Choose **Personal** or one of your organisations.
@@ -35,12 +35,35 @@ The menu also has **Create organisation** and **Join with code**. If you are not
 
 ## Create an organisation
 
-1. In the switcher, select **Create organisation**.
+1. In the switcher, select **Create organisation** (or open **Organisations** and select **Create organisation** at the top).
 2. On **Create an organisation**, enter the **Organisation name** and **Country**.
-3. Enter the organisation's **Medplum client ID** and **Medplum client secret**, and the **Medplum base URL** if it is not the default. Medbot checks them by signing in before anything is created.
+3. Under **Medplum server**, choose where the organisation's clinical records live:
+   - **Hosted by Medbot**: "Medbot makes a Medplum project for this organisation now. Nothing else to enter." This is the default on Medbot's production service.
+   - **My own Medplum project**: enter the **Medplum client ID** and **Medplum client secret**, and the **Medplum base URL** if it is not the default. Medbot checks them by signing in before anything is created.
+
+   On a deployment that does not host Medplum projects, only the credential fields are shown.
 4. Select **Create organisation**. When it succeeds, you are switched into the new organisation.
 
+Each person may create one organisation (a demo organisation does not count). Past that, the form shows the server's reason and creates nothing. The same form, with a Singapore integrations step, is in [Medbot CMS](/cms/create-organisation); either app can create an organisation the other then uses.
+
 If your clinic is already listed in Medbot's directory, claim it instead: see [Claim an organisation](/docs/getting-started/claim-an-organisation).
+
+## The Organisations page
+
+**Organisations** (`/organisations`) lists **Your memberships**, each with your role and a **Demo** chip on a demo organisation, **Your claims** if you have any, and **Join with a code**. At the top are **Claim an existing organisation** and **Create organisation**.
+
+Between them sits a dashed **Demo organisation** card, "Your own organisation for showing Medbot to clinics, with synthetic data only." Select **Create demo organisation** to make yours in one click, or **Open demo organisation** once it exists. The card appears only where Medbot can make a hosted Medplum project for it. See [Demo Services](/docs/services/demo-services).
+
+## AI policy (admins)
+
+An organisation admin's sidebar has one more item, **AI policy** (`/organisation/ai-policy`): "which AI providers and regions this organisation's agents, assistants and drafting tools may use." Under **Providers and regions**:
+
+- A switch turns the policy on or off. Off, "AI calls follow the platform defaults, as before." On, "AI calls made for this organisation use only the providers and regions below."
+- Tick the **Allowed providers** and type the **Allowed regions** (cloud region codes such as `ap-southeast-1`, separated by commas).
+- Choose a **Default model**. **Models in the catalogue** shows every model the platform offers and whether the policy would allow it, with "Provider not allowed" or "Region not allowed" against the rest.
+- Select **Save policy**. "Saved." confirms it.
+
+Non-admins who open the page see "Only organisation admins can see or change the AI policy."
 
 ## Roles and "Act as"
 

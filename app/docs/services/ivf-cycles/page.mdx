@@ -1,0 +1,19 @@
+# IVF Cycles (Preview)
+
+> **Preview.** IVF cycle tracking is turned on per service by Medbot and is off for every service unless Medbot has enabled it. Its clinical content, including doses, thresholds and red-flag wording, is still under clinician review. The **IVF and assisted reproduction** [demo service](/docs/services/demo-services) shows it with the fourteen-cycle Orchard demo set.
+
+A service with IVF cycles turned on tracks each patient's treatment cycle from a protocol, from cycle day 1 through monitoring scans to the end of the cycle.
+
+## For the care team
+
+- **Start a cycle.** On a patient's page in the service, the **Start a cycle** card asks for the **Protocol**, the **Responsible doctor** and, if known, **Cycle day 1**. Doctors, nurses and admins can start one. The responsible doctor defaults to the protocol's owner, else the signed-in doctor, else the only active doctor.
+- **Cycles on the Workstation.** A **Cycles** tab joins the [Workstation](/docs/services/workstation) views. It has three views: **Board** shows the running cycles and what needs attention, **Tomorrow** shows who is due tomorrow, and **Weekly review** is a review pack you can print.
+- **Protocols.** The service's protocol library lists each protocol with its prerequisites, activities, adopted parameters and rules, and its **Versions**. A doctor can teach a protocol's values by voice. Every value Medbot fills in by default must be confirmed.
+- **Plans and proposals.** Medbot reads the clinical notes and proposes plan changes for a doctor to approve. Approving a plan drafts the medication orders, which the doctor signs in one step. Messages telling the patient what changed follow the service's [message approval policy](/docs/services/patient-agent#message-approval-policy).
+- **Scans and history.** Ultrasound measurements and prior history from other centres are filed in Medbot CMS. See [Ultrasound photos](/cms/clinical-photos#ultrasound-photos) and [Prior history](/cms/diagnostic-results#prior-history-from-outside-records).
+- **Partners.** A cycle can be linked to the patient's partner, whose evidence counts on the readiness checklist.
+- **Cycle summary.** A PDF summary of the cycle can be produced at the end.
+
+## For the patient
+
+The patient portal gains **My cycle** (`/cycle`), with **Your cycle**, **Your visits** and **Your diary**. It asks "Has your period started?" to record cycle day 1, lists tonight's doses to confirm, and shows ultrasound images a nurse or doctor has released. The diary adds a tummy measurement to the daily weight on the [Health Log](/patient/health-log). The service's assistant can answer from the patient's plan. Red-flag screening runs on chat, Ask Medbot, the diary and SMS.
