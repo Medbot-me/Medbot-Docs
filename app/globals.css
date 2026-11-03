@@ -1,5 +1,205 @@
 @import 'tailwindcss';
- 
+
 @import 'nextra-theme-docs/style.css';
- 
-@variant dark (&:where(.dark *));
+
+/* Nextra sets `.dark` on <html>, as the Medbot apps do. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Medbot design tokens, kept in step with the main repository's
+ * `packages/ui/src/styles/globals.css` so the docs read as part of the same
+ * product: near-white grounds, one amber accent, the muted teal, Outfit and
+ * a 12px radius.
+ */
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.2101 0.0318 264.6645);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2101 0.0318 264.6645);
+  --primary: oklch(0.6716 0.1368 48.513);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.536 0.0398 196.028);
+  --secondary-foreground: oklch(1 0 0);
+  --muted: oklch(0.967 0.0029 264.5419);
+  --muted-foreground: oklch(0.551 0.0234 264.3637);
+  --accent: oklch(0.9491 0 0);
+  --accent-foreground: oklch(0.2101 0.0318 264.6645);
+  --destructive: oklch(0.53 0.2 27);
+  --border: oklch(0.9276 0.0058 264.5313);
+  --input: oklch(0.9276 0.0058 264.5313);
+  --ring: oklch(0.6716 0.1368 48.513);
+  --chart-3: oklch(0.8721 0.0864 68.5474);
+  /* Amber for small text and icons: `primary` is 3.1:1 on white. */
+  --amber-text: oklch(0.52 0.12 48.5);
+  --radius: 0.75rem;
+  --shadow-xs: 0px 1px 4px 0px hsl(0 0% 0% / 0.03);
+  --shadow-sm:
+    0px 1px 4px 0px hsl(0 0% 0% / 0.05), 0px 1px 2px -1px hsl(0 0% 0% / 0.05);
+  --shadow-lg:
+    0px 1px 4px 0px hsl(0 0% 0% / 0.05), 0px 4px 6px -1px hsl(0 0% 0% / 0.05);
+}
+
+.dark {
+  --background: oklch(0.1797 0.0043 308.1928);
+  --foreground: oklch(0.8109 0 0);
+  --card: oklch(0.1822 0 0);
+  --card-foreground: oklch(0.8109 0 0);
+  --primary: oklch(0.7214 0.1337 49.9802);
+  --primary-foreground: oklch(0.1797 0.0043 308.1928);
+  --secondary: oklch(0.594 0.0443 196.0233);
+  --secondary-foreground: oklch(0.1797 0.0043 308.1928);
+  --muted: oklch(0.252 0 0);
+  --muted-foreground: oklch(0.6268 0 0);
+  --accent: oklch(0.3211 0 0);
+  --accent-foreground: oklch(0.8109 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(0.252 0 0);
+  --input: oklch(0.252 0 0);
+  --ring: oklch(0.7214 0.1337 49.9802);
+  --amber-text: oklch(0.7214 0.1337 49.9802);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-3: var(--chart-3);
+  --color-amber-text: var(--amber-text);
+
+  --font-sans: var(--font-outfit), ui-sans-serif, sans-serif, system-ui;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) * 1.8);
+
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-lg: var(--shadow-lg);
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border);
+  }
+}
+
+/*
+ * Nextra's theme, re-pointed at the Medbot tokens. Nextra keeps its own
+ * `--x-*` variables inside cascade layers, so these unlayered values win.
+ * Its gray scale is already Tailwind's gray, which is the scale Medbot's
+ * neutrals come from, so only type, corners and a few surfaces change here;
+ * the amber primary and the page grounds are set through `<Head>` in
+ * `app/layout.tsx`.
+ */
+:root {
+  --x-font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --x-font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+  --x-default-font-family: var(--x-font-sans);
+  --x-default-mono-font-family: var(--x-font-mono);
+  --x-radius-sm: calc(var(--radius) - 4px);
+  --x-radius-md: calc(var(--radius) - 2px);
+  --x-radius-lg: var(--radius);
+  --x-radius-xl: calc(var(--radius) + 4px);
+  --x-tracking-tight: -0.025em;
+}
+
+html {
+  font-family: var(--x-font-sans);
+  letter-spacing: 0;
+}
+
+/* Header: the frosted bar of the Medbot public pages, with its links as
+ * pills and the current one held in `muted`. */
+.nextra-navbar-blur {
+  background-color: color-mix(in oklch, var(--background) 85%, transparent);
+  border-color: var(--border);
+}
+
+.nextra-navbar nav a[aria-current],
+.nextra-navbar nav > div > a,
+.nextra-navbar nav > div > button {
+  display: inline-flex;
+  align-items: center;
+  height: 2.25rem;
+  padding-inline: 0.75rem;
+  border-radius: calc(var(--radius) - 2px);
+  font-weight: 500;
+}
+
+.nextra-navbar nav > div {
+  gap: 0.125rem;
+}
+
+.nextra-navbar nav > div > a:hover,
+.nextra-navbar nav > div > button:hover {
+  background-color: var(--muted);
+  color: var(--foreground);
+}
+
+.nextra-navbar nav a[aria-current] {
+  background-color: var(--muted);
+  color: var(--foreground);
+}
+
+/* Search field: a filled `muted` control, as in the Medbot apps. */
+.nextra-navbar input[type='search'] {
+  background-color: var(--muted);
+  border-radius: calc(var(--radius) - 2px);
+}
+
+/* Content headings: semibold Outfit with tight tracking, as on medbot.me. */
+.nextra-body-typesetting-article h1,
+main h1 {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+main h2,
+main h3 {
+  font-weight: 600;
+}
+
+/* Code and tables pick up the Medbot corners and hairlines. */
+main :not(pre) > code {
+  border-radius: calc(var(--radius) - 6px);
+}
+
+main pre {
+  border-radius: var(--radius);
+}
+
+main table th {
+  background-color: var(--muted);
+  font-weight: 500;
+  text-align: start;
+}
+
+/* Footer: Nextra lays its children out as a flex row; the Medbot footer is
+ * its own grid. */
+.medbot-footer {
+  display: block;
+  padding-block: 0;
+  color: inherit;
+}
+
+::selection {
+  background-color: color-mix(in oklch, var(--primary) 25%, transparent);
+}
