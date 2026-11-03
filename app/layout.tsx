@@ -1,22 +1,39 @@
 import React from 'react'
 import type { Metadata } from 'next'
+import { JetBrains_Mono, Outfit } from 'next/font/google'
 import { Footer, Layout, Navbar } from 'nextra-theme-docs'
-import { Banner, Head } from 'nextra/components'
+import { Head } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
-import 'nextra-theme-docs/style.css'
-import './globals.css';
+import { MedbotLogo } from '@/components/MedbotMark'
+import { SiteFooter } from '@/components/SiteFooter'
+import './globals.css'
+
+/* The Medbot interface faces (`--font-sans` and `--font-mono` in the main
+ * repository's design tokens). */
+const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' })
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains-mono'
+})
 
 export const metadata: Metadata = {
-  title: 'Docs',
-  description: 'Project documentation'
+  title: {
+    default: 'Medbot Docs',
+    template: '%s | Medbot Docs'
+  },
+  description:
+    'Guides for Medbot AI, Medbot Health and Medbot CMS: the clinical workspace, the patient app and the clinic management system.',
+  icons: { icon: '/medbot-mark.svg' }
 }
 
-const navbar: React.ReactNode = (
-  <Navbar
-    logo={<b>Medbot Docs</b>}
-  />
+const navbar: React.ReactNode = <Navbar logo={<MedbotLogo />} />
+
+const footer: React.ReactNode = (
+  <Footer className="medbot-footer">
+    <SiteFooter />
+  </Footer>
 )
-const footer: React.ReactNode = <Footer>{new Date().getFullYear()} © Medbot.</Footer>
+
 export default async function RootLayout({
   children
 }: {
@@ -26,18 +43,23 @@ export default async function RootLayout({
 
   return (
     <html
-      // Not required, but good for SEO
       lang="en"
-      // Required to be set
       dir="ltr"
+      className={`${outfit.variable} ${jetbrainsMono.variable}`}
       // Suggested by `next-themes` package https://github.com/pacocoursey/next-themes#with-app
       suppressHydrationWarning
     >
       <Head
-        // ... Your additional head options
-      >
-        {/* Your additional tags should be passed as `children` of `<Head>` element */}
-      </Head>
+        // Medbot's amber `primary` (#d87943 light, #e78a53 dark), held
+        // darker in the light theme so links and active items pass AA.
+        color={{
+          hue: 22,
+          saturation: { light: 66, dark: 76 },
+          lightness: { light: 40, dark: 62 }
+        }}
+        // Medbot's `background`: white, and oklch(0.1797 0.0043 308) dark.
+        backgroundColor={{ light: '#ffffff', dark: '#121113' }}
+      />
       <body>
         <Layout
           navbar={navbar}
@@ -45,7 +67,6 @@ export default async function RootLayout({
           docsRepositoryBase="https://github.com/Medbot-me/Medbot-Docs/tree/main"
           footer={footer}
           sidebar={{ autoCollapse: false }}
-          // ... Your additional layout options
         >
           {children}
         </Layout>
