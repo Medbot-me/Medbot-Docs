@@ -22,7 +22,9 @@ An admin sets how far an agent may go on the **SmartCMS** settings page, in the 
 | **Prepare only: a person submits** | Agents prepare claims and reports. They wait in the **Claims** queue as **Waiting for review** until a person submits them. |
 | **Auto-submit routine claims** | Agents may also submit what they prepare. |
 
-**Auto-submit** is offered only once a location is approved for production for CHAS, Medisave or Screen for Life claims. Even then, an agent may submit only CHAS and Medisave claims, NIR notifications and migrant worker reports, and never a claim held with problems.
+**Auto-submit** is offered only once a location is approved for production for CHAS, Medisave or Screen for Life claims, and Medbot refuses to save it otherwise. Even then, an agent may submit only CHAS and Medisave claims, NIR notifications and migrant worker reports, and never a claim held with problems.
+
+Auto-submit is also checked each time an agent acts, not only when the policy is saved. A claim is submitted automatically only where **its own module** is in production at **that** location. Anywhere else the policy acts as **Prepare only**, and the claim waits for a person. So a location still in UAT never auto-submits because another location, or another module, of the same organisation is in production, and a saved **Auto-submit** stops acting if its location leaves production. NIR notifications and migrant worker reports are not claims, so this check does not hold them back.
 
 Each clinic location can override the organisation's policy with **Agent policy at this location**. The default is **Same as the organisation**. See [SmartCMS Settings](/cms/smartcms/settings).
 

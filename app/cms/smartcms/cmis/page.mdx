@@ -1,0 +1,131 @@
+# Allergies & Medical Alerts (CMIS)
+
+**CMIS** is MOH's national record of drug allergies, adverse drug reactions and medical alerts, shared by every clinic in Singapore. With the **Medical alerts and allergies** (`CMIS`) module, a Singapore clinic can:
+
+- **look a patient up** in CMIS, to see the medical alerts and drug reactions other clinics have reported;
+- **report a drug allergy** recorded on the chart to CMIS as an adverse drug reaction (ADR) report;
+- **record a medical alert**, such as a condition other clinics should know about, and **close** it when it no longer applies.
+
+Everything happens on the patient's chart, in the **National allergy and alert record (CMIS)** card. The [Reports](/cms/smartcms/reports) page also lists every report the clinic has made, so an admin or doctor can follow up what CMIS refused or did not confirm.
+
+> **Before go-live.** As with every SmartCMS service, nothing is sent from a clinic location until Synapxe approves it for CMIS and an admin switches it on in [SmartCMS Settings](/cms/smartcms/settings). CMIS's drug list has not been supplied by Synapxe yet, so drug allergies cannot be reported until it is. Medical alerts and the lookup do not need it.
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| See the CMIS card and select **Check CMIS** | Yes | No | Yes | Yes |
+| See **Allergy and alert reports (CMIS)** on **Reports** | Yes | No | Yes | No |
+| Report a drug allergy, correct and send a report again, check an unconfirmed report, or discard a draft | No | No | Yes | No |
+| Record or close a medical alert | No | No | Yes | No |
+
+Reports and alerts go to CMIS under the doctor's own name and **MCR number**, so only a doctor with an MCR number recorded on their practitioner profile can make them (see [Singapore Registration](/cms/smartcms/registration#practitioners)). A doctor without one, or a platform superuser, is refused. No agent ever reports to CMIS.
+
+## The CMIS card
+
+The card sits under the [Allergies card](/cms/allergies-and-medication-safety#the-allergies-card) on the chart **Overview** (`/patients/[id]#cmis`), for an organisation subscribed to CMIS. It reads: "What MOH’s CMIS holds for this patient, and what this clinic has reported to it." It has three parts.
+
+### In CMIS: looking the patient up
+
+Select **Check CMIS** to ask CMIS for the patient's records. The answer is shown in two lists:
+
+- **Medical alerts in CMIS**, or "CMIS has no medical alerts for this patient."
+- **Drug allergies and reactions in CMIS**, or "CMIS has no drug allergies or reactions for this patient."
+
+Medbot keeps the last answer for each patient, so the card opens on it next time, with the time it was checked. Before the first check the card says "Not checked yet."
+
+If CMIS cannot be asked, the card says why, for example:
+
+| Notice | What it means |
+| --- | --- |
+| **This patient cannot be looked up in CMIS** | The patient has no NRIC or FIN Medbot can send. |
+| **This clinic has no HE code for CMIS** / **This clinic is not set up for CMIS** | An admin records the location's HE code and switches CMIS on in [SmartCMS Settings](/cms/smartcms/settings). |
+| **SmartCMS is switched off** | Nothing is sent from this Medbot server. |
+| **CMIS did not answer** / **CMIS could not be reached** | Select **Try again**. |
+
+A failed check is not an empty record: "This does not mean the patient has no alerts or reactions in CMIS."
+
+### Drug allergies reported from Medbot
+
+This list shows each current drug allergy on the chart and whether it has been reported to CMIS. Non-drug allergies are not listed. Each allergy offers the next step:
+
+| Button | When |
+| --- | --- |
+| **Report to CMIS** | The allergy has not been reported (**Not reported**). |
+| **Continue report** | A draft is saved but not sent. |
+| **Correct and send again** | CMIS refused the report. |
+| **Report again** | CMIS never received the report. |
+
+An allergy whose drug has no CMIS drug code shows **Cannot be reported**, with the reason, for example "… is not in CMIS’s drug list as Medbot holds it, so it cannot be reported from Medbot. Report it in CMIS directly." Nothing is sent.
+
+Once CMIS holds a report, the row shows the CMIS reference. A correction or inactivation of a report CMIS already holds is made in CMIS directly for now.
+
+### Medical alerts recorded here
+
+The medical alerts the clinic has recorded in Medbot, each with its start date, its remarks and the state of its last report. Doctors see **Add alert** and, on an active alert, **Close alert**.
+
+## Reporting a drug allergy
+
+1. Record the allergy on the [Allergies card](/cms/allergies-and-medication-safety#adding-an-allergy) first, against the drug's ingredient.
+2. In the CMIS card, select **Report to CMIS** on the allergy. The dialog **Report to CMIS: [drug]** explains: "An adverse drug reaction report to MOH’s CMIS, under your name and MCR number. Medbot fills in the patient, the drug and you as the reporter; you give the clinical judgements."
+3. Fill in the sections:
+   - **Drug**: the suspected drug (filled in), with its **Route**, **Dose and frequency**, **Started**, **Stopped**, **Indication** and **Batch number** where known.
+   - **How likely the drug caused it**.
+   - **Reaction**: what happened, when it began, and the **Outcome of the reaction**.
+   - **Allergy and advice**.
+   - **Source**, with any **Additional information**.
+   - **Reporter**: you, filled in.
+4. Select **Save draft** to keep it in Medbot without sending, or **Confirm and send**. You are asked "Send this report to CMIS?" before it goes.
+
+If anything CMIS needs is missing, the report is saved but not sent: "Saved, not sent: CMIS would refuse the report as it stands. Fix what is listed." The allergy row says how many answers are still needed. Select **Discard draft** to drop a draft, giving a reason; nothing is sent.
+
+Where the clinic's Medbot server allows it, a drug with no CMIS drug code can be reported **by name**: tick "Report [drug] to CMIS by name, without a CMIS drug code. HSA then codes it by hand." This is off unless the server allows it, and the doctor must choose it each time.
+
+## Recording and closing a medical alert
+
+**Add a medical alert.** Select **Add alert**. The dialog says: "The alert is recorded in Medbot and sent to MOH’s CMIS at once, under your name and MCR number."
+
+1. Choose the **Alert** from CMIS's list. An alert already active on the chart, or one whose close must be sent again first, cannot be chosen. Public health alerts (travel history, quarantine, COVID-19) are set by MOH's systems, not by a clinic.
+2. Enter **Since**, the date it began.
+3. Add **Remarks** if needed.
+4. Select **Record and send to CMIS**.
+
+If the last CMIS lookup already lists the alert as active, reported by another clinic, the dialog says so. CMIS keeps one record per patient and alert, shared by every clinic, so your report is added to that national alert.
+
+**Close an alert.** Select **Close alert**, enter **Ended** (a date after the start date) and a **Reason**, then **Close and send to CMIS**. Closing makes the national CMIS alert inactive for every clinic, including any that reported it first. CMIS keeps the alert's history and has no delete. An alert recorded as starting today can be closed from tomorrow. An alert CMIS never held is simply marked no longer active, and nothing is sent.
+
+Until CMIS accepts the close, the alert shows **Still active in CMIS**, with what went wrong: CMIS did not receive the close, refused it, or it was not sent. Select **Send the close again** after checking the end date and reason. A close is never sent again on its own.
+
+## Report statuses
+
+| Status | Meaning |
+| --- | --- |
+| **Draft, not sent** | Saved in Medbot. |
+| **Queued to send** / **Sending** / **Sending (retrying)** | On its way to CMIS. |
+| **Waiting for SmartCMS to recover** | The gateway is down. It is sent by itself when it answers again. See [Gateway Outages & Deadlines](/cms/smartcms/outages). |
+| **Sent** | The gateway received it. |
+| **In CMIS** | CMIS holds the report. |
+| **Refused by CMIS** | CMIS refused it, with its reason. Correct it and send it again: the correction becomes a new report that replaces the refused one. A report CMIS never received reads **Not received by CMIS**. |
+| **Not confirmed** | The answer was lost, so Medbot does not know whether CMIS holds it. See below. |
+| **Discarded** / **Replaced** | Withdrawn, or replaced by a corrected report. |
+
+### When a report is not confirmed
+
+A report whose answer was lost is never sent again on its own, because CMIS counts every report it receives. Select **Check with CMIS**:
+
+- If CMIS holds it: "Found in CMIS: the report is held there." It is marked **In CMIS**.
+- If CMIS does not hold it, select **Send again**. If CMIS turns out to hold it after all: "CMIS already held the report: nothing was sent again."
+- If a check cannot settle it, ask Synapxe and select **Record Synapxe’s answer**: what Synapxe confirmed, their reference, and who confirmed it and how.
+
+Double clicks and two open tabs are safe: Medbot decides each report, alert and close one at a time per patient, so the same report is never sent twice.
+
+## Following reports up
+
+**SmartCMS → Reports** has an **Allergy and alert reports (CMIS)** section for Clinic Admins and doctors: "Drug allergy and medical alert reports to MOH’s CMIS. A doctor reports from the patient’s chart and follows up what CMIS refused or did not confirm there." Each row shows the report (**Drug allergy:** and the drug, or the alert's name followed by **alert added** or **alert closed**), the patient, the status, what is still to do, and when it was last updated. Selecting a row opens the patient's chart at the CMIS card. If there are none: "No CMIS reports yet."
+
+## Related
+
+- [Allergies & Medication Safety](/cms/allergies-and-medication-safety): recording the allergies that are reported here.
+- [Reports](/cms/smartcms/reports): the other national registry reports.
+- [SmartCMS Messages](/cms/smartcms/messages): the messages sent to CMIS (Clinic Admins only).
+- [Singapore Registration](/cms/smartcms/registration): practitioner MCR numbers.

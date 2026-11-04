@@ -27,7 +27,7 @@ const balance = serviceBySn(1); // chasAnnualBalanceEnquiry
 
 > **Do not correct the spelling.** Names and routes are copied exactly, misspellings included (`submisssion/hsg/iquitjourney`, `putReconcillationFile`, `getPaginatedReferralByInstituion`). The gateway routes on these strings, and a test compares the list against a transcription of the specification.
 
-A service can only be called when its group belongs to a module the organisation subscribes to and the location is entitled to it (see [Gateway](/cms/smartcms/gateway#entitlements)). Groups with no module (CHAS_DENTAL, ALPS, PSS, LEGACY) cannot be called at all. The planned modules, CMIS and HSG_BUNDLE, can be subscribed to, but Medbot has no code that calls their services yet. S/N 7, the clinic accreditation status query, is what a location's connection test calls.
+A service can only be called when its group belongs to a module the organisation subscribes to and the location is entitled to it (see [Gateway](/cms/smartcms/gateway#entitlements)). Groups with no module (CHAS_DENTAL, ALPS, PSS, LEGACY) cannot be called at all. The planned module, HSG_BUNDLE, can be subscribed to, but Medbot has no code that calls its services yet. S/N 7, the clinic accreditation status query, is what a location's connection test calls.
 
 Each group below says what Medbot does with it today. Everything has been tested against the mock gateway only; nothing has been sent to Synapxe UAT yet.
 
@@ -106,9 +106,9 @@ In Medbot: S/N 24 notifies NIR of each vaccination given with an SDD product cod
 
 ### CMIS: Medical alerts and allergies
 
-Module: `CMIS` (planned)
+Module: `CMIS`
 
-In Medbot: not used yet.
+In Medbot: all four are used. S/N 20 reports a drug allergy as an ADR report, S/N 21 adds or closes a medical alert, and S/N 22 and 23 look the patient's ADRs and medical alerts up for the chart's CMIS card, and check whether CMIS holds a report whose answer was lost. Only a doctor with an MCR number reports; agents never do. See [Allergies & Medical Alerts (CMIS)](/cms/smartcms/cmis).
 
 | S/N | Service type | Route | Format | Kind | Phase |
 | --- | --- | --- | --- | --- | --- |

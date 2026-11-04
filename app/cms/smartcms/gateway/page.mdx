@@ -49,6 +49,9 @@ SmartCMS is **off** unless `SMARTCMS_ENABLED=true`. When it is on, every variabl
 | `SMARTCMS_CDMP_SENDER_MAILBOX` | No | The UCFMSG sender mailbox SCG issues for CDMP. Without it Medisave claims wait in `prepared`. |
 | `SMARTCMS_DEROM_SERVICE_INTERFACE_ID` | No | DROM's `ServiceInterfaceID`, once Synapxe issues one. |
 | `SMARTCMS_OAUTH_REDIRECT_ORIGINS` | No | Origins an MCP connector may redirect to. Default `https://claude.ai` and `https://claude.com`, plus loopback. |
+| `SMARTCMS_CLICK_ONLY` | No | `true` sends only what a person clicks (see [UAT click-only mode](#uat-click-only-mode)). UAT only: refused with `SMARTCMS_ENV=prod`. |
+| `SMARTCMS_ALLOW_OTHER_HE_ENQUIRY` | No | `true` lets an admin's accreditation enquiry name another clinic's HE code, once Synapxe agrees (G Q56). Off by default; only a loopback host (the mock) is exempt. |
+| `SMARTCMS_CMIS_ALLOW_OTHER_DRUG_NAME` | No | `true` lets a doctor report an ADR by drug name (`OtherDrugName`) when the drug has no CMIS code. Off by default. |
 
 Start-up also fails when:
 
@@ -131,7 +134,7 @@ The rest of the API calls SmartCMS only through `SmartcmsGatewayService.call(...
 5. Sends one attempt through `SmartcmsGatewayClient`.
 6. Writes the **response** (or timeout, or transport error) to the evidence log. A failure here is logged, and the result is still returned.
 
-Services whose group has no module (CHAS_DENTAL, ALPS, PSS, LEGACY) cannot pass step 2. The planned modules (CMIS, HSG_BUNDLE) can be subscribed to, but no code calls their services yet. S/N 25 has no route, so the client refuses it.
+Services whose group has no module (CHAS_DENTAL, ALPS, PSS, LEGACY) cannot pass step 2. The planned module (HSG_BUNDLE) can be subscribed to, but no code calls its services yet. S/N 25 has no route, so the client refuses it.
 
 ### Outcomes, not exceptions
 
@@ -155,8 +158,8 @@ Every submission goes through `smartcms_submissions`. `SmartcmsSubmissionService
 
 - **One live row per business key**, for example `chas:{encounterId}:ACT`, `nir:{immunizationId}` or `derom:{encounterId}:{disease}`. A replayed event or a second prepare finds the existing row. This is Medbot's layer of double-claim prevention.
 - **States:** `prepared`, `pending`, `dispatching`, `acknowledged`, `completed`, `failed_retryable`, `failed_terminal`, `outcome_unknown`, `cancelled` and `superseded`.
-- **Resubmission.** A claim MHCP rejected is never sent again from its own row. `POST /smartcms/claims/:id/resubmit` (admin only, `SMARTCMS_RESUBMIT_ROLES`; never an agent or job) prepares the claim again from the visit's current bill as a new row under `{key}@{n}`, and moves the rejected row from `completed` to `superseded`, keeping its adjudication. Agents and jobs keep finding the rejected row under the unsuffixed key, so they never prepare the visit's claim again. A resubmission and an appeal of one rejection exclude each other, and both take a per-claim decision lock. A voided bill's claims are released attempt by attempt (`{key}@2`, `@3`, …); a `superseded` row is left alone.
-- **Who may promote.** A person's Submit, or an agent under `auto_submit` for CHAS, CDMP, NIR and MW Health, moves `prepared` to `pending`. **DEROM and CIDC rows are only ever promoted from their report form, by a doctor.** A row whose draft lists issues is refused with `draft_incomplete`.
+- **Resubmission.** A claim MHCP rejected, or a CHAS claim that ended `failed_terminal` because MSB or the gateway refused it before MHCP took it, is never sent again from its own row. An `outcome_unknown` claim cannot be resubmitted, and one MHCP refused as a duplicate (`RC001`, blocker `duplicate_at_mhcp`) answers 409 with the existing claim number. `POST /smartcms/claims/:id/resubmit` (admin only, `SMARTCMS_RESUBMIT_ROLES`; never an agent or job) prepares the claim again from the visit's current bill as a new row under `{key}@{n}`, and moves the rejected row from `completed` to `superseded`, keeping its adjudication. Agents and jobs keep finding the rejected row under the unsuffixed key, so they never prepare the visit's claim again. A resubmission and an appeal of one rejection exclude each other, and both take a per-claim decision lock. A voided bill's claims are released attempt by attempt (`{key}@2`, `@3`, …); a `superseded` row is left alone.
+- **Who may promote.** A person's Submit, or an agent under `auto_submit` for CHAS, CDMP, NIR and MW Health, moves `prepared` to `pending`. `auto_submit` is judged where the agent acts, not only where it is saved: a claim row acts under `auto_submit` only when `claimsInProduction` holds for its own module at its own location, else as `prepare_only` (in the outbox, the agent's claim tools and the module listing). Writing `auto_submit` while no claim module at the location is in production answers 422 `smartcms_auto_submit_not_in_production`. **DEROM and CIDC rows are only ever promoted from their report form, by a doctor.** A row whose draft lists issues is refused with `draft_incomplete`.
 - **Entitlement is not checked on write.** A row may exist while its location is `off`; dispatch checks again.
 
 Becoming `pending` emits `smartcms/submission.pending`, which starts the `smartcms-dispatch` function.
@@ -204,9 +207,22 @@ The CMS announces writes it makes straight to Medplum through `POST /domain-even
 - `x-api-key` and `Authorization` headers are **never stored**.
 - Plaintext columns support lookup and audit: service type, route, environment, envelope variant, `msg_id`, sequence, `msg_date_time`, JWT `jti` and key id, attempt, HTTP status, SCG status, business status code, outcome (`success`, `business_rejection`, `gateway_error`, `transport_error`, `timeout`), latency, the acting member, and `patient_ref` as a `Patient/<id>` reference, **never an NRIC**.
 
+Each row also keeps CAG's `x-amzn-requestid` and `x-amz-apigw-id` and the business code of an enquiry's answer (`SC05-002`, `WN012`, `ERROR3`, …), recorded through `SmartcmsGatewayService.recordBusinessAnswer`.
+
+**Message log.** Staff read the log at `/smartcms/messages` ([SmartCMS Messages](/cms/smartcms/messages)). The opened view and the SIT export are built by one reader (`message-view`) and redact the same way: the JWT is shown as its decoded header and claims only, never its signature. List and open are filtered by service (`message-log-access.ts`): Medisave S/N 13 to 15 need `SMARTCMS_MEDISAVE_ROLES`, claims `SMARTCMS_CLAIMS_VIEW_ROLES`, registries their own view roles, and S/N 7, CMIS, HSG_BUNDLE and unknown service types `admin`. A message a role may not see is a 404 and is not audited as an access. NRICs are masked for everyone but `admin`. Listing and opening are both written to `audit_events`.
+
 **SIT evidence export.** An admin can export one message (`GET /smartcms/evidence/:msgId`) or every message of a SIT tag as one text file per `msgID`, with the full request (headers without secrets) and response. SIT runs open a window at one location and only on a deployment configured for `uat`. Every export decrypts PHI, so it is written to `audit_events` first; a failed audit write fails the export. See [SmartCMS Settings](/cms/smartcms/settings#sit-evidence).
 
 How long the log must be kept is still open.
+
+## UAT click-only mode
+
+For Medbot's simulated clinic against Synapxe UAT (UAT-32), two guards sit in `SmartcmsGatewayService`, ahead of allocating, signing or logging anything:
+
+- **Click only** (`SMARTCMS_CLICK_ONLY=true`). Only a click is sent: a staff member's request to a route marked `@SmartcmsClick()` (enumerated in `send-paths.spec.ts`), or the one dispatch of a submission such a click queued (`clickedBy` on `smartcms/submission.pending`). Every SmartCMS schedule returns `CLICK_ONLY_SKIPPED`, the outage probe never probes, `smartcms-dispatch` sends a clicked row once without sleeping for a retry, and a domain-event send (check-in's S/N 1) is refused. The claims queue offers **Send again** in place of the retry and hides **Submit all prepared**.
+- **Test identifier allowlist.** When click-only is on, or the base URL is `cag-uat.synapxe.sg`, a request carrying an NRIC/FIN-shaped value, or any value in a known identifier field, other than Synapxe's test patient `S1234567D` is refused with a 403 staff can read (`SmartcmsSendRefusedError`). It is checked on the payload before a sequence number is taken, and again on the encoded body before signing.
+
+`GET /smartcms/gateway` (simulated clinic only, outside the roles guard by design) reports which gateway the running process talks to. The CMS strip, the SmartCMS settings header and `sim:status` read it.
 
 ## Entitlements
 
