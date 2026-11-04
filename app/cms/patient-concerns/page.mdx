@@ -1,0 +1,112 @@
+# Patient Concerns & Shared Chats
+
+Patients use **Ask Medbot** in Medbot Health with or without a clinic. What reaches your clinic from those chats is decided by the patient, clinic by clinic, on **Sharing with your clinics**. This page covers what doctors and nurses see in the CMS, and the answers they approve for Ask Medbot to quote. For the patient's side, see [Ask Medbot](/patient/ask-medbot) and [Sharing with Your Clinics](/patient/clinic-sharing).
+
+Nobody monitors patients' chats in real time, and patients are told so. None of this replaces your usual routes for urgent care.
+
+## Key ideas
+
+| Idea | What it means |
+| --- | --- |
+| **Red flag** | A message Medbot's emergency screen caught. The patient gets fixed emergency advice, and every linked clinic is alerted. The patient cannot turn this off. |
+| **Concern** | Something worth a clinician's review that is not an emergency. By default it is forwarded to the doctors and nurses of each linked clinic, unless the patient turned that off for your clinic. |
+| **Shared chats** | What the patient chose to let your clinic read of their chats: nothing, summaries and topics, chats from now on, or chats including past ones. Nothing by default. |
+| **Scanned result** | A lab report the patient scanned and checked themselves, shared with your clinic report by report. Never a verified result. |
+| **Approved answer** | An answer a doctor or nurse approved for Ask Medbot to quote word for word. |
+| **Answer report** | A patient's report that an Ask Medbot answer was wrong, unsafe or confusing. |
+
+## Who can do what
+
+| | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| **Patient concerns** inbox | No | No | Yes | Yes |
+| **Shared by patient** tab on a chart | No | No | Yes | Yes |
+| **Answer reports** | No | No | Yes | Yes |
+| **Approved answers**: see and write drafts | Yes | No | Yes | Yes |
+| **Approved answers**: approve and retire | No | No | Yes | Yes |
+| **Patient questions** report and **Common questions** | Yes | No | Yes | Yes |
+
+Concerns, shared chats and answer reports hold the patient's own words, so only doctors and nurses read them, as the patient was told. The API refuses everyone else, including a superuser: "A superuser account cannot open this. Patients share with named staff at their clinic." Every read is recorded in the [audit log](/cms/patient-records#audit-log), naming the patients shown.
+
+## Red flags
+
+A red flag goes to the clinic's inbox as an alert, as before. See [Where portal activity reaches staff](/cms/patient-portal#where-portal-activity-reaches-staff). It is sent to every clinic the patient has linked. If the alert cannot be delivered, the patient is told that nobody was alerted.
+
+## Patient concerns
+
+**Patient concerns** (`/concerns`, under **Patients** in the sidebar) is the doctors' and nurses' inbox for concerns from patients' chats. Doctors and nurses also get an email when one arrives. The email holds nothing of the concern.
+
+A concern does not go to a service's inbox, the task list, the chart notes or the clinic's message threads, which administrators and receptionists read. A clinic with no doctor or nurse is not sent concerns.
+
+Each concern card shows:
+
+- **Patient**, and the status: **New**, **Taken**, **In review**, **Replied**, **Withdrawn** or **Expired**
+- **How it arrived**: **Forwarded by default**, or **Patient chose to share** (with the service, if they sent it to one)
+- **Summary**: a short summary written from the patient's own words, and their name, date of birth and phone number. A concern the patient chose to send also carries their medicines and allergies.
+
+To deal with one:
+
+1. Select **Take this one**, so colleagues see it is yours. You see "You took this one."
+2. Choose an **Outcome**: book an appointment at this clinic, suggest another service, advise the emergency department, or no action needed. To suggest another service, choose it under **Service to suggest**. The patient sees it named and can choose to send their concern there.
+3. Write a **Reply to the patient**.
+4. Select **Send reply**. You see "Reply sent." The patient sees your reply on the concern in Medbot Health.
+
+If the patient withdraws a concern, the card says "The patient withdrew this on" the date, and "Do not contact them about it." Closed concerns are listed under **Closed**.
+
+If the patient raises the same concern again within 7 days, Medbot adds what they said to the concern you already hold, while you have not replied.
+
+## Shared by patient
+
+The **Shared by patient** tab on a patient's chart shows what that patient shared with your clinic:
+
+- **Forwarded concerns**, as in the inbox. With none: "No open concerns for this patient."
+- **Chats**, at the level the patient chose. Each chat shows its summary and topics. Select **Open the chat** to read it, if the patient shared chats and not only summaries. Each message says whether the patient, a caregiver (with their relationship) or **Medbot (AI)** wrote it. When the patient shares no chats with your clinic, the section reads only **Not shared**. A chat the patient kept out does not appear.
+- **Scanned results**, each marked **Scanned result**. Values the patient added or changed are marked **Added by patient** or **Changed by patient, read as** the value first read from the paper. Select **View the original** or **Open the PDF** to see the document.
+
+You only ever see messages from the date the patient's current choice started. If the patient lowers or withdraws their choice, the tab stops showing what it no longer covers.
+
+A summary is written about thirty minutes after a shared chat goes quiet. "Not summarized yet. Open the chat to read it." means none is ready. "No summary could be written for this chat." means the summary failed its checks and none is kept.
+
+## Approved answers
+
+**Approved answers** (`/explanation-library/answers`) are answers Ask Medbot quotes word for word when a patient asks the same question, labelled with who approved them and when.
+
+> A question that adds pregnancy, a child, kidney or liver disease, another medicine or a dose never gets this answer.
+
+### Write and approve an answer
+
+1. Select **New answer**.
+2. Enter the **Question** and the **Answer, as patients will read it**.
+3. Select **Save draft**: "Draft saved. A doctor or nurse approves it before patients see it."
+4. A doctor or nurse opens the draft, sets **Review by** (left empty, a year from today), and selects **Approve**: "Approved. Ask can now serve it."
+
+Approval is tied to the exact text the approver read. To change an approved answer, select **Edit as a new version**. The old version stays in force until the new one is approved. Select **Retire** to stop serving an answer.
+
+Each answer shows its state: **Served to patients**, **Draft, not served**, **Past its review date, not served**, **Retired**, or for a translation, **English changed, not served**.
+
+### Other languages
+
+An answer is only served in a language approved for it, and never translated on the fly. On an approved English answer, choose a language under **Add a language** (Chinese (Simplified), Malay or Tamil) and select **Draft a translation**. Check the draft, then approve it like any other. A translation stops being served when its English changes.
+
+Your clinic's answers are served to your patients first. Medbot's clinical team keeps answers for people with no clinic, marked **Medbot platform**.
+
+## Answer reports
+
+**Answer reports** (`/answer-reports`) lists answers your patients reported. Each shows the reason (**Wrong**, **Could be unsafe**, **Confusing** or **Something else**), how the answer was made (**From the record**, **Approved answer**, **General information** or **Fixed text**), the question and answer, **What the patient added**, and any **Checks that replaced a model answer**. Select **Open the chart** to go to the patient.
+
+Write **What was done** and select **Close report**.
+
+A caregiver's report goes only to Medbot's clinical team, never to a clinic. When the patient deletes the chat, the report's question, answer and notes are deleted too. Only the reason and how the answer was made are kept.
+
+## Patient questions and common questions
+
+These pages count only patients who turned on **Count my chats in** your clinic's **report**.
+
+- **Patient questions** (`/reports/patient-questions`): "What patients who opted in asked Ask Medbot about, by month." Counts by topic, in bands, from a fixed list of topics. A cell under 10 patients, or one almost every patient shares, reads **Hidden**. A month with too few patients is hidden whole. It shows the last closed months, because chats are deleted after 180 days, and a month does not change once first shown.
+- **Common questions** (`/reports/patient-questions/common-questions`): "Questions asked by at least 10 patients who opted in, rewritten so they point at nobody." Select **Write an answer**, write the **Answer, as patients will read it**, and **Save draft**. It then goes to [Approved answers](#approved-answers) for a doctor or nurse to approve. Or select **Dismiss**.
+
+## Related
+
+- [Patient Portal](/cms/patient-portal)
+- [Ask Medbot](/patient/ask-medbot) and [Sharing with Your Clinics](/patient/clinic-sharing), from the patient's side
+- [Scanned Lab Reports](/patient/lab-reports)

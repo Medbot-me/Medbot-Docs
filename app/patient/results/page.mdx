@@ -2,13 +2,13 @@ import { ImageZoom } from "nextra/components";
 
 # Results & Records
 
-The **Results** tab is where you read your test results and the rest of your health record. Records show which clinic they came from.
+The **Results** tab is where you read your test results and the rest of your health record. Records show which clinic they came from. Lab reports you scanned yourself are listed too.
 
 ## Results list
 
 Reports are listed newest first. Use **All**, **Laboratory** or **Imaging** to filter. If the clinic has asked you to do something about a result, it shows above the list.
 
-Each report has a badge: **Normal**, **Abnormal** or **Critical**.
+Each report has a badge: **Normal**, **Abnormal** or **Critical**. A lab report you scanned and checked yourself says **From a document you checked** instead, because no clinician has reviewed it. See [Scanned Lab Reports](/patient/lab-reports).
 
 ## When you see a result
 
@@ -68,6 +68,23 @@ Things you add yourself, for example with [Medical History](/patient/medical-his
 
 ## Download my summary
 
-**Download my summary** saves your whole record as an International Patient Summary. This is a standard document you can give to another clinician. If you keep a [health plan](/patient/health-plan), its goals appear in the summary's **Plan of Care** section.
+At the bottom of the **Results** tab:
 
-It covers your problems, immunisations, results and procedures. Medicines and allergies are combined across all your clinics, so a medicine recorded at two clinics appears once.
+- **Download my summary (PDF)**: "Easy to read, print or show your doctor".
+- **Download as a data file (JSON), for other health systems**: the same summary as a standard International Patient Summary, which another clinic's system can read.
+
+Both are made from your record at the moment you download them, so they always agree with each other.
+
+The PDF has sections for **Health conditions**, **Medicines**, **Allergies**, **Vaccinations**, **Test results**, **Procedures** and your **Health plan**. Medicines and allergies are combined across all your clinics, so a medicine recorded at two clinics appears once.
+
+- A test result shows its values only once your clinic has signed it off. Until then it reads "Not yet reviewed by your clinic".
+- A result from a lab report you scanned reads "From a document you checked. Not reviewed by a clinician."
+- Anything you or your family added yourselves is marked as such.
+- An empty section says "None recorded. This does not mean there are none."
+- A long section shows the most recent entries and says there may be more in your record.
+
+Names and notes in Chinese or Tamil print correctly.
+
+If the summary cannot be made, you see "Your summary could not be prepared just now." Try again later.
+
+A caregiver can download the summary only if they can see your whole record.
