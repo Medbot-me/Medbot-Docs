@@ -36,14 +36,20 @@ You can also ask Medbot to set pause points for you.
 ## Who can change what
 
 - **The owner** can edit fields, override decisions and upload PDFs when the review is in **manual** mode and nothing is running. In automatic mode, panels are read-only apart from the run buttons and the conversation; switch to manual to edit.
-- **People it is shared with** can read everything, including the conversation, but cannot change anything or talk to Medbot.
+- **People it is shared with** with **Can view** can read everything, including the conversation, and comment, but cannot change anything or talk to Medbot. With **Can edit** they work on it like the owner (change it, run it and talk to Medbot) but cannot share, move or delete it. Runs they start are billed to them.
+- **In a [research team](/docs/teams#reviews-in-a-team)**, admins own the team's reviews, members and collaborators edit them, and viewers read and comment.
+
+## Comments
+
+**Comments** in the header opens a side panel: "Everyone who can open this review can read and add comments." Start a thread, reply, and **Resolve** or **Reopen** it. See [Comments](/docs/teams#comments).
 
 ## More actions
 
 The **More actions** menu in the header has:
 
 - **Export articles (CSV)**: every article with its decisions and extracted data. See [Synthesis and Export](/docs/deep-research/synthesis-and-export#export-articles).
-- **Share**: share the review with a Medbot user, found by name or email. People you share with can read the review but not change it.
+- **Share**: share the review with a Medbot user, found by name or email, and choose **Can view** or **Can edit** for each person ("Choose whether each person can only read the review and comment, or also change and run it. Editing together is on plans with teams."). You can change a person's permission later in the same dialog.
+- **Move to team**: move the review into one of your [research teams](/docs/teams), or back to **My reviews**. Owners only.
 - **Switch to automatic**: for a manual review that is not running.
 - **Delete review**: deletes the review with its articles, decisions and syntheses. This cannot be undone.
 

@@ -4,22 +4,47 @@ import { ImageZoom } from "nextra/components";
 
 ## Create an account
 
-To create an account, head over to [medbot.me/login](https://www.medbot.me/login). The **Sign in to Medbot** page creates your account the first time you sign in with Google or with an email code.
+To create an account, head over to [medbot.me/sign-up](https://www.medbot.me/sign-up), or select **Create an account** under "New to Medbot?" on the sign-in page. The page is headed **Create your Medbot account**: "For healthcare professionals. It takes a minute."
 
-1. Select **Continue with Google**, or on the **Email code** tab enter your **Email** and select **Email me a code**.
-2. For an email code, enter the 6-digit code from the email and select **Continue**. If the code does not arrive, select **Send a new code**.
+1. Select **Continue with Google** at the top, or fill in the form below "or":
+   - **Full name**
+   - **Email**: "We will email you a code to verify it. You can start using Medbot straight away."
+   - **Password** and **Confirm password**, at least 8 characters.
+2. Select **Create account**.
 
-The same page is how you sign in later. It has three ways in:
+You are signed in at once and go on to [onboarding](#onboarding). "Already have an account?" with **Sign in** takes you back to the sign-in page.
+
+Accounts are made only here, with Google, or (in the patient app) with Apple. An email code does not create an account any more, and Medbot sends no code to an address that has no account.
+
+## Verify your email
+
+A new account works before its email is verified, but Medbot emails you a 6-digit code when you register. Until you enter it, an amber banner sits at the top of the app: "**Verify your email.** We sent a code to &lt;your email&gt;. Verifying it lets you join organisations that invite you."
+
+1. In the banner, select **Enter code**. (**Send a new code** sends another first.)
+2. Enter the code and select **Verify email**. **Not now** closes the code box.
+3. The banner says "Your email is verified." and then goes away.
+
+The **×** at the end of the banner hides it on that browser without verifying.
+
+A few steps wait for a verified email, because they trust the address:
+
+- your [500-credit signup bonus](#credits)
+- joining an organisation that invited you by email, and [creating or joining one in Medbot CMS](/cms/create-organisation#verify-your-email-first)
+- the platform administrator role, for the address the deployment names as its administrator
+
+## Sign in
+
+The **Sign in to Medbot** page ([medbot.me/login](https://www.medbot.me/login)) is how you sign in later. It has three ways in:
 
 | Option | How it works |
 | --- | --- |
-| **Continue with Google** | The button at the top of the page. Sign in with your Google account; the first time, this creates your account. It is shown only when your Medbot has Google sign-in set up. |
-| **Email code** | Below "or", the first tab. Medbot emails you a code each time. This also creates a new account. |
-| **Password** | For an account that already has a password. If your email is not verified yet, Medbot sends a code to verify it first. |
+| **Continue with Google** | The button at the top of the page. The first time, this creates your account. It is shown only when your Medbot has Google sign-in set up. |
+| **Password** | The tab selected when the page opens. Your **Email** and **Password**. |
+| **Email code** | Enter your **Email** and select **Email me a code**: "If an account uses this address, we sent it a code." Enter the 6-digit code and select **Continue**. If it does not arrive, select **Send a new code**. |
 
-You cannot sign in with a phone number on the web.
+You cannot sign in with a phone number on the web. "New to Medbot?" with **Create an account** opens the registration form, keeping any page you were on the way to.
 
-The [desktop app](/docs/desktop-and-mobile/desktop#sign-in) signs you in through this same page in your browser. The [mobile app](/docs/desktop-and-mobile/mobile#sign-in) signs in with a password or Google.
+The [desktop app](/docs/desktop-and-mobile/desktop#sign-in) signs you in through this same page in your browser. The [mobile app](/docs/desktop-and-mobile/mobile#sign-in) signs in with a password or Google, and can create an account too.
 
 ## Onboarding
 
@@ -77,9 +102,13 @@ If setup fails, choose **Try again**, **Edit my details** to correct your answer
 
 > Starter notes, templates and example Deep Research reviews are added for you automatically. Agents are not added during setup: create your own from [Agents](/docs/agents).
 
+When you arrived from an invitation, such as a [research team](/docs/teams#accepting-an-invitation) invitation, onboarding ends back on that page instead of Home.
+
 ## Credits
 
-Finishing onboarding adds a **500-credit signup bonus** to your account. Your balance is shown on the **Credits Remaining** card on **Home**; select **View Usage** to open the Usage Dashboard. See [AI Usage & Credits](/docs/ai-usage).
+Your account gets a **500-credit signup bonus** once onboarding is finished and your [email is verified](#verify-your-email). If you finish onboarding before verifying, the bonus is added on your first visit after you verify. Your balance is shown on the **Credits Remaining** card on **Home**; select **View Usage** to open the Usage Dashboard. See [AI Usage & Credits](/docs/ai-usage).
+
+Which [plan](/docs/plans-and-billing) you are on, and its limits, are on **Settings → My Account**.
 
 ## Finding your way around
 
@@ -93,10 +122,11 @@ The sidebar on the left is how you move between the tools in your personal space
 | **Datasets** | Patient data for agents. See [Patient Data](/docs/agents/datasets). |
 | **Notes** | Your notes and the [workspace](/docs/workspace). |
 | **Deep Research** | [Systematic reviews](/docs/deep-research). |
+| **Teams** | [Research teams](/docs/teams) you work in. |
 | **Templates** | [Templates](/docs/workspace/templates) you insert into notes. |
 | **Clinical Resources** | Your own [documents](/docs/clinical_resources) for AI to draw on. |
 
-At the bottom of the sidebar, select your name to open the account menu: the **Settings** gear, **Theme** (light or dark), **Documentation**, **Report a bug** and **Log out**.
+At the bottom of the sidebar, select your name to open the account menu: the **Settings** gear, **Theme** (light or dark), **Documentation**, **Contact support** (see [Plans & Billing](/docs/plans-and-billing#contact-support)), **Report a bug** and **Log out**.
 
 On a phone, the sidebar is hidden. Open it with the menu button at the top left.
 

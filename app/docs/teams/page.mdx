@@ -1,0 +1,78 @@
+# Research Teams
+
+A **research team** shares [deep research](/docs/deep-research) reviews and [agents](/docs/agents). People in a team edit and run them together and comment on them. Teams are on [Pro and above](/docs/plans-and-billing); on Free, the team actions show **Available on Pro** with **See plans and upgrade**.
+
+> A team shares research reviews and agents, and its agents run on datasets only. Being in a team never gives anyone access to a clinic or to patient records.
+
+Teams live in the Medbot app on the web. They are not in Medbot CMS or the mobile app.
+
+## Roles and seats
+
+| Role | What they can do | Seat |
+| --- | --- | --- |
+| **Admin** | Manages the team and its people, and works on everything. | Full seat (US$100 a month on Pro), with monthly credits |
+| **Member** | Adds, changes and runs the team's reviews and agents. | Full seat (US$100 a month on Pro), with monthly credits |
+| **Collaborator** | Changes and runs the team's reviews and agents, without monthly credits. | Collaborator seat (US$20 a month): their runs use the team's credits |
+| **Viewer** | Reads the team's reviews and agents and comments on them. | Free |
+
+Seats count once someone accepts their invitation, and a person counts once on an account, at their highest seat across its clinics and teams. A team always keeps at least one admin.
+
+Whatever the team runs is billed to the team's account: its owner's top-up balance and the account's [monthly allowance](/docs/ai-usage#monthly-allowance).
+
+## Make a team
+
+1. Open **Teams** in the sidebar (below **Deep Research**). The page says "Work on research reviews and agents together, and comment on them."
+2. Select **New team**, enter the **Team name** (for example "Sepsis evidence group") and select **Make team**. "You will be its admin. Invite people once it is made."
+
+Making a team counts towards the limit of 5 organisation creations an hour. Where organisations are set up by an administrator, the page says "Your administrator sets up teams." instead.
+
+## The team page
+
+Opening a team shows its name ("You are an admin." and what your role allows), then:
+
+- **People**: everyone in the team with their role and seat. An admin can change a person's role or **Remove** them ("They lose access to the team's reviews and agents.").
+- **Open invitations** (admins): invitations not yet accepted, each with **Resend** and a way to withdraw it ("The emailed link stops working.").
+- **Invite by email** (admins): an email address and a **Role**, then **Invite**.
+- **Research reviews**: the team's reviews, with **New review in this team** for those who can edit.
+- **Agents**: the team's agents with who made each, and **New agent in this team**. "Make one here, or move or copy one in from its page."
+- **Leave team**, or for an admin **Close team**: "Nobody will be able to open the team, its reviews or its agents any more."
+
+An admin renames the team with the pencil beside its name.
+
+## Accepting an invitation
+
+The invitation email links to a **Team invitation** page (`/teams/join`), which shows the team, your **Role**, your **Seat** and when it **Expires**. Invitations last 14 days.
+
+- Signed in, select **Join team**.
+- Signed out, the page still shows the invitation, with **Sign in to join** and **Create an account**. Both bring you back here; a new account goes through [onboarding](/docs/getting-started#onboarding) first and then returns to the invitation.
+
+"Invitation unavailable" means it has expired or was withdrawn: "Ask the team's admin to send a new one."
+
+## Reviews in a team
+
+- **Start one in a team.** When you start a review, choose where to save it: **My reviews** or one of your teams.
+- **Move one in or out.** In a review's **⋮** menu, the owner selects **Move to team** and picks a team, or **My reviews** ("Only you, and people you share it with.").
+- **Who can do what.** Team admins, and the review's maker while they can edit in the team, own it. Members and collaborators edit it: they change it, run it and talk to Medbot about it. Viewers read and comment.
+- **The Deep Research list** filters by team, and shows each review's team and your role.
+
+## Agents in a team
+
+- **Make one in a team** from the team page, or choose the team in the agent wizard.
+- **Move to team.** The owner of an agent can move it into a team from the agent's page, but only if every run so far was on a dataset. Otherwise Medbot offers **Copy to team instead**.
+- **Copy to a team.** Anyone who can see a personal, public or default agent can copy it into a team: "A copy of "…", without its runs, that everyone in the team can use."
+- **Move back to my agents.** A team agent's maker can take it back out.
+- A team's agents run on datasets only, never on patient records, and cannot be linked into a [service](/docs/services). Every team member sees every run.
+
+## Comments
+
+Reviews and agents have **Comments**. On a review, select **Comments** in the header; on an agent, they are on the agent's page. "Everyone who can open this review can read and add comments."
+
+- Write in **Add a comment…** to start a thread. Reply to a thread with **Reply**, and edit or delete your own comments.
+- **Resolve** closes a thread; **Reopen** brings it back. "Show N resolved threads" lists closed ones.
+- A new comment notifies the item's maker and everyone in the thread in the **Notifications** bell, and by email when they have nothing unread about that item yet, so a busy thread sends one email until they look.
+
+Commenting needs a plan with teams.
+
+## Sharing a review to edit
+
+Outside teams, you can still [share a review](/docs/deep-research/review-workspace) with one person. The share dialog lets you choose for each person **Can view** (read and comment) or **Can edit** (also change and run it). Editing together needs a plan with teams; read-only sharing works on every plan.

@@ -1,0 +1,105 @@
+# Plans & Billing
+
+Every Medbot account is on a **plan**. The plan sets how many deep research questions and agents you can keep, whether you can run clinic organisations and research teams, how much storage your resource library has, how many credits you get each month, and what support you get. AI work itself is always paid in [credits](/docs/ai-usage).
+
+## The plans
+
+The public price page is [medbot.me/pricing](https://www.medbot.me/pricing), linked from the site header and footer. Prices are in US dollars and exclude applicable taxes.
+
+| | **Free** | **Pro** | **Enterprise Starter** | **Enterprise Scale** |
+| --- | --- | --- | --- | --- |
+| Price | US$0, forever | US$100 per member a month | US$200 per member a month | Custom, priced on request |
+| Included credits | 500 on sign-up, one time | 1,000 per member a month | 2,000 per member a month | By agreement |
+| Pay-as-you-go top-ups | Yes | Yes | Yes | Yes |
+| Physician family organisation | Yes | Yes | Yes | Yes |
+| Clinic organisations (Medbot CMS) | No | Yes | Yes | Yes |
+| Deep research questions | Up to 5 | Up to 100 per member | Unlimited | Unlimited |
+| Agents | Up to 5 | Up to 100 per member | Unlimited | Unlimited |
+| [Research teams](/docs/teams) | No | Yes | Yes | Yes |
+| Resource library storage | 1 GB | 10 GB per member | 50 GB per member | By agreement |
+| Support | Docs | Email | Email, phone, onsite | Email, phone, onsite |
+| How it is bought | | By card, monthly | Annual agreement, invoiced, at least 5 members | Annual agreement, invoiced |
+
+- **Members.** A *member* (a full seat) is anyone who holds a doctor or admin role in your clinics, or is an admin or member of one of your research teams. Receptionists and nurses take a staff seat, which is free for now. A person counts once per account, at their highest seat.
+- **Collaborators** in a research team are US$20 a month on Pro, with no monthly credits: their runs use the team's credits. **Viewers** are free and can read and comment.
+- **Enterprise Scale** runs Medbot on a dedicated server or cloud you choose, with your own Medplum backend and database. The **Enterprise Pilot** programme co-designs and validates a new care pathway on an Enterprise Scale deployment ("Propose a pilot").
+- The **physician family organisation** is a limited CMS organisation for a doctor's own and close family's care, free on every plan. See [Physician Family Organisation](/cms/physician-family-organisation).
+
+"Start for free" opens the [sign-up form](/docs/getting-started#create-an-account). "Start Pro" opens your plan card on **My Account** with **Upgrade to Pro** highlighted (signing in first if you need to). The Enterprise buttons, **Talk to us** and **Contact sales**, open an email to sales@medbot.me.
+
+### Accounts from before plans
+
+Everyone who had an account before plans existed is on the **Legacy** plan: no limits, no monthly credits. Medbot moves Legacy accounts to a current plan deliberately, one at a time.
+
+## Your plan
+
+Open **Settings** and the **My Account** tab (`/my-account`). The **Plan** card shows:
+
+- the plan's name, with **Past due** or **Cancelled** beside it when the plan is not active
+- **Seats** (full and collaborator seats billed, "(contracted)" when they are set by an agreement) and **Seats in use** (full, collaborator and staff), when you have clinics or a team on the account
+- **Current period ends**, on a paid plan
+- each limit: **Research questions**, **Agents**, **Clinic organisations** and **Storage**, or **Unlimited**
+- **Clinics on this plan**, with "(offboarded)" against a clinic that has left
+
+If a paid plan is past due or cancelled, the card says which plan's limits apply meanwhile: a cancelled plan falls back to Free.
+
+### Upgrade to Pro
+
+On Free, Legacy or a cancelled plan, the card says what Pro costs ("Pro is US$100 per member a month by card, for each doctor and admin in your clinics and each admin and member of your research teams (at least one)…") and offers **Upgrade to Pro**.
+
+1. Select **Upgrade to Pro**. Stripe's checkout opens. In the [desktop app](/docs/desktop-and-mobile/desktop) it opens in your browser, and the app says "Pro shows here once the payment is confirmed."
+2. Pay by card. You come back to **My Account**, which says **Payment received**: "Thanks — you're on Pro." (or "Pro will show here within a minute" while Stripe confirms).
+
+The subscription is monthly. You are billed for one full seat per member counted in your clinics and research teams (at least one), and a second line for collaborator seats while you have any. Medbot updates the seat count every hour as people join and leave, and Stripe prorates the change.
+
+### Manage billing
+
+On Pro, **Manage billing** opens Stripe's customer portal, where you change your card, see invoices or cancel. It stays on the card after you cancel, so past invoices remain reachable. If a payment fails, the card shows **Payment failed**: "Your last payment failed. Update your card in Manage billing to keep Pro." The plan stays on Pro while Stripe retries.
+
+**See plans and pricing** opens the price page. Enterprise plans are not bought on the card: "Pro is paid by card; Enterprise plans are arranged with our team."
+
+## Plan limits
+
+A plan's limits are checked each time you create a deep research question, an agent or a clinic organisation, and before a file is stored in your resource library. Deleting an item frees its slot.
+
+- **Whose limits.** Your own items count against the most generous account you belong to: your own, or one where you hold a full seat. On a per-member plan the items of everyone seated on it are pooled. A research team's items count against the team's account.
+- **What you see.** Where Medbot enforces limits, going past one refuses the action with a message such as "This upload would go past your plan's storage. Delete some files or upgrade your plan." Nothing you already have is deleted.
+- **Not enforced everywhere yet.** Until Medbot switches enforcement on for a deployment, limits are only recorded, and nothing is refused.
+
+Demo organisations are exempt from plan limits. Medbot platform superadmins are exempt too, along with what is billed to their own account.
+
+## Monthly credits
+
+Pro and Enterprise Starter grant credits each billing month: 1,000 or 2,000 per full seat, pooled across everyone on the account. They are spent before your own top-up balance, and whatever is left expires when the month ends: they do not roll over. A rise in seats during the month adds the difference at once. See [Monthly allowance](/docs/ai-usage#monthly-allowance).
+
+A clinic draws on the allowance of the account it is billed to. Your personal work draws on your own account's allowance, or on one where you hold a full seat.
+
+## Clinics and billing accounts
+
+A **billing account** belongs to one person and carries the plan. A clinic you create is billed to your account and takes its plan; its doctors and admins are the account's seats. Demo organisations are not billed. A physician family organisation follows its physician's own plan and bills its AI usage to them.
+
+In Medbot CMS, a clinic's admins see its plan under [Organisation settings → Plan](/cms/settings#plan). To move a clinic to another account, or to change an Enterprise agreement, contact Medbot.
+
+## Contact support
+
+**Contact support** in the account menu (in Medbot CMS too, where it opens this page in a new tab) opens `/support`. What it offers follows your plan, or the organisation's plan when you are working in one:
+
+- **Free**: the help docs. "Your plan includes the help docs. Email support is on Pro and above." **Open the help docs**, **Report a bug**, and **See plans and upgrade**.
+- **Pro**: email support, "We reply within 2 business days".
+- **Enterprise**: **Priority support**, a reply within 1 business day, and a phone number.
+
+To send a request:
+
+1. Choose a **Topic**: A question, Something isn't working, Billing, My account or Something else.
+2. Enter a **Subject** and a **Message** ("What were you trying to do, and what happened?"). **Don't include patient details**: "Leave out patients' names, identity numbers and clinical details."
+3. Select **Send request**. **Request sent** says when to expect a reply, in Singapore time, and you get a copy by email.
+
+Business days are Monday to Friday, Singapore time. **My requests** lists what you have sent and its status: **Open**, **In progress**, **Waiting for reply** or **Resolved**. You can send up to 10 requests a day.
+
+## Dedicated deployments
+
+On an Enterprise Scale deployment the plan is fixed for everyone and billing is by agreement. The plan card says "Billing is by agreement with your organisation." and has no upgrade, billing or top-up buttons. Only platform administrators create clinics, research teams, demo and physician family organisations there; everyone else sees "Your administrator sets organisations up on this Medbot."
+
+## For administrators
+
+Medbot platform superadmins manage billing accounts, physician verifications, support requests and per-organisation features in the Admin Panel. See [Billing & Support](/docs/admin/billing-and-support).

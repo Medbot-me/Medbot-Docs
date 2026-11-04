@@ -2,7 +2,7 @@ import { ImageZoom } from "nextra/components";
 
 # AI Usage & Credits
 
-Medbot tracks the AI you use with **credits**. Your credit balance and the history behind it are on the **Usage Dashboard**.
+Medbot tracks the AI you use with **credits**. Your credit balance and the history behind it are on the **Usage Dashboard**. On a paid [plan](/docs/plans-and-billing), credits come from a monthly allowance first and from your own top-up balance after that.
 
 ## Finding your usage statistics
 
@@ -17,21 +17,30 @@ The pill on the **Credits Remaining** card shows your state at a glance:
 | Pill | Meaning |
 | --- | --- |
 | **Usage Tracking** | You have credits left. |
-| **Out of Credits** (red) | Your balance is zero or below. |
+| **Out of Credits** (red) | Your balance, plus what is left of your monthly allowance, is zero or below. |
 
 ## What the Usage Dashboard shows
 
 The page is headed **Usage Dashboard** and names the account it belongs to (**Account:** followed by your name). Credits are personal: the dashboard shows your own balance and activity, not your organisation's.
 
+### Monthly allowance
+
+On a plan with monthly credits (Pro and Enterprise Starter), a **Monthly allowance** card comes first: how many are left, for example "640 of 1,000 credits left", and "Resets on &lt;date&gt;. Your plan's monthly credits are used first, before your top-up balance. Unused credits expire when the allowance resets."
+
+- The allowance is 1,000 (Pro) or 2,000 (Enterprise Starter) credits per full seat each billing month, pooled across everyone on the account. A new month starts on the day your billing period started.
+- Nothing rolls over. When seats or the plan go up during a month, the difference is added straight away; when they go down, nothing is taken back.
+- A spent allowance still shows, at 0, with its reset date.
+- Without an allowance (Free, Legacy, Enterprise Scale, or a cancelled plan), the card is not shown and the page reads as below.
+
 ### Summary cards
 
-Three cards sit across the top. All three cover the lifetime of your account. For a breakdown over a chosen period, see [AI usage](#ai-usage) below.
+Three cards sit across the top. All three cover the lifetime of your account. For a breakdown over a chosen period, see [AI usage](#ai-usage) below. With a monthly allowance, they describe your top-up balance only.
 
 | Card | What it counts |
 | --- | --- |
-| **Credits Remaining** | Your spendable balance across all AI features. It turns red at zero or below. |
-| **Lifetime Granted** | Every credit ever added to your account: grants, purchases and adjustments. |
-| **Lifetime Used** | Every credit spent on AI generations. |
+| **Credits Remaining** (**Top-up balance** with an allowance) | Your spendable balance across all AI features; with an allowance, "Used once the monthly allowance runs out". It turns red when nothing is left to spend. |
+| **Lifetime Granted** | Every credit ever added to your account (or top-up balance): grants, purchases and adjustments. |
+| **Lifetime Used** | Every credit spent on AI generations, not counting the monthly allowance. |
 
 ### Credit Activity
 
@@ -48,13 +57,13 @@ The **Credit Activity** table lists the entries behind those totals, newest firs
 
 You can sort by any column except **Description**. Use **View** to show or hide columns, and **Rows per page** to show 10, 20, 30 or 50 rows. On a narrow screen, **Feature**, **Description** and **Balance After** are hidden to save space.
 
-The table shows your **20 most recent** entries. A new account shows "No credit activity yet." until its first entry.
+Credits taken from the monthly allowance are not listed here. The table shows your **20 most recent** entries. A new account shows "No credit activity yet." until its first entry.
 
 ## Where credits come from
 
 | Entry type | When it appears |
 | --- | --- |
-| **Grant** | Every new account gets a **500-credit signup bonus** when it finishes [onboarding](/docs/getting-started#onboarding). |
+| **Grant** | Every new account gets a **500-credit signup bonus** once it has finished [onboarding](/docs/getting-started#onboarding) and [verified its email](/docs/getting-started#verify-your-email). An account that is not verified yet gets the bonus on its first visit after verifying. |
 | **Adjustment** | A platform administrator granted you credits. The description is the reason they gave, or "Manual top-up by" their email address. |
 | **Purchase** | A credit pack you bought with **Top up credits**. |
 | **Usage** | Credits spent on an AI generation. |
@@ -74,7 +83,7 @@ Select **Top up credits** on the Usage Dashboard to see the credit packs:
 
 ## How usage is charged
 
-One credit is worth **US$0.01**. A generation is priced from the number of input and output tokens it used and the model that produced it, rounded up to a whole credit (at least one).
+One credit is worth **US$0.01**. A generation takes whole credits from your monthly allowance first, then from your top-up balance. A generation is priced from the number of input and output tokens it used and the model that produced it, rounded up to a whole credit (at least one).
 
 Calls to models you run yourself from the [desktop app](/docs/desktop-and-mobile/desktop#local-models) (with Ollama or llama-server) are never billed. They use no credits and do not appear in [AI usage](#ai-usage).
 
@@ -87,11 +96,18 @@ Below the three cards, the **AI usage** section lists "Every AI call billed to y
 <ImageZoom src="/images/docs/ai-usage/01-usage-dashboard.png" alt="The Usage Dashboard with the credits cards and the AI usage section for the last 30 days" />
 
 - **Period** chooses the time range: **Last 7 days**, **Last 30 days** (the default), **This month**, **Last 90 days** or **All time**.
-- Four tiles summarise the period: **Model cost** (what the providers charged, with margin), **Credits charged** (whole credits taken from the balance), **AI calls** (with how many did not complete) and **Tokens** (in and out, plus minutes of audio).
+- Four tiles summarise the period: **Model cost** (what the providers charged, with margin), **Credits charged** ("Whole credits charged, from the monthly allowance and the top-up balance"), **AI calls** (with how many did not complete) and **Tokens** (in and out, plus minutes of audio).
 - **By feature** and **By model** tables break the period down by calls, tokens and cost. Features include Autocomplete, Refine text, Continue note, Deep Research, Agent run, Resource ingestion, Encounter transcription and Dictation.
 - The **AI calls** table lists each call with **Time**, **Feature**, **Model**, tokens in and out, **Cost**, **Credits** and **Status** (Completed, Failed, Stopped or In progress), 25 per page. Credits leave your balance in whole numbers once the fractions add up to one.
 
 After paying through checkout, a **Payment received** or **Top-up canceled** message appears.
+
+## Who pays
+
+- **Your personal work** is billed to you: your own top-ups, and the monthly allowance of your own account or of an account where you hold a full seat.
+- **Work inside an organisation** is billed to the organisation. A clinic's admins see its balance and allowance in Medbot CMS under [Organisation settings → AI credits](/cms/settings#ai-credits). A [physician family organisation](/cms/physician-family-organisation) bills its physician instead.
+- **A research team's** reviews and agents bill the team's account. A personal review that someone you shared it with runs is billed to whoever ran it.
+- **Medbot platform superadmins** are recorded with a cost but not charged for their own work, their own organisations' work and demo organisations' work.
 
 ## When a model you chose is retired
 

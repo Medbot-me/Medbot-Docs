@@ -1,0 +1,68 @@
+# Physician Family Organisation
+
+A **physician family organisation** is a small Medbot CMS organisation of a doctor's own, for the care of themselves and their close family. Every registered physician can have one, on every [plan](/docs/plans-and-billing) including Free, with no time limit. It is a way to try the CMS, not a way to run a practice: a clinic uses an ordinary [organisation](/cms/create-organisation).
+
+> **Not switched on yet.** Medbot turns physician family organisations on once its clinical lead has signed off the drug lists below. Until then, creating one says "The physician family organisation is not available yet." MCR verification can already be requested.
+
+It follows the Singapore Medical Council's Ethical Code and Ethical Guidelines on care for yourself and those close to you (ECEG B1): routine continued care of stable conditions, minor conditions, and urgent care when no other doctor is available in time; no controlled or dependence-forming drugs; no psychiatric care; and no medical certificates.
+
+## Creating one
+
+You create it in the Medbot app, from **Organisations** (`/organisations`). The **Physician family organisation** card says: "For doctors: a small CMS of your own for yourself and close family, free on every plan…"
+
+1. Enter your **MCR number** and select **Submit for checking**.
+2. The card shows **Waiting for review**: "Medbot is checking &lt;MCR&gt; against the SMC register. You can create the organisation once it is verified." A Medbot administrator checks your number and name against the SMC register.
+3. Once the card shows **MCR verified**, select **Create my family organisation**.
+4. Select **Open in the CMS** to start working in it.
+
+If the check is rejected or later revoked, the card shows **Not verified** or **Verification revoked** with Medbot's note, and **Submit again**.
+
+What you get:
+
+- One per verified physician. It does not count towards the one organisation you may create.
+- Hosted by Medbot: nothing to set up.
+- You are its only member, as admin and as doctor under your verified MCR.
+- Up to 10 patients.
+- Its AI usage is billed to your own account, and its limits follow your own plan.
+
+A family member who wants to see their own record signs in to [Medbot Health](/patient) and can give you [caregiver access](/patient/caregivers); they do not join the organisation.
+
+## Patients: yourself and family
+
+**Patients** heads the list **Yourself and family**: "This organisation is for you and those close to you (SMC ECEG B1): no controlled or dependence-forming drugs, no psychiatric care and no medical certificates. Prescriptions are filled at an outside pharmacy." With nobody yet: "No one registered yet. Start by registering yourself."
+
+To add someone:
+
+1. Select **Register yourself or family**. The page says "Only yourself and those close to you can be patients here."
+2. Choose **Who this patient is to you**: **Myself** (once), **Spouse or partner**, **Parent**, **Child**, **Sibling**, **Grandparent**, **Grandchild** or **Other close family**.
+3. Fill in the identity fields and register.
+
+Each patient's relationship to you is recorded. There is no anonymous registration, no self-registration invite and no CSV seeding here.
+
+## Visits: the care category
+
+Starting an encounter (from the patient's chart, the patient list or a teleconsult) asks for a **Care category**, "Care for yourself and close family is limited to these (SMC ECEG B1).":
+
+- **Stable condition (routine continued care)**
+- **Minor condition**
+- **Urgent, no other doctor available in time**
+
+The category is recorded on the encounter, and a prescription cannot be signed without it.
+
+## Prescribing
+
+- **Blocked medicines.** Drafting or signing a prescription refuses a medicine in a blocked class, for example: "&lt;medicine&gt; is in hypnotics and sedatives: … which the SMC ethical guidelines do not allow you to provide to yourself or those close to you. Refer to another doctor." The blocked classes cover opioids, drugs used in addictive disorders, benzodiazepine antiepileptics, hypnotics and sedatives, psychostimulants and anti-obesity products (dependence), and antipsychotics, anxiolytics and antidepressants (psychiatric care). The list is a draft awaiting the clinical lead's sign-off.
+- **Medicines with no class on record** are refused too: "&lt;medicine&gt; has no drug class on record, so it cannot be checked against the SMC ethical guidelines…"
+- **Outside pharmacy.** Every prescription is filled at an outside pharmacy. There is no inventory or dispensing.
+- **Signing makes it active.** A prescription becomes active only by being signed.
+
+## What is not offered
+
+In a physician family organisation the CMS does not show:
+
+- **Staff**, **Inventory** and **Stock** in the sidebar; adding staff and access requests on **Staff**
+- SmartCMS modules, the join code and CSV seeding in [Organisation settings](/cms/settings)
+- self-registration invites for patients
+- issuing a medical certificate
+
+The API refuses these too, along with other members, role grants and join requests.

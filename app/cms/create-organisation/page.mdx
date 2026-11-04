@@ -6,9 +6,20 @@ Reach the form from `/organisations/new`, from **Create organisation** on the [o
 
 > **No Medplum server?** On Medbot's production service you do not need one: the form's last step offers **Hosted by Medbot**, which makes a Medplum project for the organisation as you create it. See [Medbot-Hosted Organisations](/cms/hosted-organisations). A deployment without Medbot's own Medplum server does not offer it, and a note under the form points you to app.medplum.com to create a project and a client for it.
 
+## Verify your email first
+
+Opening `/organisations/new` with an email address that is not verified yet shows **Verify your email**: "Clinics recognise staff by email, so confirm that &lt;email&gt; is yours before joining or creating an organisation." Send yourself a code, enter it, and the form appears. See [Getting Started](/cms/getting-started#verify-your-email).
+
 ## How many you can create
 
 Each person may create **one** organisation (the deployment can raise this). The limit counts the active organisations you created yourself, hosted or self-managed; a [demo organisation](/docs/services/demo-services#your-demo-organisation) does not count, and organisations you joined are not yours. Past the limit the form shows the reason the server gave and creates nothing. Medbot platform superadmins have no limit.
+
+Two more checks apply:
+
+- **At most 5 attempts an hour.** Creating organisations, demo organisations and research teams share one allowance of 5 an hour per person, refused attempts included. Past it, the server answers that there are too many requests; wait and try again.
+- **Your plan.** A new clinic is billed to your [billing account](/docs/plans-and-billing#clinics-and-billing-accounts). Where Medbot enforces plan limits, a plan without clinic organisations (Free) refuses to create one; clinics are on Pro and above.
+
+A doctor who wants a CMS only for themselves and their family can use a [physician family organisation](/cms/physician-family-organisation) instead, free on every plan.
 
 ## Before you start
 
