@@ -101,8 +101,16 @@ Each row is one task. A cell reads **Yes**, **View only**, or **No**. Notes belo
 | [Make a portal invite for an existing patient](/cms/patient-portal) | Yes | Yes | Yes | Yes |
 | [Invite a new patient to self-register](/cms/patient-portal) | Yes | Yes | No | No |
 | [Answer portal messages in the clinic inbox](/cms/patient-portal) | Yes | Yes | No | No |
+| [Read the Patient concerns inbox](/cms/patient-concerns#patient-concerns) | No | No | Yes | Yes |
+| [Read the Shared by patient tab](/cms/patient-concerns#shared-by-patient) | No | No | Yes | Yes |
+| [Read answer reports](/cms/patient-concerns#answer-reports) | No | No | Yes | Yes |
+| [See and draft approved answers](/cms/patient-concerns#approved-answers) | Yes | No | Yes | Yes |
+| [Approve or retire an approved answer](/cms/patient-concerns#approved-answers) | No | No | Yes | Yes |
+| [Read the patient questions report and common questions](/cms/patient-concerns#patient-questions-and-common-questions) | Yes | No | Yes | Yes |
 
 A medical certificate prints the issuing doctor's MCR number, so only the Doctor role issues one. A Clinic Admin who is also a doctor switches to their Doctor role to issue it. A Clinic Admin can still void one.
+
+Concerns, shared chats and answer reports hold the patient's own words, so only doctors and nurses read them, and a Superuser account is refused too.
 
 A Doctor sees only the patients assigned to them in the queue; a Nurse sees every patient at the location. Reading a chart, its vitals, and its notes is open to all four roles for a patient in the organization.
 

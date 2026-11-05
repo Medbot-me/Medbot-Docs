@@ -42,9 +42,14 @@ The menu also has **Create organisation** and **Join with code**. If you are not
    - **My own Medplum project**: enter the **Medplum client ID** and **Medplum client secret**, and the **Medplum base URL** if it is not the default. Medbot checks them by signing in before anything is created.
 
    On a deployment that does not host Medplum projects, only the credential fields are shown.
-4. Select **Create organisation**. When it succeeds, you are switched into the new organisation.
+4. Optionally, under **Organisation image (optional)**, select **Upload image**: "PNG, JPEG or WebP, up to 512 KB; square works best. Without one, Medbot shows the organisation's initials." **Replace image** and **Remove image** change it before you create.
+5. Select **Create organisation**. When it succeeds, you are switched into the new organisation.
 
-Each person may create one organisation (a demo organisation does not count). Past that, the form shows the server's reason and creates nothing. The same form, with a Singapore integrations step, is in [Medbot CMS](/cms/create-organisation); either app can create an organisation the other then uses.
+The image is uploaded just after the organisation is made. If that fails, the organisation still exists: the form says "&lt;name&gt; was created, but its image was not saved", and **Continue without the image** takes you in. An admin can add a logo later in [Medbot CMS settings](/cms/settings#patient-branding).
+
+Each person may create one organisation (a demo organisation does not count). Past that, the form shows the server's reason and creates nothing. On top of that, anyone may try to create organisations at most **5 times an hour**, counting clinics, demo organisations and [research teams](/docs/teams) together, and refused attempts included. Past that the server answers "too many requests"; wait and try again. Medbot platform superadmins are not limited.
+
+A new clinic is billed to its creator's [billing account](/docs/plans-and-billing). Where plan limits are enforced, a plan that allows no clinic organisations (Free) refuses to create one and says why. The same form, with a Singapore integrations step, is in [Medbot CMS](/cms/create-organisation); either app can create an organisation the other then uses.
 
 If your clinic is already listed in Medbot's directory, claim it instead: see [Claim an organisation](/docs/getting-started/claim-an-organisation).
 
@@ -52,7 +57,30 @@ If your clinic is already listed in Medbot's directory, claim it instead: see [C
 
 **Organisations** (`/organisations`) lists **Your memberships**, each with your role and a **Demo** chip on a demo organisation, **Your claims** if you have any, and **Join with a code**. At the top are **Claim an existing organisation** and **Create organisation**.
 
-Between them sits a dashed **Demo organisation** card, "Your own organisation for showing Medbot to clinics, with synthetic data only." Select **Create demo organisation** to make yours in one click, or **Open demo organisation** once it exists. The card appears only where Medbot can make a hosted Medplum project for it. See [Demo Services](/docs/services/demo-services).
+Between them sits a dashed **Demo organisation** card, "Your own organisation for showing Medbot to clinics, with synthetic data only." Select **Create demo organisation** to make yours in one click, or **Open demo organisation** once it exists. The card appears only where Medbot can make a hosted Medplum project for it. See [Demo Services](/docs/services/demo-services). Once yours exists, the card also has **Delete demo organisation**; see [Deleting a demo organisation](/docs/services/demo-services#deleting-your-demo-organisation).
+
+Below it, the **Physician family organisation** card is for doctors: a small CMS of your own for yourself and close family. See [Physician Family Organisation](/cms/physician-family-organisation).
+
+## Organisation overview
+
+Choosing an organisation opens its **Overview** (`/organisation`). From the top down:
+
+- **The organisation**: its image (or its initials), its name, **Your role** and, in a demo organisation, a **Demo organisation** chip.
+- **Needs attention**: "Outstanding work across your N services", or "Nothing is outstanding across your services right now." Four tiles count, across every service:
+
+  | Tile | What it counts |
+  | --- | --- |
+  | **Open tasks** | Tasks not yet done, with how many are overdue and how many are assigned to you. Opens the inbox. |
+  | **Open escalations** | "Patient conversations handed to the care team". Shown in red when there are any. |
+  | **Drafts awaiting review** | "Patient agent replies, not yet sent". |
+  | **Referrals to screen** | "Screening verdicts are drafts until a person decides". |
+
+  With tasks open, **Resolve in inbox** opens the [Task Inbox](/docs/getting-started/home#inbox).
+- **By service**: up to eight services, the busiest first, with **Tasks**, **Escalations**, **Drafts** and **Referrals** and one button for the next thing to do: **Review escalations**, **Open tasks**, **Review drafts**, **Screen referrals**, **Finish setup** (for a draft) or **Open service**. **View all services** opens the list.
+- **Recent updates**: the latest new tasks, escalations and referrals across services, each with its service and when. With none yet: "New tasks, escalations and referrals will show up here."
+- **Jump back in**: cards for the services you opened most recently (**Services** until you have opened one), each with badges for its open escalations, tasks and drafts. Beside them, **Workspace** is the way back to your Personal space. With no services yet, a **Create your first service** card offers **New service**.
+- **Services**, **Patients** and **Members** cards: how many services are published and draft, a link to the patients, and how many members there are and whether invitations are pending (**Manage members**).
+- **Try a demo service** (in a demo organisation) or **Start from a template**: the [service templates](/docs/services/demo-services#create-a-service-from-a-template).
 
 ## AI policy (admins)
 

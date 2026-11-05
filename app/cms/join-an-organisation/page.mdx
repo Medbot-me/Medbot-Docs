@@ -6,18 +6,21 @@ A new hire who is not creating a clinic needs to get into an existing one. There
 
 An admin adds the person from `/staff` with their email, name, role, and, for clinical roles, their registration number. (Admins can also invite many people at once by [seeding from a CSV file](/cms/seed-data).) That files a membership waiting on that email address.
 
-If the person already has a Medbot sign-in with that email address, and the address is confirmed, they are linked at once. Otherwise Medbot emails them an invitation: "You have been invited to &lt;organisation&gt; on Medbot." Its **Sign in to Medbot** link opens the CMS sign-in page with their email address filled in.
+If the person already has a Medbot sign-in with that email address, and the address is confirmed, they are linked at once. Otherwise Medbot emails them an invitation, "You have been invited to &lt;organisation&gt; on Medbot.", asking them to sign in or create their account with that address and verify it with the code Medbot emails them. Its **Continue to Medbot** link opens, with their email address filled in:
 
-When the person signs in with that same email address, their account is linked to the waiting membership automatically. Nothing further is needed from either side. Only a confirmed email address claims an invitation: signing in with an email code confirms it. If the person was invited by more than one organisation, every waiting membership is linked at the same sign-in.
+- the CMS **registration form** (`/sign-up`) for someone with no Medbot account yet, or
+- the CMS **sign-in page** (`/login`) for someone who already has one.
 
-The invitation does not expire, and the person can sign in without it. If the email never arrived, they can open the CMS, select **Sign In**, and sign in with the invited address.
+Their account is linked to the waiting membership as soon as that email address is **verified**. A new account gets a verification code by email when it registers, and the CMS shows a **Verify your email** banner until it is entered (see [Getting Started](/cms/getting-started#verify-your-email)). Verifying in any Medbot app counts. Nothing further is needed from either side. If the person was invited by more than one organisation, every waiting membership is linked at once. Only a verified address claims an invitation, so nobody can register with a colleague's email and take their place.
+
+The invitation does not expire, and the person can register or sign in without it. If the email never arrived, they can open the CMS and select **Set up your clinic** (to register) or **Sign in**, using the invited address.
 
 ## Route 2: you request access with a join code
 
 For a hire who signs up before anyone invites them, or whose invite has not arrived yet. It also works for someone who already belongs to one organisation and needs to join another.
 
 1. An admin gives them the organisation's **join code**, a short code from the [organisation's settings](/cms/settings#join-code).
-2. The new user signs in and opens the **Request access to an organisation** form at `/onboarding`. It is linked from the [organisations screen](/cms) (where a user with no memberships lands), and from **Join with code** on the [welcome screen](/cms/switching#the-welcome-screen) and in the sidebar's organisation switcher.
+2. The new user signs in and opens the **Request access to an organisation** form at `/onboarding`. An account whose email is not verified yet is asked to verify it there first. It is linked from the [organisations screen](/cms) (where a user with no memberships lands), and from **Join with code** on the [welcome screen](/cms/switching#the-welcome-screen) and in the sidebar's organisation switcher.
 3. They enter the join code and submit.
 
 What happens next depends on what the backend finds:

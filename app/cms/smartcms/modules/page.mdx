@@ -28,7 +28,7 @@ Modules are shown as cards grouped under the certification badge they belong to.
 | **Disease notification** (`DEROM`) | Notify MOH of notifiable diseases, confirmed by the diagnosing doctor. | HE code per location, practitioner MCR numbers |
 | **Chronic disease indicators** (`CIDC`) | Report chronic disease clinical indicators prepared from chronic visits. | HE code per location, coded chronic diagnoses |
 | **Referral contribution to NEHR** (`NEHR_REFERRAL`) | Contribute referral letters to the National Electronic Health Record, as the CHAS Badge requires. | HE code per location, NEHR onboarding |
-| **Medical alerts and allergies** (`CMIS`) · *Planned* | Share and look up drug allergies and medical alerts with the national system. | CMIS codeset, clinician-recorded allergies |
+| **Medical alerts and allergies** (`CMIS`) | Share and look up drug allergies and medical alerts with the national system. See [CMIS](/cms/smartcms/cmis). | HE code per location, practitioner MCR numbers, CMIS drug codeset (for allergy reports) |
 
 ### Migrant Worker Health Badge
 
@@ -51,9 +51,12 @@ A Singapore organisation with at least one matching module gets a **SmartCMS** g
 | Screen | Route | Shown when the organisation subscribes to | Roles |
 | --- | --- | --- | --- |
 | **Claims**: "Subsidy and Medisave claims" | `/claims` | CHAS, CDMP or SFL | `admin`, `receptionist`, `doctor` |
-| **Reports**: "National registry notifications and reports" | `/reports` | NIR, DEROM, CIDC, MW_HEALTH or NEHR_REFERRAL | `admin` and `doctor`; a `nurse` sees the NIR section only |
+| **Messages**: the SmartCMS message log | `/smartcms/messages` | Any module with a Claims or Reports screen | `admin`, `receptionist`, `doctor`, `nurse`, each seeing only the messages of services they may use; CMIS messages are `admin` only |
+| **Reports**: "National registry notifications and reports" | `/reports` | NIR, DEROM, CIDC, MW_HEALTH, NEHR_REFERRAL or CMIS | `admin` and `doctor`; a `nurse` sees the NIR section only |
 
-See [Claims Workflow](/cms/smartcms/claims) and [Reports](/cms/smartcms/reports). Each section of **Reports** shows only for its own module and roles.
+With CDMP, **Claims** also links to **Medisave claims** (`/claims/medisave`). With CMIS, the patient chart gets the **National allergy and alert record (CMIS)** card for `admin`, `doctor` and `nurse`.
+
+See [Claims Workflow](/cms/smartcms/claims), [Reports](/cms/smartcms/reports), [SmartCMS Messages](/cms/smartcms/messages) and [CMIS](/cms/smartcms/cmis). Each section of **Reports** shows only for its own module and roles.
 
 Modules also add panels to screens staff already use, such as CHAS verification at check-in, the **Diagnoses (ICD-10-AM)** card, and the claim panels on **Generate invoice**. See [The screens](/cms/smartcms#the-screens).
 

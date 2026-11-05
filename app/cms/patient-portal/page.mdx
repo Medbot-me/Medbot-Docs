@@ -4,7 +4,7 @@ import { ImageZoom } from "nextra/components";
 
 The patient portal is the patient-facing side of Medbot. A clinic's patients sign in to their own Medbot account to ask questions about their record, message the clinic, request appointments, read visit summaries and results, and keep their details current. It is not an emergency service. Portal messaging is for non-urgent contact only.
 
-The portal is a separate app from Medbot CMS, with its own sign-in. Patients sign in with a code texted to their mobile number first, or with an email code, a password, or Google where it is offered. The [Patient](/patient) tab documents it from the patient's point of view. This page covers the CMS side: how staff connect a patient to the portal, and where each portal action reaches staff.
+The portal is a separate app from Medbot CMS, with its own sign-in. A new patient registers with a form (name, email and password) or with Google or Apple. After that they sign in with a code texted to their mobile number, an email code, a password, or Google where it is offered. A code only signs in an account that already exists; it never creates one. The [Patient](/patient) tab documents it from the patient's point of view. This page covers the CMS side: how staff connect a patient to the portal, and where each portal action reaches staff.
 
 > **If you knew the old portal:** the CMS used to serve patients itself at `/portal`, with its own one-time-code sign-in and its own two-step check for contact changes. That section has been retired. The patient app carries over everything it did. See [What changed](#what-changed).
 
@@ -47,6 +47,8 @@ Select **Invite to self-register** on the **Patients** page. The patient fills i
 | Requests an appointment | [Appointments: Booking requests](/cms/appointments#responding-to-portal-booking-requests). Staff accept, reject, or propose another time. The patient answers a new proposal from their own request. |
 | Messages the clinic | [Clinic Messaging](/cms/messaging). One thread per patient, answered by Clinic Admins and receptionists. |
 | Raises a red flag through Ask Medbot | The same clinic inbox. Medbot passes it to staff rather than answering. When the patient has several clinics connected, every one of them gets it. |
+| Says something worrying in Ask Medbot, short of a red flag | [Patient Concerns](/cms/patient-concerns#patient-concerns), for the clinic's doctors and nurses. This is on by default; the patient can turn it off per clinic. |
+| Shares chats or scanned results with the clinic | The [Shared by patient](/cms/patient-concerns#shared-by-patient) tab on the chart, at the level the patient chose. |
 | Reads a result | Nothing to do, but what the portal shows depends on your sign-off. See below. |
 | Updates contact details or consent | The patient's own chart and consent record. |
 

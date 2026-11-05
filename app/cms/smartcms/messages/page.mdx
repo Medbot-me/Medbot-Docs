@@ -1,0 +1,55 @@
+# SmartCMS Messages
+
+**SmartCMS → Messages** (`/smartcms/messages`) is the clinic's log of what Medbot sent to the SmartCMS gateway and what came back, newest first. Use it to see exactly what a registry was asked and what it answered, for example when a claim was refused, a check failed, or Synapxe asks for a message's request id.
+
+The page says: "What [organisation] sent to the SmartCMS gateway and what came back. Opening a message shows patient data and is recorded in the audit log."
+
+## Who can see what
+
+Every clinic role (Clinic Admin, Receptionist, Doctor and Nurse) of a Singapore organisation subscribed to a SmartCMS module sees **Messages** in the sidebar. Each role sees only the messages of the services it may use itself:
+
+| Messages about | Who sees them |
+| --- | --- |
+| Medisave balance checks, claims and CPF's answers | The roles that work Medisave: Clinic Admin and Receptionist |
+| CHAS, PHPC, Screen for Life, vaccination and CDS claims | The roles that see the [Claims queue](/cms/smartcms/claims#5-the-claims-queue): Clinic Admin, Receptionist and Doctor |
+| Registry notifications and reports (NIR, DEROM, CIDC, MW Health, NEHR) | The roles that may view that report on [Reports](/cms/smartcms/reports) |
+| Accreditation and connection tests, CMIS, the Healthier SG bundle, and anything else | Clinic Admins only |
+
+A message your role may not see is not listed and cannot be opened. NRICs in the messages are masked (first letter and last four characters) for everyone except a Clinic Admin. Reading the list and opening a message are both recorded in the [audit log](/cms/patient-records).
+
+## The list
+
+Filter by:
+
+- **Location**: **All locations** or one clinic location.
+- **SIT run**: **Any time**, or one of the location's [SIT evidence](/cms/smartcms/settings#sit-evidence) runs, shown with its tag and start time, and "(open)" while it runs.
+- **Patient**: **All patients** or one patient, to see their SmartCMS history.
+
+Select **Refresh** to read the log again. While a SIT run is open, the list updates itself every 3 seconds.
+
+| Column | What it shows |
+| --- | --- |
+| **Sent** | When the message was sent, in Singapore time. Select it to open the message. |
+| **Service** | The service and its S/N, and the attempt number when it was sent more than once, with the route beneath. |
+| **User** | The staff member whose action sent it, with their role, or **System** for something Medbot sent on its own (a scheduled check, the outbox). |
+| **Patient** | The patient the message was about, if any. |
+| **Status** | The HTTP and gateway (SCG) status. |
+| **Business code** | The registry's own answer code, such as `SC05-002`, `WN012` or `ERROR3`. |
+| **Outcome** | **success**, **business rejection** (the registry answered no), **gateway error**, **transport error** or **timeout**, or **in flight** while no answer has come. |
+
+Each row also carries the gateway's request ids, `x-amzn-requestid` and `x-amz-apigw-id`, which Synapxe asks for when you raise a message with them.
+
+## Opening a message
+
+Select the time to open **SmartCMS message**. It shows the **Status**, **Business code**, **Outcome**, when it was **Answered** (or **No answer**), the **User**, the **Patient**, and both request ids. Below that are:
+
+- **Request sent**: the URL, the headers, the decoded JWT header and claims, and the body.
+- **Answer received**: the body of the answer.
+
+The API key and the `Authorization` header are never stored, and the JWT is shown as its decoded header and claims only, never its signature. The same redaction applies to the [SIT evidence](/cms/smartcms/settings#sit-evidence) export, which is built from the same records.
+
+## Related
+
+- [Claims Workflow](/cms/smartcms/claims): the claims these messages carry.
+- [SmartCMS Settings](/cms/smartcms/settings): SIT runs and the evidence export.
+- [Gateway (Developers)](/cms/smartcms/gateway#evidence-log): how the evidence log is stored.

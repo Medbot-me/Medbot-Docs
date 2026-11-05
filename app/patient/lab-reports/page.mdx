@@ -1,0 +1,79 @@
+# Scanned Lab Reports
+
+You can add a lab report from another clinic, a hospital or a health screening to your own record. Medbot reads the values from a photo or PDF, and you check each one against the paper before anything is saved.
+
+A scanned report is **never** treated as a verified result. It shows everywhere as "From a document you checked", and no clinician reviews it in Medbot Health.
+
+## Add a report
+
+Upload the report as a document, in any of these ways:
+
+- On the **Documents** step of your [medical history](/patient/medical-history#step-3-documents): **Take a photo** or **Choose files**. For a report of several pages, use **Several pages** to send the photos as one document.
+- From **Log something** on Home, choose **Document**.
+- In Ask Medbot, use the paper clip. See [Send a photo or a file](/patient/ask-medbot#send-a-photo-or-a-file).
+
+Use a PDF, JPG or PNG. Medbot reads it in the background. When it finds lab values, the document shows **Check N values**. Select it to open **Check your results**.
+
+## Check your results
+
+> Medbot read these from your document. Compare each one with the paper before saving. Nothing is in your record until you save.
+
+The screen shows the original beside the values: **Open the original**, or on a phone tap the page to open it full size. It also says where the report came from and its dates, for example "Sample taken" and "Reported".
+
+Each value has a **Test**, **Result**, **Unit**, **Range on the paper** and **Flag on the paper**. A range or flag the paper does not print reads **None printed**. Medbot never works one out for you.
+
+1. Compare each row with the paper. Correct anything that is wrong, or **Remove** a row. Select **Add a value** for anything Medbot missed. The screen says how many values it read: "If the paper has more, add them."
+2. Answer each value marked for your attention. See [Marked values](#marked-values).
+3. Check the dates. Write each as YYYY-MM-DD, or leave one empty if the paper does not print it. A report with no date is saved as undated.
+4. Tick "I checked these against the paper. I'm responsible for what I save."
+5. Select **Save to my record**.
+
+You then see "Saved to your record": "Your results show as from a document you checked. No clinician reviews them here." Select **See my results**.
+
+## Marked values
+
+Medbot keeps every row it read and marks the ones you need to look at. It never fixes or drops a value for you. Save is refused until each marked value is corrected, or confirmed with **This matches the paper**.
+
+| Mark | What it means |
+| --- | --- |
+| "We do not recognize this unit, or none is printed." | Check the unit. |
+| "This is an unusual number for this test." | The value is outside what is plausible for that test. Check it. |
+| "This may have a decimal point or unit wrong." | A decimal point may have been lost. |
+| "This was hard to read." | The photo was hard to read at this row. |
+| "Reading it twice gave different answers." | Medbot read the report twice and got two different values. |
+| "We could not find this on the page." | On a digital PDF, the value, flag or range is not on the page as read. |
+| "We found this test but could not read its result." | Type the result from the paper, or remove the row. A tick cannot answer this one. |
+| "This value looks already in your record." | Saving adds it again. |
+
+### Commas in numbers
+
+A comma can mean a thousands separator or a decimal point. Medbot tells you how it read each one, with the number:
+
+- "250,000" or "1,234,567" are read as thousands.
+- "5,6" or "0,123" are read as a decimal point.
+- A number like "1,234" could be either. Medbot asks you to type it without the comma: 1234 or 1.234. Otherwise it is saved as printed, as words and not a number.
+
+### Name, date of birth and dates
+
+Medbot also checks the report as a whole:
+
+| Mark | What to do |
+| --- | --- |
+| The name on the paper does not match this record | If the report really is yours, tick **This is mine**. |
+| The date of birth on the paper does not match this record | Tick **This is mine** if it is yours. |
+| A date is in the future, or out of order | Correct it, or tick **The dates match the paper**. |
+| The day and month of a date may be the wrong way round | Compare it with the paper and correct it. This check works on digital PDFs only. |
+
+## Where your scanned results appear
+
+- On the **Results** tab, with "From a document you checked". See [Results & Records](/patient/results).
+- In your [health summary](/patient/results#download-my-summary), marked "From a document you checked. Not reviewed by a clinician."
+- To Ask Medbot, which can read them back to you as values from your own record.
+
+## Sharing a scanned report with a clinic
+
+A scanned report is not shared with any clinic unless you choose. On **Sharing with your clinics**, tick **Share with &lt;clinic&gt;?** under the report. The clinic's doctors and nurses then see it marked as scanned and checked by you, with the original. They also see which values you changed or added. See [Scanned results](/patient/clinic-sharing#scanned-results).
+
+## Deleting the original
+
+You can delete a document's original from the **Documents** step. Medbot asks first: "Delete the original of &lt;name&gt;? The values you saved stay in your record. Clinics you shared it with stop seeing it." Select **Delete original**, or **Keep**.

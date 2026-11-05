@@ -1,0 +1,66 @@
+# Billing & Support
+
+> **For Medbot platform administrators only.** Billing accounts and physician verifications are for superadmins; support requests and bug reports are for every platform administrator. For what customers see, read [Plans & Billing](/docs/plans-and-billing).
+
+## Billing accounts
+
+**Billing accounts** (`/admin/billing-accounts`): "Who pays, and on which plan. Each person has one account; clinics attached to it share its plan and count towards its seats."
+
+The list shows each account's **Owner**, **Plan**, **Contracted seats**, **Contract**, **Period ends** and when it was **Opened**. Filter by plan, or search by owner email or name.
+
+To open an account for someone, use **Open an account**: enter their **User id** and select **Open account**. "Every person has at most one account. A new one starts on Free; an existing one is opened as it is." Everyone who existed before plans already has a **Legacy** account.
+
+### An account's page
+
+- **Owner**: name, email and user id, the account id, and when it was opened and last changed.
+- **Entitlements**: what the account is entitled to now: **Plan in force**, **Current period ends**, **Seats billed**, **Seats in use** and each limit. When the people counted go past the contracted full or collaborator seats, **More people than the contract** says by how many ("N more than contracted — update the contract or invoice"). An account a superadmin owns is marked **Platform admin: exempt**: it, and every clinic and team billed to it, has no plan limits, and the owner's own AI usage is recorded but not charged.
+- **Plan and contract**: **Plan**, **Status** (**Active**, **Past due** or **Cancelled**), **Currency** (US$ or S$), **Contracted full seats** and **Contracted collaborator seats** ("Blank bills the members counted."), **Period start** and **Period end** (Singapore time), **Contract reference** and **Notes**. "A cancelled account falls back to Free. Contracted full seats, when set, size the limits instead of the members counted." Enterprise Starter needs at least 5 full seats.
+- **Limits override**: per limit, **Plan default**, **Unlimited** or **Custom** (storage in GB). **Reset** clears the overrides.
+- **Clinics**: "Clinics billed to this account take its plan, and their members are its seats. Demo and physician family organisations cannot be attached." Enter an **Organisation id** and select **Attach clinic**, or **Detach** one: "The clinic goes back to the Legacy plan and its members stop counting as this account's seats."
+- **Billing by invoice**: see below.
+- **Change log**: every change, by whom and when: **Account opened**, **Account changed** (with the fields), **Clinic attached** and **Clinic detached**.
+
+Saving a change also refreshes the account's monthly credit allowance at once.
+
+### Billing by invoice
+
+Enterprise customers on annual agreements are invoiced through Stripe. The **Billing by invoice** card shows the **Billing method**, the **Stripe customer**, the **Stripe subscription** and its status, the **Contracted seats** and the **Period**.
+
+- **Start an invoiced subscription**: "Makes an annual subscription in Stripe that invoices the owner, and puts the account on the plan with these contracted seats." Choose the **Plan**, **Full seats** (at least the plan's minimum) and **Collaborator seats**; the card shows the yearly **List price**. Stripe sends an invoice due in 30 days. Not for an account billed in S$ or for Enterprise Scale.
+- **Link a subscription made in Stripe**: "For prices by agreement or in S$." Enter the **Subscription id** (`sub_…`) and select **Link subscription**. It must belong to the account's Stripe customer.
+- **Change contracted seats** on a live invoiced subscription: "Stripe prorates the change to the end of the period and invoices it immediately." (**Change and invoice now**).
+- An account paid by card says so: the owner manages it in Stripe's customer portal. Cancel it in Stripe before starting an invoiced agreement. Once an invoiced agreement has no live subscription, **Bill by card** switches the account back.
+
+### Moving Legacy accounts
+
+Legacy accounts are moved to a current plan with a script run by the Medbot team (`billing:move-legacy`), a dry run by default that lists each account's owner, clinics, seats and usage against the target plan. Each move is written to the account's change log. See the billing go-live runbook in the main repository before switching plan limits to enforce.
+
+## Physician verifications
+
+**Physician verifications** (`/admin/physician-verifications`): "Doctors who want a physician family organisation. Check each MCR number and name against the SMC register before verifying it."
+
+1. Choose a status tab: **Pending** (the default), **Verified**, **Rejected** or **Revoked**.
+2. Each row shows the **Person**, their **MCR**, the **Status** and when it was **Submitted**. **Search the SMC register** opens the register's search page.
+3. For a pending request, select **Verify** or **Reject**. For a verified one, **Revoke**. Rejecting and revoking ask for a **Note**: "Say why, so they know what to fix. They are shown this note."
+
+A verified doctor can then create their [physician family organisation](/cms/physician-family-organisation). Revoking stops them creating one.
+
+## Support requests
+
+**Support Requests** (`/admin/support-requests`): "Sent from Contact support. Priority (Enterprise) first, then the earliest reply-by. A reply-by in red is overdue."
+
+- Filter by status: **Open**, **In progress**, **Waiting for reply**, **Resolved** or **All**. The table shows the **Request**, **Status**, **Plan**, **Requester**, **Reply by** and **Age**, with a **Priority** badge on Enterprise requests.
+- A request's page shows the message, the requester (**Name**, **Email**, **Organisation**, **Plan when sent**, **User id**, the **Page** they were on) and a **Timeline** (**Sent**, **Reply by**, **First response**, **Resolved**, **Last changed**).
+- Under **Work the request**, set the status and an admin note. "Moving it off Open records the first response; Resolved records when. The requester never sees the note."
+
+Each request is also emailed to the support inbox with its plan and priority, and the requester gets a copy.
+
+## Bug reports
+
+**Bug Reports** now have a status: **New**, **Triaged**, **In progress**, **Resolved** or **Won't fix**. Filter the list by status. On a report, set the status and an admin note: "Resolved or Won't fix records when it was closed; reopening clears it. The reporter never sees the note."
+
+## Organisation features
+
+An organisation's page under **Organisations** has a **Features** card: "Switched per organisation, for Enterprise pilots. The clinic sees these, read-only, in its CMS settings."
+
+The one feature today is **Care pathway engine** (on by default): "Protocol-driven care pathways (such as IVF cycles) on the organisation's services. Off: no service can switch its pathway engine on, and switching this off turns it off on every service." A superadmin switches it on or off, with an optional **Note** (for example the pilot agreement), or resets it to the default.

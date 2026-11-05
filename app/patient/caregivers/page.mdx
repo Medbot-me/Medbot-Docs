@@ -4,32 +4,59 @@ A **caregiver** is a parent, guardian, adult child or carer who uses the patient
 
 Caregiver access is for people who cannot or will not use the portal themselves: a child too young to hold an account, or an adult who needs a family member to keep track of their care. The person a caregiver acts for is their **dependant**.
 
+You can also keep a profile for someone who has no account at all, such as a young child, and hand it over to them later. See [Family](/patient/family).
+
 ## Key ideas
 
 | Idea | What it means |
 | --- | --- |
 | **Caregiver** | Someone with their own Medbot account who has been given access to another person's record. |
 | **Access level** | What the caregiver may do: **Read-only** or **Can make changes**. See [What a caregiver can do](#what-a-caregiver-can-do). |
+| **What they can see** | **Everything**, or only the parts of the record you choose. See [Choosing what they can see](#choosing-what-they-can-see). |
+| **AI chats** | Whether the caregiver may use your Ask Medbot chats. A separate switch, off by default. |
 | **Relationship** | How the caregiver is related to the patient: Parent, Legal guardian, Child, Spouse or partner, Sibling, Other family member, Professional carer, or Other. |
 | **Invite** | A one-time link that turns into access once the caregiver accepts it. Nobody gets access without accepting. |
 | **End date** | Optional. Access ends automatically on that day. |
 
 ## Giving someone access to your record
 
-You manage who can see your record from **Profile → People who can access your record**:
+You manage who can see your record from the [Family](/patient/family) page, under **People who can access your record**. Open it from **Profile → Family and sharing**, or the **Family** card on Home:
 
 > A family member or carer can use Medbot for you with their own account. You choose what they can do, and you can remove them at any time.
 
-1. Select **Add a caregiver**.
+1. Select **Add someone who can help with your record**. The **Add a caregiver** page opens.
 2. Fill in the form:
    - **Their email (optional).** With an email, only someone signed in with that verified email address can accept. Without one, the link works for whoever opens it first. The form warns: "Without one, anyone you give the link to can accept it, so share it only with them."
    - **How are they related to you?**
    - **What can they do?** **See my record** (read-only, the default) or **Help manage my care**.
+   - **What can they see?** **Everything** or **Only what I choose**. See [Choosing what they can see](#choosing-what-they-can-see).
    - **End access on (optional).** Leave it empty to keep access until you remove it.
 3. Select **Create invite**.
 4. The **Invite ready** screen shows the link with a **Copy** button. Send it to your caregiver yourself. If you entered an email address, Medbot also emails them the invite.
 
 The link works **once** and for **7 days**. You can have up to **5 invites** waiting at a time; to send another, cancel one first.
+
+### Choosing what they can see
+
+Under **What can they see?**, choose:
+
+- **Everything**: "Their whole record, including messages with clinics. AI chats have their own switch."
+- **Only what I choose**: "AI chats and full summaries stay private." Then tick the parts of your record to share. You must choose at least one.
+
+- **Appointments and visits**
+- **Test results**
+- **Medicines and allergies**
+- **Conditions, allergies and vaccinations**
+- **Documents**
+- **Messages with clinics**
+- **Health log and plan**
+- **Contact details**
+
+A caregiver who opens a part you did not share sees "This part of their record has not been shared with you."
+
+**AI chats** is a separate switch: "Let them read, continue and delete your chats with Ask Medbot and the health sessions you started yourself." It is off by default. It can only be turned on for a caregiver who sees **Everything**: "AI chats answer from your whole record, so they can only be shared with someone who sees everything."
+
+Each grant is also written to your health record as a consent that lists the parts you shared.
 
 > A patient cannot add themselves as a child's guardian from the portal. Access to a child's record is set up by the child's clinic. See [When the clinic sets up access](#when-the-clinic-sets-up-access).
 
@@ -38,12 +65,14 @@ The link works **once** and for **7 days**. You can have up to **5 invites** wai
 The **People who can access your record** card lists everyone with access, including people your clinic added. Each row shows:
 
 - the caregiver's name, or their email address partly hidden
-- their relationship, their access level, and who added them: **You**, the clinic's name, or **Medbot support**
+- their relationship, their access level, and who added them: **You**, the clinic's name, **Medbot support**, or the person who created the profile
+- what they can see: "Can see your whole record" or "Can see:" and a list, and whether they **Can use your AI chats** or **Cannot see your AI chats**
 - **Last used** and a date, or **Not used yet**, and the end date if one is set
 
 For each caregiver you can:
 
 - **Make read-only** or **Allow changes** to switch their access level.
+- **Change what they can see** to change the parts they see and the **AI chats** switch, then **Save**. The change applies from their next page.
 - **Remove** them. Confirm with **Remove access**, or choose **Keep** to change your mind. Removal takes effect at once.
 
 You can remove anyone, including a caregiver your clinic added.
@@ -80,7 +109,7 @@ When nobody has access, the card says "Nobody else can see your record."
 A caregiver always has their own record and the records of the people they care for.
 
 - **On a computer**, the sidebar shows a **Viewing** list: **My record**, then one row per person you care for. A read-only record is marked **Read-only**. The list appears only when you care for someone.
-- **On a phone**, open **Profile** from your avatar at the top of the screen, then go to **People you care for** ("Records you can see because someone gave you access.") and select **View their record**.
+- **On a phone**, open **Family** from the card on Home, or from **Profile → Family and sharing**. Under **People you care for**, select **View their record**.
 
 While you are acting for someone, every screen shows a banner:
 
@@ -95,9 +124,10 @@ Every tab (**Home**, **Messages**, **Log**, **Visits**, **Results** and **Profil
 
 | | Read-only | Can make changes |
 | --- | --- | --- |
-| Read Ask Medbot history, messages, visits, results and health records | Yes | Yes |
+| Read the parts of the record you shared with them | Yes | Yes |
+| Read and continue Ask Medbot chats (only with the **AI chats** switch on) | Read only | Yes |
 | Read and clear notifications | Yes | Yes |
-| Ask Medbot new questions, and send it photos and files | No | Yes |
+| Ask Medbot new questions, and send it photos and files (only with the **AI chats** switch on) | No | Yes |
 | Message the clinic | No | Yes |
 | Request appointments and answer the clinic's offers | No | Yes |
 | Check in for a visit and fill in a pre-visit check-in | No | Yes |
@@ -114,7 +144,10 @@ Some things only the patient can ever do, whatever the access level:
 - share a guided care session's summary, or share a concern with a clinic from Ask Medbot
 - ask a clinic for a referral in [Find Care](/patient/find-care)
 - buy [Record Services](/patient/record-services) ("Only the patient can buy record services.")
-- add or remove caregivers
+- add or remove caregivers, or change what they can see
+- choose what each clinic can see on [Sharing with your clinics](/patient/clinic-sharing)
+- connect a [device](/patient/devices) such as Garmin
+- download their [health summary](/patient/results#download-my-summary). A caregiver who sees only some parts of the record cannot.
 - delete their Medbot account
 
 A control you cannot use is greyed out with a lock, and tells you why:
@@ -128,6 +161,8 @@ On **Profile**, the clinics and caregivers cards are replaced by **Clinics and c
 
 When a caregiver uses Ask Medbot or a guided care session, Medbot is told that a caregiver is typing, by relationship (never by name). It addresses you rather than the patient, and asks whether the patient is with you when that matters. If a message raises a red flag, the clinic is told it was sent by the patient's caregiver, for example "(sent by the patient's Parent, a caregiver acting for them)".
 
+If a caregiver reports an Ask Medbot answer, the report goes only to Medbot's clinical team for a safety review, not to any clinic.
+
 Everything a caregiver does while acting for someone is recorded against their access.
 
 ## When the clinic sets up access
@@ -138,14 +173,16 @@ A clinic can invite a caregiver from the patient's chart in the CMS, for example
 - For a patient **under 18**, the clinic's invite normally ends on the patient's **18th birthday**.
 - If the dependant has no Medbot account of their own, accepting also lets Medbot keep a copy of their records from that clinic, so their health record fills in as it would for any patient.
 
-When a dependant later creates their own account, their caregivers keep access. The dependant is told "People can already access your record" and can review or remove each caregiver from their own **Profile**.
+A parent or legal guardian the clinic confirmed can also turn on Ask Medbot for a dependant who has no account, and make their [clinic sharing](/patient/clinic-sharing#who-can-change-these-choices) choices, until the dependant turns 21. See [AI chats for a child or dependant without an account](/patient/family#ai-chats-for-a-child-or-dependant-without-an-account).
+
+When a dependant later creates their own account, their caregivers keep access. The dependant is told "People can already access your record" and can review or remove each caregiver from their own **Family** page.
 
 ## When access ends
 
 Access ends when:
 
 - the patient removes the caregiver
-- the caregiver stops it themselves: **Profile → People you care for → Stop**, then **Stop caring for them**
+- the caregiver stops it themselves: **Family → People you care for → Stop caring for them**, then **Stop**
 - the clinic or Medbot support revokes it
 - the end date passes
 

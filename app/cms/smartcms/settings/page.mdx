@@ -8,12 +8,13 @@ The page's header says which Synapxe environment this Medbot server talks to:
 
 - "This server connects to Synapxe UAT. A location sends only in the environment it is approved for." (or "production")
 - If SmartCMS is switched off on the server: "SmartCMS is not enabled on this server; settings are saved but nothing is sent."
+- On Medbot's simulated clinic, which gateway the running server actually talks to: the SmartCMS mock ("This server connects to the SmartCMS mock …, not to Synapxe."), a local UAT stand-in, or Synapxe UAT. In UAT mode it adds "Only what a person clicks is sent." See [The simulated clinic and UAT mode](#the-simulated-clinic-and-uat-mode).
 
 From top to bottom, the page has these cards.
 
 ## Agent policy
 
-How far an AI agent may take a claim: **Off: agents never prepare claims**, **Prepare only: a person submits**, or **Auto-submit routine claims**. Select **Save policy**. **Auto-submit** appears only once a location is approved for production for CHAS, Medisave or Screen for Life claims. See [Claims Agent](/cms/smartcms/claims-agent#agent-policy).
+How far an AI agent may take a claim: **Off: agents never prepare claims**, **Prepare only: a person submits**, or **Auto-submit routine claims**. Select **Save policy**. **Auto-submit** appears only once a location is approved for production for CHAS, Medisave or Screen for Life claims, and Medbot refuses to save it before then. At a location or for a module not in production, a saved **Auto-submit** acts as **Prepare only**. See [Claims Agent](/cms/smartcms/claims-agent#agent-policy).
 
 ## Agent credentials
 
@@ -49,9 +50,11 @@ After the change, the location shows a reminder: send Synapxe an **UPDATE** row 
 
 ### Accreditation
 
-**Check accreditation** asks MHCP whether the location is accredited, for each of the accreditation types Medbot checks: `CM`, `PHPC` and `CD`. Each shows **Accredited**, **Suspended**, **Not accredited**, or the date accreditation starts. A scheme not yet asked about shows **Not checked yet**.
+**Check accreditation** asks MHCP whether the location is accredited, for each of the accreditation types Medbot checks: `CM`, `PHPC` and `CD`. Each shows **Accredited**, **Suspended**, **Not accredited**, or the date accreditation starts, with the period, any suspensions, and the HE code it was checked for. A scheme not yet asked about shows **Not checked yet**. If the location's HE code has changed since the check, the panel says so: check again.
 
-A location that is not accredited for a scheme cannot claim under it, so check before you switch it on.
+A location that is not accredited for a scheme cannot claim under it, so check before you switch it on. If MHCP refuses the check, or answers that the location is not authorised, the panel shows MHCP's code and words and says what to do, and Medbot stops at the first refusal instead of asking about the other types.
+
+**Ask about another clinic.** An admin can ask MHCP about any clinic's accreditation: enter its **HE code**, choose the **Type** (`CM`, `PHPC` or `CD`) and select **Ask**. The enquiry is "Sent as this location. The answer is shown here and is not saved as this location’s accreditation." It is logged and audited like the location's own check. Asking about another clinic's HE code needs Synapxe's agreement, so until this Medbot server allows it the panel says "Synapxe has not agreed to enquiries about other clinics yet" and only the location's own HE code can be asked about.
 
 ## Synapxe onboarding
 
@@ -69,12 +72,26 @@ For Synapxe's system integration testing (SIT), the clinic must show evidence of
 
 1. Select **Start run** with the scenario's tag, for example `ACC-01-01`.
 2. Carry out the scenario in the CMS.
-3. Select **End**, then **Download evidence**. The file holds every message Medbot sent to SmartCMS during the run and every reply, up to 500 messages.
+3. Select **End**, then **Download evidence**. The file holds every message Medbot sent to SmartCMS during the run and every reply, up to 500 messages, with each message's `x-amzn-requestid` and `x-amz-apigw-id`.
+
+While a run is open, [SmartCMS Messages](/cms/smartcms/messages) can be filtered to it and updates itself every few seconds, so you can watch each scenario's messages as you go.
 
 Medbot keeps an encrypted record of every SmartCMS message and reply for audit, whether or not a SIT run is open.
+
+## The simulated clinic and UAT mode
+
+Medbot tests SmartCMS against Synapxe's UAT gateway from a **simulated clinic**: a stack with synthetic patients and staff, and a UAT test clinic with Synapxe's own test identity. It is not a customer clinic. Its strip at the top of every page reads "SIMULATED CLINIC: synthetic patients and staff on a local stack." followed by the gateway the server talks to, for example **SmartCMS: UAT (cag-uat), clicks only**, or **SmartCMS: mock (…)**. A real gateway is marked out in white, so a screenshot from UAT cannot be mistaken for mock evidence. If the server does not answer, the strip says **SmartCMS: gateway unknown**.
+
+In UAT mode, two guards decide what may be sent:
+
+- **Clicks only.** Only what a person clicks is sent. Scheduled jobs, the outage probe and check-in's automatic CHAS verification send nothing, and a failed send is not retried by itself: the claim offers **Send again** instead. **Submit all prepared** is not offered.
+- **Test patient only.** A request that carries any NRIC or FIN other than Synapxe's test patient is refused before it is sent. A check refused this way shows **Not checked in UAT mode**, and a claim is held with the reason.
+
+These guards never apply to a production server.
 
 ## Related
 
 - [Modules & Gating](/cms/smartcms/modules): choosing modules.
 - [Singapore Registration](/cms/smartcms/registration): UEN, GST, HE codes and practitioner numbers.
 - [Claims Workflow](/cms/smartcms/claims) and [Claims Agent](/cms/smartcms/claims-agent).
+- [SmartCMS Messages](/cms/smartcms/messages): the messages of a SIT run.

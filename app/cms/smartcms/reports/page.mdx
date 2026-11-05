@@ -13,10 +13,11 @@ The page has one section per module:
 | **Chronic disease indicators (CIDC)** | Chronic disease indicators (`CIDC`) | One report per chronic visit, with its updates and deletion. |
 | **MW Health consult reports** | Migrant worker health reporting (`MW_HEALTH`) | One report per completed visit of a migrant worker. |
 | **NEHR referral letters** | Referral contribution to NEHR (`NEHR_REFERRAL`) | Each referral letter issued, its cancellation, and the daily reconciliation file. |
+| **Allergy and alert reports (CMIS)** | Medical alerts and allergies (`CMIS`) | Each drug allergy (ADR) report and each medical alert added or closed. Doctors make and follow these up from the patient's chart. See [Allergies & Medical Alerts (CMIS)](/cms/smartcms/cmis). |
 
 You see a section only when your organisation subscribes to its module (see [Modules & Gating](/cms/smartcms/modules)) and your role may view it. Each list shows the newest activity first.
 
-> Reports are prepared only at clinic locations that Synapxe has approved for the module, and nothing is sent from a location that is not approved. An admin records approvals on the [SmartCMS settings](/cms/smartcms/settings) page. No Medbot clinic has connected to Synapxe yet, not even in UAT. Everything on this page has been tested only against Medbot's mock gateway.
+> Reports are prepared only at clinic locations that Synapxe has approved for the module, and nothing is sent from a location that is not approved. An admin records approvals on the [SmartCMS settings](/cms/smartcms/settings) page. No customer clinic has connected to Synapxe yet. Medbot's own UAT test clinic has exchanged messages with Synapxe UAT, and the rest has been tested against Medbot's mock gateway.
 
 ## Who can do this
 
@@ -33,8 +34,10 @@ You see a section only when your organisation subscribes to its module (see [Mod
 | See NEHR referral letters | Yes | No | Yes | No |
 | Resend a failed NEHR row | Yes | No | Yes | No |
 | Confirm patient consent for a held referral letter | No | No | Yes | No |
+| See CMIS allergy and alert reports | Yes | No | Yes | No |
+| Report a drug allergy or record or close a medical alert in CMIS | No | No | Yes | No |
 
-A receptionist does not see **Reports** at all. A nurse sees only the NIR section. An admin can open every DEROM, CIDC and MW Health form to follow it up, but the form is read only.
+A receptionist does not see **Reports** at all. A nurse sees only the NIR section. An admin can open every DEROM, CIDC and MW Health form to follow it up, but the form is read only. Every role can read the messages behind the reports it may view on [SmartCMS Messages](/cms/smartcms/messages).
 
 ## When the page will not open
 
@@ -56,6 +59,7 @@ A form at `/reports/derom/[id]`, `/reports/cidc/[id]` or `/reports/mwh/[id]` fol
 | DEROM | When a doctor confirms it | Always a doctor |
 | CIDC | When a doctor confirms it | Always a doctor |
 | MW Health | When a doctor submits it | A doctor |
+| CMIS | When a doctor confirms an allergy report, or records or closes an alert | Always a doctor, never an agent |
 
 **DEROM and CIDC always wait for a doctor**, even when the [claims agent](/cms/smartcms/claims-agent) prepares them, and even under the **Auto-submit routine claims** policy. Under that policy an agent may send NIR notifications, and an MW Health report only when MOM's own check already accepts it. Under **Prepare only**, an agent's NIR notification waits on this page for staff to submit it.
 
@@ -292,3 +296,4 @@ A letter is held when the patient has a diagnosis of termination of pregnancy, v
 - [Claims Agent](/cms/smartcms/claims-agent): what agents may prepare and send.
 - [Vaccinations](/cms/vaccinations): recording a vaccination with its product code.
 - [Documents & Certificates](/cms/documents-and-certificates): issuing and voiding referral letters.
+- [Allergies & Medical Alerts (CMIS)](/cms/smartcms/cmis): reporting drug allergies and medical alerts.
