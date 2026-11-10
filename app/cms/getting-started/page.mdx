@@ -1,21 +1,23 @@
 # Getting Started
 
-This page walks a new staff member through signing in, choosing an organization, and finding their way around Medbot CMS. It applies to every role.
+This page walks a new staff member through signing in, their first sign-in, choosing an organisation and service, and finding their way around Medbot CMS. It applies to every role.
 
 ## Before you start
 
-You need a Medbot sign-in and a place in an organization. Your Clinic Admin adds you from [Staff](/cms/staff), which emails you an invitation if you have no Medbot sign-in yet, or shares a join code (see [Join an Organization](/cms/join-an-organisation)). If your clinic does not use Medbot yet, see [Create an Organization](/cms/create-organisation).
+You need a Medbot sign-in and a place in an organisation. Your Clinic Admin adds you from [Staff](/cms/staff), which emails you an invitation if you have no Medbot sign-in yet, or shares a join code (see [Join an Organisation](/cms/join-an-organisation)). If your clinic does not use Medbot yet, see [Create an Organisation](/cms/create-organisation).
 
 ## 1. Sign in or create your account
 
 Open the CMS. Its public pages (`/`, **Features** and **About**, whose **Contact** section `/contact` now opens) describe Medbot CMS and have **Sign in** and **Set up your clinic** at the top.
+
+The sign-in and registration pages fill the screen. Beside the form, a panel says what Medbot CMS is for and, under **Joining from an invitation**: "Sign in with the address your invitation was sent to. Your access to the healthcare organisation is linked once that address is verified." On a phone the panel is a header above the form.
 
 ### New to Medbot
 
 Select **Set up your clinic**, or **Create an account** under "New to Medbot?" on the sign-in page. **Create your Medbot CMS account** (`/sign-up`) says "Invited by a clinic? Use the email address the invitation was sent to."
 
 1. Select **Continue with Google**, if your deployment offers it, or fill in **Full name**, **Email**, **Password** and **Confirm password** (at least 8 characters).
-2. Select **Create account**. You are signed in at once.
+2. Select **Create account**. You are signed in at once, and Medbot emails you a code to verify your address (see [Confirm your email](#confirm-your-email)).
 
 If you were invited, the invitation email opens this form with your email address already filled in. A Medbot account made in the Medbot app or Medbot Health works here too: sign in with it instead.
 
@@ -27,59 +29,122 @@ The **Sign in to Medbot CMS** page (`/login`) offers these ways in:
 - **Password** (the default tab). Enter your **Email** and **Password** and select **Sign in**.
 - **Email code**. Enter your **Email** and select **Email me a code**: "If an account uses this address, we sent it a code." Enter the 6-digit code from the email and select **Continue**. **Send a new code** sends another, and **Use a different address** goes back. A code signs in an existing account only; it does not create one.
 
-If you see "This account has been disabled. Contact your administrator.", you no longer have an active role in any organization. Ask your Clinic Admin.
+If you see "This account has been disabled. Contact your administrator.", you no longer have an active role in any organisation. Ask your Clinic Admin.
 
-### Verify your email
+### Confirm your email
 
-When you register, Medbot emails you a 6-digit code. Until you enter it, an amber banner at the top of the CMS says "**Verify your email.** We sent a code to &lt;your email&gt;. Verifying it lets you join organisations that invited you." Select **Enter code**, type the code and select **Verify email**.
+Clinics recognise staff by email, so joining an organisation (claiming an invitation or requesting access with a join code) and creating one both need a verified address. Confirming it is the last part of signing in: an account that is not verified yet, on its way to the first-sign-in screens or `/organisations/new`, is shown **Confirm your email** (`/verify-email`) in the sign-in frame: "One last step to sign in. Healthcare organisations recognise staff by email, so confirm that &lt;your email&gt; is yours."
 
-You can use the CMS before verifying, but clinics recognise staff by email, so a few steps wait for it:
+1. Select **Email me a code**, or **I already have a code** if you have the one sent when you registered.
+2. Enter the 6-digit code and select **Verify and continue**. **Send a new code** sends another, and **Back** returns to the first step.
 
-- **Joining an organisation that invited you.** The invitation is claimed the moment your address is verified, in any Medbot app.
-- **Requesting access with a join code**, and **creating an organisation**. These pages first show **Verify your email**: "Clinics recognise staff by email, so confirm that &lt;email&gt; is yours before joining or creating an organisation." Send yourself a code and enter it there.
+You then go on to the page you were heading for. Any invitation sent to that address is claimed the moment it is verified, in any Medbot app.
 
-## 2. Choose your organization
+Until you verify, an amber banner at the top of the CMS also says "**Verify your email.** We sent a code to &lt;your email&gt;. Verifying it lets you join organisations that invited you." Select **Enter code**, type the code and select **Verify email**.
 
-After you sign in, the welcome screen shows **Welcome back** and **Choose the organisation and role to continue as.** Each organization you belong to appears once, as a card with its name and the role you will enter it as.
+## 2. Choose your organisation and service
+
+### Your first sign-in
+
+The first time you sign in, the CMS takes you through one framed flow instead of the usual app. A panel on the left shows your setup progress, step by step, with "Signed in as &lt;email&gt;" and **Sign out** at the bottom. On a phone the panel is above the step.
+
+#### If you were invited
+
+Once your address is verified, the organisations that invited you are already linked. The welcome screen marks this **Invitation linked**: "You've been added to a healthcare organisation" (or to several), and "An administrator invited &lt;email&gt;, so your account is already linked and ready."
+
+1. Each organisation is a card with its name and "You join as &lt;Role&gt;".
+2. Select **Enter &lt;organisation&gt;**.
+
+If the organisation or role is wrong, ask the administrator who invited you to change it. The same screen links to **join another healthcare organisation**.
+
+#### If you have no organisation yet
+
+You land on **Welcome to Medbot CMS** (`/onboarding`): "How are you getting started? You can join or add more healthcare organisations later." Choose one:
+
+| Choice | What it is for |
+| --- | --- |
+| **Set up a new healthcare organisation** | "For a clinic, hospital or remote care service. You become its first administrator." See [Create an Organisation](/cms/create-organisation). Where you may make a demo organisation, you also choose between **A real organisation** and **A demo organisation** ("Synthetic data only. Ready in one click."). |
+| **Join my healthcare organisation** | "Use the join code from your organisation's administrator." Enter the **Join code** and select **Request access**. See [Join an Organisation](/cms/join-an-organisation#route-2-you-request-access-with-a-join-code). |
+| **Claim my organisation's listing** | "Your healthcare organisation is already listed on Medbot. A Medbot administrator reviews every claim." **Find my organisation** opens the claim search. See [Claim an Organisation](/docs/getting-started/claim-an-organisation). |
+
+A join code that matches an invitation for your address links you straight away and opens the welcome screen. Otherwise your request waits for an administrator, on a page of its own (see [Waiting for approval](/cms/join-an-organisation#waiting-for-approval)).
+
+### The welcome screen
+
+When you sign in again, the welcome screen shows **Welcome back** and **Choose the organisation and role to continue as.** Each organisation you belong to appears once, as a card with its name and the role you will enter it as.
 
 1. Select **Enter as** followed by your role on the card, for example **Enter as Receptionist**.
-2. The CMS opens on the **Queue** page.
+2. If the organisation has more than one care service you can open, **Where are you working today?** (`/choose-service`) asks which one: "Choose a service. The CMS opens on the home page for your role there." The service you used last is selected and marked **Last used**. Select **Open &lt;service&gt;**.
+3. The CMS opens on your role's home page in that service (see [Your home page](#your-home-page)). With one service the choice is skipped; with none, the CMS opens on the **Queue**.
 
-The same screen has **Join with code**, **Create organisation**, **Manage organisations**, and **Sign out**. You see the welcome screen once each time you sign in. To change organization later, see [Choosing & Switching](/cms/switching).
+The welcome screen has **Join with code**, **Create organisation**, **Manage organisations**, and **Sign out**. The service screen has **Switch organisation** and **Skip and open the queue**. You see the welcome screen once each time you sign in. To change organisation, service or role later, see [Choosing & Switching](/cms/switching).
 
-> **Note:** You work as one role at a time. If you belong to two organizations, you can be a Doctor in one and a Nurse in the other. If you hold more than one role in the same organization, for example Doctor and Clinic Admin, you enter as one of them and switch with the role menu (see step 3).
+> **Note:** You work as one role at a time. If you belong to two organisations, you can be a Doctor in one and a Nurse in the other. If you hold more than one role in the same organisation, for example Doctor and Clinic Admin, you enter as one of them and switch from the sidebar switcher or the **Working as** menu (see step 3).
+
+### Your home page
+
+Each role has one home page in a service, whatever kind of service it is:
+
+| Role | Home page |
+| --- | --- |
+| Doctor, Nurse | The service's **Workstation** |
+| Clinic Admin, Receptionist | The service's **Referrals** |
+
+A badge at the top reads, for example, **Doctor home**, with shortcuts under it, each shown only when your role can open its page:
+
+| Shortcut | Shown to | Opens |
+| --- | --- | --- |
+| **Add patient** | Clinic Admin, Receptionist | Registering a patient, to add them to the service |
+| **Add staff** | Clinic Admin | The **Add staff member** dialog on [Staff](/cms/staff) (`/staff?add=1`) |
+| **Book appointment** | Receptionist | A new appointment |
+| **Service patients** and **Referrals** | Doctor, Nurse | Everyone enrolled in the service, and the patients referred to it |
+
+The service pages themselves are described in [Services](/cms/services).
 
 ## 3. Learn the sidebar
 
-The sidebar on the left lists the pages your role can open. The groups are Patients, Scheduling, Billing, Pharmacy, SmartCMS (Singapore organisations only), and Administration. You only see items your role may use.
+At the top of the sidebar is the **switcher**: the organisation's name and, under it, the service and the role you are working as, for example "Diabetes review · Doctor". Open it to change organisation, service or role; see [Choosing & Switching](/cms/switching#the-sidebar-switcher). With the sidebar collapsed, only the organisation's initials show.
 
-| Group | Clinic Admin | Receptionist | Doctor | Nurse |
+Under the switcher, two tabs split the CMS:
+
+- **Home**: the Home assistant (**New chat**), **Tasks** for the care services, your saved **Chats**, and the **Organisation** group (Patients, Staff, Agents, Settings, AI policy).
+- **CMS**: the clinic's work. The service you are working in comes first, with its pages for your role and your home page at the top. Then **Clinical**, **Operations**, and **Admin** (Billing, Claims, Pharmacy).
+
+Both tabs have **Search**. A patient you have open shows as a card under it. You only see items your role may use:
+
+| Tab and group | Clinic Admin | Receptionist | Doctor | Nurse |
 | --- | --- | --- | --- | --- |
-| Patients: Patients, Results, Inbox, Tasks | Yes | Patients, Results, Inbox, Tasks | Patients, Results, Tasks | Patients, Results, Tasks |
-| Patients: Photo capture | Yes | Yes | Yes | Yes |
-| Patients: Explanation library | Yes | No | Yes | No |
-| Scheduling: Appointments, Roster, Queue, Session | Yes | Yes | Appointments, Roster, Queue | Appointments, Roster, Queue |
-| Billing: Billing, Catalog | Yes | Yes | No | No |
-| Billing: Services, Devices & substances | Yes | No | Yes | Yes |
-| Pharmacy: Formulary, Inventory, Stock | Yes | No | Yes | Yes |
-| Pharmacy: Order sets | Yes | No | Yes | Yes |
-| Pharmacy: Medication safety | Yes | No | No | No |
-| SmartCMS: Claims | Yes | Yes | Yes | No |
-| Administration: Staff | Yes | No | No | No |
-| Administration: **Organisations** | Yes | Yes | Yes | Yes |
-| Platform: Hosted organisations, Caregiver access, Record services | Medbot platform superadmins only, whatever their clinic role | | | |
+| Home: New chat, Tasks | Yes | Yes | Yes | Yes |
+| Home › Organisation: Patients, Agents | Yes | Yes | Yes | Yes |
+| Home › Organisation: Staff, Settings, AI policy | Yes | No | No | No |
+| Home › Organisation: Downtime recovery | No (in Settings) | Yes | Yes | Yes |
+| CMS › Clinical: Results, Templates, Photo capture, Tasks | Yes | Yes | Yes | Yes |
+| CMS › Clinical: Inbox | Yes | Yes | No | No |
+| CMS › Clinical: Explanation library | Yes | No | Yes | No |
+| CMS › Clinical: Approved answers, Patient questions | Yes | No | Yes | Yes |
+| CMS › Clinical: Answer reports, Patient concerns | No | No | Yes | Yes |
+| CMS › Operations: Queue, Appointments, Roster | Yes | Yes | Yes | Yes |
+| CMS › Operations: Session | Yes | Yes | No | No |
+| CMS › Admin › Billing: Billing, Catalog | Yes | Yes | No | No |
+| CMS › Admin › Billing: Billable services, Devices & substances | Yes | No | Yes | Yes |
+| CMS › Admin › Claims: Claims (Singapore) | Yes | Yes | Yes | No |
+| CMS › Admin › Pharmacy: Formulary, Inventory, Stock, Order sets | Yes | No | Yes | Yes |
+| CMS › Admin › Pharmacy: Medication safety | Yes | No | No | No |
+| Home › Platform: Hosted organisations, Caregiver access, Record services | Medbot platform superadmins only, whatever their clinic role | | | |
 
-**SmartCMS → Reports** shows to the roles that work on at least one of the organisation's reports; see [Reports](/cms/smartcms/reports).
+**Claims → Reports** shows to the roles that work on at least one of the organisation's reports; see [Reports](/cms/smartcms/reports). Downtime devices and System status are linked from **Downtime and status** in the organisation's [Settings](/cms/settings).
 
-At the top of the sidebar you see your organization and your role. At the bottom you see your name, which opens your account menu.
+On a phone the **Home** and **CMS** tabs sit under the top bar, and a bar at the bottom holds the tab's main pages, **Search** and **More**.
 
-If you hold more than one role in the organization, a rounded **Working as** button at the right of the top bar shows the role you are working as. Open it and choose another role to switch; the sidebar and every page then follow that role. See [Switching role](/cms/switching#switching-role). If your deployment is a test environment, a strip at the top of the screen reads **STAGING** and says the data is test data only.
+At the bottom of the sidebar you see your name, which opens your account menu.
+
+If you hold more than one role in the organisation, a rounded **Working as** button at the right of the top bar shows the role you are working as. Open it and choose another role to switch; the sidebar and every page then follow that role. See [Switching role](/cms/switching#switching-role). If your deployment is a test environment, a strip at the top of the screen reads **STAGING** and says the data is test data only.
 
 For what each role can do on each page, see [Roles & Permissions](/cms/roles-and-permissions).
 
 ## 4. Your name and appearance
 
-Open **Settings** from your account menu. Both sections apply to you only and do not change anything for other staff. Settings for the whole clinic are in [Organization Settings](/cms/settings).
+Open **Settings** from your account menu. Both sections apply to you only and do not change anything for other staff. Settings for the whole clinic are in [Organisation Settings](/cms/settings).
 
 - **Profile**: your **Full name**, "How your name appears on organisations you create or join." Change it and select **Save name** ("Name saved"). If your account has no name yet, the section says "Your account has no name yet. Add one so organisations you create or join can show it."
 - **Appearance**: how the CMS looks for you.
@@ -89,11 +154,12 @@ The account menu also has **Contact support**, which opens Medbot's [support pag
 ## 5. If you cannot open a page
 
 - If the sidebar does not show a page, your role cannot open it.
-- If you open a page by address and see "This action requires one of the following roles", check the role menu: if you hold another role that can open the page, switch to it. Otherwise ask your Clinic Admin whether you should have another role.
-- If you are asked to log in again, sign in and choose your organization again.
+- If you open a page by address and see "This action requires one of the following roles", check the switcher at the top of the sidebar: if you hold another role that can open the page, switch to it. Otherwise ask your Clinic Admin whether you should have another role.
+- A Clinic Admin [previewing another role](/cms/switching#previewing-another-role) still has only their own access, so a page the previewed role could open may refuse them.
+- If you are asked to log in again, sign in and choose your organisation again.
 
 ## Next steps
 
 - Reception: [Reception Queue](/cms/reception-queue) and [Appointments](/cms/appointments).
 - Nurses and doctors: [Patient Records & Consent](/cms/patient-records) and [Vitals](/cms/vitals).
-- Clinic Admins: [Staff](/cms/staff) and [Organization Settings](/cms/settings).
+- Clinic Admins: [Staff](/cms/staff) and [Organisation Settings](/cms/settings).

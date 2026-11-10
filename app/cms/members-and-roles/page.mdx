@@ -19,7 +19,7 @@ An organisation uses four clinic roles. Each membership has exactly one; a perso
 
 The full matrix of what each role can do lives in [Roles & Permissions](/cms/roles-and-permissions).
 
-The same four roles are used across Medbot. In the web app, a person's role on a [Service](/docs/services) care team is their role in the organisation, not a separate service role.
+The same four roles are used across Medbot. A person's role on a [Service](/cms/services) care team is their role in the organisation, not a separate service role, and it decides the service page the CMS opens on for them: the **Workstation** for a Doctor or Nurse, **Referrals** for a Clinic Admin or Receptionist (see [Where the CMS opens](/cms/switching#where-the-cms-opens)).
 
 A fifth role, `superuser`, exists for internal and testing accounts. It passes every role check. It is not a clinic role anyone should be given in normal use; on staging it can be created by [CSV seeding](/cms/seed-data) for test accounts.
 
@@ -48,7 +48,7 @@ Adding a member creates their Practitioner record on the organisation's own Medp
 
 **Add Staff** is only for people the organisation does not have yet. Adding someone already on the staff, or already invited, is refused with a message pointing to their row: give an existing member a second role with **Add another role** (below), not by adding them again.
 
-If the person already has a Medbot account under that email, with the address confirmed, they are linked immediately. Otherwise the membership waits, and they receive an invitation email that links to the CMS sign-in page with their address filled in. The membership is linked when they sign in with that email address and it is confirmed; an account whose email address was never confirmed cannot claim it. See [Join an Organisation](/cms/join-an-organisation). To add many people at once, use [Seeding Staff & Patients](/cms/seed-data).
+If the person already has a Medbot account under that email, with the address confirmed, they are linked immediately. Otherwise the membership waits, and they receive an invitation email that links to the CMS sign-in page with their address filled in. The membership is linked when they sign in with that email address and it is confirmed; an account whose email address was never confirmed cannot claim it. See [Join an Organisation](/cms/join-an-organisation). To add many people at once, use [Seeding Staff & Patients](/cms/seed-data). A new organisation's first administrator can also add people one at a time from **Invite a colleague** at the end of setup, under the same rules (see [Add your team](/cms/create-organisation#add-your-team)).
 
 ## Changing a role, registration or status
 
@@ -76,10 +76,11 @@ A person can hold more than one role in the same organisation, for example Docto
 - An admin gives an existing member a role with **Add another role** on their row. The person must have joined (not only been invited), and the row must be active.
 - The same role cannot be held twice. A deactivated role is reactivated, not added again.
 - A registration number belongs to its registry, not to the person. The Doctor role carries the MCR number and the Nurse role the SNB number; each is entered for that role, and a Clinic Admin or Receptionist role carries none.
-- The person works as one role at a time and [switches between them](/cms/switching#switching-role) with the role menu at the top of the screen. Permissions are those of the active role only; they do not add up across roles.
+- The person works as one role at a time and [switches between them](/cms/switching#switching-role) from the sidebar switcher or the **Working as** menu at the top of the screen. Permissions are those of the active role only; they do not add up across roles.
+- What they write is recorded as the role they are working in, not the role they were given first. That includes what the CMS writes to the organisation's Medplum server, so a document a Doctor writes is authored as the Doctor, even by someone whose first role there was Clinic Admin.
 
 For example, a doctor who also runs the clinic works as Clinic Admin to manage staff and as Doctor to issue a medical certificate.
 
 ## One person, several organisations
 
-Memberships are independent. The same email can be a member of several organisations with different roles in each. Within an organisation, an email holds each role at most once. Every actor recorded on a clinical or operational write (who performed a stock movement, who acted on a queue ticket, who owns an order set) is the member: the person, in the role they were working as. It is resolved server-side from the caller's own session, and the role can only ever be one of their own active roles in that organisation.
+Memberships are independent. The same email can be a member of several organisations with different roles in each. Within an organisation, an email holds each role at most once. Every actor recorded on a clinical or operational write (who performed a stock movement, who acted on a queue ticket, who owns an order set) is the member: the person, in the role they were working as. It is resolved server-side from the caller's own session, and the role can only ever be one of their own active roles in that organisation. A Clinic Admin [previewing another role](/cms/switching#previewing-another-role) is still recorded as the Clinic Admin.
