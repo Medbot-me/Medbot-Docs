@@ -1,6 +1,6 @@
 # Platform Administration
 
-> **For Medbot platform administrators only.** These pages describe the Admin Panel used by the Medbot team to run the platform. If you are a clinician or clinic staff member, you will not see it and can skip this section. Organisation admins manage their own organisation under **Organisation settings** and **Members** instead.
+> **For Medbot platform administrators only.** These pages describe the Admin Panel used by the Medbot team to run the platform. If you are a clinician or clinic staff member, you will not see it and can skip this section. Organisation admins manage their own organisation in [Medbot CMS](/docs/getting-started/organisations), under [Settings](/cms/settings) and [Staff](/cms/staff), instead.
 
 ## Opening the Admin Panel
 
@@ -18,22 +18,35 @@ Sections marked (superadmin) are shown to superadmins only.
 | Group | Section | What it is for |
 | --- | --- | --- |
 | Platform | **Overview** | Totals for users, agents and bug reports, and agent usage. |
-| | **User Management** (superadmin) | Users, their credits (**Top up credits**) and **Usage**. See [AI Usage & Credits](/docs/ai-usage#for-administrators). |
+| | **User Management** (superadmin) | Users, their roles, their credits (**Top up credits**) and **Usage**. See [AI Usage & Credits](/docs/ai-usage#for-administrators) and [Changing a role](#changing-a-platform-role). |
 | | **Identity Cleanup** (superadmin) | Platform tool for cleaning up user identities. |
 | | **Caregiver Access** | Platform tool for caregiver access. |
 | Organisations & services | **Organisations** | All organisations. Filter by **All**, **Active**, **Offboarded**, **Hosted** or **Self-managed**; search with "Search by name or slug". |
 | | **Billing accounts** (superadmin) | Who pays, and on which plan. See [Billing & Support](/docs/admin/billing-and-support#billing-accounts). |
 | | **Physician verifications** (superadmin) | MCR checks for physician family organisations. See [Billing & Support](/docs/admin/billing-and-support#physician-verifications). |
-| | **Services** | A read-only list of services. Filter by **All**, **Published**, **Draft** or **Archived**; search with "Search by service, specialty or organisation". Open a service to manage it on its own page. |
+| | **Services** | A read-only list of services. Filter by **All**, **Published**, **Draft** or **Archived**; search with "Search by service, specialty or organisation". Open a service to see its details; its **Open service** button opens it in [Medbot CMS](/cms/services), where services are run. |
 | | **Directory** | Providers not yet on Medbot. See [Provider Directory](/docs/admin/directory). |
 | | **Referral requests** | Patients' requests to be referred. See [Referral Requests](/docs/admin/referral-requests). |
 | | **Claims** (superadmin) | Claims on directory listings. See [Claims Review](/docs/admin/claims). |
 | AI & content | **Templates**, **Tools**, **Agents** | Shared templates, tools and agents. |
-| | **Models**, **Audio Models**, **Realtime Models** | Which AI models are available to everyone. The platform administrator chooses these; users pick from what is listed. Models that can read images show an **Images** badge. |
+| | **Models**, **Audio Models**, **Realtime Models** | Which AI models are available to everyone. The platform administrator chooses these; users pick from what is listed. Models that can read images show an **Images** badge. The default audio or realtime model cannot be deleted: set another model as the default first. |
 | | **Vision Tasks** | Which model reads photos and files for each image task, such as health-log photos and uploaded documents. See [Vision Tasks](/docs/admin/vision-tasks). |
 | | **Care Context Prompts**, **Sample Notes** | Prompts and sample notes used by care features. |
-| Support | **Patient Channels** | Patient messaging channels. |
+| Support | **Patient Channels** | Patient messaging channels: **Unattributed emergencies**, **Shared numbers** (every phone number more than one linked patient shares, across every organisation) and **Unroutable inbound** messages. |
 | | **Support Requests** | Requests sent from **Contact support**. See [Billing & Support](/docs/admin/billing-and-support#support-requests). |
 | | **Bug Reports** | Reports sent with **Report a bug**, with triage statuses. See [Billing & Support](/docs/admin/billing-and-support#bug-reports). |
 
 An organisation's page under **Organisations** also has a **Features** card, for per-organisation switches. See [Billing & Support](/docs/admin/billing-and-support#organisation-features).
+
+## Confirmations
+
+Actions that cannot be undone ask first, naming what goes and what happens next. Select **Cancel** or **Go back** to keep things as they are.
+
+- **Deleting** a shared template, tool or agent, a sample note, an audio or realtime model, or a bug report, for example "Delete &lt;name&gt;?": "The tool is removed for good. This cannot be undone." A deleted bug report goes with its screenshot; to keep it on record, mark it resolved instead.
+- **Resetting a care context prompt**: "Reset this prompt to the default?" The custom prompt and model choice for the slot are discarded and the shipped prompt is used.
+- **Billing and organisation features**: starting an invoiced subscription, changing its seats, attaching a clinic and switching an organisation feature off. See [Billing & Support](/docs/admin/billing-and-support).
+- **Taking over** a referral request another admin holds. See [Referral Requests](/docs/admin/referral-requests).
+
+### Changing a platform role
+
+In **User Management**, choosing a new role for someone asks "Change role?", saying who goes from which role to which. Granting superadmin adds "A superadmin can assign roles, delete users and wipe identities across the whole platform."; removing it adds "They lose superadmin access straight away." Select **Change role** to go ahead. You cannot change your own role.

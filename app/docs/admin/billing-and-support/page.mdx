@@ -13,10 +13,10 @@ To open an account for someone, use **Open an account**: enter their **User id**
 ### An account's page
 
 - **Owner**: name, email and user id, the account id, and when it was opened and last changed.
-- **Entitlements**: what the account is entitled to now: **Plan in force**, **Current period ends**, **Seats billed**, **Seats in use** and each limit. When the people counted go past the contracted full or collaborator seats, **More people than the contract** says by how many ("N more than contracted — update the contract or invoice"). An account a superadmin owns is marked **Platform admin: exempt**: it, and every clinic and team billed to it, has no plan limits, and the owner's own AI usage is recorded but not charged.
-- **Plan and contract**: **Plan**, **Status** (**Active**, **Past due** or **Cancelled**), **Currency** (US$ or S$), **Contracted full seats** and **Contracted collaborator seats** ("Blank bills the members counted."), **Period start** and **Period end** (Singapore time), **Contract reference** and **Notes**. "A cancelled account falls back to Free. Contracted full seats, when set, size the limits instead of the members counted." Enterprise Starter needs at least 5 full seats.
+- **Entitlements**: what the account is entitled to now. The card says that going past a limit is refused only where enforcement is switched on for the deployment (`ENTITLEMENTS_ENFORCEMENT=enforce`), and otherwise logged, not refused. It shows **Plan in force**, **Current period ends**, **Seats billed**, **Seats in use** and each limit. When the people counted go past the contracted full or collaborator seats, **More people than the contract** says by how many ("N more than contracted — update the contract or invoice"). An account a superadmin owns is marked **Platform admin: exempt**: it, and every clinic and team billed to it, has no plan limits, and the owner's own AI usage is recorded but not charged.
+- **Plan and contract**: **Plan**, **Status** (**Active**, **Past due** or **Cancelled**), **Currency** (US$ or S$), **Contracted full seats** and **Contracted collaborator seats** ("Blank bills the members counted."), **Period start** and **Period end** (Singapore time), **Contract reference** and **Notes**. "A cancelled account falls back to Free. Contracted full seats, when set, size the limits instead of the members counted." Enterprise Starter needs at least 5 full seats. While a Stripe subscription is live, **Status**, the contracted seats and the period cannot be edited: "A Stripe subscription is live, so status, contracted seats and the period follow Stripe. Change seats under Billing by invoice, or cancel the subscription in Stripe."
 - **Limits override**: per limit, **Plan default**, **Unlimited** or **Custom** (storage in GB). **Reset** clears the overrides.
-- **Clinics**: "Clinics billed to this account take its plan, and their members are its seats. Demo and physician family organisations cannot be attached." Enter an **Organisation id** and select **Attach clinic**, or **Detach** one: "The clinic goes back to the Legacy plan and its members stop counting as this account's seats."
+- **Clinics**: "Clinics billed to this account take its plan, and their members are its seats. Demo and physician family organisations cannot be attached." Enter an **Organisation id** and select **Attach clinic**. Medbot asks first, in **Attach this clinic?**: the clinic "takes this account's plan and its members become this account's seats. If another billing account bills it now, it is moved off that account." Select **Attach clinic** again to go ahead, or **Go back**. To remove one, select **Detach**: "The clinic goes back to the Legacy plan and its members stop counting as this account's seats."
 - **Billing by invoice**: see below.
 - **Change log**: every change, by whom and when: **Account opened**, **Account changed** (with the fields), **Clinic attached** and **Clinic detached**.
 
@@ -26,9 +26,9 @@ Saving a change also refreshes the account's monthly credit allowance at once.
 
 Enterprise customers on annual agreements are invoiced through Stripe. The **Billing by invoice** card shows the **Billing method**, the **Stripe customer**, the **Stripe subscription** and its status, the **Contracted seats** and the **Period**.
 
-- **Start an invoiced subscription**: "Makes an annual subscription in Stripe that invoices the owner, and puts the account on the plan with these contracted seats." Choose the **Plan**, **Full seats** (at least the plan's minimum) and **Collaborator seats**; the card shows the yearly **List price**. Stripe sends an invoice due in 30 days. Not for an account billed in S$ or for Enterprise Scale.
+- **Start an invoiced subscription**: "Makes an annual subscription in Stripe that invoices the owner, and puts the account on the plan with these contracted seats." Choose the **Plan**, **Full seats** (at least the plan's minimum) and **Collaborator seats**; the card shows the yearly **List price**. Medbot asks "Start &lt;plan&gt; by invoice?" first, since Stripe invoices the owner straight away; select **Start and invoice**. Stripe sends an invoice due in 30 days. Not for an account billed in S$ or for Enterprise Scale.
 - **Link a subscription made in Stripe**: "For prices by agreement or in S$." Enter the **Subscription id** (`sub_…`) and select **Link subscription**. It must belong to the account's Stripe customer.
-- **Change contracted seats** on a live invoiced subscription: "Stripe prorates the change to the end of the period and invoices it immediately." (**Change and invoice now**).
+- **Change contracted seats** on a live invoiced subscription: "Stripe prorates the change to the end of the period and invoices it immediately." Select **Change and invoice now**, then confirm **Change contracted seats and invoice now?** with **Change and invoice**.
 - An account paid by card says so: the owner manages it in Stripe's customer portal. Cancel it in Stripe before starting an invoiced agreement. Once an invoiced agreement has no live subscription, **Bill by card** switches the account back.
 
 ### Moving Legacy accounts
@@ -59,8 +59,12 @@ Each request is also emailed to the support inbox with its plan and priority, an
 
 **Bug Reports** now have a status: **New**, **Triaged**, **In progress**, **Resolved** or **Won't fix**. Filter the list by status. On a report, set the status and an admin note: "Resolved or Won't fix records when it was closed; reopening clears it. The reporter never sees the note."
 
+Deleting a report asks "Delete this bug report?" first: the report and its screenshot are removed for good. To keep it on record, mark it resolved instead.
+
 ## Organisation features
 
 An organisation's page under **Organisations** has a **Features** card: "Switched per organisation, for Enterprise pilots. The clinic sees these, read-only, in its CMS settings."
 
 The one feature today is **Care pathway engine** (on by default): "Protocol-driven care pathways (such as IVF cycles) on the organisation's services. Off: no service can switch its pathway engine on, and switching this off turns it off on every service." A superadmin switches it on or off, with an optional **Note** (for example the pilot agreement), or resets it to the default.
+
+Switching a feature off is confirmed first, in **Switch off &lt;feature&gt;?**. For the care pathway engine: "This also turns the pathway engine off on every service in this organisation. Switching it back on does not turn it back on for those services; each has to be re-enabled from its own settings." Select **Switch off** to go ahead, or **Go back**.

@@ -20,7 +20,6 @@ Use the chips to choose which agents to show:
 
 | Chip | Shows |
 | --- | --- |
-| **&lt;your organisation&gt;** | Agents owned by your organisation (shown when you are working in an organisation). |
 | **All** | Every agent you can see. |
 | **Mine** | Your own agents. |
 | **Default** | Agents managed by Medbot or your administrator. You can run and copy them, but not edit or delete them. |
@@ -31,7 +30,7 @@ Search with **Search agents**, and sort by **Last run** (the default), **Last up
 
 ### Agent cards
 
-Each card shows the agent's name and description, badges for its scope (for example **Mine**, **Default**, **Public**, **Shared by &lt;name&gt;** or your organisation), its model and its [workflow status](#workflow-status), and three tiles:
+Each card shows the agent's name and description, badges for its scope (for example **Mine**, **Default**, **Public** or **Shared by &lt;name&gt;**), its model and its [workflow status](#workflow-status), and three tiles:
 
 | Tile | What it shows |
 | --- | --- |
@@ -39,7 +38,7 @@ Each card shows the agent's name and description, badges for its scope (for exam
 | **Agreement** | The share of live calls reviewed by clinicians in the last 30 days that were accepted as drafted. |
 | **Live calls** | How many times the agent ran on live data in the last 30 days, and how many of those were flagged (failed, marked as a false positive or negative, or rejected by a clinician). |
 
-The footer shows when the agent last ran and its validation dataset, with **Open** and either **Run** or **Copy to mine**. The **⋮** menu has the actions that apply to the agent: **Dashboard** (its Results tab), **Edit**, **Run**, **Share**, **Copy to mine**, **Claim for &lt;organisation&gt;** and **Delete agent**.
+The footer shows when the agent last ran and its validation dataset, with **Open** and either **Run** or **Copy to mine**. The **⋮** menu has the actions that apply to the agent: **Dashboard** (its Results tab), **Edit**, **Run**, **Share**, **Copy to mine** and **Delete agent**.
 
 An agent with no workflow shows *This agent runs from its prompt alone. Turn its expert knowledge into a workflow.* with a **Generate workflow** link, which opens the [workflow editor](/docs/agents/workflow).
 
@@ -70,7 +69,7 @@ The bell in the Agents header shows your unread notices. Click one to open it; *
 | Kind | Who can use it |
 | --- | --- |
 | **Your own agents** | Only you, unless you share them or list them publicly. |
-| **Organisation agents** | Every member of the organisation can run them. Choose the organisation under **Who owns it** when you create the agent, or use **Claim for &lt;organisation&gt;** on a personal or public agent to copy it into the organisation. |
+| **Organisation agents** | Every member of the organisation can run them. They are in Medbot CMS, not here: see [below](#organisation-agents). |
 | **Public agents** | Every Medbot user can find and copy them. Tick **List it publicly so other Medbot users can copy it** in the wizard. |
 | **Default agents** | Managed by Medbot or your administrator. You can run and copy them, but not edit or delete them. |
 | **Shared agents** | Agents shared with you by email or name. Share your own from the card menu or the agent page (**Share**). An agent that is already public cannot be shared, since everyone can reach it. |
@@ -79,6 +78,10 @@ The bell in the Agents header shows your unread notices. Click one to open it; *
 **Copy to mine** makes your own editable copy of any agent you can see. On an agent's page, **Move to team** moves your own agent into a research team, **Copy to a team** copies any agent you can see into one, and a team agent's maker can **Move back to my agents**. See [Research Teams](/docs/teams#agents-in-a-team).
 
 Your own, organisation, shared and team agents have **Comments** on their page: see [Comments](/docs/teams#comments).
+
+### Organisation agents
+
+An organisation's agents are on **Agents** in Medbot CMS, under **Organisation** in its Home tab (`/agents`). It is the same page as here, with a chip for the organisation's agents; there, **Who owns it** in the wizard offers the organisation ("Every member of the organisation can run it."), and the **⋮** menu has **Claim for &lt;organisation&gt;** to copy a personal or public agent into the organisation. The Medbot app's **Agents** page always works for you personally and does not show organisation agents; an old link to `/agents?filter=organisation` opens **All**. See [Teams and Organisations](/docs/getting-started/organisations).
 
 ## Tools
 

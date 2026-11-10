@@ -1,109 +1,61 @@
-import { ImageZoom } from "nextra/components";
+# Teams and Organisations
 
-# Organisations and Roles
+The Medbot app is your personal workspace: your notes, agents, datasets, Deep Research reviews, templates and clinical resources. The [research teams](/docs/teams) you belong to are reached from the same app.
 
-If you work for a clinic or a hospital group, you can use Medbot inside an **organisation**. Services, patients, members and organisation settings live there. Your own notes, agents and research stay in your **Personal** space.
+Clinics and hospital groups are **organisations**, and they live in **Medbot CMS**. Their services, tasks, patients, staff, agents, settings and AI policy are there, and so are creating, joining and claiming an organisation. The Medbot app no longer has organisation pages, an organisation switcher or a **Role** menu.
 
-## Personal space and organisation space
+## The space switcher
 
-The sidebar changes depending on where you are.
+At the top of the sidebar, the switcher shows where you are: **Personal space** with "Only you", or a team's name with "Team · N members" while you are on that team's page.
 
-- **Personal** shows Home, Inbox, Agents, Datasets, Notes, Deep Research, Templates and Clinical Resources.
-- **An organisation** shows a group named after the organisation, with Overview, Tasks, Services, Agents, Patients, Members and Organisation settings, plus **AI policy** for admins.
-- **A service** (opened from **Services**) shows that service's own pages. See [Services](/docs/services).
+Select it to open the menu:
 
-Personal tools disappear while you are inside an organisation. Switch back to **Personal** to use them.
+- Under **Personal**, **Personal space** opens [Home](/docs/getting-started/home).
+- Under **Teams**, each research team you belong to opens its team page. With no teams yet, the menu says "Share research and agents with colleagues in a team."
+- **Create team** opens **Teams** (`/teams`), where **New team** makes one. See [Make a team](/docs/teams#make-a-team).
+- **Join with invite link** opens the team invitation page (`/teams/join`). Team invitations come by email: open the link in the email to see the invitation and join. Opened from the menu, without an invitation link, the page shows **Invitation unavailable**: "This link is missing its invitation." See [Accepting an invitation](/docs/teams#accepting-an-invitation).
+- **Organisations are in Medbot CMS** opens Medbot CMS.
 
-## Switch organisation
+A tick marks where you are. The sidebar's tools stay the same whichever you pick: choosing a team opens its [team page](/docs/teams#the-team-page), with the team's reviews and agents. Teams have no workspace of their own yet.
 
-At the top of the sidebar, the switcher shows your organisation's name with **Organisation** beneath it (**Demo organisation** for a demo one), or **Personal** with **Medbot**.
+## Getting to Medbot CMS
 
-1. Select the switcher. A menu headed **Organisations** opens.
-2. Choose **Personal** or one of your organisations.
+There are three ways from the Medbot app to Medbot CMS:
 
-You land on the organisation's overview, or on [Home](/docs/getting-started/home) for Personal.
+- **Open Medbot CMS** on the card at the bottom of the sidebar (hidden while the sidebar is collapsed). If you belong to an organisation, the card is headed **Organisation work**: "Services, patients and clinic operations live in Medbot CMS." If not, it is headed **Run a clinic or service?**: "Set up your organisation, its services and its clinic in Medbot CMS."
+- The same card, with the same **Open Medbot CMS** button, beside the welcome card on [Home](/docs/getting-started/home).
+- **Organisations are in Medbot CMS** in the space switcher.
 
-The menu also has **Create organisation** and **Join with code**. If you are not in any organisation yet, Medbot says so and suggests you create one or join with a code from your admin.
+These links appear only where your Medbot has Medbot CMS set up. Sign in to Medbot CMS with the same Medbot account. To start there, see:
 
-<ImageZoom src="/images/docs/organisations/01-switcher-and-role.png" alt="The organisation switcher open, listing the organisations with Create organisation and Join with code, and the current role shown in the top bar" />
+- [Getting Started](/cms/getting-started) in Medbot CMS: signing in and the first sign-in.
+- [Create an Organisation](/cms/create-organisation), [Join an Organisation](/cms/join-an-organisation) and [Claim an Organisation](/docs/getting-started/claim-an-organisation).
+- [Choosing & Switching](/cms/switching): the organisation, service and role switcher.
+- [Staff App Overview](/cms/overview), the [Home assistant](/cms/home-assistant) that replaced the organisation Overview, [Services](/cms/services) and [AI policy](/cms/ai-policy).
 
-## Join with a code
+## Old organisation links
 
-1. In the switcher, select **Join with code**.
-2. Enter the **Join code** from your organisation's admin, and optionally a **Message (optional)**.
-3. Select **Request to join**. An admin of the organisation approves it.
+Addresses in the Medbot app for pages that moved now redirect to the same page in Medbot CMS, keeping anything after the `?`. Bookmarks, links in emails and kiosk QR codes keep working.
 
-## Create an organisation
+| Medbot app address | Opens in Medbot CMS |
+| --- | --- |
+| `/services` and every page under it | The same address: [Services](/cms/services) |
+| `/campaigns` and every page under it | The same address |
+| `/kiosk` and every page under it | The same address: the [kiosk](/cms/services/kiosk) |
+| `/organisations` and every page under it, including claims and **Create organisation** | The same address |
+| `/patients` | `/patients`, the organisation's patients |
+| `/inbox` (the Task Inbox) | `/services/inbox`, **Tasks** in Medbot CMS |
+| `/organisation` (the organisation Overview) | `/home`, the [Home assistant](/cms/home-assistant) |
+| `/organisation/members` and a member's page | `/staff`: see [Staff](/cms/staff) |
+| `/organisation/settings` | `/organisation-settings`, which opens the current organisation's [settings](/cms/settings) |
+| `/organisation/ai-policy` | `/ai-policy`: see [AI policy](/cms/ai-policy) |
 
-1. In the switcher, select **Create organisation** (or open **Organisations** and select **Create organisation** at the top).
-2. On **Create an organisation**, enter the **Organisation name** and **Country**.
-3. Under **Medplum server**, choose where the organisation's clinical records live:
-   - **Hosted by Medbot**: "Medbot makes a Medplum project for this organisation now. Nothing else to enter." This is the default on Medbot's production service.
-   - **My own Medplum project**: enter the **Medplum client ID** and **Medplum client secret**, and the **Medplum base URL** if it is not the default. Medbot checks them by signing in before anything is created.
+Where your Medbot has no Medbot CMS, these addresses are not found.
 
-   On a deployment that does not host Medplum projects, only the credential fields are shown.
-4. Optionally, under **Organisation image (optional)**, select **Upload image**: "PNG, JPEG or WebP, up to 512 KB; square works best. Without one, Medbot shows the organisation's initials." **Replace image** and **Remove image** change it before you create.
-5. Select **Create organisation**. When it succeeds, you are switched into the new organisation.
+The **Inbox** item has gone from the sidebar with the move, since every task in the Task Inbox belongs to a care service. An organisation's agents are on **Agents** in Medbot CMS; **Agents** in the Medbot app shows your own, shared, public, default and team agents. See [Agents](/docs/agents#who-can-see-an-agent).
 
-The image is uploaded just after the organisation is made. If that fails, the organisation still exists: the form says "&lt;name&gt; was created, but its image was not saved", and **Continue without the image** takes you in. An admin can add a logo later in [Medbot CMS settings](/cms/settings#patient-branding).
+## Organisation roles
 
-Each person may create one organisation (a demo organisation does not count). Past that, the form shows the server's reason and creates nothing. On top of that, anyone may try to create organisations at most **5 times an hour**, counting clinics, demo organisations and [research teams](/docs/teams) together, and refused attempts included. Past that the server answers "too many requests"; wait and try again. Medbot platform superadmins are not limited.
+Roles in an organisation (Admin, Doctor, Nurse, Receptionist and the rest), and switching between them, are in Medbot CMS. See [Roles & Permissions](/cms/roles-and-permissions) and [Members & Roles](/cms/members-and-roles).
 
-A new clinic is billed to its creator's [billing account](/docs/plans-and-billing). Where plan limits are enforced, a plan that allows no clinic organisations (Free) refuses to create one and says why. The same form, with a Singapore integrations step, is in [Medbot CMS](/cms/create-organisation); either app can create an organisation the other then uses.
-
-If your clinic is already listed in Medbot's directory, claim it instead: see [Claim an organisation](/docs/getting-started/claim-an-organisation).
-
-## The Organisations page
-
-**Organisations** (`/organisations`) lists **Your memberships**, each with your role and a **Demo** chip on a demo organisation, **Your claims** if you have any, and **Join with a code**. At the top are **Claim an existing organisation** and **Create organisation**.
-
-Between them sits a dashed **Demo organisation** card, "Your own organisation for showing Medbot to clinics, with synthetic data only." Select **Create demo organisation** to make yours in one click, or **Open demo organisation** once it exists. The card appears only where Medbot can make a hosted Medplum project for it. See [Demo Services](/docs/services/demo-services). Once yours exists, the card also has **Delete demo organisation**; see [Deleting a demo organisation](/docs/services/demo-services#deleting-your-demo-organisation).
-
-Below it, the **Physician family organisation** card is for doctors: a small CMS of your own for yourself and close family. See [Physician Family Organisation](/cms/physician-family-organisation).
-
-## Organisation overview
-
-Choosing an organisation opens its **Overview** (`/organisation`). From the top down:
-
-- **The organisation**: its image (or its initials), its name, **Your role** and, in a demo organisation, a **Demo organisation** chip.
-- **Needs attention**: "Outstanding work across your N services", or "Nothing is outstanding across your services right now." Four tiles count, across every service:
-
-  | Tile | What it counts |
-  | --- | --- |
-  | **Open tasks** | Tasks not yet done, with how many are overdue and how many are assigned to you. Opens the inbox. |
-  | **Open escalations** | "Patient conversations handed to the care team". Shown in red when there are any. |
-  | **Drafts awaiting review** | "Patient agent replies, not yet sent". |
-  | **Referrals to screen** | "Screening verdicts are drafts until a person decides". |
-
-  With tasks open, **Resolve in inbox** opens the [Task Inbox](/docs/getting-started/home#inbox).
-- **By service**: up to eight services, the busiest first, with **Tasks**, **Escalations**, **Drafts** and **Referrals** and one button for the next thing to do: **Review escalations**, **Open tasks**, **Review drafts**, **Screen referrals**, **Finish setup** (for a draft) or **Open service**. **View all services** opens the list.
-- **Recent updates**: the latest new tasks, escalations and referrals across services, each with its service and when. With none yet: "New tasks, escalations and referrals will show up here."
-- **Jump back in**: cards for the services you opened most recently (**Services** until you have opened one), each with badges for its open escalations, tasks and drafts. Beside them, **Workspace** is the way back to your Personal space. With no services yet, a **Create your first service** card offers **New service**.
-- **Services**, **Patients** and **Members** cards: how many services are published and draft, a link to the patients, and how many members there are and whether invitations are pending (**Manage members**).
-- **Try a demo service** (in a demo organisation) or **Start from a template**: the [service templates](/docs/services/demo-services#create-a-service-from-a-template).
-
-## AI policy (admins)
-
-An organisation admin's sidebar has one more item, **AI policy** (`/organisation/ai-policy`): "which AI providers and regions this organisation's agents, assistants and drafting tools may use." Under **Providers and regions**:
-
-- A switch turns the policy on or off. Off, "AI calls follow the platform defaults, as before." On, "AI calls made for this organisation use only the providers and regions below."
-- Tick the **Allowed providers** and type the **Allowed regions** (cloud region codes such as `ap-southeast-1`, separated by commas).
-- Choose a **Default model**. **Models in the catalogue** shows every model the platform offers and whether the policy would allow it, with "Provider not allowed" or "Region not allowed" against the rest.
-- Select **Save policy**. "Saved." confirms it.
-
-Non-admins who open the page see "Only organisation admins can see or change the AI policy."
-
-## Roles and "Act as"
-
-In an organisation you can hold one or more roles: Admin, Doctor, Receptionist, Nurse or Superuser. The top bar shows **Role:** followed by your active role, and what you see and can do follows that role.
-
-If you hold more than one role, **Role** is a menu headed **Act as**. Choose a role to switch to it; no need to sign out.
-
-You can also pick a role when switching from Home: the **Switch to an organisation** card has a role list and a **Switch** button for each organisation.
-
-### Giving someone more roles (organisation admins)
-
-1. Open **Members** in the organisation.
-2. Open the member and select **Edit member**.
-3. Tick the **Roles** they should hold. A registration number is required for doctors.
-4. Select **Save changes**.
+The Medbot app always works for you personally, whichever organisation you last chose in Medbot CMS. Research teams have their own roles: see [Roles and seats](/docs/teams#roles-and-seats).

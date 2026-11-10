@@ -25,12 +25,11 @@ Go to **Datasets → Connectors** ([medbot.me/datasets/connectors](https://www.m
    - **None**.
 
    The secret is stored encrypted and is never shown again.
-6. Organisation admins can tick **Add it for &lt;organisation&gt;** (ticked by default for them): every member's agents can use it, and admins manage it. Otherwise the connector is personal.
-7. Click **Connect**. Medbot creates the connector and tests the connection straight away.
+6. Click **Connect**. Medbot creates the connector and tests the connection straight away.
 
 ## The connector card
 
-Each card shows the connector's kind, whether it belongs to the organisation or is personal, and its status: **Connected**, **Not reachable** (with the last error) or **Not tested yet**. It lists the tools agents may call, and how many agents use it and when it was last checked.
+Each card shows the connector's kind, that it is **Personal**, and its status: **Connected**, **Not reachable** (with the last error) or **Not tested yet**. It lists the tools agents may call, and how many agents use it and when it was last checked.
 
 - **Test connection** connects to the server again, lists its tools and updates the status.
 - **Settings** (managers only) opens the connector's settings.
@@ -46,10 +45,9 @@ Changing the URL or secret resets the status to **Not tested yet**. **Remove con
 
 ## Who can manage connectors
 
-| Connector | Who can see, use and test it | Who can change settings, remove it and run extraction |
-| --- | --- | --- |
-| Personal | Only you. | Only you. |
-| Organisation | Every active member of the organisation. | The organisation's admins. |
+Connectors are personal: only you can see, use and test yours, change their settings, remove them and run extraction.
+
+Organisation connectors, which organisation admins could add while organisations were in the Medbot app, have not moved to Medbot CMS, and the Medbot app's Connectors page lists personal connectors only.
 
 ## Using a connector in an agent
 
