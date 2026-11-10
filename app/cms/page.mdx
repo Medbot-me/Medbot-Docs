@@ -4,7 +4,7 @@
 
 An **organisation** is a clinic as a tenant of Medbot CMS: its own staff, its own locations, its own patients, and, crucially, **its own Medplum server**. Everything the CMS does happens inside exactly one organisation at a time.
 
-Medbot CMS is multi-organisation. Any signed-in user can create an organisation (hosted by Medbot, or on their own Medplum project), add staff to it with roles, and run every clinic workflow (patients, queue, sessions, results, documents, rostering, inventory, billing) scoped to the organisation they have chosen for this sign-in. A user who belongs to more than one switches between them.
+Medbot CMS is multi-organisation, and it is where everything an organisation does lives: its clinic operations, its [care services](/cms/services) and its administration. Medbot web is for each person's own work. Any signed-in user can create an organisation (hosted by Medbot, or on their own Medplum project), add staff to it with roles, and run every clinic workflow (patients, queue, sessions, results, documents, rostering, inventory, billing) scoped to the organisation they have chosen for this sign-in. A user who belongs to more than one switches between them.
 
 > This is a change from the single-tenant CMS. There is no "first admin" bootstrap step and no Medplum credentials in environment variables any more: the first admin is whoever creates the organisation, and each organisation's Medplum credentials are entered through the app (or set up by Medbot) and stored encrypted.
 
@@ -29,14 +29,23 @@ Medbot CMS is multi-organisation. Any signed-in user can create an organisation 
    Doctors can also have a small organisation of their own for themselves and their family: [Physician Family Organisation](/cms/physician-family-organisation).
 4. **Belong to several** and choose which one to work in: [Choosing & Switching](/cms/switching).
 5. **Bring in staff and patients**, one at a time or in bulk from a CSV file: [Members & Roles](/cms/members-and-roles) and [Seeding Staff & Patients](/cms/seed-data).
-6. **Administer the organisation**: rename it, set its country and time zone, choose its integrations, rotate its join code, manage its Medplum connection: [Organisation Settings](/cms/settings).
+6. **Administer the organisation**: rename it, set its country and time zone, choose its integrations, rotate its join code, manage its Medplum connection: [Organisation Settings](/cms/settings). Decide which AI providers and regions its AI may use: [AI Policy](/cms/ai-policy).
 7. **Connect to Singapore's national systems** through SmartCMS: verify CHAS at check-in, claim CHAS, Medisave and other subsidies from the bill, and send registry and disease reports: [SmartCMS](/cms/smartcms).
 
 ## The organisations screen
 
-`/organisations` lists every organisation the signed-in user belongs to, with their role in each and a **Current** badge on the active one. From it they can switch to another, open **Settings** on any they administer, or **Create organisation**.
+`/organisations` lists every organisation the signed-in user belongs to, with their role in each and a **Current** badge on the active one. From it they can switch to another, open **Settings** on any they administer, **Create organisation**, or **Claim an existing organisation** that Medbot already lists. The same screen shows:
 
-Unlike every other staff page, this one does not require an organisation to be chosen: a brand-new user with no memberships lands here. With no memberships at all, the empty state says "You don't belong to any organisation yet. Create one or ask an administrator for a join code."
+- a banner when the user has just claimed an organisation: "&lt;name&gt; is on Medbot, with you as its first admin.", with **Open it**
+- the demo organisation, and a doctor's [physician family organisation](/cms/physician-family-organisation)
+- **Your claims**, each with its status. "A Medbot administrator reviews every claim."
+- **Join with a code**, to [request to join](/cms/join-an-organisation) with a join code from an admin
+
+Unlike every other staff page, this one does not require an organisation to be chosen. A brand-new user with no memberships is sent to onboarding instead, to join or set up an organisation (see [Getting Started](/cms/getting-started)). Opened with no memberships at all, the empty state says "You don't belong to any organisation yet. Create one or ask an administrator for a join code."
+
+## Inside an organisation
+
+Once an organisation is chosen, the sidebar has two tabs. **Home** holds the [Home assistant](/cms/home-assistant), care-service tasks and the organisation's administration (patients, staff, agents, settings and the [AI policy](/cms/ai-policy)). **CMS** holds the care service you are working in and the clinic's operations. See [Staff App Overview](/cms/overview#home-and-cms).
 
 ## Where to go next
 

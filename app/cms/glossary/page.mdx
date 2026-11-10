@@ -7,7 +7,14 @@ Terms used across the CMS documentation, each with one meaning. Where a term is 
 | **Organization** | A clinic's account: its staff, locations, and patients. The screen spells it **Organisation**. A person's role is set per organization. |
 | **Clinic location** | One physical site of an organization. Sessions, rooms, and the queue are scoped to one location at a time. |
 | **Member** | A person's place in one organization in one role. Someone with two roles in the same organization, such as Doctor and Clinic Admin, has two memberships. |
-| **Role** | Clinic Admin, Receptionist, Doctor, or Nurse, held per organization. A person can hold more than one role in an organization and works as one at a time, switching from the **Working as** menu. See [Roles & Permissions](/cms/roles-and-permissions) and [Switching role](/cms/switching#switching-role). |
+| **Role** | Clinic Admin, Receptionist, Doctor, or Nurse, held per organization. A person can hold more than one role in an organization and works as one at a time, switching from the sidebar switcher or the **Working as** menu. See [Roles & Permissions](/cms/roles-and-permissions) and [Switching role](/cms/switching#switching-role). |
+| **Home tab** | The half of the sidebar with the Home assistant, care-service tasks and the organisation's administration. See [Home and CMS](/cms/overview#home-and-cms). |
+| **CMS tab** | The half of the sidebar with the current care service and clinic operations. A patient's chart opens here. See [Home and CMS](/cms/overview#home-and-cms). |
+| **Care service** | A programme of care the organisation runs, with its own referrals, workstation and care team. Its pages sit at the top of the CMS tab. See [Services](/cms/services). |
+| **Home assistant** | The Home tab's chat, which answers from the organisation's records and cannot change them. See [Home Assistant](/cms/home-assistant). |
+| **Search palette** | The search box opened from **Search** in the sidebar or with ⌘K or Ctrl+K. See [Search](/cms/overview#search). |
+| **Open patient card** | The card at the top of the CMS tab's sidebar with the open chart's sections. See [The patient chart](/cms/patient-records#the-patient-chart). |
+| **AI policy** | Which AI providers and regions the organisation's AI may use, and its default model. Set by a Clinic Admin. See [AI Policy](/cms/ai-policy). |
 | **Session** | A clinic location's working day: which staff are on duty and which rooms are open. Opened from [Session Setup](/cms/session-setup). |
 | **Shift** | One rostered block of work for one staff member. See [Rostering](/cms/rostering). |
 | **Queue ticket** | The number a checked-in patient is called by. See [Reception Queue](/cms/reception-queue). |
@@ -33,6 +40,9 @@ Terms used across the CMS documentation, each with one meaning. Where a term is 
 | **Override reason** | The prescriber's recorded reason for going ahead with a prescription despite a **Stop:** alert. It is shown on the signed prescription. |
 | **Lot** | A batch of stock received into inventory, with its own quantity and expiry. See [Inventory & Stock](/cms/inventory-and-stock). |
 | **Ping** | A short task or message sent to a staff member. See [Tasks & Staff Pings](/cms/tasks). |
+| **Task Inbox** | The care services' tasks waiting for you, such as plan approvals and patients' questions. At **Home → Tasks** (`/services/inbox`). Different from pings. See [The Task Inbox](/cms/tasks#the-task-inbox). |
+| **Note template** | Reusable note text, offered in every note editor's `/` menu and Templates panel. Managed at **Clinical → Templates** (`/templates`). See [Note templates](/cms/patient-notes#note-templates). |
+| **Billable service** | A clinical procedure the clinic charges for, at **Billing → Billable services** (`/billable-services`). Not the same as a care service. See [Services & Consumables](/cms/services-and-consumables). |
 | **Patient portal** | A separate, patient-facing app where a clinic's patients manage their care. See [Patient Portal](/cms/patient-portal). |
 | **MCR, SNB** | Registration numbers for doctors (Medical Council) and nurses (Nursing Board), entered on the staff form. |
 | **Caregiver** | A family member or carer who uses the patient portal for a patient with their own account, read-only or able to make changes. See [Caregiver access](/cms/patient-portal#caregiver-access). |
@@ -41,8 +51,8 @@ Terms used across the CMS documentation, each with one meaning. Where a term is 
 | **CHAS** | The Community Health Assist Scheme. Medbot verifies a patient's CHAS card at check-in and claims CHAS subsidies from the bill. See [Claims Workflow](/cms/smartcms/claims). |
 | **Medisave (CDMP)** | Paying part of a chronic disease bill from a patient's or family member's Medisave account, claimed from CPF. See [Claims Workflow](/cms/smartcms/claims#medisave). |
 | **ICD-10-AM** | The diagnosis coding MOH requires on claims and reports. Coded on the visit's **Diagnoses (ICD-10-AM)** card. |
-| **Claims queue** | Every SmartCMS claim the organisation has prepared, with its status. At **SmartCMS → Claims**. |
-| **Claims today** | One clinic day's checked-in patients, with each bill, its claims and what the patient still owes. At **SmartCMS → Claims → Claims today**. See [Claims today](/cms/smartcms/claims#claims-today). |
+| **Claims queue** | Every SmartCMS claim the organisation has prepared, with its status. At **Claims → Claims** (`/claims`) in the CMS tab. |
+| **Claims today** | One clinic day's checked-in patients, with each bill, its claims and what the patient still owes. At **Claims today** (`/claims/today`), linked from the claims queue. See [Claims today](/cms/smartcms/claims#claims-today). |
 | **Resubmission** | A corrected claim an admin sends after MHCP rejects one. The rejected claim shows **Rejected, resubmitted**. See [Resubmitting a rejected claim](/cms/smartcms/claims#resubmitting-a-rejected-claim). |
 | **Claims agent** | The automated run, or AI agent, that prepares claims and reports under the organisation's agent policy. See [Claims Agent](/cms/smartcms/claims-agent). |
 | **Entitlement** | Synapxe's approval for one clinic location to use one SmartCMS service. Recorded on [SmartCMS Settings](/cms/smartcms/settings). |
@@ -51,7 +61,7 @@ Terms used across the CMS documentation, each with one meaning. Where a term is 
 | **Status banner** | The amber (degraded) or red (major outage) strip at the top of every page when Medbot has a problem. See [System Status](/cms/system-status). |
 | **Medbot CMS desktop app** | The installed app for clinic laptops that shows Medbot CMS while Medbot answers and the downtime workspace when it does not. See [Medbot CMS Desktop App](/cms/downtime/cms-desktop). |
 | **Downtime workspace** | The offline part of the desktop app, for looking up charts and recording care during an outage. See [Working During an Outage](/cms/downtime/working-offline). |
-| **Downtime laptop** | A computer enrolled to keep an encrypted copy of the charts for use during an outage, with a desk profile. Managed at **Administration → Downtime devices**. See [Downtime Laptops](/cms/downtime/devices). |
+| **Downtime laptop** | A computer enrolled to keep an encrypted copy of the charts for use during an outage, with a desk profile. Managed on **Downtime devices**, linked from organisation Settings. See [Downtime Laptops](/cms/downtime/devices). |
 | **Desk profile** | What a downtime laptop holds and can record: **Consultation room**, **Reception** or **Dispensary**. See [Desk profiles](/cms/downtime/devices#desk-profiles). |
 | **Offline passphrase** | What a person types to unlock a downtime laptop offline. Not their Medbot password. |
 | **Downtime entry** | Vitals, an allergy, a note, a visit record or a walk-in recorded on a downtime laptop, signed by its author and uploaded when Medbot is back. |

@@ -1,0 +1,66 @@
+# Home Assistant
+
+The Home assistant is a chat on the **Home** tab. Ask it about the organisation's patients, today's queue, appointments or billing, and it answers from the records, drawing what it found as cards. It can only read: it never books, checks in, bills, signs, orders or changes anything.
+
+Selecting **Home** opens it on a new chat (`/home`). Each conversation you start gets its own address, `/home/chats/<id>`, and is listed under **Chats** in the sidebar.
+
+## Who can do this
+
+Every role can use the Home assistant. What it can look up follows your role, the same way the matching pages do:
+
+| What it can look up | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| Find a patient by name, NRIC or FIN, phone number or birth date | Yes | Yes | Yes | Yes |
+| A patient's summary (allergies, conditions, medications, last visit, next appointment) | Yes | No | Yes | Yes |
+| A patient's latest results | Yes | No | Yes | Yes |
+| The appointments on a day | Yes | Yes | Yes | Yes |
+| The live queue | Yes | Yes | Yes | Yes |
+| Unpaid invoices | Yes | Yes | No | No |
+
+If you ask for something your role cannot see, the assistant says it has no way to look it up. Under the message box it reminds you: "Medbot reads &lt;organisation&gt;'s records and shows only what your role may see. It cannot change the record. Check before you act."
+
+## Starting a chat
+
+1. Select **Home**, or **New chat** in the sidebar.
+2. Type your question in the box ("Ask about a patient, the queue, appointments or billing") and send it, or select one of the suggestions:
+   - "Who is waiting in the queue?"
+   - "What appointments do we have today?"
+   - "Show a patient's latest results"
+   - "Which invoices from today are unpaid?"
+   - "Who is booked for tomorrow?"
+3. Medbot reads the records and replies with a sentence or two on what matters, and a card for each thing it looked up.
+
+To ask about a patient, name them. The assistant searches for the patient first. If several match, it lists them and asks which one you mean.
+
+Days are the organisation's own calendar days, in its time zone.
+
+## The cards
+
+| Card | What it shows | Link |
+| --- | --- | --- |
+| Patient matches | Each patient found, with their details and masked identifier | **Open chart** |
+| Patient summary | **Allergies**, **Conditions**, **Active medications**, **Last visit** and **Next appointment** | **Open chart** |
+| Results | The patient's most recent report: each **Test**, its **Result**, **Reference range**, the previous value and the lab's **Flag**, with how many are flagged | |
+| **Queue** | How many patients are at each stage, and each patient's **Ticket**, **Stage**, **Doctor** and how long they have **Waited**, longest wait first | **Open queue** |
+| **Appointments** | The day's total, how many are booked, arrived, fulfilled, cancelled or no-show, and the next appointments (**Next up**) | **Open appointments** |
+| **Unpaid invoices** | Issued invoices not yet paid, with the total owed and the largest invoices | **Open billing** |
+
+Values are shown exactly as the record has them, never rounded or converted. A card lists only the first few rows; follow its link for the full page.
+
+## Replies
+
+Each reply has **Copy reply**, and the latest has **Ask again**, which asks the same question afresh. If the assistant cannot answer, it says so with **Try again**.
+
+The assistant always runs on the organisation's default model. The box shows **Organisation default model**: you cannot choose another. A Clinic Admin sets that model in the [AI policy](/cms/ai-policy).
+
+## Your conversations
+
+**Chats** in the Home sidebar lists your 20 most recent conversations, newest first, under **Today**, **Previous 7 days** and **Older**. A new conversation appears there as soon as you send its first message. Select one to carry on where you left off.
+
+Conversations are yours alone, in that organisation. Nobody else sees them, and they are not listed when you work in another organisation. Opening a conversation that is not yours, or that belongs to another organisation, shows "This conversation is not here", with **Start a new chat**.
+
+## Related
+
+- [Staff App Overview](/cms/overview): the Home and CMS tabs.
+- [AI Policy](/cms/ai-policy): which AI providers and regions the organisation's AI may use, and its default model.
+- [Patient Records & Consent](/cms/patient-records), [Reception Queue](/cms/reception-queue), [Appointments](/cms/appointments) and [Billing](/cms/billing): the pages the cards link to.

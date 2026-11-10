@@ -22,6 +22,24 @@ You work as one role at a time, and permissions do not add up across roles. Use 
 
 What you can do depends on your role in the current organization. For example, only a Clinic Admin and a Receptionist can check a patient in, and only a Doctor can sign off a result. Check the **Who can do this** table on the feature page, or the full [Roles & Permissions](/cms/roles-and-permissions) matrix.
 
+## A page I used is missing from the sidebar
+
+The sidebar shows one tab at a time. Patients, staff, agents, settings and the AI policy are in the **Home** tab under **Organisation**. Results, the queue, appointments, billing, claims and pharmacy are in the **CMS** tab. Or use **Search** (⌘K or Ctrl+K) and type the page's name. See [Staff App Overview](/cms/overview#the-sidebar).
+
+Downtime devices, downtime recovery and system status are no longer in the sidebar for Clinic Admins: open them from the **Downtime and status** section of [Organisation Settings](/cms/settings#downtime-and-status). Billable services moved from `/services` to **Billing → Billable services** (`/billable-services`); `/services` is now the organisation's [care services](/cms/services).
+
+## An organisation link from Medbot web opens Medbot CMS
+
+Organisation features moved from Medbot web to Medbot CMS: services, the Task Inbox, organisation patients and members, settings and the AI policy. Old links redirect to the matching CMS page. Medbot web is now for your personal work.
+
+## The Home assistant says it cannot look something up
+
+What the [Home assistant](/cms/home-assistant) can read follows your role. For example, only Clinic Admins, Doctors and Nurses get a patient's summary and results, and only Clinic Admins and Receptionists unpaid invoices. It never changes the record: open the page its card links to.
+
+## I cannot choose the Home assistant's model
+
+The Home assistant always runs on the organisation's default model, which a Clinic Admin sets in the [AI policy](/cms/ai-policy).
+
 ## The reception queue is empty or says "No session yet today"
 
 Nobody has opened a session for the location yet. Select **Create session**, or open one from [Session Setup](/cms/session-setup). Also confirm you have chosen the right location at the top of the [Reception Queue](/cms/reception-queue).

@@ -49,9 +49,20 @@ Some surfaces depend on the organisation's **country** and the national-service 
 
 When you are not a member of an organisation, or your membership is inactive, requests for it answer **not found** rather than **forbidden**. The app deliberately does not confirm that an organisation exists to someone who cannot see it. A page that shows "not found" where you expected settings usually means the membership, not the URL.
 
+## The service and the previewed role
+
+Two more choices are kept alongside the organisation: the care service you are working in, and, for a Clinic Admin, a role being previewed. Neither grants anything.
+
+- **The service** (`medbot_service`) decides which service's pages the CMS tab shows and where the CMS opens. It counts only when it names the current organisation and a service you may open; otherwise it is ignored. Every service page still checks your access.
+- **A previewed role** (`medbot_preview_role`) changes the sidebar, the phone's bar, search and the home page to another role's. It lasts the browser session and counts only for an administrator's own membership. Every page, every API check and every record of who did what still use the administrator's real role, so a preview never lets an administrator sign notes as a doctor.
+
+Signing out clears both. See [Choosing & Switching](/cms/switching).
+
 ## Across the Medbot apps
 
-The web app's [Services](/docs/services) live in the same organisations: a Service belongs to one organisation, its care team is drawn from that organisation's members, and each member's role on a Service is their role in the organisation.
+[Care services](/cms/services) are part of the organisation and are run from Medbot CMS: a service belongs to one organisation, its care team is drawn from that organisation's members, and each member's role on a service is their role in the organisation. Medbot web is personal only: it has no organisation scope, so nothing done there is scoped to a clinic, and its old organisation pages redirect to Medbot CMS.
+
+The [Home assistant](/cms/home-assistant) works inside one organisation too. A conversation belongs to the person who started it, in the organisation they started it in, and it reads only that organisation's records through the same role checks as the CMS pages.
 
 ## What is still single-organisation
 

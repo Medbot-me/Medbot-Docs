@@ -1,6 +1,6 @@
 # Organisation Settings
 
-Settings for one organisation live at `/organisations/[id]/settings`, reachable from the **Settings** link beside any organisation you administer on the [organisations screen](/cms).
+Settings for one organisation live at `/organisations/[id]/settings`. For the organisation you are signed in to, open **Organisation → Settings** in the **Home** tab sidebar. `/organisation-settings` also goes there, and old organisation settings links from Medbot web redirect to it. For any other organisation you administer, use the **Settings** link beside it on the [organisations screen](/cms#the-organisations-screen).
 
 Only an **administrator of that organisation** can open it. A non-admin member sees "Only an administrator of &lt;name&gt; can manage its settings"; a non-member gets a plain "not found". The app does not distinguish an organisation you cannot see from one that does not exist.
 
@@ -8,7 +8,7 @@ The page works on the organisation named in its own URL rather than the one you 
 
 The page has these sections, in order. In a [physician family organisation](/cms/physician-family-organisation), **Integrations**, **Join code** and **Seed data** are not shown.
 
-Your own name and appearance are not here: they are under **Settings** in your account menu (see [Getting Started](/cms/getting-started#4-your-name-and-appearance)).
+Your own name and appearance are not here: they are under **Settings** in your account menu (see [Getting Started](/cms/getting-started#4-your-name-and-appearance)). Which AI providers and regions the organisation's AI may use is on its own page, [AI Policy](/cms/ai-policy).
 
 ## General
 
@@ -37,6 +37,7 @@ Country-specific national services, at `#integrations`.
 
 - **Singapore:** the card is titled **Singapore integrations**: "The SmartCMS services this clinic uses. Each one also needs Synapxe's approval for every location before it connects." Pick modules in the module picker (or **Use GP starter**) and click **Save integrations**. See [Modules & Gating](/cms/smartcms/modules).
   Once at least one module is saved, a **SmartCMS settings** button opens the organisation's SmartCMS tab (`/organisations/[id]/smartcms`). There an admin switches services on per location, tests the connection and exports the Synapxe onboarding rows. Only an administrator can open it. See [SmartCMS Settings](/cms/smartcms/settings).
+  With **Referral contribution to NEHR** ticked, a note under the modules names every active location that has no HE code: "Referral letters from &lt;locations&gt; are not sent to NEHR until it has an HE code." (or "until they have" for several). **Add HE codes** jumps to [Singapore registration](#singapore-registration). See [Locations without an HE code](/cms/smartcms/reports#locations-without-an-he-code).
 - **Anywhere else:** "No country-specific integrations are available for &lt;country&gt;."
 
 ## Singapore registration
@@ -83,6 +84,18 @@ On a plan with monthly credits, that page also shows the **Monthly allowance**: 
 ## Data location
 
 "Where this organisation's data is kept and which processors handle it, as far as this deployment's configuration shows." **See where your data lives** opens `/organisations/[id]/data-location`, a report generated from the deployment's configuration each time it opens. It lists, under **Where your data is kept**, each store that holds the organisation's records, and under **Who handles it**, each service that processes data on its behalf, with who operates it and where. Items under **In progress** are listed so the page does not read as complete. Only an administrator of the organisation can open it.
+
+## Downtime and status
+
+"How the clinic keeps working through an outage, and catches up after one." Shown only when the page is for the organisation you are signed in to, because these pages act on that one. Each link opens its page:
+
+| Link | What it opens |
+| --- | --- |
+| **Downtime devices** | Enrolling and revoking the organisation's downtime laptops (`/downtime-devices`). See [Downtime Laptops](/cms/downtime/devices). |
+| **Downtime recovery** | Reviewing and filing what was recorded while the clinic was offline (`/downtime-recovery`). See [Recovery After an Outage](/cms/downtime/recovery). |
+| **System status** | The health of the services the organisation depends on (`/status`). See [System Status](/cms/system-status). |
+
+These pages are no longer in the sidebar for Clinic Admins. When downtime entries are past their verification target, the **Settings** item in the sidebar shows the count. Doctors, nurses and receptionists, who cannot open Settings, have **Organisation → Downtime recovery** in the Home tab instead.
 
 ## Seed data
 

@@ -1,6 +1,8 @@
 # Services & Consumables
 
-Services are the clinical procedures the clinic offers. Devices and substances are the non-medication supplies it stocks. Find them at **Billing → Services** (`/services`) and **Billing → Devices & substances** (`/consumables`). Doctors and nurses pick from these lists when they place [orders](/cms/orders-and-order-sets).
+Billable services are the clinical procedures the clinic offers and charges for. Devices and substances are the non-medication supplies it stocks. Find them in the **CMS** tab under **Admin**, at **Billing → Billable services** (`/billable-services`) and **Billing → Devices & substances** (`/consumables`). Doctors and nurses pick from these lists when they place [orders](/cms/orders-and-order-sets).
+
+> **Note:** Billable services used to be at `/services`. That address now belongs to the organisation's [care services](/cms/services), which are a different thing: programmes of care with their own referrals, workstation and care team.
 
 ## Who can do this
 
@@ -11,9 +13,9 @@ Services are the clinical procedures the clinic offers. Devices and substances a
 
 Doctors and nurses see the lists without any buttons. Receptionists cannot open either page.
 
-## Services
+## Billable services
 
-The **Services** table shows **Service**, **Slug**, **Status**, and **Price**. A service with no price shows **Unpriced**.
+The page is titled **Services**. Its table shows **Service**, **Slug**, **Status**, and **Price**. A service with no price shows **Unpriced**.
 
 1. Select **Add service**.
 2. Enter a **Name** and a **Catalog slug** (lowercase letters, numbers, and hyphens; it fills in from the name). Add a SNOMED code, a description, and an expected consumable if you want. SNOMED is a standard clinical coding system.

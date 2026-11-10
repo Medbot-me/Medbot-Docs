@@ -16,7 +16,7 @@ Reception controls what a display shows by calling patients to rooms. See [Recep
 
 ## Adding a display
 
-1. Open **Scheduling → Session** and choose the clinic location.
+1. In the **CMS** tab, open **Operations → Session** and choose the clinic location. The **Displays** link under **Session** goes straight to the section.
 2. In **Displays**, select **Add display**.
 3. Enter a **Name**, for example "Lobby TV".
 4. Choose the **Type**: **Waiting room (full board)** or **Room door (single room)**. For a room door screen, also choose the **Room**.
@@ -27,13 +27,13 @@ A window says the display is ready and shows its web address. Open that address 
 <ImageZoom src="/images/cms/display-boards/02-display-created.png" alt="The display ready window over the Session setup page, with the display address hidden as dots and a Done button" />
 _The display is ready window_
 
-The **Displays** list shows each display with its **Name**, **Type**, **Room**, **Last seen**, and **Status**. **Last seen** tells you whether the device is still open.
+The **Displays** list shows each display with its **Name**, **Type**, **Room**, **Last seen**, and **Status**. **Last seen** tells you whether the device is still open: for example "42s ago" or "5m ago", and after an hour the date and time in Singapore time ("21 Oct 2026, 2:30 pm"), or **Never**.
 
 ## What each display shows
 
 A display belongs to one location. It updates itself about every four seconds, so nobody needs to reload it. It never shows a patient's name.
 
-The waiting room board shows the location name and the time of the last update. Under **NOW SERVING** it lists the ticket last called for each room, with the room name. Under **WAITING** it lists the tickets of patients who have checked in and not been called. Before anyone is called it says **No patients called yet**. At the bottom, when a check-in code is set for the day, it shows "Checking in on your phone? Enter code &lt;code&gt; in the patient portal," (The same code appears as **Self check-in code** on the staff queue screen.) Patients now register from the portal with a single button and do not need the code. See [Reception Queue](/cms/reception-queue).
+The waiting room board shows the location name and the time of the last update, in Singapore time (for example 14:03:09). Under **NOW SERVING** it lists the ticket last called for each room, with the room name. Under **WAITING** it lists the tickets of patients who have checked in and not been called. Before anyone is called it says **No patients called yet**. At the bottom, when a check-in code is set for the day, it shows "Checking in on your phone? Enter code &lt;code&gt; in the patient portal," (The same code appears as **Self check-in code** on the staff queue screen.) Patients now register from the portal with a single button and do not need the code. See [Reception Queue](/cms/reception-queue).
 
 <ImageZoom src="/images/cms/display-boards/03-waiting-room-board.png" alt="A black waiting room board titled Main Clinic, with one ticket in Now serving beside Consult 1, one ticket under Waiting, and the check-in code at the bottom" />
 _A waiting room board_

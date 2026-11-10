@@ -2,7 +2,7 @@ import { ImageZoom } from "nextra/components";
 
 # Patient Records & Consent
 
-Patient records are the list of everyone registered at your clinic and each person's chart. Find them at **Patients → Patients** (`/patients`). All four roles can open a chart. Front desk staff register patients.
+Patient records are the list of everyone registered at your clinic and each person's chart. The patient list is in the **Home** tab at **Organisation → Patients** (`/patients`), and you can find a patient from **Search** (⌘K) in either tab. A chart opens in the **CMS** tab. All four roles can open a chart. Front desk staff register patients.
 
 ## Who can do this
 
@@ -65,22 +65,50 @@ _The duplicate identifier message_
 
 ## The patient chart
 
-The chart opens on **Overview**. Cards on the overview:
+A chart opens in the **CMS** tab, with the patient as a card at the top of the sidebar listing the chart's sections: **Overview**, **Accounts**, **Encounters**, **Notes**, **Results**, **Photos**, **Vaccinations**, **Documents** and **Messages**, and for some roles **Shared by patient** and **Audit log**. **Notes** appears only when your deployment has turned the [notes workspace](/cms/patient-notes) on. **Photos** holds [clinical photos](/cms/clinical-photos). **Accounts** is visible to Clinic Admins and Receptionists only. **Audit log** is visible to Clinic Admins only (see [Audit log](#audit-log)). Select the cross on the card (**Close patient**) to leave the chart. On a phone the sections are a row of tabs under the patient's name.
+
+### The chart header
+
+On **Overview** the header shows the patient in full:
+
+- their initials and name, and below it their sex, age, birth date, MRN and phone number, each where recorded
+- up to two allergy chips, such as "Allergy: Penicillin", then how many more
+- the patient's status when it is not active, and any other names ("Also known as")
+- **Encounter in progress**, when the patient has one: what it is for, when it started, its class and clinician, with **Open** to go to [Encounters](/cms/encounters)
+- **Ping staff**, to send a [staff ping](/cms/tasks) about the patient
+
+On the other sections the header leads with the section's name, with the patient's name and details beside it.
+
+Each section's own buttons sit at the top right. On a phone they are a bar along the bottom of the screen, in place of the app's bottom bar. On **Overview** they are:
+
+| Button | What it does | Who sees it |
+| --- | --- | --- |
+| **Portal invite** | Makes a one-time link that, once the patient signs in to the patient app, links their account to this chart. See [Patient Portal](/cms/patient-portal). | Everyone |
+| **New note** | Opens the [notes workspace](/cms/patient-notes). | Clinic Admins, Doctors and Nurses |
+| **Start Encounter** | Starts a visit. See [Encounters & Clinical Notes](/cms/encounters#starting-an-encounter). | Clinic Admins, Doctors and Nurses, while no encounter is in progress |
+
+### The Overview
+
+**Allergies** comes first, across the full width. Below it are two columns (one on a narrow screen):
+
+| Left column | Right column |
+| --- | --- |
+| **Problem list**, **Medications**, **Vitals**, and in Singapore **Diagnoses (ICD-10-AM)** | **Recent results**, **Clinical notes**, **Contact**, **Communication consent**, **Demographics and identifiers** |
 
 | Card | What it shows |
 | --- | --- |
 | **Allergies** | Drug allergies and intolerances, or "No known drug allergies". Not shown to Receptionists. See [Allergies & Medication Safety](/cms/allergies-and-medication-safety) |
-| **Patient-reported intake** | Answers from a self-registration, only for patients who registered themselves |
+| **Patient-reported intake** | Answers from a self-registration, only for patients who registered themselves. Shown under **Allergies** |
 | **Problem list** and **Medications** | The patient's conditions, with a count of active ones, and their medicines, with a filter between active and all. Read only, and shown to doctors, nurses and Clinic Admins. If a list cannot be loaded, the card says so ("Do not assume this patient has no problems.") with **Try again**, never an empty list |
-| **Demographics** | Birth date, gender, and marital status, preferred language and date of death when recorded |
-| **Contact** | Phone and email with a **Preferred** badge, plus **Portal invite**, **Caregivers** and **Edit contact**. See [Caregiver access](/cms/patient-portal#caregiver-access) |
-| **Address** | Addresses on file |
-| **Identifiers** | Identifier type and number |
-| **Communication consent** | Consent by purpose and channel, plus **Edit consent** |
 | **Vitals** | See [Vitals](/cms/vitals) |
-| **Clinical notes** | See [Encounters & Clinical Notes](/cms/encounters) |
+| **Diagnoses (ICD-10-AM)** | Singapore only. See [Coding the visit's diagnoses](/cms/encounters#coding-the-visits-diagnoses-singapore) |
+| **Recent results** | The patient's three latest results, each with when it was received and **Awaiting review** or who reviewed it. Select one to open it on **Results**, or **All results**. See [Diagnostic Results](/cms/diagnostic-results) |
+| **Clinical notes** | See [Encounters & Clinical Notes](/cms/encounters#clinical-notes) |
+| **Contact** | Phone and email with a **Preferred** badge, and the addresses on file, plus **Caregivers**, **Messaging numbers** and **Edit contact**. See [Caregiver access](/cms/patient-portal#caregiver-access) |
+| **Communication consent** | Consent by purpose and channel, plus **Edit consent** |
+| **Demographics and identifiers** | Birth date, gender, and marital status, preferred language and date of death when recorded, then each identifier and its number |
 
-The sidebar lists the other chart sections under the patient's name: **Overview**, **Accounts**, **Encounters**, **Notes**, **Results**, **Photos**, **Vaccinations**, **Documents** and **Messages**. **Notes** appears only when your deployment has turned the [notes workspace](/cms/patient-notes) on. **Photos** holds [clinical photos](/cms/clinical-photos). **Accounts** is visible to Clinic Admins and Receptionists only. **Audit log** is visible to Clinic Admins only (see [Audit log](#audit-log)). **Ping staff** at the top of every chart sends a staff ping.
+**Messaging numbers** shows the numbers the patient's care services message them on, their own and any guardian's.
 
 <ImageZoom src="/images/cms/patient-records/04-chart-overview.png" alt="A patient chart overview with demographics, contact, address, identifiers, consent, vitals and clinical notes cards" />
 _A patient chart overview_

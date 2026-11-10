@@ -1,6 +1,7 @@
 export default {
   index: "Introduction",
   overview: "Staff App Overview",
+  "home-assistant": "Home Assistant",
   "getting-started": "Getting Started",
   "roles-and-permissions": "Roles & Permissions",
   "-- guides": { type: "separator", title: "Guides by Role" },
@@ -46,6 +47,7 @@ export default {
   "members-and-roles": "Members & Roles",
   "seed-data": "Seeding Staff & Patients",
   settings: "Organisation Settings",
+  "ai-policy": "AI Policy",
   "medplum-credentials": "Medplum Credentials",
   scoping: "How Scoping Works",
   smartcms: "SmartCMS (Singapore)",

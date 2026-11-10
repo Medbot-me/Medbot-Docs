@@ -2,7 +2,7 @@ import { ImageZoom } from "nextra/components";
 
 # Encounters & Clinical Notes
 
-An encounter is the record of one visit. Doctors and nurses attach vitals, notes, orders and vaccinations to it. Find encounters in a patient's chart under **Encounters** (`/patients/[id]/encounters`). Clinical notes appear on the chart **Overview**.
+An encounter is the record of one visit. Doctors and nurses attach vitals, notes, orders and vaccinations to it. Find encounters in a patient's chart under **Encounters** (`/patients/[id]/encounters`). Clinical notes appear on the chart **Overview**, and the latest note of the encounter in progress on **Encounters**.
 
 ## Who can do this
 
@@ -19,11 +19,11 @@ An encounter is the record of one visit. Doctors and nurses attach vitals, notes
 | Order a Screen for Life screening (Singapore) | Yes | No | Yes | Yes |
 | Record a developmental screening (Singapore) | Yes | No | Yes | No |
 
-The **Start Encounter** button is visible to every role. A Receptionist who submits the form sees "Something went wrong while starting the encounter." Ask a Doctor, Nurse or Clinic Admin to start it.
+On the chart, **Start Encounter** is shown to Clinic Admins, Doctors and Nurses, and only while the patient has no encounter in progress. The actions menu on the Patients page offers it to every role: a Receptionist who submits the form there sees "Something went wrong while starting the encounter." Ask a Doctor, Nurse or Clinic Admin to start it.
 
 ## Starting an encounter
 
-1. Open the patient's chart and select **Encounters**, or select **Start Encounter** in the actions menu on the Patients page.
+1. On the chart's **Overview** or **Encounters**, select **Start Encounter** (on a phone, in the bar at the bottom of the screen). Or select **Start Encounter** in the actions menu on the Patients page.
 2. Choose the **Encounter class**: **Ambulatory** (the default), **Emergency**, **Virtual**, **Home Health** or **Inpatient**.
 3. Choose the **Status**: **Planned**, **Arrived**, **Triaged** or **In Progress** (the default).
 4. Choose the **Priority**: **Routine** (the default), **Urgent**, **ASAP** or **STAT**.
@@ -64,15 +64,34 @@ Visits from the queue finish when the doctor, or the lead nurse of a nurse-led v
 <ImageZoom src="/images/cms/encounters/04-encounters-page.png" alt="The Encounters page with a table of encounters and the Orders card" />
 _The Encounters page_
 
-## The encounters table
+## The Encounters page
 
-Each row shows the ID, status, class, priority, type, reason, account, start and end time, and service provider. Newest rows come first. Clinic Admins, Doctors and Nurses see **Record vitals** on any encounter that is still open. See [Vitals](/cms/vitals). The **Orders** card below the table is described in [Orders & Order Sets](/cms/orders-and-order-sets).
+**Encounters** leads with the encounter in progress, then the patient's other encounters. Its buttons, at the top right (on a phone, at the bottom of the screen), are **Go to billing** for Clinic Admins and Receptionists, and **Start Encounter** while no encounter is in progress.
+
+### The encounter in progress
+
+The current encounter is shown as a panel with what it is for, its status, its class, when it started, its clinician and service provider, and a short id such as `ENC-1A2B3C`. Inside it:
+
+- **Vitals in this encounter**: the readings taken in it, with **Record vitals** for Clinic Admins, Doctors and Nurses. "No vitals recorded yet." until there are some. See [Vitals](/cms/vitals).
+- **Clinical note**: the latest note written in it, with its author and time, and how many notes it has. **Write a note**, or **Open notes** once one is written, opens the [notes workspace](/cms/patient-notes).
+
+Without one, the page says **No encounter in progress**: "Start one to record vitals, notes and orders against it." for those who can, otherwise "A doctor or nurse starts one when the patient is seen."
+
+The **Orders** card follows. It is described in [Orders & Order Sets](/cms/orders-and-order-sets).
+
+The chart header on every section also shows **Encounter in progress**, with **Open** to come here.
+
+### Past encounters
+
+**Past encounters** lists the patient's other encounters, newest first, with the **Date** (and times), **Encounter**, **Class**, **Clinician**, how many **Notes** were written in it, and its **Status**. Chips above it narrow the list to one class, with a count on each, or **All**. Ten show at a time: **Show more** adds ten more. With none, it says "No other encounters."
+
+Clinic Admins, Doctors and Nurses see **Record vitals** on any past encounter that is still open.
 
 Clinical photos can be linked to an encounter when they are uploaded. They are listed in the chart's **Photos** section, not on this page. See [Clinical Photos](/cms/clinical-photos).
 
 ## Clinical notes
 
-The **Clinical notes** card on **Overview** lists notes grouped by encounter, newest first. Each note shows its type, author and time. There are two types:
+The **Clinical notes** card, in the right-hand column of **Overview**, lists notes grouped by encounter, newest first. Each note shows its type, author and time. There are two types:
 
 - **Consultation Note**: the physician's note for the consultation. Doctors and Clinic Admins write these.
 - **Progress Note**: a procedure performed or health education given. Doctors, Nurses and Clinic Admins write these.
@@ -105,7 +124,7 @@ Receptionists can read notes but cannot write, amend or retract them.
 
 ## Coding the visit's diagnoses (Singapore)
 
-The **Diagnoses (ICD-10-AM)** card sits on the chart **Overview**, above **Clinical notes**. It covers the current encounter only. It appears for a Singapore organisation that subscribes to CHAS, CDMP, SFL, DEROM, CIDC or MW_HEALTH. Without a current encounter it is not shown. It says: "This visit's coded diagnoses. Claims and MOH reports take them from here."
+The **Diagnoses (ICD-10-AM)** card sits in the left-hand column of the chart **Overview**, under **Vitals**. It covers the current encounter only. It appears for a Singapore organisation that subscribes to CHAS, CDMP, SFL, DEROM, CIDC or MW_HEALTH. Without a current encounter it is not shown. It says: "This visit's coded diagnoses. Claims and MOH reports take them from here."
 
 1. Under **Add a diagnosis**, type in **Search by code or name, e.g. J06.9 or diabetes** and choose a match. A well-formed code that is not on MOH's lists is offered as **Not on MOH's lists**.
 2. Medbot fills in the CDMP conditions the diagnosis suggests. Remove any that do not apply, or choose **Add** beside **CDMP:** to add one.
