@@ -2,7 +2,9 @@ import { ImageZoom } from "nextra/components";
 
 # Tasks & Staff Pings
 
-A ping is a short message from one staff member to another, like a walkie-talkie. Staff use pings to ask a colleague to come to a room, clarify an order, or call back. Your pings appear in the bell at the top of the screen and on the **Tasks** page at **Patients → Tasks** (`/tasks`).
+A ping is a short message from one staff member to another, like a walkie-talkie. Staff use pings to ask a colleague to come to a room, clarify an order, or call back. Your pings appear in the bell at the top of the screen and on the **Tasks** page, in the **CMS** tab at **Clinical → Tasks** (`/tasks`). On a phone, **Tasks** is on the CMS tab's bottom bar.
+
+Care services have tasks of their own, such as approving a plan or answering a patient's question. Those are in the [Task Inbox](#the-task-inbox) on the **Home** tab, not here.
 
 ## Who can do this
 
@@ -59,7 +61,32 @@ You can select **Done** straight away, without acknowledging.
 
 At the bottom of the bell list, **Open Tasks as a drawer** or **Open Tasks as a page** changes what the **Tasks** menu item does for you. Your choice is remembered in your browser.
 
+## The Task Inbox
+
+The **Task Inbox** (`/services/inbox`) is the care services' list of work for you: "Tasks assigned to you directly, or unclaimed tasks assigned to a role you hold in a service of this organisation." Open it with **Tasks** in the **Home** tab sidebar, which shows how many are waiting. On a phone, **Tasks** is on the Home tab's bottom bar.
+
+Every role can open it. Each task under **Pending** names its service and, when it is about one, the patient, and is marked **Overdue** once past its due date. Act on it from the row, for example **Complete**. With nothing waiting, it says "No pending tasks."
+
+The tasks come from the services' own work, such as [referrals](/cms/services/referrals) and [pre-visit check-ins and escalations](/cms/services/pre-visit-and-escalations). Old Task Inbox links from Medbot web, including those in task emails, open this page.
+
+If a task disappears while the inbox is open, for example because a [demo reset](/cms/services/demo-services#remove-or-reset-the-demo) removed it, acting on it shows the server's reason, and the inbox refreshes and drops it.
+
+### Redirecting a task to a doctor
+
+A nurse can pass a patient's task to a doctor when it needs a doctor's decision.
+
+1. On the task, select **Redirect to doctor**.
+2. Choose the **Doctor**. Medbot suggests one when the service's care team makes it clear: the patient's assigned doctor, else whoever is covering the service today, else the only doctor on the care team, and says why ("Suggested: …"). If more than one could take it, it says "More than one doctor could take this. Choose who should answer." With no doctor on the care team: "No doctor is on this service's care team. Add one to the care team to redirect tasks."
+3. Say **Why does this need a doctor?**, for example "missed antagonist dose last night, lead follicle 16 mm. Needs a decision on timing."
+4. Select **Redirect to doctor**.
+
+The task moves to the doctor's Task Inbox with a **Redirected to you** badge. Others see "Redirected to &lt;doctor&gt; by &lt;nurse&gt;" and the reason. The doctor sees who sent it and why, the latest messages with the patient, the latest results, and **Open the plan context** and **Full message history**. They can:
+
+- **Reply to the patient** and **Send reply**. The reply goes to the patient's portal thread (WhatsApp, SMS or email only tell them a message is waiting) and closes the task.
+- **Hand back**, with a **Note for** the nurse, for example "in theatre until 3 pm; Dr Ng is covering", then **Hand back to** the nurse. The nurse sees "Handed back by &lt;doctor&gt;:" with the note, and can redirect it again.
+
 ## Related
 
 - [Encounters & Clinical Notes](/cms/encounters): orders you can ping about.
+- [Services](/cms/services): the care services whose tasks reach the Task Inbox.
 - [Reception Queue](/cms/reception-queue): who is in which room today.

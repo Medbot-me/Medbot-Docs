@@ -1,6 +1,6 @@
 # Patient Notes Workspace
 
-The notes workspace is a full-page writing area attached to a patient's chart. It lists the notes filed for one patient and lets clinicians claim an existing note into the chart. Open it with **Notes** under the patient's name in the sidebar, or go to `/notes`, where you first search for the patient. There is no top-level **Notes** link in the sidebar.
+The notes workspace is a full-page writing area attached to a patient's chart. It lists the notes filed for one patient and lets clinicians claim an existing note into the chart. Open it with **Notes** in the open patient's card in the sidebar, **New note** at the top of the chart's **Overview**, or **Write a note** (**Open notes** once one is written) on **Encounters**. You can also go to `/notes`, where you first search for the patient. There is no top-level **Notes** link in the sidebar.
 
 > **Note:** The notes workspace is available only when your Medbot deployment has turned it on. If it is off, the **Notes** entry is missing and the page shows "not found".
 
@@ -18,7 +18,7 @@ A Receptionist opens the workspace in read-only mode and does not see the button
 ## Finding a patient's notes
 
 1. Go to `/notes`. There is no sidebar link for it. This opens a page that says "Search for a patient to view the notes claimed into their chart."
-2. Type in **Search patients by name...** and select the patient. From a patient's chart, select **Notes** under their name to go straight there.
+2. Type in **Search patients by name...** and select the patient. From a patient's chart, select **Notes** in the open patient's card to go straight there.
 
 The workspace is laid out as a workbench with three areas:
 
@@ -27,6 +27,18 @@ The workspace is laid out as a workbench with three areas:
 - On the right, the **AI** dock, with the tabs **Chat** and **Agents**.
 
 The **Notes** tab lists the patient's notes under **Search notes**. An empty chart says "No notes in this patient's chart yet." Type in **Search notes** to filter the list by title. Each row shows the title and when it was last updated.
+
+### Note templates
+
+Your note templates are offered in three places in the note you are writing:
+
+- **The `/` menu.** Type `/` in the note and choose a template under **Templates**.
+- **An empty note.** A new, empty note shows a button for each template. Select one to fill the note with it.
+- **The Templates tab** in the **Notes** dock. Each template has **Insert**, which adds it where the cursor is, and **Copy**. A template with a smart phrase shows it under its title. **New** and **Manage** open the CMS **Templates** page (`/templates`) in a new browser tab.
+
+The list holds your own templates under **My templates**, then the default templates you have not copied under **Defaults**. They are the same templates as on **Clinical → Templates** (`/templates`) in the CMS tab and on the [Templates](/docs/workspace/templates) page in Medbot web. A care service's consult editor offers the same list.
+
+A Receptionist, who opens the workspace read-only, can copy a template but not insert one.
 
 ### Previewing a note or encounter
 

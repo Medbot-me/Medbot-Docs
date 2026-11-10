@@ -1,49 +1,98 @@
-# Choosing & Switching Organisations and Roles
+# Choosing & Switching Organisations, Services and Roles
 
 A doctor who covers two clinics, or an administrator who runs a group, belongs to several organisations with one account. The CMS renders exactly one of them at a time: the **current organisation**.
 
-A person can also hold more than one role in the same organisation, for example a doctor who is also the Clinic Admin. The CMS works as exactly one of those roles at a time: the **active role**. You choose the organisation from the sidebar and the role from the role menu at the top of the screen.
+Within it, the CMS works in one **care service** at a time: the service whose pages sit at the top of the CMS tab, and whose home page the CMS opens on. See [Services](/cms/services).
+
+A person can also hold more than one role in the same organisation, for example a doctor who is also the Clinic Admin. The CMS works as exactly one of those roles at a time: the **active role**.
+
+All three are chosen from one place, the [switcher](#the-sidebar-switcher) at the top of the sidebar. The **Working as** menu at the top of the screen [switches role](#switching-role) too, and a Clinic Admin can [preview another role's view](#previewing-another-role).
 
 ## The welcome screen
 
 Every fresh sign-in starts at **Welcome back** (`/welcome`): "Choose the organisation and role to continue as." This happens even for someone who belongs to only one organisation.
 
-- There is one card per organisation, showing the organisation's name and the role you will enter it as. If you hold several roles there, the card shows one of them: the role you were last working as there, if this browser remembers it, or otherwise the role you were given first. You change role after you enter, with the [role menu](#switching-role).
+- There is one card per organisation, showing the organisation's name and the role you will enter it as. If you hold several roles there, the card shows one of them: the role you were last working as there, if this browser remembers it, or otherwise the role you were given first. You change role after you enter.
 - The organisation you used last carries a **Last used** badge.
-- Click **Enter as &lt;Role&gt;** (for example, **Enter as Clinic Admin**) to continue. You go to the page you were trying to reach, or to the queue by default.
+- Click **Enter as &lt;Role&gt;** (for example, **Enter as Clinic Admin**) to continue. You go to the page you were trying to reach or, by default, on to [choose a service](#choosing-a-service).
 - Links at the bottom: **Join with code**, **Create organisation**, **Manage organisations**, and **Sign out**.
 
-Until you choose, any staff page redirects to the welcome screen and then returns you to that page. The organisations screen, onboarding, sign-in, patient-facing displays and public pages do not need a choice.
+Until you choose, any staff page redirects to the welcome screen and then returns you to that page. The organisations screen, the first-sign-in screens, sign-in, patient-facing displays and public pages do not need a choice.
 
-A signed-in user with **no memberships** at all is sent to the [organisations screen](/cms) instead, to create an organisation (hosted by Medbot or on its own Medplum project) or join with a code.
+Someone who has never entered any of their organisations, because an invitation was linked when they verified their email, sees the welcome screen as **Invitation linked** instead, with **Enter &lt;organisation&gt;** on each card. See [Getting Started](/cms/getting-started#if-you-were-invited).
+
+A signed-in user with **no memberships** at all is sent to **Welcome to Medbot CMS** (`/onboarding`) instead, to set up an organisation, join one with a code, or claim a listing. See [Getting Started](/cms/getting-started#if-you-have-no-organisation-yet).
 
 ### Why you choose every time
 
 The choice is tied to **this sign-in session**. Signing out and back in, a second person on a shared computer, or an expired session all mean choosing again. The "last used" organisation is only a hint for the badge, never a grant of access. That way nobody lands in a clinic they did not mean to open, or inherits someone else's context on a shared front-desk machine.
 
-**Sign out** (on the welcome screen or in the account menu) also makes the browser forget the organisation and role it last used. The next person to sign in on that computer sees no **Last used** badge, and enters each organisation as their first role there.
+**Sign out** (on the welcome screen or in the account menu) also makes the browser forget the organisation, service and role it last used. The next person to sign in on that computer sees no **Last used** badge, and enters each organisation as their first role there.
+
+## Choosing a service
+
+After the welcome screen, **Where are you working today?** (`/choose-service`) asks which care service to work in: "Choose a service. The CMS opens on the home page for your role there."
+
+- Each service you can open is a card, marked **Published** or **Draft**. The one you used last in this organisation is selected and marked **Last used**.
+- Beside the button, "Opens on &lt;Workstation or Referrals&gt;. You can change service at any time from the top of the sidebar."
+- Select **Open &lt;service&gt;**. The CMS opens on your role's home page there.
+- **Switch organisation** opens the organisations screen, and **Skip and open the queue** goes to the **Queue** without choosing.
+
+With one service, or none, there is nothing to choose and the screen is skipped.
+
+The service you choose is remembered in this browser, for each organisation, until you sign out. The CMS uses it only while it is still a service you may open there; otherwise it uses the organisation's only service, if it has exactly one.
+
+### Where the CMS opens
+
+Opening the CMS (`/`, or the **CMS** tab) goes to your role's home page in the service you are working in:
+
+| Role | Home page |
+| --- | --- |
+| Doctor, Nurse | **Workstation** |
+| Clinic Admin, Receptionist | **Referrals** |
+
+With no service chosen, it goes to **Where are you working today?** when you can open several services, and to the **Queue** when you can open none. The home page's shortcuts are listed in [Getting Started](/cms/getting-started#your-home-page).
 
 ## The sidebar switcher
 
-The organisation switcher sits in the sidebar header for everyone, including people with a single organisation. It shows the current organisation's name and your active role in it; with the sidebar collapsed, only its initials show.
+The switcher sits in the sidebar header for everyone, including people with a single organisation. It shows the current organisation's name and, under it, the service and the role you are working as (for example "Diabetes review · Doctor", or "No service · Doctor"), with "(preview)" after a role you are [previewing](#previewing-another-role). With the sidebar collapsed, only the organisation's initials show.
 
-Opening it lists your **Organisations**, each listed once with the role you would enter it as, and a check mark on the current one, followed by:
+Opening it shows three columns:
 
-- **Manage organisations**: the organisations screen
-- **Create organisation**: see [Create an Organisation](/cms/create-organisation)
-- **Join with code**: see [Join an Organisation](/cms/join-an-organisation)
+| Column | Lists | Choosing one | Links |
+| --- | --- | --- | --- |
+| **Organisation** | Your organisations, each once with the role you would enter it as | Switches to that organisation, then asks for the [service](#choosing-a-service) | **Manage organisations** (the organisations screen), **Create organisation** (see [Create an Organisation](/cms/create-organisation)), **Join with code** (see [Join an Organisation](/cms/join-an-organisation)) |
+| **Service** | The organisation's services you can open, marked **Published** or **Draft**; "No services you can open yet." when there are none | Opens your role's home page in that service | **All services**, and **New service** for a Clinic Admin |
+| **Role** | Your roles in the organisation, marked **Your role**, and for a Clinic Admin the roles to preview, marked **Preview**. Each shows its home page, for example "Home: Workstation" | Switches to that role, or starts or ends a preview, and opens its home page | |
 
-Choosing a different organisation re-renders the entire app under it: the queue, the patient list, the schedule, the results, inventory, everything. You enter it as the role shown beside it; if you hold several roles there, switch with the role menu once you are in.
+The current organisation, service and role each carry a check mark.
 
-## From the organisations screen
+Choosing a different organisation re-renders the entire app under it: the queue, the patient list, the schedule, the results, inventory, everything. You enter it as the role shown beside it; if you hold several roles there, switch once you are in.
 
-`/organisations` lists every organisation the user belongs to, once each, with the role they would enter it as, a **Current** badge on the active one, a **Switch to this** button on the others, and a **Settings** link where that role is Clinic Admin.
+## The organisations screen
+
+**Organisations** (`/organisations`), "Every organisation you belong to.", lists each organisation once, with the role you would enter it as, a **Current** badge on the active one, a **Switch to this** button on the others, and a **Settings** link where that role is Clinic Admin. At the top are **Claim an existing organisation** and **Create organisation**.
+
+Above the list, where they apply:
+
+- after a claim is verified, a banner: "&lt;organisation&gt; is on Medbot, with you as its first admin." with **Open it**
+- your **Demo organisation**, to create, open or delete; see [Demo Services](/cms/services/demo-services#your-demo-organisation)
+- the **Physician family organisation** card; see [Physician Family Organisation](/cms/physician-family-organisation)
+- **Your claims**, each with its status; see [Claim an Organisation](/docs/getting-started/claim-an-organisation)
+- **Join with a code**, to request access with an organisation's join code; see [Join an Organisation](/cms/join-an-organisation#route-2-you-request-access-with-a-join-code)
 
 A link to `/organisations?select=<organisation>` switches straight into that organisation if you are a member.
 
+Open the screen from **Manage organisations** in the sidebar switcher or on the welcome screen, or from **Switch organisation** on the service screen.
+
 ## Switching role
 
-The role menu appears only for someone who holds more than one active role in the current organisation. It is the rounded button at the right of the bar across the top of the screen, reading **Working as** and your active role (on a narrow screen only the role's icon shows). It is deliberately far from the sidebar's organisation switcher, so changing role and changing organisation are never one mis-click apart.
+You can switch between the roles you hold in two places:
+
+- the **Role** column of the [sidebar switcher](#the-sidebar-switcher), which opens the new role's home page, or
+- the **Working as** menu, which keeps you on the page you are on where it can.
+
+The **Working as** menu appears only for someone who holds more than one active role in the current organisation. It is the rounded button at the right of the bar across the top of the screen, reading **Working as** and your active role (on a narrow screen only the role's icon shows). It is deliberately far from the sidebar switcher's organisation list, so changing role and changing organisation are never one mis-click apart.
 
 1. Open the role menu. Its heading reads **Switch role**, with "Your &lt;number&gt; roles at &lt;organisation&gt;" beneath it.
 2. Each role is listed with a short summary of the sidebar pages it opens (the first three, then how many more). Your active role is ticked and marked **Current role**.
@@ -53,7 +102,7 @@ When the switch is done, a message confirms "Now working as &lt;Role&gt;" with t
 
 - **You stay on the same page** if the new role can open it, with its filters and tabs kept. The queue stays the queue.
 - **Otherwise you go to the nearest page the new role can open.** For example, from a section of a patient's chart the new role cannot see, you land on that patient's overview.
-- **If there is no such page, you go to the queue.**
+- **If there is no such page, you go to the new role's home page**, as [Where the CMS opens](#where-the-cms-opens) describes.
 - The sidebar, the controls on each page, and every permission check now follow the new role. Roles do not add up: working as Doctor, you can do what a Doctor can, and none of what your Clinic Admin role can until you switch back.
 
 If the switch fails, you see "Could not switch role" and stay in your current role.
@@ -62,16 +111,30 @@ Your choice of role is remembered in this browser. It stays as you move between 
 
 To be given another role, ask a Clinic Admin. See [Staff](/cms/staff#giving-someone-another-role).
 
+## Previewing another role
+
+A Clinic Admin can see the CMS as a Doctor, Nurse or Receptionist would, to check what each person on their team opens on. While you are working as Clinic Admin, the **Role** column of the sidebar switcher lists those roles marked **Preview**, under "As an administrator you can preview any role. You keep your own access, and what you change is recorded as you." A role you hold yourself is listed once, as **Your role**, and switching to it is a real role switch.
+
+1. Open the sidebar switcher and choose a role marked **Preview**. The CMS opens on that role's home page.
+2. A banner on every page reads "**Previewing the &lt;role&gt; view.** You keep your admin access, and anything you change is recorded as you."
+3. To stop, select **Back to admin** on the banner, or choose your own role in the switcher. You return to your own home page.
+
+The end of [setting up an organisation](/cms/create-organisation#choose-where-to-start) offers the same preview, through **Open the CMS as**.
+
+**A preview is navigation only.** It changes the sidebar, the phone's bottom bar, search, the home page and its shortcuts. It never changes what you may do: every page and every action still checks your own Clinic Admin role, and everything you change is recorded as you, never as the role you are previewing. So a preview never lets an administrator sign a note as a doctor. A page the previewed role may open but a Clinic Admin may not is refused as usual, and a home-page shortcut appears only when both roles may open its page.
+
+A preview ends when you go back to admin, switch role or organisation, or sign out, and if you stop being a Clinic Admin.
+
 ## Roles are per organisation
 
-A person's roles are a property of their memberships, not of their account. The same user can be a Clinic Admin at one clinic and a Nurse at another, or both a Doctor and a Clinic Admin at the same clinic. Switching organisation, or switching role, changes which role they are acting under. Every permission check runs against the active role in the organisation currently selected, and every action is recorded against that role.
+A person's roles are a property of their memberships, not of their account. The same user can be a Clinic Admin at one clinic and a Nurse at another, or both a Doctor and a Clinic Admin at the same clinic. Switching organisation, or switching role, changes which role they are acting under. Every permission check runs against the active role in the organisation currently selected, and every action is recorded against that role, including what the CMS writes to the organisation's Medplum server: an admin who is also a doctor, working as Doctor, writes as the Doctor.
 
 ## What switching does not do
 
-Switching does not widen anyone's access. The stored choice only decides *which* of the user's own organisations, and which of their own active roles there, a page renders; it is never treated as authorisation on its own. Every request the CMS makes re-checks the caller's membership and role for that organisation server-side, so a tampered-with choice yields nothing: an organisation the user does not belong to answers as if it does not exist, and a role they do not hold is ignored in favour of one they do.
+Switching does not widen anyone's access. The stored choice only decides *which* of the user's own organisations, which of the services they may open there, and which of their own active roles there, a page renders; it is never treated as authorisation on its own. Every request the CMS makes re-checks the caller's membership and role for that organisation server-side, so a tampered-with choice yields nothing: an organisation the user does not belong to answers as if it does not exist, a service they may not open is not used, and a role they do not hold is ignored in favour of one they do.
 
-Administering an organisation you are not currently in is fine, too. The settings page works on the organisation named in its own URL, not the current one, so an admin of several can manage any of them without switching first.
+Administering an organisation you are not currently in is fine, too. The settings page works on the organisation named in its own URL, not the current one, so an admin of several can manage any of them without switching first. `/organisation-settings` always opens the current organisation's settings.
 
 ## The CMS and the web app
 
-The Medbot web app has its own organisation switcher (plus a personal scope the CMS does not have). Each app keeps its own choice, so choose the organisation in each app you use.
+Organisations live in Medbot CMS only. The Medbot web app is personal: its switcher lists your personal space and research teams, with "Organisations are in Medbot CMS", and **Open Medbot CMS** takes you here. Old organisation links in the web app redirect to their CMS pages.

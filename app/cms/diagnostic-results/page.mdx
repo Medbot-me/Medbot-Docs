@@ -2,7 +2,7 @@ import { ImageZoom } from "nextra/components";
 
 # Diagnostic Results
 
-Diagnostic results are laboratory and imaging reports that reach the clinic. Find them at **Patients → Results** (`/results`) and in the **Results** section of each patient's chart. Front desk staff file incoming reports, and doctors sign them off.
+Diagnostic results are laboratory and imaging reports that reach the clinic. Find them in the **CMS** tab at **Clinical → Results** (`/results`) and in the **Results** section of each patient's chart. **Search** (⌘K) in the CMS tab also finds results from the last 180 days by patient or test. Front desk staff file incoming reports, and doctors sign them off.
 
 ## Who can do this
 
@@ -46,11 +46,21 @@ _The results inbox, with the critical result at the top_
 
 Select a row to open the result. The window shows the dates, who ordered the test, who it is routed to, the values, and the summary. Select **Open report** to view the attached report.
 
+## Results on the patient's chart
+
+A patient's **Results** section lists their results by the day each was received, newest first. Chips above the list narrow it: **All** and **Awaiting review**, each with a count, and **Lab** or **Imaging** when the patient has results of that kind. Open follow-ups are shown above the list, for example "Follow-up due …". When the patient has more results awaiting sign-off than are loaded, a badge gives the total. **Load more** brings in older results.
+
+On a wide screen the chosen result opens in a panel beside the list. With none chosen, the panel shows the first result awaiting review, or else the newest. On a narrower screen a result opens in a window instead, as it does from the results inbox.
+
+The section's buttons, at the top right (on a phone, at the bottom of the screen), are **Explain selected** for doctors and nurses (see [Explaining results to the patient](#explaining-results-to-the-patient)) and **File result**. **Import prior history** sits beside the chips (see [Prior history from outside records](#prior-history-from-outside-records)).
+
+The chart's **Overview** also has a **Recent results** card with the three latest results. Selecting one opens it here.
+
 ## Filing an incoming result
 
 Anyone who works at the front desk or the clinic floor can file a result. Filing sends it to the inbox for a doctor to review.
 
-1. Select **File result**. On a patient's chart, use **File result** in the **Results** section.
+1. Select **File result**. On a patient's chart, use **File result** at the top of the **Results** section (on a phone, in the bar at the bottom of the screen).
 2. Under **Patient**, search by name and select the patient. Each match shows the patient's age and sex (for example "34 y, Female") and their masked NRIC, FIN or passport number under the name, so you can tell apart patients with the same name.
 3. Choose the **Receiving clinic**, the **Type**, and enter the **Name** of the test, for example "Full blood count".
 4. Enter the **Performing lab / centre**, and who the test was **Ordered by**. Choose a doctor at this clinic, or type an **Outside orderer (optional)**. Do not fill both.
@@ -262,7 +272,7 @@ If a result was withdrawn but its explanation is still live, the **Explanations 
 
 ## The explanation library
 
-The library holds approved wording that explanations reuse as written, without asking the drafting model. It covers three sections for each test: **What the test measures**, **When to get help sooner**, and **Looking after yourself**, in English and Chinese. Clinic Admins and doctors find it at **Patients → Explanation library** (`/explanation-library`).
+The library holds approved wording that explanations reuse as written, without asking the drafting model. It covers three sections for each test: **What the test measures**, **When to get help sooner**, and **Looking after yourself**, in English and Chinese. Clinic Admins and doctors find it in the **CMS** tab at **Clinical → Explanation library** (`/explanation-library`).
 
 Medbot supplies starter wording for each test. It has not been reviewed by a clinician, so it shows as **Unreviewed draft** and explanations do not use it. If no starter wording is loaded, a Clinic Admin sees **Load starter wording**.
 

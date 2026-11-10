@@ -1,0 +1,41 @@
+# AI Policy
+
+The AI policy decides which AI providers and regions the organisation's AI work may use: its agents, assistants such as the [Home assistant](/cms/home-assistant), and drafting tools. It also sets the organisation's default model. Find it in the **Home** tab at **Organisation → AI policy** (`/ai-policy`).
+
+Until an administrator saves a policy, the organisation has none and its AI calls follow the platform defaults.
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| See and change the AI policy | Yes | No | No | No |
+
+Only Clinic Admins have **AI policy** in the sidebar. Anyone else who opens `/ai-policy` sees "Only organisation admins can see or change the AI policy." The server refuses them too.
+
+The page works on the organisation you are signed in to. To change another organisation's policy, [switch](/cms/switching) to it first.
+
+## Setting the policy
+
+The page is headed with the organisation's name: "which AI providers and regions this organisation's agents, assistants and drafting tools may use." Under **Providers and regions**:
+
+1. Turn on **Restrict this organisation's AI to the choices below**. Off, "AI calls follow the platform defaults, as before." On, "AI calls made for this organisation use only the providers and regions below."
+2. Tick the **Allowed providers**. Each says where it is called, for example "Called in ap-southeast-1.", or "The region it is called in cannot be stated from here."
+3. Optionally, type the **Allowed regions**, cloud region codes separated by commas, such as `ap-southeast-1`. Buttons such as **Add ap-southeast-1** add a provider's region for you. Leave the field empty to allow any region of the providers you ticked. With regions listed, only a provider called in one of them can run, so a provider whose region is not known cannot run, and the page says so.
+4. Choose a **Default model**, or **The platform default, when the policy allows it**. It is "Used when an agent asks for a model the policy does not allow." The Home assistant always runs on it.
+5. Select **Save policy**. "Saved." confirms it, and the page shows when it was last saved (Singapore time) and by whom.
+
+Saving a policy with the switch off stores your choices without applying them. Turn the switch on and save again to apply them.
+
+## Models in the catalogue
+
+**Models in the catalogue** lists every active model the platform offers, with its provider and region, and whether your choices would allow it: **Allowed**, **Provider not allowed** or **Region not allowed**. The list is "Shown as if the policy were on."
+
+With the policy on, an agent that asks for a model the policy does not allow runs on the default model instead. If no model is allowed, the call fails rather than use one the policy forbids.
+
+If something in your choices does not fit together, the page lists the problems in red and **Save policy** stays disabled until you fix them.
+
+## Related
+
+- [Home Assistant](/cms/home-assistant): the Home tab's chat, which runs on the default model.
+- [Organisation Settings](/cms/settings): the organisation's other settings, including its AI credits.
+- [Agents](/docs/agents): how agents work in Medbot.

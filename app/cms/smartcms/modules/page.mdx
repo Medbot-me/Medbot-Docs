@@ -42,7 +42,7 @@ Modules are shown as cards grouped under the certification badge they belong to.
 | --- | --- | --- |
 | **Healthier SG** (`HSG_BUNDLE`) · *Planned* | Enrolment, health plans, care reports and referrals for Healthier SG. | CHAS Badge certified first |
 
-A **Planned** module can be selected, so the clinic's onboarding record with Synapxe is complete, but it adds no screens yet.
+A **Planned** module can be selected, so the clinic's onboarding record with Synapxe is complete. Healthier SG adds one thing so far: the [Patient Care Summary](/cms/smartcms/patient-care-summary) button on the patient chart, for `doctor` only.
 
 ## What the modules unlock
 
@@ -54,7 +54,7 @@ A Singapore organisation with at least one matching module gets a **SmartCMS** g
 | **Messages**: the SmartCMS message log | `/smartcms/messages` | Any module with a Claims or Reports screen | `admin`, `receptionist`, `doctor`, `nurse`, each seeing only the messages of services they may use; CMIS messages are `admin` only |
 | **Reports**: "National registry notifications and reports" | `/reports` | NIR, DEROM, CIDC, MW_HEALTH, NEHR_REFERRAL or CMIS | `admin` and `doctor`; a `nurse` sees the NIR section only |
 
-With CDMP, **Claims** also links to **Medisave claims** (`/claims/medisave`). With CMIS, the patient chart gets the **National allergy and alert record (CMIS)** card for `admin`, `doctor` and `nurse`.
+With CDMP, **Claims** also links to **Medisave claims** (`/claims/medisave`). With CMIS, the patient chart gets the **National allergy and alert record (CMIS)** card for `admin`, `doctor` and `nurse`. With HSG_BUNDLE, the patient header gets the **Patient Care Summary** button for `doctor`. With NEHR_REFERRAL, the patient's Documents show each referral letter's NEHR status to `admin` and `doctor`.
 
 See [Claims Workflow](/cms/smartcms/claims), [Reports](/cms/smartcms/reports), [SmartCMS Messages](/cms/smartcms/messages) and [CMIS](/cms/smartcms/cmis). Each section of **Reports** shows only for its own module and roles.
 

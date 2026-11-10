@@ -6,15 +6,15 @@ import { ImageZoom } from "nextra/components";
 
 <ImageZoom src="/images/docs/getting-started/06-home.png" alt="The Home dashboard with credits, agents, notes, deep research and clinical resources cards" />
 
-Home only exists in your **Personal** space. If you are working inside an organisation, use the switcher at the top of the sidebar to go back to **Personal**, or see [Organisations and roles](/docs/getting-started/organisations).
+Choose **Personal space** in the switcher at the top of the sidebar to come back here from a [research team](/docs/teams). Organisation work is in Medbot CMS; see [Teams and Organisations](/docs/getting-started/organisations).
 
 ## What is on Home
 
 | Card | What you can do |
 | --- | --- |
 | **Welcome to Medbot** | A greeting with a link to this documentation. |
-| **Switch to an organisation** | Shown only if you belong to an organisation. Pick the organisation, and a role if you hold more than one there, then select **Switch**. |
-| **Get started with an organisation** | Shown instead if you belong to none: "Care services, patients and care teams live inside an organisation. You are not in one yet." See [below](#if-you-are-not-in-an-organisation). |
+| **Organisation work** | Shown beside the welcome card if you belong to an organisation: "Services, patients and clinic operations live in Medbot CMS." **Open Medbot CMS** opens it. See [below](#organisations-and-medbot-cms). |
+| **Run a clinic or service?** | Shown instead if you belong to none: "Set up your organisation, its services and its clinic in Medbot CMS." with **Open Medbot CMS**. |
 | **Credits Remaining** | Your balance, counting what is left of your plan's [monthly allowance](/docs/ai-usage#monthly-allowance). Select **View Usage** to open the [Usage Dashboard](/docs/ai-usage). |
 | **Recent Agent Runs** | A table of recent runs (**Agent Name**, status). Select **Create Agent** to build one, or **View All**. |
 | **My Agents** | Your agents. Select **Manage Agents**. |
@@ -22,31 +22,14 @@ Home only exists in your **Personal** space. If you are working inside an organi
 | **Deep Research** | **New review** starts a [review](/docs/deep-research); **View All** lists them. |
 | **Clinical Resources** | **Add New** uploads a [document](/docs/clinical_resources); **Manage Resources** lists them. |
 
-## If you are not in an organisation
+## Organisations and Medbot CMS
 
-Beside the welcome card, the **Get started with an organisation** card offers two ways in:
+Organisations, with their services, tasks, patients and staff, are in Medbot CMS. From Home, the **Organisation work** or **Run a clinic or service?** card is the way there: select **Open Medbot CMS**. The card is shown only where your Medbot has Medbot CMS set up.
 
-- **Create organisation**, "For your own clinic, with you as its first admin." It opens the [create form](/docs/getting-started/organisations#create-an-organisation). Have a join code instead? **Join with a code** opens the join form.
-- **Try a demo organisation**: "Synthetic data only: ready-made services with demo patients and sign-ins, to explore every part of Medbot. You can delete it anytime." **Create demo organisation** makes yours and switches you into it, or **Open demo organisation** once it exists. This part is shown only where Medbot can make one. See [Demo Services](/docs/services/demo-services).
-
-Where organisations are set up by an administrator (a [dedicated deployment](/docs/plans-and-billing#dedicated-deployments)), the card says "Your administrator sets organisations up on this Medbot. Ask them for a join code." and offers only **Join with a code**.
+In Medbot CMS you can [create an organisation](/cms/create-organisation) (with you as its first admin), [join one with a code](/cms/join-an-organisation), [claim a listed one](/docs/getting-started/claim-an-organisation) or open a [demo organisation](/cms/services/demo-services). See [Teams and Organisations](/docs/getting-started/organisations).
 
 ## Inbox
 
-**Inbox** in the sidebar opens the **Task Inbox**. It lists tasks assigned to you directly, and unclaimed tasks assigned to a role you hold in a [service](/docs/services). Pending tasks appear under **Pending**. Inside an organisation the same page is called **Tasks** in the sidebar.
+The Medbot app no longer has an **Inbox**. Every task in the Task Inbox belongs to a care service, so the Task Inbox moved to Medbot CMS, where it is **Tasks** (`/services/inbox`). The old `/inbox` address redirects there.
 
-If a task disappears while the inbox is open, for example because a [demo reset](/docs/services/demo-services#remove-or-reset-the-demo) removed it, acting on it shows the server's reason, and the inbox refreshes and drops it.
-
-### Redirect to a doctor
-
-A nurse can pass a patient's task to the attending doctor when it needs a doctor's decision.
-
-1. On the task, select **Redirect to doctor**.
-2. Choose the **Doctor**. Medbot suggests one when the care team makes it clear: the patient's assigned doctor, else whoever is covering the service today, else the only doctor on the care team. If more than one could take it, it asks you to choose. With no doctor on the care team, add one first.
-3. Say **Why does this need a doctor?**, for example "missed antagonist dose last night, lead follicle 16 mm. Needs a decision on timing."
-4. Select **Redirect to doctor**.
-
-The task moves to the doctor's Task Inbox with a **Redirected to you** badge. Others see "With &lt;doctor&gt;" and the reason. The doctor sees who sent it and why, the latest messages with the patient, the latest results, and links to the plan context and the full message history. They can:
-
-- **Reply to the patient** and **Send reply**. It goes to the patient's portal thread, and closes the task. An agent's drafted message, if there is one, is there to edit.
-- **Hand back** with a note for the nurse, for example "in theatre until 3 pm; Dr Ng is covering". The nurse sees "Handed back by &lt;doctor&gt;" with the note, and can redirect it again.
+For notifications about your own work (finished runs, comments), use the **Notifications** bell at the top right of every page.

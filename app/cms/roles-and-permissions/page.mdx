@@ -1,6 +1,6 @@
 # Roles & Permissions
 
-> **Note:** Roles are set per organization. A person can be a Clinic Admin at one clinic and a Nurse at another, or hold more than one role in the same clinic, such as Doctor and Clinic Admin. They work as one role at a time, chosen with the [role menu](/cms/switching#switching-role), and every check below runs against that active role in the organization they have currently chosen. Roles do not add up: to do a Clinic Admin task, switch to Clinic Admin.
+> **Note:** Roles are set per organisation. A person can be a Clinic Admin at one clinic and a Nurse at another, or hold more than one role in the same clinic, such as Doctor and Clinic Admin. They work as one role at a time, chosen from the [sidebar switcher or the **Working as** menu](/cms/switching#switching-role), and every check below runs against that active role in the organisation they have currently chosen. Roles do not add up: to do a Clinic Admin task, switch to Clinic Admin. A Clinic Admin [previewing another role](/cms/switching#previewing-another-role) sees that role's navigation but keeps the Clinic Admin column below.
 
 Medbot CMS is built around four clinic roles, plus one internal account that is not a real clinic role. Every action re-checks the signed-in user's role before it reads or writes clinic data. What you see on a page only controls what is visible, so a role's real boundary is enforced at the action, not on the screen. When a role cannot do something, the control is hidden or disabled, and an action attempted anyway is refused.
 
@@ -112,7 +112,7 @@ A medical certificate prints the issuing doctor's MCR number, so only the Doctor
 
 Concerns, shared chats and answer reports hold the patient's own words, so only doctors and nurses read them, and a Superuser account is refused too.
 
-A Doctor sees only the patients assigned to them in the queue; a Nurse sees every patient at the location. Reading a chart, its vitals, and its notes is open to all four roles for a patient in the organization.
+A Doctor sees only the patients assigned to them in the queue; a Nurse sees every patient at the location. Reading a chart, its vitals, and its notes is open to all four roles for a patient in the organisation.
 
 ## Front desk and scheduling
 
@@ -190,7 +190,10 @@ Only for organisations in Singapore that subscribe to the matching [module](/cms
 | [Re-check a claim held for a nurse-led visit](/cms/smartcms/claims#claims-on-a-nurse-led-visit) | Yes | Yes | No | No |
 | [Submit a claim on a nurse-led visit as nurse-led](/cms/smartcms/claims#claims-on-a-nurse-led-visit) | Yes | No | No | No |
 | [See Reports](/cms/smartcms/reports) | Yes | No | Yes | NIR only |
+| [Open a patient's Patient Care Summary (Healthier SG)](/cms/smartcms/patient-care-summary) | No | No | Yes | No |
 | [Open SmartCMS settings: switch locations on, agent policy, credentials](/cms/smartcms/settings) | Yes | No | No | No |
+
+The **Patient Care Summary** button is in the patient header for a Doctor only, at an organisation subscribed to the Healthier SG module (`HSG_BUNDLE`), and is disabled when the patient has no NRIC or FIN on record. Synapxe's specification bars clinic assistants, so a Clinic Admin who is also a doctor switches to their Doctor role to open it; previewing the Doctor view does not show it.
 
 ## Pharmacy and inventory
 
@@ -218,8 +221,9 @@ Only for organisations in Singapore that subscribe to the matching [module](/cms
 | [See a staff member's audit log](/cms/staff#a-staff-members-audit-log) | Yes | No | No | No |
 | [Change patient branding, or see where the organisation's data lives](/cms/settings#patient-branding) | Yes | No | No | No |
 | [Switch between your own roles](/cms/switching#switching-role) | Yes | Yes | Yes | Yes |
+| [Preview another role's view](/cms/switching#previewing-another-role) | Yes | No | No | No |
 
-Switching role is open to anyone who holds more than one active role in the organization.
+Switching role is open to anyone who holds more than one active role in the organisation. A preview changes only the sidebar, search and the home page: what the Clinic Admin can do, and who their changes are recorded as, stay their own.
 
 ## Outages and downtime
 

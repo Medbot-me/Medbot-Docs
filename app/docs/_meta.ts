@@ -9,7 +9,6 @@ export default {
   "deep-research": "Deep Research",
   teams: "Research Teams",
   "clinical_resources": "Clinical Resources",
-  services: "Services",
   advanced: "Advanced",
   admin: "Platform Administration",
   "use-cases": "Use Cases",

@@ -111,6 +111,22 @@ The emergency reply still appears if something else goes wrong, for example if t
 
 The portal is not an emergency service. This check exists to get you to a person quickly, not to triage you.
 
+### Record what happened for your doctor
+
+Beside the emergency reply, never instead of it, Medbot can offer a [history taking](#guided-care-sessions) session about that warning sign, for example chest pain. It is never offered for thoughts of self-harm.
+
+The card reads **Record what happened for your doctor?**: "Get help first. When you are safe, or while you wait, Medbot can take down the details so you can show the doctor who sees you, or send them to your clinic or hospital." Select **Start the history**, or **Not now**.
+
+The session always opens with a fixed line in your language, before anything else: "Getting help comes first. If you have not called 995 or gone to an emergency department yet and you still feel unwell, do that now and come back to these questions later. If anything gets worse while we talk, stop and call 995."
+
+The questions are short and focus on what an emergency or clinic doctor needs first. While you answer, mentioning the same warning sign again does not bring back the emergency reply, so the history can be taken. A different warning sign, or thoughts of self-harm, is handled as on any other message: you get the emergency reply and your clinics are alerted.
+
+If you already have a history taking session open that you started yourself, the card continues that one instead, and it becomes about this warning sign. Once you have started the history, the card offers to continue it, and once it is completed the card no longer appears.
+
+When the history is completed, it is saved to your [Health Records](/patient/health-records) like any other session. Under **What would you like to do next?** you see first: "If it comes back or gets worse, call 995 or go to the nearest emergency department. Do not wait for a reply here." Then: "This history is about a possible emergency warning sign. Send it to a clinic or hospital you're connected to, or show it to the doctor who sees you:", with a **Share with** button for each care program and connected clinic or hospital. A clinic or hospital you send it to gets the full history in its inbox, with a note naming the warning sign and saying you were told to call emergency services or go to an emergency department.
+
+The offer appears in Medbot Health on the web. The [mobile app](/patient/mobile-app) does not show it on an emergency reply yet.
+
 ## Concerns from Ask Medbot
 
 Some worries are not an emergency but are worth a clinician seeing. What happens when Medbot notices one depends on your [sharing choices](/patient/clinic-sharing#concerns).
@@ -163,7 +179,7 @@ Alongside answering, Ask Medbot classifies the question for whether a **guided c
 - **Health education**
 - **Financial counselling**
 
-A session is only ever offered this way, with consent — there is no separate picker to start one from. Accepting creates a thread in [Messages](/patient/messages) with the session's own identity. A red-flagged message never triggers a session offer.
+A session is only ever offered this way, with consent — there is no separate picker to start one from. Accepting creates a thread in [Messages](/patient/messages) with the session's own identity. A red-flagged message triggers no other offer: the only card beside the emergency reply is the history of that warning sign. See [Record what happened for your doctor](#record-what-happened-for-your-doctor).
 
 A session does not require the patient to be enrolled in any care program. When it completes, its summary is saved to the patient's own [Health Records](/patient/health-records), kept separate from any clinic's chart.
 

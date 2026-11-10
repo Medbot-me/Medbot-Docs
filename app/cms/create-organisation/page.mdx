@@ -2,17 +2,19 @@
 
 Any signed-in user can create an organisation. The creator becomes its first **administrator** automatically.
 
-Reach the form from `/organisations/new`, from **Create organisation** on the [organisations screen](/cms), on the [welcome screen](/cms/switching#the-welcome-screen) or in the sidebar's organisation switcher.
+Reach the form from `/organisations/new`: from **Set up a new healthcare organisation** on the [first-sign-in screen](/cms/getting-started#if-you-have-no-organisation-yet), or from **Create organisation** on the [organisations screen](/cms/switching#the-organisations-screen), the [welcome screen](/cms/switching#the-welcome-screen) or the [sidebar switcher](/cms/switching#the-sidebar-switcher).
+
+Setting up an organisation is part of the first-sign-in flow: the form, and the services and team steps after it, fill the screen with your setup progress on a panel beside them (**Organisation details**, **Singapore integrations** for Singapore only, **Record storage**, **Set up services**, **Add your team**). Only trying Medbot out? The first step links to **Create a demo organisation**, with synthetic data, instead; see [A demo organisation instead](#a-demo-organisation-instead).
 
 > **No Medplum server?** On Medbot's production service you do not need one: the form's last step offers **Hosted by Medbot**, which makes a Medplum project for the organisation as you create it. See [Medbot-Hosted Organisations](/cms/hosted-organisations). A deployment without Medbot's own Medplum server does not offer it, and a note under the form points you to app.medplum.com to create a project and a client for it.
 
 ## Verify your email first
 
-Opening `/organisations/new` with an email address that is not verified yet shows **Verify your email**: "Clinics recognise staff by email, so confirm that &lt;email&gt; is yours before joining or creating an organisation." Send yourself a code, enter it, and the form appears. See [Getting Started](/cms/getting-started#verify-your-email).
+Opening `/organisations/new` with an email address that is not verified yet sends you to **Confirm your email** (`/verify-email`) first: "One last step to sign in. Healthcare organisations recognise staff by email, so confirm that &lt;email&gt; is yours." Send yourself a code, enter it, and you come back to the form. See [Getting Started](/cms/getting-started#confirm-your-email).
 
 ## How many you can create
 
-Each person may create **one** organisation (the deployment can raise this). The limit counts the active organisations you created yourself, hosted or self-managed; a [demo organisation](/docs/services/demo-services#your-demo-organisation) does not count, and organisations you joined are not yours. Past the limit the form shows the reason the server gave and creates nothing. Medbot platform superadmins have no limit.
+Each person may create **one** organisation (the deployment can raise this). The limit counts the active organisations you created yourself, hosted or self-managed; a [demo organisation](/cms/services/demo-services#your-demo-organisation) does not count, and organisations you joined are not yours. Past the limit the form shows the reason the server gave and creates nothing. Medbot platform superadmins have no limit.
 
 Two more checks apply:
 
@@ -33,9 +35,11 @@ These go into the form below, not into an environment variable. The CMS holds no
 
 ## The wizard
 
-The form is a short wizard, headed "Step N of M" with the step's name. The number of steps depends on the country.
+The form is a short wizard, headed "Set up a new healthcare organisation · step N of M" above the step's name. The number of steps depends on the country. **Back** returns to the step before, or from the first step to the first-sign-in screen.
 
-### Step 1: Organisation
+### Step 1: Organisation details
+
+"A clinic, hospital or remote care service. You become its first administrator. Country and time zone are guessed from your browser."
 
 | Field | Required | Notes |
 | --- | --- | --- |
@@ -43,17 +47,17 @@ The form is a short wizard, headed "Step N of M" with the step's name. The numbe
 | **Country** | Yes | Guessed from your browser, falling back to Singapore. Decides which [country-specific integrations](/cms/settings#integrations) are offered. |
 | **Time zone** | No | Guessed from your browser. |
 
-**Next** stays disabled until the name and country are set.
+**Continue** stays disabled until the name and country are set.
 
 ### Step 2: Singapore integrations (Singapore only)
 
-Shown only when the country is Singapore. Choose the [SmartCMS modules](/cms/smartcms/modules) the clinic intends to use, or click **Use GP starter** for the usual general-practice set (CHAS, Medisave, National Immunisation Registry, Disease notification). **Skip for now** leaves them empty; they can be chosen later in settings.
+Shown only when the country is Singapore: "Choose the national services this organisation will use. Nothing here is required, and you can change it later in settings." Choose the [SmartCMS modules](/cms/smartcms/modules) the clinic intends to use, or click **Use GP starter** for the usual general-practice set (CHAS, Medisave, National Immunisation Registry, Disease notification). **Skip for now** leaves them empty; they can be chosen later in settings.
 
 Choosing a module does not connect anything by itself: each clinic location still needs its HE code and Synapxe's approval.
 
-### Step 3: Medplum server
+### Step 3: Where records are stored
 
-Where the deployment hosts Medplum projects, the step opens with two choices:
+"&lt;Organisation&gt;'s patient records live in a Medplum project." Where the deployment hosts Medplum projects, the step offers two choices:
 
 - **Hosted by Medbot** (selected by default): "Medbot makes a Medplum project for this organisation now. Nothing else to enter."
 - **My own Medplum project**: "Enter its client ID and secret." The fields below appear.
@@ -66,7 +70,7 @@ On a deployment without hosting, only the fields are shown.
 | **Medplum client ID** | Yes | From step 2 of "Before you start". |
 | **Medplum client secret** | Yes | Write-only: it is never shown back to you. |
 
-Click **Create organisation**. If the server refuses, for example because you are past your limit or it cannot store credentials just now, the form shows **Could not create organisation** with the reason.
+Click **Create &lt;organisation name&gt;**. If the server refuses, for example because you are past your limit or it cannot store credentials just now, the form shows **Could not create organisation** with the reason.
 
 ## What happens on submit
 
@@ -83,14 +87,54 @@ The API refuses SmartCMS modules for any country other than Singapore.
 
 ## After creating
 
-The new organisation becomes the current one and you land on **Add your team and patients** (`/organisations/<id>/seed?setup=1`), where you can bring in staff and patients from a CSV file. See [Seeding Staff & Patients](/cms/seed-data). **Skip for now** takes you to the CMS home screen instead.
+The new organisation becomes the current one, and two optional steps follow. Both can be done later.
 
-If you chose any Singapore integrations, the same page shows a **Connect SmartCMS** card with a **Review integrations** link: each location needs its HE code and Synapxe's approval before it connects. See [Singapore Registration](/cms/smartcms/registration) and [SmartCMS Settings](/cms/smartcms/settings).
+### Set up your first service
 
-From there:
+`/onboarding/services` opens with "&lt;Organisation&gt; created" and **Set up your first service**: "Start from a basic service or a specialised template. A template fills in the details below and configures visit steps, red flags, education and agents for its area." It is shown to an administrator while the organisation has no services.
+
+1. Under **Start from**, choose **Basic service** ("Only the essentials. You choose the care setting, specialty and everything after.") or one of the specialised templates.
+2. Under **Service details**, enter or check the **Service name**, the **Care setting** (Outpatient, Inpatient, Remote or Hybrid), the **Specialty**, and **Where care happens** (optional). A template fills these in ("Filled from the &lt;template&gt; template. You can change any of it."), and your changes are saved onto the service it makes.
+3. Select **Create service**, or **Skip for now**.
+
+The service starts as a draft you can finish before patients see it, and you can add more from Services. See [Getting Started with Services](/cms/services/getting-started) and [Modes of Care](/cms/services/modes-of-care).
+
+### Add your team
+
+`/onboarding/team` reads "&lt;Organisation&gt; is ready": "You're its administrator. Add the people you work with now, or do it later from Staff."
+
+- **Invite a colleague**: enter their **Email**, **First name**, **Last name** and **Role**, with the role's registration number (the MCR number for a doctor, the SNB number for a nurse) and, for a doctor in a Singapore organisation, **NRIC or FIN (optional)**. Select **Send invitation**. The same rules apply as for **Add Staff** on [Staff](/cms/staff#adding-a-staff-member). Each person appears in a list below, marked **Invited** if they have no Medbot account yet (they are linked when they sign in with that address) or **Added** if they have one. The role you chose stays selected for the next person.
+- **Or load staff and patients from a CSV**: the same panel as on the organisation's seed page. See [Seeding Staff & Patients](/cms/seed-data).
+- **Connect SmartCMS**, if you chose any Singapore integrations: "You chose &lt;number&gt; Singapore integrations. Each location needs its HE code and Synapxe's approval before it connects." **Open SmartCMS** goes to the organisation's SmartCMS page. See [Singapore Registration](/cms/smartcms/registration) and [SmartCMS Settings](/cms/smartcms/settings).
+
+### Choose where to start
+
+The team step ends with **Choose where to start**, once the organisation has a service:
+
+1. Under **Service**, choose the service to open.
+2. Under **Open the CMS as**, choose a role. Each shows its home page:
+
+| Role | Badge | Home | What it opens on |
+| --- | --- | --- | --- |
+| **Clinic Admin** | Your role | Referrals | "Referrals, adding patients and staff, and service setup." |
+| **Doctor** | Preview | Workstation | "Today's visits, escalations and unsigned notes." |
+| **Nurse** | Preview | Workstation | "Pre-visit check-ins, caseload and escalations." |
+| **Receptionist** | Preview | Referrals | "New referrals, bookings and arrivals." |
+
+3. Select **Open &lt;service&gt;**, or **Preview &lt;service&gt; as &lt;role&gt;**.
+
+"A preview shows another role's pages and home. You keep your admin access, and what you change is recorded as you." See [Previewing another role](/cms/switching#previewing-another-role).
+
+With no service yet, the step ends with **Enter &lt;organisation&gt;** instead.
+
+### From there
 
 - add the rest of the staff from `/staff`: see [Members & Roles](/cms/members-and-roles)
 - hand out the join code to new hires: see [Join an Organisation](/cms/join-an-organisation)
 - configure locations, rooms and everything else exactly as [Getting Started](/cms/getting-started) describes
 
-There is no manual role edit anywhere in the app and no separate "make me an admin" step. The first admin is whoever created the organisation; every admin after that is one an existing admin added.
+There is no separate "make me an admin" step. The first admin is whoever created the organisation; every admin after that is one an existing admin added.
+
+## A demo organisation instead
+
+On the first-sign-in screen, where you may make one, **Set up a new healthcare organisation** offers **A real organisation** or **A demo organisation**: "Your own organisation for trying Medbot or showing it to others, with synthetic data only. Medbot hosts it in Singapore and you're its administrator. Delete it whenever you're done." Select **Create demo organisation** (or **Open demo organisation** if you have one). It goes straight to **Set up a demo service**, with **Create demo service** or **Skip for now**, and then to Home. See [Demo Services](/cms/services/demo-services#your-demo-organisation).

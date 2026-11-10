@@ -1,0 +1,123 @@
+import { ImageZoom } from "nextra/components";
+
+# Demo Services
+
+A **demo service** is a fully configured service filled with made-up patients, so you can show how a service runs, or learn it yourself, without touching real records. Demo patients have no real phone, email or ID number, so nothing is ever sent to a real person.
+
+Demo services live only in a **demo organisation**: your own organisation for showing Medbot, with synthetic data only. Loading demo patients there also makes **demo sign-ins** for the care team and the patients, so the people you show it to can sign in as each person and try every part themselves. Nothing demo remains in a clinic's real organisation.
+
+## Your demo organisation
+
+Anyone signed in may make one demo organisation, on a deployment where Medbot can host Medplum projects (Medbot's production service).
+
+1. In Medbot CMS, open the context switcher at the top of the sidebar and select **Manage organisations**. On **Organisations**, the dashed **Demo organisation** card says "Your own organisation for showing Medbot to clinics, with synthetic data only."
+2. Select **Create demo organisation**. Medbot makes a Medbot-hosted organisation for it, in Singapore, with you as its first admin, and switches you into it, on Home.
+3. Later, select **Open demo organisation** on the same card.
+
+When you first sign in to Medbot CMS with no organisation, the first-sign-in page offers **Create demo organisation** too, and **Create organisation** links to it ("Only trying Medbot out?"). See [Getting Started](/cms/getting-started). From there you go on to **Set up a demo service**, from a basic service or a template: see [Your organisation's first service](/cms/services/getting-started#your-organisations-first-service).
+
+A demo organisation does not count towards the one organisation you may create, and it is not billed or held to plan limits. If the card is missing, the server cannot make hosted organisations.
+
+### Deleting your demo organisation
+
+The person who made a demo organisation can delete it, and then make a new one.
+
+1. On the **Demo organisation** card on **Organisations**, select **Delete demo organisation**.
+2. Confirm **Delete &lt;name&gt;?** with **Delete**: "Its demo patients are removed from every service, the demo sign-ins stop working, and the organisation and its services leave every member's list. You can make a new demo organisation afterwards."
+3. Medbot first removes the demo patients from each service, waiting for any load still running, and the card shows "Removing demo patients from &lt;services&gt;…" until they are gone. Then the organisation is deleted.
+
+If removing patients from a service fails, the wait stops and you can try again. If it takes longer than a few minutes, the card says "Its demo patients are still being removed. Come back in a few minutes and delete it again."
+
+The demo sign-in addresses are not lost: the next demo organisation that loads the same people reuses them.
+
+## Create a service from a template
+
+1. Open the context switcher at the top of the sidebar, select **All services** and click **New Service** (administrators can select **New service** in the switcher directly). In a demo organisation, the page says "Start from a blank service, or try a demo service: a template that comes fully configured for one clinical area and can be filled with demo patients."
+2. Under **How to start this service**, choose a template:
+
+   | Template | Specialty | What it sets up |
+   | --- | --- | --- |
+   | **Chronic disease management** | Family medicine | Pre-visit history before each review, red flags for low and high blood sugar, chest pain and stroke signs, foot and eye screening steps, and education and financial counselling agents for chronic care. |
+   | **Joint replacement and recovery** | Orthopaedic surgery | Post-op reviews with wound check, X-ray and physiotherapy steps, red flags for wound infection, calf swelling and breathlessness, education on weight-bearing, exercises and pain relief, and pre-op readiness questions. |
+   | **Medical retina clinic** | Ophthalmology | Visual acuity, pressure and dilation steps, red flags for sudden vision loss, flashes and floaters, and a painful red eye after injection, injection interval reminders, and a pre-visit history on vision changes. |
+   | **IVF and assisted reproduction** | Reproductive medicine | Monitoring visits with scan and hormone blood-test steps, red flags for OHSS and for bleeding or pain in early pregnancy, injection-technique and cycle-stage education, and financial counselling for cycles. |
+
+3. The **Name** is pre-filled with the template's name; change it if you like. The template sets the specialty, protocols, referral criteria, AI encounters, red flags, agents and visit steps. You can change any of them afterwards. Every template makes an **Outpatient** service; change the mode later with **Edit service details** if you need to.
+4. Click **Create from template**.
+
+The service opens on its page as a **draft**, skipping the setup wizard: see [Finish setting up](#finish-setting-up).
+
+<ImageZoom src="/images/cms/services/demo-services/01-new-service-template-picker.png" alt="The New Service page with the template cards and the Medical retina clinic template selected" />
+
+In a demo organisation the service shows an amber **Demo** chip beside its status ("Demo data - synthetic, not a real patient record"). Any member of the organisation can create one.
+
+### Finish setting up
+
+A templated service stays a draft until you publish it. In place of the usual draft banner, its owner sees a **Finish setting up** card: "This service is a draft. The template filled in most of it; finish the rest, or mark setup complete whenever you are ready." Each row is ticked once done, and links to its wizard step:
+
+| Row | What it asks for |
+| --- | --- |
+| **Protocols, referral criteria, agents and settings** | "Filled in by the template. Review or change them anytime." (**Review**) |
+| **Care team** | The people who run the service. In a demo organisation, "Loading demo patients adds a demo care team with sign-ins, or add people from your organisation." (**Add care team**) |
+| **Demo patients** (in a demo organisation) or **Patients** | **Load demo patients**, or **Add patients** from the organisation's patient directory. |
+| **Content library** | Optional. Documents for the service's agents to draw on. (**Add content**) |
+
+A demo load ticks both the care team and the patients. Select **Mark setup complete** to publish the service at any time; once everything is in place the card says "Everything this service needs is in place. Mark setup complete to publish it." In the wizard, a templated service's **Patients** step shows the **Demo patients** panel in a demo organisation, so you can load them there and then **Finish setup**.
+
+### Templates in a real organisation
+
+The same templates are offered in every organisation, with the same configuration, but only in a demo organisation do they make a demo service. Elsewhere the new-service page calls them "a template that comes configured for one clinical area", and the service they create is an ordinary service, a draft until you finish setting it up, with no **Demo** chip and no demo patients.
+
+## Load demo patients
+
+The **Demo patients** panel (with a **Synthetic data** chip) sits on a demo service's **Overview**, below the patient agent card. For a service you made without a template, owners and organisation admins find it at the bottom of **Settings**, above the **Danger zone**. Everyone with access to the service can see the panel; only the service owner or an organisation admin sees the buttons that change it, and the sign-ins.
+
+1. Click **Load demo patients**.
+2. In **Load demo patients**, choose a **Demo patient set**. Each shows a name, a **Bundled** or **From Medbot-Simulation** badge, and a description. A set already loaded in another service is greyed out.
+
+   The bundled sets are **Chronic disease clinic — core six**, **Joint replacement — pre-op to 3 months**, **IVF cycles in progress** and **Medical retina clinic — injection list**.
+3. Choose which patients to load. If the set has several conditions, archetypes or sites, filter with **Condition**, **Archetype** and **Site**. Quick buttons choose **One per archetype**, **Two per archetype**, **All shown** or **None**; or tick patients individually under **Patients (N shown)**.
+4. Click **Load N patient(s)**.
+
+<ImageZoom src="/images/cms/services/demo-services/02-load-demo-patients-dialog.png" alt="The Load demo patients dialog with the bundled set, the Condition filter, All shown and None, the patient list and the Load 6 patients button" />
+
+Patients are dated relative to today, so their story is current whenever you load them. The panel's status line tracks progress ("Loading demo patients - N of M ready.") and ends with "N demo patients loaded." If some steps fail it says so, and you can try again.
+
+Each loaded patient shows their name (a link to their patient page), a summary and tags. An **In patient portal** badge appears once their portal copy is ready. Demo patients carry a **Demo** chip in the cohort roster, on their patient page, and on the Workstation boards. Use the link at the foot of the panel to see them in today's queue on the Workstation.
+
+<ImageZoom src="/images/cms/services/demo-services/03-demo-panel-loaded.png" alt="The Demo patients panel with loaded patients, View as patient buttons and the reset and remove buttons" />
+
+## Demo sign-ins
+
+A load also makes accounts for a cast of staff and for every demo patient, so a clinic being shown Medbot can sign in as each of them. They are listed in the **Demo sign-ins** section of the panel, for the service owner and organisation admins.
+
+- **Who.** A set names its own cast. The IVF set has Dr Jonathan Lim (the lead doctor), Siti Nurhaliza (nurse, covering the Nurse role), Grace Ho (admin) and Dr Ruth Tan; any other set gets a generic lead doctor, nurse and admin. Each demo patient gets a sign-in linked to their own portal record. The lead doctor becomes the practitioner on the run's appointments and plans.
+- **Addresses.** Plus-addresses of the email of the person who loaded the set, for example `you+orchard-lim@yourdomain` for a staff member and `you+orchard-mei-lin@yourdomain` for a patient. The accounts are created already verified, so no invitation or code is sent. The care team's ordinary notifications go to those addresses, so you receive them.
+- **Password.** One per load, two words and four digits such as `maple-river-4821`, shown at the top of the section. "Every account below signs in with this password. A reset ends them, and the next load gives them a new one." **Copy password** copies it; **Copy all** copies the password and every address, with where each signs in, as text to paste into a message to the client.
+- **Where.** The section says where the **Care team** signs in (Medbot CMS) and where **Patients** sign in (the patient app).
+
+While signed in with a demo patient's sign-in, every patient app screen carries an amber **Demo patient** banner: "A synthetic record for a demonstration. Nothing here is real."
+
+## View as patient
+
+Any care team member in a demo organisation can see what a demo patient sees without a sign-in. Once a patient shows **In patient portal**, click **View as patient**. The patient portal opens in a new tab as that demo patient, signed in as you. The first time, it asks you to complete a short sign-up.
+
+If it fails, a message says "Could not open the patient portal".
+
+## Remove or reset the demo
+
+These buttons are for the service owner and organisation admins:
+
+- **Refresh portal copies**: re-syncs the patient portal copies.
+- **Reset and reload**: after you confirm **Reset and reload the demo?**, deletes everything the demo patients have (charts, appointments, visits, notes and portal copies, including anything you added while demoing) and reloads them dated from today.
+- **Remove demo patients**: after you confirm **Remove the demo patients?**, deletes the demo patients and everything they touched. If removal does not finish, the panel says so and offers **Retry removal**.
+
+A reset also ends the demo sign-ins: their sessions end, the staff leave the care team and rota, and the patient links are revoked. The next load reuses the same addresses with a new password.
+
+A reset or removal first cancels the demo patients' pending tasks, so a Task Inbox left open does not offer tasks that are about to disappear. Removing a large demo can take a few minutes: when Medplum asks Medbot to slow down, the removal pauses until it may continue, and the panel shows only what the removal itself ran into.
+
+A service that still has demo patients cannot be deleted. Remove them first, so their records are deleted from the patient portal too.
+
+### Demo patients loaded before demo organisations
+
+A service in a real organisation that was filled with demo patients before this change keeps them until you remove them. Its **Demo patients** panel says "Demo patients now load only in a demo organisation (open yours from Organisations). Remove the ones still in this service." and offers only **Remove demo patients**.

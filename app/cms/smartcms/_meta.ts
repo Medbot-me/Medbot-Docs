@@ -4,6 +4,7 @@ export default {
   "claims-agent": "Claims Agent",
   reports: "Reports",
   cmis: "Allergies & Medical Alerts (CMIS)",
+  "patient-care-summary": "Patient Care Summary",
   messages: "SmartCMS Messages",
   outages: "Gateway Outages & Deadlines",
   modules: "Modules & Gating",

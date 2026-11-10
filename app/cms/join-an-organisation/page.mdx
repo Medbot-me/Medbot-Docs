@@ -11,7 +11,9 @@ If the person already has a Medbot sign-in with that email address, and the addr
 - the CMS **registration form** (`/sign-up`) for someone with no Medbot account yet, or
 - the CMS **sign-in page** (`/login`) for someone who already has one.
 
-Their account is linked to the waiting membership as soon as that email address is **verified**. A new account gets a verification code by email when it registers, and the CMS shows a **Verify your email** banner until it is entered (see [Getting Started](/cms/getting-started#verify-your-email)). Verifying in any Medbot app counts. Nothing further is needed from either side. If the person was invited by more than one organisation, every waiting membership is linked at once. Only a verified address claims an invitation, so nobody can register with a colleague's email and take their place.
+Their account is linked to the waiting membership as soon as that email address is **verified**. A new account gets a verification code by email when it registers, and confirming it is the last part of signing in (see [Getting Started](/cms/getting-started#confirm-your-email)). Verifying in any Medbot app counts. Nothing further is needed from either side. If the person was invited by more than one organisation, every waiting membership is linked at once. Only a verified address claims an invitation, so nobody can register with a colleague's email and take their place.
+
+Until they first enter it, the welcome screen shows the organisation marked **Invitation linked**, with "You join as &lt;Role&gt;" and **Enter &lt;organisation&gt;**. See [If you were invited](/cms/getting-started#if-you-were-invited).
 
 The invitation does not expire, and the person can register or sign in without it. If the email never arrived, they can open the CMS and select **Set up your clinic** (to register) or **Sign in**, using the invited address.
 
@@ -20,21 +22,33 @@ The invitation does not expire, and the person can register or sign in without i
 For a hire who signs up before anyone invites them, or whose invite has not arrived yet. It also works for someone who already belongs to one organisation and needs to join another.
 
 1. An admin gives them the organisation's **join code**, a short code from the [organisation's settings](/cms/settings#join-code).
-2. The new user signs in and opens the **Request access to an organisation** form at `/onboarding`. An account whose email is not verified yet is asked to verify it there first. It is linked from the [organisations screen](/cms) (where a user with no memberships lands), and from **Join with code** on the [welcome screen](/cms/switching#the-welcome-screen) and in the sidebar's organisation switcher.
-3. They enter the join code and submit.
+2. The new user signs in and chooses **Join my healthcare organisation** on **Welcome to Medbot CMS** (`/onboarding`), where a user with no organisation lands. It is also opened by **Join with code** on the [welcome screen](/cms/switching#the-welcome-screen) and in the [sidebar switcher](/cms/switching#the-sidebar-switcher). An account whose email is not verified yet is asked to confirm it first.
+3. They enter the **Join code** and select **Request access**. The form says: "If your healthcare organisation already invited &lt;email&gt;, the code links your account straight away. Otherwise your request goes to their administrator."
 
 What happens next depends on what the backend finds:
 
 | Outcome | What the user sees |
 | --- | --- |
-| An invite for their email already exists at that organisation | **Access granted**: they are linked immediately and can enter the organisation. |
+| An invite for their email already exists at that organisation | They are linked immediately, and can enter the organisation from the welcome screen or the sidebar switcher. |
 | They are already a member | Same: they are simply let in. |
-| A request from them is already pending | **Request already pending**: an administrator still needs to review it. |
-| Nothing matches | **Request submitted**: an administrator will review it. |
+| A request from them is already pending | The waiting page: "Your request to &lt;organisation&gt; is still waiting". |
+| Nothing matches | The waiting page: "Request sent to &lt;organisation&gt;". |
 
 **Filing a request never grants access on its own.** It queues work for an admin.
 
+The **Join with a code** card on the [organisations screen](/cms/switching#the-organisations-screen) files the same request, with a **Message (optional)** for the admin, through **Request to join**. It is open when you belong to no organisation; otherwise select **Enter it here**.
+
 A join code gets a person into an organisation; it does not give someone who is already a member a second role there. For that, an admin uses **Add another role** on the person's row in [Staff](/cms/staff#giving-someone-another-role).
+
+### Waiting for approval
+
+A request an administrator still has to review gets a page of its own, `/onboarding/pending`, marked **Pending review**: "An administrator at &lt;organisation&gt; will review your request. Once they approve it, sign in again and you'll go straight in."
+
+- It lists every request of yours still pending, at any organisation, each with the **Organisation**, **Requested as** (your email) and when it was **Sent**. With several, the heading reads "&lt;number&gt; requests are waiting".
+- **While you wait**, where you may have one, you can create or open your own demo organisation, with synthetic data only.
+- "Wrong organisation?" links to **Use a different join code** and **set up a new healthcare organisation**.
+
+Once nothing is pending (each request approved or denied), the page sends you on to the welcome screen, which opens an organisation you now belong to or starts you again at `/onboarding`.
 
 ### Why a join code is required
 

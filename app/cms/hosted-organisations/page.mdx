@@ -6,12 +6,12 @@ A clinic that has no Medplum server of its own can have Medbot host one. When yo
 
 ## Creating one
 
-1. Open **Create organisation** from the [organisations screen](/cms), the [welcome screen](/cms/switching#the-welcome-screen), the sidebar switcher or `/organisations/new`.
+1. Choose **Set up a new healthcare organisation** on the [first-sign-in screen](/cms/getting-started#if-you-have-no-organisation-yet), or open **Create organisation** from the [organisations screen](/cms/switching#the-organisations-screen), the [welcome screen](/cms/switching#the-welcome-screen), the [sidebar switcher](/cms/switching#the-sidebar-switcher) or `/organisations/new`.
 2. Enter the **Organisation name**, **Country** and **Time zone**, and for a Singapore clinic choose its SmartCMS modules or skip them.
-3. On the **Medplum server** step, leave **Hosted by Medbot** selected. It says "Medbot makes a Medplum project for this organisation now. Nothing else to enter." The other choice, **My own Medplum project**, asks for a client ID and secret instead.
-4. Select **Create organisation**.
+3. On the **Where records are stored** step, leave **Hosted by Medbot** selected. It says "Medbot makes a Medplum project for this organisation now. Nothing else to enter." The other choice, **My own Medplum project**, asks for a client ID and secret instead.
+4. Select **Create &lt;organisation name&gt;**.
 
-Medbot creates the Medplum project, its client, the organisation, your `admin` membership and a default "Main Clinic" location, then switches you into the new organisation. If any step fails, whatever was made in Medplum is removed again and the form shows the reason. The Medbot web app's **Create organisation** form offers the same choice.
+Medbot creates the Medplum project, its client, the organisation, your `admin` membership and a default "Main Clinic" location, then switches you into the new organisation and goes on to [set up its first service and team](/cms/create-organisation#after-creating). If any step fails, whatever was made in Medplum is removed again and the form shows the reason.
 
 The same **one organisation per person** limit applies as for a self-managed organisation: see [Create an Organisation](/cms/create-organisation#how-many-you-can-create).
 
@@ -23,7 +23,7 @@ Everything else (staff, join code, patients, every clinic workflow) behaves exac
 
 ## For Medbot platform administrators
 
-Hosted organisations are looked after in the CMS's **Platform** sidebar group, which appears only for a **platform superadmin**. That is a Medbot-wide role on the user account, separate from any organisation role, and granted by an existing superadmin. For anyone else, `/admin/*` answers **not found**. Some of the same queues are also in the admin area of the Medbot web app.
+Hosted organisations are looked after in the CMS's **Platform** sidebar group, in the **Home** tab, which appears only for a **platform superadmin**. That is a Medbot-wide role on the user account, separate from any organisation role, and granted by an existing superadmin. For anyone else, `/admin/*` answers **not found**. Some of the same queues are also in the admin area of the Medbot web app.
 
 The **Platform** group has three items:
 
