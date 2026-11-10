@@ -12,12 +12,24 @@ export default withNextra({
       // Care Programs were renamed to Services.
       {
         source: '/docs/care-programs',
-        destination: '/docs/services',
+        destination: '/cms/services',
         permanent: true,
       },
       {
         source: '/docs/care-programs/:path*',
-        destination: '/docs/services/:path*',
+        destination: '/cms/services/:path*',
+        permanent: true,
+      },
+
+      // Services moved from the Medbot app to Medbot CMS (Home and CMS split).
+      {
+        source: '/docs/services',
+        destination: '/cms/services',
+        permanent: true,
+      },
+      {
+        source: '/docs/services/:path*',
+        destination: '/cms/services/:path*',
         permanent: true,
       },
 

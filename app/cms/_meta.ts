@@ -5,6 +5,8 @@ export default {
   "roles-and-permissions": "Roles & Permissions",
   "-- guides": { type: "separator", title: "Guides by Role" },
   guides: "Guides by Role",
+  "-- services": { type: "separator", title: "Care Services" },
+  services: "Services",
   "-- patients": { type: "separator", title: "Patients & Clinical Care" },
   "patient-records": "Patient Records & Consent",
   encounters: "Encounters & Clinical Notes",
