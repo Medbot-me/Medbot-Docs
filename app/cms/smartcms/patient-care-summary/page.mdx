@@ -1,0 +1,52 @@
+# Patient Care Summary
+
+The **Patient Care Summary** is Synapxe's national summary of a Healthier SG patient's care. A doctor can open it from the patient's chart, for viewing only. Medbot does not keep the summary: Synapxe shows it in its own page, inside a window in the CMS.
+
+> **Before go-live.** The Patient Care Summary is built to Synapxe's specification and tested against a mock gateway. Like every SmartCMS service, it opens only from a clinic location with an HE code that an admin has switched on for Healthier SG in [SmartCMS Settings](/cms/smartcms/settings).
+
+## Who can open it
+
+The **Patient Care Summary** button is in the patient header, on every tab of the chart. It appears only for a **Doctor**, at a Singapore organisation subscribed to the **Healthier SG** module (`HSG_BUNDLE`). Clinic Admins, receptionists and nurses do not see it. See [Modules & Gating](/cms/smartcms/modules).
+
+The summary is found by the patient's NRIC or FIN. When the patient has neither, the button is disabled and says "Needs the patient’s NRIC or FIN." Select **View identifiers** to record one. See [Patient Records](/cms/patient-records).
+
+## Open the summary
+
+1. On the patient's chart, select **Patient Care Summary**.
+2. The **Patient Care Summary** window opens, with the patient's name: "Synapxe’s national summary for this patient, for viewing only. It is updated weekly and may not show the most recent care." While Medbot asks Synapxe for the page, it shows "Opening the Patient Care Summary…".
+3. Read the summary in the window. It cannot be downloaded or printed from the window, and it cannot open other windows.
+
+Under the summary, the window says "Closes when you log out, close this window or leave the CMS idle for 10 minutes." and when the summary was requested.
+
+Only one summary window is open at a time. The button is disabled while it is open.
+
+## When the window closes
+
+The window closes when you close it, log out, your session times out, or you close the CMS. To see the summary again, select **Patient Care Summary** again.
+
+It also closes after 10 minutes without activity in the CMS. Reading inside the summary does not count as activity, so a minute before it closes the window warns: "The summary closes in under a minute because the CMS has been idle." Select **Keep it open** to carry on reading. Once it has closed, the chart says "The Patient Care Summary closed after 10 minutes without activity."
+
+## When it cannot open
+
+The window says **The Patient Care Summary could not be opened**, and why:
+
+| Message | What to do |
+| --- | --- |
+| "The Patient Care Summary is opened by NRIC or FIN only. Record the patient’s NRIC or FIN first." | Select **View the patient’s identifiers** and record the NRIC or FIN. |
+| "Access is denied. Patient is not enrolled to Healthier SG." | The patient has no summary to show. |
+| "Access is denied. Patient is not enrolled to your clinic." | The patient is enrolled with another clinic. |
+| "Patient records could not be found." | Synapxe has no records for the patient. |
+| "We are currently experiencing difficulties connecting to the required service. Please try again later." | Select **Try again** later. |
+| "We have encountered an unexpected error. Please try again later." | Select **Try again** later. |
+| "The Patient Care Summary could not be reached." | Select **Try again**. |
+| "SmartCMS is switched off." | Nothing is sent from this Medbot server. Contact Medbot. |
+
+## What is recorded
+
+Each request is logged on [SmartCMS Messages](/cms/smartcms/messages), as every SmartCMS call is. Synapxe's answer carries a link that opens the patient's summary for whoever holds it, so its token is shown as `[redacted]` in the message log and in the [SIT evidence](/cms/smartcms/settings#sit-evidence) export.
+
+## Related
+
+- [Modules & Gating](/cms/smartcms/modules): the Healthier SG module.
+- [SmartCMS Settings](/cms/smartcms/settings): switching a location on.
+- [SmartCMS Messages](/cms/smartcms/messages): what was sent and what came back.

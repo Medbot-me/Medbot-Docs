@@ -65,12 +65,27 @@ On Home, a **Garmin** chip beside **Log something** says when Garmin last synced
 
 Synced readings do not count towards your logging streak. A day's reading replaces the one Garmin sent earlier for that day, so a re-sent summary is not counted twice. Medbot does not check synced readings for warning signs. Ask Medbot or call your clinic if you are worried about a reading.
 
+## Let AI features use your readings
+
+Medbot's AI features do not read your synced readings unless you agree. Ask Medbot, care sessions and any care program assistant you let see your whole record can take your Garmin readings into account only while this is on. It is off until you turn it on.
+
+On **Connected devices**, under **AI features**:
+
+1. Turn on **Let AI features use my synced readings**.
+2. Read **Let AI features use your synced readings?**. It says where the readings go: when an AI feature works on your care, the Garmin readings it needs are sent to Anthropic's Claude AI models, run for Medbot by Amazon Web Services with zero data retention. They are used only to answer and are not kept, and they are never used to train AI.
+3. Select **Allow**, or **Cancel** to leave it off.
+
+To withdraw, turn the switch off. There is no confirmation: AI features stop reading your synced readings from then on.
+
+If you disconnect Garmin and keep your synced readings, the switch stays on **Connected devices** while it is on, so you can still turn it off.
+
 ## Manage the connection
 
 **Profile → Preferences → Connected devices** shows:
 
 - **Connected**, and **Last synced** with a time, or "Waiting for the first readings from Garmin"
 - **Data you share**, with a switch for each kind of reading
+- **AI features**, with the **Let AI features use my synced readings** switch. See [Let AI features use your readings](#let-ai-features-use-your-readings).
 - **Recent syncs**, each with how many readings arrived, or **Didn't sync**
 
 If Garmin stops accepting Medbot's sign-in, the card says **Needs reconnecting**. Select **Reconnect Garmin Connect™**. If health data sharing for Medbot is turned off in Garmin Connect™, the page tells you to turn it back on there, under **Account information**.

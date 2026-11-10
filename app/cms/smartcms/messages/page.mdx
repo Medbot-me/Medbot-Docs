@@ -46,7 +46,7 @@ Select the time to open **SmartCMS message**. It shows the **Status**, **Busines
 - **Request sent**: the URL, the headers, the decoded JWT header and claims, and the body.
 - **Answer received**: the body of the answer.
 
-The API key and the `Authorization` header are never stored, and the JWT is shown as its decoded header and claims only, never its signature. The same redaction applies to the [SIT evidence](/cms/smartcms/settings#sit-evidence) export, which is built from the same records.
+The API key and the `Authorization` header are never stored, and the JWT is shown as its decoded header and claims only, never its signature. The token in a [Patient Care Summary](/cms/smartcms/patient-care-summary) answer, which would open the patient's summary for whoever holds it, is shown as `[redacted]`. The same redaction applies to the [SIT evidence](/cms/smartcms/settings#sit-evidence) export, which is built from the same records.
 
 ## Related
 

@@ -46,11 +46,13 @@ SmartCMS is enabled **per organisation** and only for organisations whose countr
 | **Coded diagnoses** (ICD-10-AM) on the visit | Available |
 | **Singapore billing**: one bill per visit, receipt numbers, GST, bill categories, void and correct | Available |
 | **Claims**: CHAS, PHPC, vaccination and CDS subsidies, Screen for Life (with claim history), Medisave and Flexi-Medisave | Available |
-| **Claims queue**: submit, re-prepare, discard, status tracking, CHAS appeals, resubmitting rejected or refused claims, Medisave amend and cancel, CPF payment reconciliation, matching CPF messages, the 30-day CPF answer check, the stale CPF fetch alert | Available |
+| **Claims queue**: submit, re-prepare, discard, status tracking with each claim's Prepared, Sent, Received and Paid steps, CPF wait, overdue and shortfall details, CHAS appeals, resubmitting rejected or refused claims, Medisave amend and cancel, CPF payment reconciliation, matching CPF messages, the 30-day CPF answer check, the stale CPF fetch alert | Available |
 | **Medisave claims**: Medisave claims by patient or visit, with what CPF paid and what patients owe | Available |
 | **Claims today**: each patient's bill, claims and what they owe, by location and day | Available |
 | **Claims agent**: nightly run, "Prepare today's claims", AI assistant connections over MCP | Available |
-| **Reports**: NIR, disease notification (DEROM), CIDC, NEHR referral letters, migrant worker health | Available |
+| **Reports**: NIR, disease notification (DEROM), CIDC, NEHR referral letters (with filters, search and the consent confirmation), migrant worker health | Available |
+| **NEHR on Documents**: each referral letter's NEHR status, and the consent hold warning while a letter is written | Available |
+| **Patient Care Summary**: Synapxe's national summary for a Healthier SG patient, for doctors | Available, tested against the mock gateway |
 | **CMIS**: looking a patient up, reporting drug allergies (ADR), recording and closing medical alerts | Available. Drug allergy reports wait for CMIS's drug list from Synapxe |
 | **SmartCMS messages**: the log of every message and answer, per role | Available |
 | **Gateway outages**: holding submissions while the gateway is down, resuming closest deadline first, CHAS and DEROM deadline alerts, the backlog on System status | Available |
@@ -64,7 +66,7 @@ A Singapore organisation with a matching module gets a **SmartCMS** group in the
 
 | Screen | What it is for |
 | --- | --- |
-| **Claims** (`/claims`) | The claims queue, **Claims today**, the claims agent, notes for staff, **Medisave claims** and **Medisave payments**. See [Claims Workflow](/cms/smartcms/claims). |
+| **Claims** (`/claims`) | The claims queue, **Claims today**, the claims agent, notes for staff, **Medisave claims** and **Medisave payments from CPF**. See [Claims Workflow](/cms/smartcms/claims). |
 | **Messages** (`/smartcms/messages`) | What Medbot sent to the gateway and what came back. See [SmartCMS Messages](/cms/smartcms/messages). |
 | **Reports** (`/reports`) | National registry notifications and reports, and CMIS allergy and alert reports. See [Reports](/cms/smartcms/reports). |
 
@@ -75,6 +77,8 @@ SmartCMS also adds to screens staff already use:
 | [Reception Queue](/cms/reception-queue) and the patient header | CHAS verification and the CHAS badge |
 | [Encounters](/cms/encounters) | The **Diagnoses (ICD-10-AM)** card, Screen for Life and developmental screening panels |
 | The patient chart's **Overview** | The **National allergy and alert record (CMIS)** card, under **Allergies**. See [CMIS](/cms/smartcms/cmis). |
+| The patient header | The **Patient Care Summary** button, for doctors. See [Patient Care Summary](/cms/smartcms/patient-care-summary). |
+| [Documents & Certificates](/cms/documents-and-certificates) | Each referral letter's NEHR status, and the consent hold warning on **Compose document**. See [NEHR referral letters](/cms/smartcms/reports#on-the-patients-documents). |
 | [Vaccinations](/cms/vaccinations) | The SDD product and the vaccination subsidy check |
 | [Billing](/cms/billing) | The claim panels on **Generate invoice**, and void and correct |
 | [Organisation Settings](/cms/settings) | Modules, Singapore registration, and the link to **SmartCMS settings** |
@@ -85,6 +89,7 @@ SmartCMS also adds to screens staff already use:
 - Letting an agent prepare claims: [Claims Agent](/cms/smartcms/claims-agent).
 - National registry notifications and reports: [Reports](/cms/smartcms/reports).
 - Looking patients up in CMIS, reporting drug allergies and medical alerts: [Allergies & Medical Alerts (CMIS)](/cms/smartcms/cmis).
+- Opening a Healthier SG patient's national summary: [Patient Care Summary](/cms/smartcms/patient-care-summary).
 - What was sent to SmartCMS and what came back: [SmartCMS Messages](/cms/smartcms/messages).
 - What happens when the SmartCMS gateway is down, and claim deadlines: [Gateway Outages & Deadlines](/cms/smartcms/outages).
 - Choosing what the clinic subscribes to: [Modules & Gating](/cms/smartcms/modules).

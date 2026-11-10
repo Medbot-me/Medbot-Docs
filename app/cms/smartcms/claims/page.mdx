@@ -124,7 +124,7 @@ PHPC also asks for the **Patient type** and any justification MHCP requires. The
 2. Under **Check a payer**, enter the payer's NRIC and who the payer is (the patient or a family member).
 3. Confirm that the patient and payer signed the once-off Medisave consent form (MCAF(S)). The consent must be dated on the visit day.
 4. Select **Check Medisave**. Medbot shows the payer's balance.
-5. Choose the **Chronic condition** and enter how much **Medisave pays**. Medbot caps it: "Medisave can pay at most $X of this bill: the payer can claim $Y, and the patient pays $Z after the bill's subsidies."
+5. Choose the **Chronic condition** and enter how much **Medisave pays**. The list offers the conditions CPF accepts on the visit date. For visits from 1 November 2026 it includes **Hypothyroidism** and **Hyperthyroidism**, each as **(Visit)** or **(Complex)**. Medbot caps it: "Medisave can pay at most $X of this bill: the payer can claim $Y, and the patient pays $Z after the bill's subsidies."
 
 **Flexi-Medisave.** When the payer is the patient or their spouse, tick "Also check Flexi-Medisave, so part of the amount can be claimed from it. Needs the clinic enabled for the scheme at MCAF." before **Check Medisave**. The check then shows **Flexi-Medisave available**, and the bill offers **Of which Flexi-Medisave $**: the part of the Medisave amount to take from Flexi-Medisave, at most the figure shown. Leave it blank for an ordinary Medisave claim. The claim is held if the Flexi part is more than the payer's Flexi figure or than the Medisave amount. Flexi-Medisave is not offered for a child, parent or grandparent payer.
 
@@ -169,29 +169,46 @@ A daily check at 02:30 (Singapore time) picks up any issued bill from the past w
 
 ## 5. The Claims queue
 
-**SmartCMS → Claims** (`/claims`) lists every claim for the organisation, newest activity first. The page says which modules it covers and that "MHCP status is checked every four hours during the day." Below the heading are **Claims today**, which opens the [day view](#claims-today), and, with Medisave, **Medisave claims** (see [Medisave claims](#medisave-claims)) and, for Clinic Admins and receptionists, **Medisave payments from CPF**.
+**SmartCMS → Claims** (`/claims`) lists every claim for the organisation, newest activity first. The page says which modules it covers and who is checked, for example "MHCP and CPF status is checked every four hours during the day." Below the heading are **Claims today**, which opens the [day view](#claims-today), and, with Medisave, **Medisave claims** (see [Medisave claims](#medisave-claims)) and, for Clinic Admins and receptionists, **Medisave payments from CPF**.
 
 From top to bottom, the page shows:
 
 1. **Claims agent.** The agent's recent runs and the buttons to start one. See [Claims Agent](/cms/smartcms/claims-agent).
 2. **Notes for staff.** "What an agent or Medbot could not prepare, and why. Take each up by hand, then mark it resolved." Select **Resolve** once you have dealt with a note.
 3. **CPF answers are not being fetched.** Shown only when a Medisave location's CPF answers have not been fetched for 48 hours. See [When CPF answers are not being fetched](#when-cpf-answers-are-not-being-fetched).
-4. **The queue.** Filter by **All**, **Waiting for review** or **Needs your action**.
+4. **The queue.** Filter by **All**, **Prepared** or **Needs attention**.
 
 | Column | What it shows |
 | --- | --- |
-| **Claim** | The patient's name and initials, then the module and category, the visit date, the amount and the location. Below that, the claim number (**Not sent yet** before it is sent), who prepared it (**Prepared by staff**, **Prepared automatically** or **Prepared by agent** and the agent's name), and any problems. A resubmission is marked **Resubmission 1** (then 2, and so on), and a Medisave correction **Amendment** or **Cancellation**. |
-| **Where it is** | The claim's progress as four steps, each with its date: **Prepared**, **Sent**, **Received by MHCP** (or **by CPF**) and **Paid** (**Approved** for Medisave). A step that went wrong is marked in red: **Refused**, **Not confirmed** or **Rejected by MHCP**. Below the steps are the status and why the claim is there, with any code apart, such as MHCP's rejection, a Medisave shortfall or overdue answer, or the state of an appeal. |
+| **Claim** | The patient's name, then the module, category and location. A resubmission is marked **Resubmission 1** (then 2, and so on), and a Medisave correction **Amendment** or **Cancellation**. Below that, the claim number (**Claim no.**, or **HRN** for Medisave; **Not sent yet** before it is sent), the visit date and the amount (for Medisave, "Medisave S$…" and who pays it), and any problems in red. |
+| **Prepared** | Who prepared the claim (**Staff**, **Automatically**, or the agent's name, such as "nightly run") and when. An appeal row reads **Appeal**. |
+| **Status** | The claim's status, then its progress as four steps, each with its date: **Prepared**, **Sent**, **Received by MHCP** (or **by CPF**) and **Paid**. A step that went wrong is marked in red: **Not sent**, **Refused**, **Not confirmed** or **Rejected by MHCP** (or **by CPF**). Below the steps are why the claim is there, with any code apart, such as MHCP's rejection or the state of an appeal, and when the payer was last checked: "Checked … · next …", or "· final answer". While a claim is being sent it shows "Sending to MHCP…" (or CPF). |
 | **Paid** | The amount paid and the date. |
-| **Actions** | A button for each action open to you, the main one highlighted. See [Actions on a claim](#actions-on-a-claim). |
+| **⋯** | The actions open to you, in a menu. See [Actions on a claim](#actions-on-a-claim). |
 
 An appeal is its own row, marked **Appeal**, with the claim number it appeals and the reason.
 
 The queue shows a page of claims at a time. Use the page numbers at the bottom to see older claims.
 
-**Needs your action** collects claims that were refused or not confirmed, are parked because a location was switched off, were paid short by Medisave, have had no answer from CPF for 20 days, or that MHCP or CPF rejected, recovered or returned with an error. **Waiting for review** collects claims prepared and waiting for a person, including those held with problems. A rejected claim leaves the list once it is resubmitted, and comes back if its resubmission is discarded.
+A Medisave claim that is waiting for CPF's answer, overdue or paid short shows its steps in a card under the row instead. See [Medisave claims waiting on CPF](#medisave-claims-waiting-on-cpf).
+
+**Needs attention** collects claims that were refused or not confirmed, are parked because a location was switched off, were paid short by Medisave, have had no answer from CPF for 20 days, or that MHCP or CPF rejected, recovered or returned with an error. **Prepared** collects claims prepared and waiting for a person, including those held with problems. A rejected claim leaves the list once it is resubmitted, and comes back if its resubmission is discarded.
+
+### Medisave claims waiting on CPF
+
+A Medisave claim sent to CPF and not yet answered, overdue, or paid short gets a CPF card under its row. The card shows the four steps, then:
+
+- **Waiting for CPF.** **Sent**, **Waiting** (how long, for example "4 days 3 h"), **Last checked** and **Next check**. The **Received by CPF** step reads "Waiting ·" and how long. The card says "Waiting for CPF’s answer. Medbot checks on its own, so there’s nothing to do yet."
+- **Overdue.** The same details, with **Waiting** in amber, and the **Received by CPF** step reads "Overdue since" the date it became overdue, 20 days after it was sent. The card says "CPF hasn’t answered this claim yet, and keeps its answer for only 30 days. If there’s still no answer 25 days after sending, call CPF with claim no. …". See [When CPF does not answer](#when-cpf-does-not-answer).
+- **Paid short.** A bar of how much CPF paid, then **Claimed**, **Paid by CPF** and **Owed by the patient**. The **Paid** step shows what CPF paid of what was claimed, for example "S$60.00 of S$80.00". The card says why, or "CPF paid less than was claimed. Collect the rest from the patient, or amend the claim to what CPF paid." Select **Amend** to [amend the claim](#amending-or-cancelling-a-medisave-claim).
+
+A Clinic Admin or Receptionist can select **Check CPF now** on a waiting or overdue claim. The other actions on the page wait while it runs. If CPF has nothing yet, the card says so with the time it checked. When CPF's answer arrives, the card shows "✓ Reply received. CPF’s answer now shows on the claim." for a moment before the claim's new status replaces it. If CPF could not be reached: "CPF couldn’t be reached, so the claim wasn’t checked. Nothing on the claim has changed." Select **Try again**.
+
+**Check CPF now** and **Amend** appear on the card, so the row's ⋯ menu leaves them out.
 
 ### Actions on a claim
+
+Each row's actions are in its **⋯** menu.
 
 | Action | When it is offered |
 | --- | --- |
@@ -202,7 +219,7 @@ The queue shows a page of claims at a time. Use the page numbers at the bottom t
 | **Submit as nurse-led** | The same claim, when the visit is still nurse-led. Clinic Admins only. |
 | **Discard** | Any claim not yet sent. You are asked "Why is this claim being discarded?" |
 | **Refresh status** | A sent CHAS claim. Asks MHCP for its status now. |
-| **Check CPF now** | A sent Medisave claim. If nothing is back yet: "CPF has not answered this claim yet. Medbot checks again on its own." |
+| **Check CPF now** | A sent Medisave claim. On a claim waiting for CPF, overdue or paid short, it is on the [CPF card](#medisave-claims-waiting-on-cpf) instead. If nothing is back yet: "CPF has not answered this claim yet. Medbot checks again on its own." |
 | **Appeal** | A CHAS claim MHCP rejected. See [Appealing a rejected CHAS claim](#appealing-a-rejected-chas-claim). |
 | **Resubmit** | A CHAS, PHPC, Screen for Life, vaccination or CDS claim MHCP rejected, or that was refused before MHCP took it. Clinic Admins only. See [Resubmitting a rejected claim](#resubmitting-a-rejected-claim). |
 | **Amend** and **Cancel with CPF** | A Medisave claim. See [Amending or cancelling a Medisave claim](#amending-or-cancelling-a-medisave-claim). |
@@ -284,14 +301,23 @@ If nobody checked in: "No patients were checked in here on this day." If the day
 - Filter by **All**, **Needs attention**, **Waiting on CPF** or **Paid**, or search by patient name or claim number.
 - Each group shows **Claimed**, **Paid**, **Owes** and a status: the first claim needing staff, "… to submit" for prepared claims, **Waiting on CPF**, **Approved** or **Closed**.
 - Open a group to see each claim: its claim number (or **Not sent yet**), who paid if not the patient ("Paid from …"), its status, and a note: what is missing, CPF's rejection with its code, or when it was sent and when CPF was last checked. The main action is a button, the rest are under **More actions**.
+- **More actions** also has **View claim**, which opens the claim in a side panel: the patient, "Medisave claim · CDMP" and the location, the HRN (or **Not sent yet**), **Claimed**, **CPF paid** and **Shortfall**, the [CPF card](#medisave-claims-waiting-on-cpf) when the claim is waiting or paid short, and what happened to the claim, newest first, for example "Prepared from the bill", "Sent to CPF", "CPF deducted less than claimed" (from the CPFPAY file) or "No answer from CPF yet". The claim's actions are at the bottom. Taking one closes the panel.
 
 The page reads the most recent claims. Older ones stay in the Claims queue.
 
 ### Medisave payments
 
-**Medisave payments** (`/claims/medisave-payments`) shows the payment files CPF sent in the last 60 days, one card per day and Hospital Code. Each card's summary says "All N checks agree" or "N of M checks do not agree", and counts any refused file. Above the cards, "… things to sort out" lists every problem across the days: a refused file, a tie-out that is off (with the expected and actual figures), and claims CPF paid short of balance. Open a card to see its tie-outs and its files: **Payment detail (CPFPAY)**, **Summary (CPFSUM)** and **GIRO letter (CPFIBG)**, each with its **State** (**Applied**, **Refused** or **Waiting**), **Records**, **Total** and the **Claims** it paid. **Check CPF payments now** collects new files immediately. If none arrived: "No payment files from CPF in the last 60 days."
+**Medisave payments from CPF** (`/claims/medisave-payments`) shows the payment files CPF sent in the last 60 days, one card per day and Hospital Code. **Check CPF payments now** collects new files immediately. If none arrived: "No payment files from CPF in the last 60 days."
 
-Each day's tie-outs compare CPF's summary with its payment detail for every kind of submission the files name: first submissions (`FS`), then amendments (`AM`) and cancellations (`CA`), whose refunds are negative. Each line shows **Agrees**, or "Off by" the difference. A submission type that appears in only one of the two files shows as a difference.
+From the top, the page shows:
+
+1. **… things to sort out**, listing every problem across the days: a refused file, a tie-out that is off (with the expected and actual figures), and claims CPF paid short of balance.
+2. [Messages from CPF that match no claim](#messages-from-cpf-that-match-no-claim), when there are any.
+3. The day cards. Each card's summary says **All tie-outs match**, "N tie-outs off", or, with no tie-outs, how many files were refused. The newest day, and any day with a tie-out off or a refused file, start open.
+
+An open card lists its files: **Payment detail (CPFPAY)**, **Summary (CPFSUM)** and **GIRO letter (CPFIBG)**, each with its **State** (**Applied**, **Refused** with the reason, or **Waiting**), **Records**, **Total** and **Claims** (how many it matched, any unmatched, and any short of balance). Below the files are the day's tie-outs.
+
+The tie-outs compare CPF's summary with its payment detail for every kind of submission the files name: first submissions (`FS`), then amendments (`AM`) and cancellations (`CA`), whose refunds are negative. Each line is ticked or crossed and shows the expected figure "against" the actual one, with "(off by …)" when they do not agree. A submission type that appears in only one of the two files shows as a difference.
 
 ### When CPF answers are not being fetched
 
@@ -312,20 +338,22 @@ The claim reads "CPF has not answered this Medisave claim 20 days after it was s
 
 ### Messages from CPF that match no claim
 
-Sometimes a message from CPF matches none of Medbot's claims, for example an answer to a claim sent through another system, or one where CPF echoed a different submission date. These appear at the top of **Medisave payments** under **Messages from CPF that match no claim**: "Match each to the claim it answers, or dismiss it if the claim was not sent from Medbot. CPF keeps a message for 30 days." The section is hidden when there are none.
+Sometimes a message from CPF matches none of Medbot's claims, for example an answer to a claim sent through another system, or one where CPF echoed a different submission date. These appear on **Medisave payments from CPF**, after the things to sort out, under **Messages from CPF that match no claim** with the count: "Match each to the claim it answers, or dismiss it if the claim was not sent from Medbot. CPF keeps a message for 30 days." The messages are listed soonest to expire first. The section is hidden when there are none.
 
-| Column | What it shows |
-| --- | --- |
-| **Message** | **Claim advice (CPFADV)** or **Error notice (ERRMSG)**, the clinic location and the day it was received. |
-| **Claim reference** | For an advice, the HRN, submission type and when the claim was sent. For an error notice, the reference of the message CPF refused. |
-| **CPF's answer** | CPF's status, for example **Approved**, **Pending with CPF** or **Rejected by CPF** (an error notice reads **Refused by MediClaim**), and the amount paid. |
-| **Action** | Match or dismiss. |
+Each message is a card showing:
 
-1. Under **Choose the claim it answers**, pick the claim. Each choice shows the HRN, submission type, when it was sent and the amount. An advice offers only the claims sent from that location under its HRN and of the same submission type. If none fits: "No claim sent from here could be its claim."
-2. Select **Match**. CPF's answer is applied to the claim as if it had matched when collected, and the claim's status in the queue changes.
-3. Or select **Dismiss** if the message is not for a claim sent from Medbot. The message is kept, but leaves the list.
+- what it is: **Claim advice** (`CPFADV`) or **Error notice** (`ERRMSG`), the clinic location and the day it was received
+- how long until CPF deletes it, for example "12 days left". With 7 days or fewer, the badge turns amber and adds "CPF deletes it on" the date.
+- **Claim reference**: for an advice, the HRN, then the submission (**Full submission**, **Amendment** or **Cancellation**) and when the claim was sent. For an error notice, the reference of the message CPF refused.
+- **CPF’s answer**: CPF's status, for example **Approved**, **Pending with CPF** or **Rejected by CPF** (an error notice reads **Refused by MediClaim**), and the amount paid, or "No payment"
 
-Medbot refuses a match that cannot be right, for example "The claim was sent from another clinic location." or "Choose a Medisave claim that has been sent to CPF." If the answer cannot be applied, the message stays on the list: "CPF’s answer could not be applied to the claim, so the message is still unmatched. Try again shortly." Every match and dismissal is audited.
+To settle a message:
+
+1. Under **Choose the claim it answers**, pick the claim. Each choice shows the HRN, submission type, when it was sent and the amount. An advice offers only the claims sent from that location under its HRN and of the same submission type. If none fits, the card says "No claim sent from here could be its claim." and offers only **Dismiss**.
+2. Select **Match**. CPF's answer is applied to the claim as if it had matched when collected, and the claim's status in the queue changes. The card says "Matched to HRN …. CPF’s answer now shows on the claim." for a moment, then leaves the list.
+3. Or select **Dismiss** if the message is not for a claim sent from Medbot. Confirm "Dismiss this message? Only if the claim wasn’t sent from Medbot. It won’t be linked to any claim." with **Dismiss**, or select **Keep it**. The card says "Dismissed. It won’t show here again." The message is kept, but leaves the list.
+
+Medbot refuses a match that cannot be right, for example "The claim was sent from another clinic location." or "Choose a Medisave claim that has been sent to CPF." If the answer cannot be applied, the message stays on the list: "CPF’s answer could not be applied to the claim, so the message is still unmatched. Try again shortly." If Medbot cannot be reached at all: "Medbot couldn’t be reached, so nothing was changed. Check your connection." Each of these errors shows on the card with **Try again**. If the section itself cannot load, it says "CPF's unmatched messages could not be loaded." with **Try again**, and the payments still show. Every match and dismissal is audited.
 
 ## 7. Corrections
 

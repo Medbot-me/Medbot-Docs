@@ -20,6 +20,12 @@ How far an AI agent may take a claim: **Off: agents never prepare claims**, **Pr
 
 Tokens an AI assistant uses to reach Medbot's SmartCMS claims tools, for one location or the whole organisation, lasting up to 30 days. A token is shown once, at creation. See [Claims Agent](/cms/smartcms/claims-agent#create-an-agent-credential).
 
+## Referral contribution to NEHR
+
+Shown when the organisation subscribes to **Referral contribution to NEHR**. The card says "Issued referral letters go to NEHR without review, unless they may mention termination of pregnancy, sterilisation or organ transplant: those wait for a doctor’s consent check. Each location sends a reconciliation file every night at 00:15." It also gives **Who sees and resends** (**Doctors and admins**), **Who confirms consent** (**Doctors only**) and **During a SmartCMS outage** (**Letters wait, then send**), with a link to **Open Reports**.
+
+An active location with no HE code is named: "No HE code at …: referral letters from there are not sent to NEHR." See [NEHR referral letters](/cms/smartcms/reports#nehr-referral-letters).
+
 ## Clinic locations
 
 Choose a location from the location list. Each location shows its HE code and Hospital Code (with **Edit codes**), then one row per subscribed module.
@@ -85,9 +91,11 @@ Medbot tests SmartCMS against Synapxe's UAT gateway from a **simulated clinic**:
 In UAT mode, two guards decide what may be sent:
 
 - **Clicks only.** Only what a person clicks is sent. Scheduled jobs, the outage probe and check-in's automatic CHAS verification send nothing, and a failed send is not retried by itself: the claim offers **Send again** instead. **Submit all prepared** is not offered.
-- **Test patient only.** A request that carries any NRIC or FIN other than Synapxe's test patient is refused before it is sent. A check refused this way shows **Not checked in UAT mode**, and a claim is held with the reason.
+- **Test patients only.** A request that carries any NRIC or FIN other than Synapxe's test patients is refused before it is sent. A check refused this way shows **Not checked in UAT mode**, and a claim is held with the reason. The test patients are Synapxe's sample patient and the ten CDMP test patients Synapxe allotted to Medbot for the November 2026 CDMP tests.
 
 These guards never apply to a production server.
+
+The UAT test clinic has the ten CDMP test patients registered, with no visit, bill or claim, so a tester makes those in the CMS during a SIT run. CDMP visits are seen by a separate doctor, "Clara Doctor (UAT CDMP)", whose MCR is on Synapxe's list for the CDMP tests. The clinic's other doctor stays the attending doctor for the other services.
 
 ## Related
 

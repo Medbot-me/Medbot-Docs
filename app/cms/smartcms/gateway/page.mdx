@@ -209,7 +209,7 @@ The CMS announces writes it makes straight to Medplum through `POST /domain-even
 
 Each row also keeps CAG's `x-amzn-requestid` and `x-amz-apigw-id` and the business code of an enquiry's answer (`SC05-002`, `WN012`, `ERROR3`, …), recorded through `SmartcmsGatewayService.recordBusinessAnswer`.
 
-**Message log.** Staff read the log at `/smartcms/messages` ([SmartCMS Messages](/cms/smartcms/messages)). The opened view and the SIT export are built by one reader (`message-view`) and redact the same way: the JWT is shown as its decoded header and claims only, never its signature. List and open are filtered by service (`message-log-access.ts`): Medisave S/N 13 to 15 need `SMARTCMS_MEDISAVE_ROLES`, claims `SMARTCMS_CLAIMS_VIEW_ROLES`, registries their own view roles, and S/N 7, CMIS, HSG_BUNDLE and unknown service types `admin`. A message a role may not see is a 404 and is not audited as an access. NRICs are masked for everyone but `admin`. Listing and opening are both written to `audit_events`.
+**Message log.** Staff read the log at `/smartcms/messages` ([SmartCMS Messages](/cms/smartcms/messages)). The opened view and the SIT export are built by one reader (`message-view`) and redact the same way: the JWT is shown as its decoded header and claims only, never its signature. List and open are filtered by service (`message-log-access.ts`): Medisave S/N 13 to 15 need `SMARTCMS_MEDISAVE_ROLES`, claims `SMARTCMS_CLAIMS_VIEW_ROLES`, registries their own view roles, and S/N 7, CMIS, HSG_BUNDLE and unknown service types `admin`. The answer to S/N 56 (`getPatientCareSummaryToken`) has its page-address token and any `wiseAccessToken` replaced by `[redacted]` (`redactPcsTokens`), in the opened view and the SIT export alike. A message a role may not see is a 404 and is not audited as an access. NRICs are masked for everyone but `admin`. Listing and opening are both written to `audit_events`.
 
 **SIT evidence export.** An admin can export one message (`GET /smartcms/evidence/:msgId`) or every message of a SIT tag as one text file per `msgID`, with the full request (headers without secrets) and response. SIT runs open a window at one location and only on a deployment configured for `uat`. Every export decrypts PHI, so it is written to `audit_events` first; a failed audit write fails the export. See [SmartCMS Settings](/cms/smartcms/settings#sit-evidence).
 
@@ -220,7 +220,7 @@ How long the log must be kept is still open.
 For Medbot's simulated clinic against Synapxe UAT (UAT-32), two guards sit in `SmartcmsGatewayService`, ahead of allocating, signing or logging anything:
 
 - **Click only** (`SMARTCMS_CLICK_ONLY=true`). Only a click is sent: a staff member's request to a route marked `@SmartcmsClick()` (enumerated in `send-paths.spec.ts`), or the one dispatch of a submission such a click queued (`clickedBy` on `smartcms/submission.pending`). Every SmartCMS schedule returns `CLICK_ONLY_SKIPPED`, the outage probe never probes, `smartcms-dispatch` sends a clicked row once without sleeping for a retry, and a domain-event send (check-in's S/N 1) is refused. The claims queue offers **Send again** in place of the retry and hides **Submit all prepared**.
-- **Test identifier allowlist.** When click-only is on, or the base URL is `cag-uat.synapxe.sg`, a request carrying an NRIC/FIN-shaped value, or any value in a known identifier field, other than Synapxe's test patient `S1234567D` is refused with a 403 staff can read (`SmartcmsSendRefusedError`). It is checked on the payload before a sequence number is taken, and again on the encoded body before signing.
+- **Test identifier allowlist.** When click-only is on, or the base URL is `cag-uat.synapxe.sg`, a request carrying an NRIC/FIN-shaped value, or any value in a known identifier field, other than Synapxe's test patient `S1234567D` or the ten CDMP Nov 2026 test patients Synapxe allotted to Medbot (`SMARTCMS_UAT_TEST_IDENTIFIERS`) is refused with a 403 staff can read (`SmartcmsSendRefusedError`). It is checked on the payload before a sequence number is taken, and again on the encoded body before signing.
 
 `GET /smartcms/gateway` (simulated clinic only, outside the roles guard by design) reports which gateway the running process talks to. The CMS strip, the SmartCMS settings header and `sim:status` read it.
 
@@ -299,7 +299,7 @@ pnpm --filter medbot-api smartcms-mock
 | `SMARTCMS_MOCK_ISSUER` | `MEDBOT` |
 | `SMARTCMS_MOCK_SUBJECT` | `MEDBOT` |
 
-It prints the API key to use (`smartcms-mock-api-key`). The expected `srcApplication` is `MEDBOT`. Two HE codes are seeded: `9400001` (entitled to CHAS, SFL, CDMP, MW_HEALTH, NIR, CIDC, DEROM and NEHR_REFERRAL) and `9400002` (no service groups, so every call answers `SCG_06`).
+It prints the API key to use (`smartcms-mock-api-key`). The expected `srcApplication` is `MEDBOT`. Two HE codes are seeded: `9400001` (entitled to CHAS, SFL, CDMP, MW_HEALTH, NIR, CIDC, DEROM, NEHR_REFERRAL and HSG_BUNDLE) and `9400002` (no service groups, so every call answers `SCG_06`).
 
 To point a local API at it, set `SMARTCMS_ENABLED=true`, `SMARTCMS_ENV=uat`, `SMARTCMS_BASE_URL=http://localhost:4455`, the printed API key and private key, and matching `kid`/`iss`/`sub`.
 
@@ -309,7 +309,7 @@ In tests, start it in-process with `startSmartcmsMock({ consumers })`.
 
 - **CAG:** the API key; the JWT's `kid`, `iss` and `sub`; `iat` within 60 seconds; `exp - iat` at most 180 seconds; a `jti` of at least 36 characters that has not been seen before. Failures answer 401 with a reason. CAG times out at 15 seconds (504) while the back-end keeps running, as the real one does.
 - **SCG:** the envelope, validated against the vendor XSDs; each route takes only its own format, and the legacy form only where the route has one; every status code from `SCG_01` to `SCG_99`. A reused `msgSequenceID` for the same `srcInstitution` and `serviceType` answers `SCG_09`.
-- **Back-ends:** S/N 1 to 4, 7 to 16, 19, 24, 38, 39 and 47. Any other service answers `SCG_01`.
+- **Back-ends:** S/N 1 to 4, 7 to 16, 19, 24, 38, 39, 47 and 56. Any other service answers `SCG_01`. S/N 56 answers with a page the mock serves itself at `GET /pcs/index.html?token=…`, live for 5 minutes, so the CMS's Patient Care Summary window works end to end; the test NRICs in `PCS_MOCK_NRICS` (`backends/pcs.ts`) answer each PCS refusal. A Patient Care Summary page address over `http` is opened only from a loopback mock; from a real gateway it must be `https`.
 
 ### Control API
 
