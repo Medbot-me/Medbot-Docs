@@ -4,7 +4,7 @@ Each service has its own appointment book. Care team members publish recurring w
 
 ## 1. Publish availability
 
-Nothing can be booked until at least one care team member has an availability window. See [Care Team → Availability](/docs/services/care-team#availability).
+Nothing can be booked until at least one care team member has an availability window. See [Care Team → Availability](/cms/services/care-team#availability).
 
 ## 2. Booking for a patient (staff)
 
@@ -23,7 +23,7 @@ Patients can book an appointment with the service from the patient portal. They 
 
 ## 4. Booking through the patient agent
 
-If the [patient agent](/docs/services/patient-agent) is on, a patient can ask it for a new appointment, to move one, or to cancel one. It reads the same open slots and books directly; a confirmed booking is immediate, not a request. These appointments are labelled **booked by patient agent**.
+If the [patient agent](/cms/services/patient-agent) is on, a patient can ask it for a new appointment, to move one, or to cancel one. It reads the same open slots and books directly; a confirmed booking is immediate, not a request. These appointments are labelled **booked by patient agent**.
 
 Appointments arranged from a clinician's encounter note are labelled **booked from an encounter note**.
 
@@ -45,6 +45,6 @@ Reminders go out on the service's **Default channel** (WhatsApp or SMS, falling 
 
 - Availability windows are **recurring and weekly**, in **clinic time** (your organisation's timezone, or Singapore time if none is set), e.g. "Tuesdays 09:00–17:00, 30-minute slots". There are no per-date overrides for holidays or leave yet: switch the window's **Active** toggle off and on again, or cancel the affected appointments.
 - A slot is open when no confirmed appointment holds it for that care team member. This is checked again at the moment of booking, so a slot that looked free a few seconds ago is still booked safely.
-- Slots are only offered for care team members who have a practitioner record in the clinic's schedule (see [Not bookable](/docs/services/care-team#availability)).
+- Slots are only offered for care team members who have a practitioner record in the clinic's schedule (see [Not bookable](/cms/services/care-team#availability)).
 - Every service booking, however it was made, is also written to the clinic's schedule. The Workstation, the queue, check-in and the calendar in Medbot CMS all see it. If the clinic schedule refuses a booking, it is undone and the patient is told the slot is not available.
-- A booked patient appears on the Workstation queue as **Not yet arrived**, ready for **Mark arrived** (see [Workstation](/docs/services/workstation)). A booking can also trigger an offer of a [pre-visit history](/docs/services/pre-visit-and-escalations).
+- A booked patient appears on the Workstation queue as **Not yet arrived**, ready for **Mark arrived** (see [Workstation](/cms/services/workstation)). A booking can also trigger an offer of a [pre-visit history](/cms/services/pre-visit-and-escalations).

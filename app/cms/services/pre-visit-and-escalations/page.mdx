@@ -10,11 +10,11 @@ Three related features help a service hear from patients before and between visi
 
 ## Offering a pre-visit history
 
-Pre-visit history is a [History taking](/docs/services/encounters) encounter. On the service's **Settings**, in the **AI encounters** card, the **History taking** kind has a **Before a booked visit** block:
+Pre-visit history is a [History taking](/cms/services/encounters) encounter. On the service's **Settings**, in the **AI encounters** card, the **History taking** kind has a **Before a booked visit** block:
 
 - **Offer it on the patient portal when a visit is booked**: the patient answers before the visit and chooses whether to send it.
 - **Text a link to patients without a portal account**: sent once, when the visit is booked.
-- **Offer it at the clinic kiosk on the day**: for patients who have not answered it yet. See [Kiosk Self-Service](/docs/services/kiosk).
+- **Offer it at the clinic kiosk on the day**: for patients who have not answered it yet. See [Kiosk Self-Service](/cms/services/kiosk).
 - **About how long**: 5, 10 or 15 minutes.
 - **Red-flag alerts go to**: by default the service's escalation role, or choose another role.
 - **If no one acknowledges within**: **Don't page anyone else**, **5 minutes** or **10 minutes**, and **then page** the role you choose.
@@ -36,7 +36,7 @@ Each rule shows **Matched N times**. Remove one with **Remove this rule**.
 
 ## The Pre-visit board
 
-In a Clinic service, the Workstation's **Pre-visit** view lists who has been offered a history. Switch between **Today** and **Tomorrow**.
+In an Outpatient or Hybrid service, the Workstation's **Pre-visit** view lists who has been offered a history. Switch between **Today** and **Tomorrow**.
 
 Tiles count **Offered**, **Sent**, **Red flags to acknowledge** (red when there are any) and **Not started**. Filter by **All**, **Red flag**, **Not started** or **Unsigned drafts**.
 
@@ -47,7 +47,7 @@ Row actions:
 - **Open note** (once the patient has sent it).
 - **Offer at kiosk**, which adds the history to the kiosk for that patient ("Offered at kiosk" afterwards).
 
-<ImageZoom src="/images/docs/services/pre-visit-and-escalations/01-pre-visit-board.png" alt="The Pre-visit board for today with the Offered, Sent, Red flags to acknowledge and Not started tiles and one pre-visit history that was sent but not signed" />
+<ImageZoom src="/images/cms/services/pre-visit-and-escalations/01-pre-visit-board.png" alt="The Pre-visit board for today with the Offered, Sent, Red flags to acknowledge and Not started tiles and one pre-visit history that was sent but not signed" />
 
 ### Reading the note
 
@@ -73,7 +73,7 @@ The Workstation's **Escalations** view (available in every mode of care) has two
 
 Open an item to see a timeline: the patient consented and sent it from Ask Medbot, anything they added, who took it, and the outcome. If the patient withdraws it, the item says not to contact them about this concern.
 
-<ImageZoom src="/images/docs/services/pre-visit-and-escalations/02-escalations-inbox.png" alt="The Escalations inbox with one new concern from a patient selected, showing it is in scope and the summary the patient agreed to share" />
+<ImageZoom src="/images/cms/services/pre-visit-and-escalations/02-escalations-inbox.png" alt="The Escalations inbox with one new concern from a patient selected, showing it is in scope and the summary the patient agreed to share" />
 
 1. Click **Take this one**.
 2. Choose an **Outcome**: **Book an appointment at this clinic**, **Suggest another service**, **Advise the emergency department** or **No action needed**.

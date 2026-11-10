@@ -2,7 +2,7 @@ import { ImageZoom } from "nextra/components";
 
 # Service Agents
 
-Service agents are AI agents you author for one service, on its **Agents** item. An agent is never a person: it works for, or alongside, the care team, and it always receives the [service context](/docs/services/context-and-content), the relevant care team and patient context, the tools you give it, and any subagents you link to it.
+Service agents are AI agents you author for one service, on its **Agents** page (under the service's name in the CMS sidebar, for admins). An agent is never a person: it works for, or alongside, the care team, and it always receives the [service context](/cms/services/context-and-content), the relevant care team and patient context, the tools you give it, and any subagents you link to it.
 
 ## Audiences
 
@@ -11,7 +11,7 @@ Every agent has an **audience**, which decides who it serves and which tools it 
 | Audience | What it is for | How it runs |
 | --- | --- | --- |
 | **Staff** | Work on behalf of the care team: chasing patients, preparing summaries, requesting reviews. | On demand, scheduled once, or daily. |
-| **Patient** | A patient-facing conversational agent in the patient portal. Badged **Patient-facing**. | Only in reply to a patient's message, once bound in Settings. See [Patient Agent](/docs/services/patient-agent). |
+| **Patient** | A patient-facing conversational agent in the patient portal. Badged **Patient-facing**. | Only in reply to a patient's message, once bound in Settings. See [Patient Agent](/cms/services/patient-agent). |
 | **Onboarding** | Assess each patient as they join the cohort. Badged **Runs on add**. | Automatically when a patient is added, once bound in Settings. Can also be run on demand. |
 
 ## Default agents
@@ -29,7 +29,7 @@ A service created before the defaults existed may show a **Missing** card. Click
 
 Each default card and table row also has a **Latest run** panel: "Latest run · when · status", with a dialog ("&lt;agent&gt; · latest run") that shows what the run did, or "No runs yet".
 
-<ImageZoom src="/images/docs/services/agents/01-default-agent-cards.png" alt="The Default agents cards on a service's Agents page" />
+<ImageZoom src="/images/cms/services/agents/01-default-agent-cards.png" alt="The Default agents cards on a service's Agents page" />
 
 ## Creating an agent
 
@@ -78,7 +78,7 @@ For **Email staff**, choose which roles the agent may email under **Staff it may
 | **Triage escalation** | Flag an urgent (not emergency) symptom to the covering role, on top of the always-on red-flag screen. |
 | **Hand off to care team** | Pass on a question outside the service's scope, or one it is unsure of. |
 | **Education & counselling sessions** | Walk the patient through a counselling or education protocol step by step, recording consent and what they understood or agreed. |
-| **Hand over for a full encounter** | Send the patient a link to a full [AI encounter](/docs/services/encounters) (history taking, education or counselling) when SMS turns are not enough. |
+| **Hand over for a full encounter** | Send the patient a link to a full [AI encounter](/cms/services/encounters) (history taking, education or counselling) when SMS turns are not enough. |
 
 A fixed safety preamble is always layered on top of a patient agent's instructions and cannot be removed by them.
 
@@ -94,13 +94,13 @@ Open the **Subagents** section of the agent editor (or **Manage** / **Add subage
 4. Optionally write **Decision rules**, for example "If eligible is no, open a task for the care coordinator."
 5. Save with **Create agent** or **Save agent**. On the standalone subagents page the button is **Save subagents**.
 
-<ImageZoom src="/images/docs/services/agents/02-agent-editor-subagents.png" alt="The agent editor's Subagents section with an empty Agent library, the Choosing subagents options and Decision rules" />
+<ImageZoom src="/images/cms/services/agents/02-agent-editor-subagents.png" alt="The agent editor's Subagents section with an empty Agent library, the Choosing subagents options and Decision rules" />
 
 An agent can have up to 10 subagents, and a Patient agent cannot use **Every run**. Any care team member can link their own or the organisation's agents; linking shared, public or default agents from elsewhere needs an organisation admin. A linked agent that has no live version shows **Skipped on runs**.
 
 ## The onboarding agent
 
-The **Onboarding** default agent is already bound in **Settings → On patient added**. Each time a patient is added to the cohort, it reviews them against the service and raises a task **only when the patient clearly looks out of scope**, so staff are not flooded with a task per patient. It does not message the patient: Medbot sends the single [enrolment notice](/docs/services/patients#what-happens-when-a-patient-is-added) itself.
+The **Onboarding** default agent is already bound in **Settings → On patient added**. Each time a patient is added to the cohort, it reviews them against the service and raises a task **only when the patient clearly looks out of scope**, so staff are not flooded with a task per patient. It does not message the patient: Medbot sends the single [enrolment notice](/cms/services/patients#what-happens-when-a-patient-is-added) itself.
 
 Rewrite its instructions for your service, switch it off, or bind a different onboarding agent from **Settings → On patient added** ("Assess the patient with the onboarding agent"). The bound agent carries a **Bound** badge.
 
@@ -112,7 +112,7 @@ Each staff (and onboarding) agent's row has a **Run** button:
 2. **When**: **Run now**, **Schedule for later** (a date and time), or **Repeat daily** (a time of day in UTC, until you cancel it).
 3. Click **Run now**, **Schedule run** or **Start daily schedule**.
 
-A patient agent has no Run button, since it only ever replies to a patient. It has **Preview chat** instead; see [Patient Agent](/docs/services/patient-agent#preview-chat).
+A patient agent has no Run button, since it only ever replies to a patient. It has **Preview chat** instead; see [Patient Agent](/cms/services/patient-agent#preview-chat).
 
 ## Runs and schedules
 
@@ -123,4 +123,4 @@ Above the agent list on the Agents page:
 
 ## Service agents and the Agents library
 
-Service agents belong to one service. They are separate from the Medbot app's general **Agents** library, where agents can be personal or shared with the whole organisation, and a personal, public or default agent can be copied into the organisation.
+Service agents belong to one service. They are separate from the organisation's **Agents** (**Home** › **Organisation** › **Agents** in Medbot CMS) and from your personal agents in the Medbot web app. Agents there can be personal or shared with the whole organisation, and a personal, public or default agent can be copied into the organisation.

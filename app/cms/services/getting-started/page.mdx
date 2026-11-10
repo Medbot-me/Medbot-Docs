@@ -2,26 +2,36 @@
 
 ## 1. Start a new service
 
-With an organisation selected, open **Services** in the sidebar. The list shows each service's name, specialty, setting, **Mode** and status, with a **Continue setup** link next to any of your own drafts. Demo services carry a **Demo** chip.
+In Medbot CMS, open the context switcher at the top of the sidebar and select **All services** (or **Choose a service** in the sidebar, when no service is set). The **Services** list shows each service's name, specialty, setting, **Mode** and status, with a **Continue setup** link next to any of your own drafts. Demo services carry a **Demo** chip.
 
-Click **New Service**. Under **How to start this service**, choose:
+Click **New Service**. Administrators can also select **New service** in the context switcher. Under **How to start this service**, choose:
 
 - **Blank service**: start empty and set up your care team, protocols, agents and settings step by step.
-- **A template** (Chronic disease management, Joint replacement and recovery, Medical retina clinic, or IVF and assisted reproduction): comes fully configured for one clinical area. In a demo organisation it is a demo service, which can be filled with made-up patients; elsewhere it is an ordinary service with a configured starting point. See [Demo Services](/docs/services/demo-services).
+- **A template** (Chronic disease management, Joint replacement and recovery, Medical retina clinic, or IVF and assisted reproduction): comes fully configured for one clinical area. In a demo organisation it is a demo service, which can be filled with made-up patients; elsewhere it is an ordinary service with a configured starting point. See [Demo Services](/cms/services/demo-services).
 
 For a blank service, fill in:
 
 - **Name**: required, e.g. "Colorectal SOC: Referral to Discharge".
 - **Specialty**: optional, e.g. "Colorectal Surgery".
-- **Mode of care**: **Clinic**, **Inpatient** or **Remote**. This sets what the Workstation shows. See [Modes of Care](/docs/services/modes-of-care).
+- **Mode of care**: **Outpatient**, **Inpatient**, **Remote** or **Hybrid**. This sets what the Workstation shows. See [Modes of Care](/cms/services/modes-of-care).
 - **Setting**: optional, e.g. "SOC, inpatient, primary care".
 
 Click **Create Service**. Any member of the organisation can create one. The service is created as a `draft`, with:
 
-- four default agents: **Onboarding**, **Health education**, **Financial counselling** and **Patient agent** (see [Service Agents](/docs/services/agents#default-agents))
+- four default agents: **Onboarding**, **Health education**, **Financial counselling** and **Patient agent** (see [Service Agents](/cms/services/agents#default-agents))
 - default AI encounter settings
 
-and you go straight into the setup wizard. A service created from a template skips the wizard and opens its page as a draft, with a **Finish setting up** card listing what is left; see [Demo Services](/docs/services/demo-services#finish-setting-up).
+and you go straight into the setup wizard. A service created from a template skips the wizard and opens its page as a draft, with a **Finish setting up** card listing what is left; see [Demo Services](/cms/services/demo-services#finish-setting-up).
+
+### Your organisation's first service
+
+When someone sets up a new organisation, or a demo organisation, in the first-sign-in flow (see [Getting Started](/cms/getting-started)), its first administrator is asked to set up its first service at `/onboarding/services`: **Set up your first service**, or **Set up a demo service** in a demo organisation. The step appears only while the organisation has no services.
+
+1. Under **Start from**, choose **Basic service** ("Only the essentials. You choose the care setting, specialty and everything after.") or one of the specialised templates.
+2. Under **Service details**, fill in or check the **Service name**, the **Care setting** (**Outpatient**, **Inpatient**, **Remote** or **Hybrid**), the **Specialty** and **Where care happens** (optional). A template fills these in for you ("Filled from the &lt;template&gt; template. You can change any of it."), and anything you change is saved onto the service it makes.
+3. Click **Create service** (**Create demo service** in a demo organisation), or **Skip for now**.
+
+The service starts as a draft. A real organisation then goes on to its team step; a demo organisation opens on Home.
 
 ## 2. Walk through the setup wizard
 
@@ -29,60 +39,84 @@ The wizard has seven steps, shown as numbered pills you can jump between freely.
 
 ### Step 1: Care team
 
-Add people from your organisation to the service. Each joins with the role or roles they already hold in the organisation; there is no role to choose. See [Care Team](/docs/services/care-team).
+Add people from your organisation to the service. Each joins with the role or roles they already hold in the organisation; there is no role to choose. See [Care Team](/cms/services/care-team).
 
 ### Step 2: SOP and Instructions
 
-Describe, in plain language, how this service runs: who does what, when to escalate, and how to use the content library. A starting set of protocols is filled in for you. Adjust it and click **Save**; Medbot then turns it into the agent context that every service agent run is given. See [Service Context & Content](/docs/services/context-and-content).
+Describe, in plain language, how this service runs: who does what, when to escalate, and how to use the content library. A starting set of protocols is filled in for you. Adjust it and click **Save**; Medbot then turns it into the agent context that every service agent run is given. See [Service Context & Content](/cms/services/context-and-content).
 
 ### Step 3: Referral criteria
 
-Describe which referrals this service accepts and at what thresholds. Medbot's screening agent checks each incoming referral against this text and drafts a verdict; a person always decides. See [Referrals](/docs/services/referrals#referral-criteria).
+Describe which referrals this service accepts and at what thresholds. Medbot's screening agent checks each incoming referral against this text and drafts a verdict; a person always decides. See [Referrals](/cms/services/referrals#referral-criteria).
 
 ### Step 4: Agents
 
-The four default agents are already here, shown as **Default agents** cards. Rewrite their instructions, or add agents alongside them. Services created before the defaults existed have an **Add missing default agents** button. See [Service Agents](/docs/services/agents).
+The four default agents are already here, shown as **Default agents** cards. Rewrite their instructions, or add agents alongside them. Services created before the defaults existed have an **Add missing default agents** button. See [Service Agents](/cms/services/agents).
 
 ### Step 5: Settings
 
-- **Patient agent**: whether enrolled patients can chat with the service's patient agent in the patient portal (on by default). See [Patient Agent](/docs/services/patient-agent).
-- **AI encounters**: which encounters the service offers and how each is set up. See [AI Encounters](/docs/services/encounters#settings).
-- **On patient added**: the enrolment notice and the onboarding agent. See [Patients & Cohort](/docs/services/patients#what-happens-when-a-patient-is-added).
+- **Patient agent**: whether enrolled patients can chat with the service's patient agent in the patient portal (on by default). See [Patient Agent](/cms/services/patient-agent).
+- **AI encounters**: which encounters the service offers and how each is set up. See [AI Encounters](/cms/services/encounters#settings).
+- **On patient added**: the enrolment notice and the onboarding agent. See [Patients & Cohort](/cms/services/patients#what-happens-when-a-patient-is-added).
 
 ### Step 6: Content library
 
-Upload counselling protocols and reference material for the service's agents, or attach documents already uploaded elsewhere. See [Service Context & Content](/docs/services/context-and-content#content-library).
+Upload counselling protocols and reference material for the service's agents, or attach documents already uploaded elsewhere. See [Service Context & Content](/cms/services/context-and-content#content-library).
 
 ### Step 7: Patients
 
-Add patients to the cohort from the organisation's Medplum patient directory. This step is deliberately **last**, so the agents, protocols, content and care team are in place before real patients start receiving notices. See [Patients & Cohort](/docs/services/patients).
+Add patients to the cohort from the organisation's Medplum patient directory. This step is deliberately **last**, so the agents, protocols, content and care team are in place before real patients start receiving notices. See [Patients & Cohort](/cms/services/patients).
 
 Use **← Back** and **Next: &lt;step&gt; →** to move between steps. On the last step, click **Finish setup** to publish the service (from `draft` to `published`). Every step remains editable afterwards.
 
 ## 3. Continue setup later
 
-If you skipped the wizard, the **Services** list shows a **Continue setup** link next to your own drafts, and the service's page shows a draft banner with a **Finish setup** button (the **Finish setting up** card, with **Mark setup complete**, for a service made from a template). The organisation [Overview](/docs/getting-started/organisations#organisation-overview) also lists drafts under **By service** with **Finish setup**.
+If you skipped the wizard, the **Services** list shows a **Continue setup** link next to your own drafts, and the service's page shows a draft banner with a **Finish setup** button (the **Finish setting up** card, with **Mark setup complete**, for a service made from a template).
 
 ## 4. The service page
 
-A service's page has no tab bar. While you are inside a service, the sidebar lists its sections, and the breadcrumb has a service switcher ("Find service…", **All services**, **New service**). The page also shows the service's status and **Mode of care** as badges.
+Every page of a service is on the **CMS** tab. A service's page has no tab bar: the pages of the service you chose in the context switcher sit at the top of the CMS sidebar, under the service's name (with **Draft** beside it while it is a draft). Opening a service's page from a link shows that service's pages instead. The page also shows the service's status and **Mode of care** as badges.
 
-| Sidebar item | What it holds |
-| --- | --- |
-| **Overview** | Open **Tasks** for this service, the **Patient agent** summary card, then the **Demo patients** panel (demo services only). **SOP and instructions** and **Referral intake criteria** sit side by side, closed until you select **Open** (**Hide** closes them again), each with a one-line summary such as "3 sections · 412 words." or "Nothing written yet." When the patient agent is on, the summary card shows **Turns (7 days)**, **Pending drafts**, **Open escalations**, **Upcoming appointments** and **Waiting on a patient's choice**. |
-| **Referrals** | Incoming referrals for the service. See [Referrals](/docs/services/referrals). |
-| **Workstation** | The day's working board and consult screen. See [Workstation](/docs/services/workstation). |
-| **Patients** | The cohort roster. |
-| **Agents** | **Agent runs**, **Daily agent schedules**, the **Default agents** cards and the **Agents** table. |
-| **Content library** | The service's documents and pictures. See [Service Context & Content](/docs/services/context-and-content#content-library). |
-| **Care team** | **Care team**, **Coverage / rota** and **Availability**. |
-| **Patient notifications** | Which events alert patients, and over which channel. See [Patient Notifications](/docs/services/patient-notifications). |
-| **Settings** | **Concerns from patients not booked here**, **Patient agent**, **Message approval policy** and **Configuration history** (see [Patient Agent](/docs/services/patient-agent#message-approval-policy)), **AI encounters**, **Red-flag rules**, **Channel**, **Patient notifications**, **On patient added**, a **Demo patients** panel (non-demo services, owner or admin) and the **Danger zone** (owner). |
+The sidebar lists only the pages your role uses. **Home** comes first and opens your role's home page (see [Role home pages](#role-home-pages)), which is not listed again under its own name.
+
+| Sidebar item | Shown to | What it holds |
+| --- | --- | --- |
+| **Home** | Everyone | The **Workstation** for doctors and nurses, **Referrals** for admins and receptionists. |
+| **Overview** | Admins | Open **Tasks** for this service, the **Patient agent** summary card, then the **Demo patients** panel (demo services only). **SOP and instructions** and **Referral intake criteria** sit side by side, closed until you select **Open** (**Hide** closes them again), each with a one-line summary such as "3 sections · 412 words." or "Nothing written yet." When the patient agent is on, the summary card shows **Turns (7 days)**, **Pending drafts**, **Open escalations**, **Upcoming appointments** and **Waiting on a patient's choice**. |
+| **Patients** | Everyone | The cohort roster. See [Patients & Cohort](/cms/services/patients). |
+| **Referrals** | Everyone | Incoming referrals for the service. See [Referrals](/cms/services/referrals). |
+| **Workstation** | Admins, doctors and nurses | The day's working board and consult screen. See [Workstation](/cms/services/workstation). |
+| **Board** | Admins, doctors and nurses | The cohort roster on a page of its own (**Cohort board**). |
+| **Agents** | Admins | **Agent runs**, **Daily agent schedules**, the **Default agents** cards and the **Agents** table. |
+| **Content library** | Admins, doctors and nurses | The service's documents and pictures. See [Service Context & Content](/cms/services/context-and-content#content-library). |
+| **Care team** | Everyone | **Care team**, **Coverage / rota** and **Availability**. |
+| **Patient notifications** | Admins | Which events alert patients, and over which channel, on a page of its own. See [Patient Notifications](/cms/services/patient-notifications). |
+| **Settings** | Admins | **Concerns from patients not booked here**, **Patient agent**, **Message approval policy** and **Configuration history** (see [Patient Agent](/cms/services/patient-agent#message-approval-policy)), **AI encounters**, **Red-flag rules**, **Channel**, **On patient added**, a **Demo patients** panel (non-demo services, owner or admin) and the **Danger zone** (owner). |
 
 The owner can change the name, specialty, mode of care and setting with **Edit service details**.
+
+An administrator previewing the CMS as another role sees that role's sidebar. See [Choosing & Switching](/cms/switching).
+
+### Role home pages
+
+Each role has one home page in a service, whatever template the service was made from:
+
+| Role | Home page |
+| --- | --- |
+| Doctor, Nurse | **Workstation** (`/services/<id>/workstation`) |
+| Admin, Receptionist | **Referrals** (`/services/<id>/referrals`) |
+
+Choosing a service in the context switcher, or on **Where are you working today?** after signing in, opens this page. The top of the page carries a "&lt;Role&gt; home" badge and quick access to what the role starts from:
+
+- **Add patient**: "Register a patient, then add them to &lt;service&gt;" (admins and receptionists).
+- **Add staff**: "Invite someone to the organisation" (admins).
+- **Book appointment**: "Find a slot and book a patient in" (receptionists).
+- **Service patients** and **Referrals** (doctors and nurses).
+
+A quick action appears only when both your role and the role you are previewing may open its page.
 
 ## 5. Deleting a service
 
 The owner can delete a service from **Settings → Danger zone**. This permanently removes it with its care team, agents, cohort membership, encounter notes and message history. It cannot be undone. Patients stay in the organisation's patient directory.
 
-A service that still has demo patients cannot be deleted until you remove them first. See [Demo Services](/docs/services/demo-services#remove-or-reset-the-demo).
+A service that still has demo patients cannot be deleted until you remove them first. See [Demo Services](/cms/services/demo-services#remove-or-reset-the-demo).
