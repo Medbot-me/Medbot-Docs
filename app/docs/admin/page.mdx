@@ -1,6 +1,6 @@
 # Platform Administration
 
-> **For Medbot platform administrators only.** These pages describe the Admin Panel used by the Medbot team to run the platform. If you are a clinician or clinic staff member, you will not see it and can skip this section. Organisation admins manage their own organisation in [Medbot CMS](/docs/getting-started/organisations), under [Settings](/cms/settings) and [Staff](/cms/staff), instead.
+> **For Medbot platform administrators only.** These pages describe the Admin Panel in the Medbot web app, used by the Medbot team to run accounts, research teams, billing, AI and support. Everything about clinic organisations and patients (organisations, services, the directory, claims, requests, support access, caregiver access and the audit log) is in the [platform admin panel in Medbot CMS](/cms/platform-administration). If you are a clinician or clinic staff member, you will not see it and can skip this section. Organisation admins manage their own organisation in [Medbot CMS](/docs/getting-started/organisations), under [Settings](/cms/settings) and [Staff](/cms/staff), instead.
 
 ## Opening the Admin Panel
 
@@ -9,7 +9,7 @@ Platform administrators have a platform role of **admin** or **superadmin**. Thi
 1. Open **Settings** from the account menu.
 2. Select **Admin Panel** at the top right.
 
-The panel's sidebar shows **Platform admin** or **Platform superadmin** under its title. Select **Back to Settings** to leave. On a phone, the sections appear as a scrolling tab strip. If you are not an administrator, the panel redirects you to Home.
+The panel's sidebar shows **Platform admin** or **Platform superadmin** under its title, and a link to the platform admin panel in Medbot CMS. Select **Back to Settings** to leave. On a phone, the sections appear as a scrolling tab strip. If you are not an administrator, the panel redirects you to Home.
 
 ## Sections
 
@@ -20,23 +20,40 @@ Sections marked (superadmin) are shown to superadmins only.
 | Platform | **Overview** | Totals for users, agents and bug reports, and agent usage. |
 | | **User Management** (superadmin) | Users, their roles, their credits (**Top up credits**) and **Usage**. See [AI Usage & Credits](/docs/ai-usage#for-administrators) and [Changing a role](#changing-a-platform-role). |
 | | **Identity Cleanup** (superadmin) | Platform tool for cleaning up user identities. |
-| | **Caregiver Access** | Platform tool for caregiver access. |
-| Organisations & services | **Organisations** | All organisations. Filter by **All**, **Active**, **Offboarded**, **Hosted** or **Self-managed**; search with "Search by name or slug". |
-| | **Billing accounts** (superadmin) | Who pays, and on which plan. See [Billing & Support](/docs/admin/billing-and-support#billing-accounts). |
-| | **Physician verifications** (superadmin) | MCR checks for physician family organisations. See [Billing & Support](/docs/admin/billing-and-support#physician-verifications). |
-| | **Services** | A read-only list of services. Filter by **All**, **Published**, **Draft** or **Archived**; search with "Search by service, specialty or organisation". Open a service to see its details; its **Open service** button opens it in [Medbot CMS](/cms/services), where services are run. |
-| | **Directory** | Providers not yet on Medbot. See [Provider Directory](/docs/admin/directory). |
-| | **Referral requests** | Patients' requests to be referred. See [Referral Requests](/docs/admin/referral-requests). |
-| | **Claims** (superadmin) | Claims on directory listings. See [Claims Review](/docs/admin/claims). |
+| | **Teams** | Every research team, for support. See [Teams](#teams). |
+| Accounts | **Billing accounts** (superadmin) | Who pays, and on which plan. See [Billing & Support](/docs/admin/billing-and-support#billing-accounts). |
 | AI & content | **Templates**, **Tools**, **Agents** | Shared templates, tools and agents. |
-| | **Models**, **Audio Models**, **Realtime Models** | Which AI models are available to everyone. The platform administrator chooses these; users pick from what is listed. Models that can read images show an **Images** badge. The default audio or realtime model cannot be deleted: set another model as the default first. |
+| | **Models**, **Audio Models**, **Realtime Models** | Which AI models are available to everyone. The platform administrator chooses these; users pick from what is listed. Models that can read images show an **Images** badge. The default audio or realtime model cannot be deleted: set another model as the default first. Each page checks prices against the providers' published ones: see [Checking model prices](#checking-model-prices). |
 | | **Vision Tasks** | Which model reads photos and files for each image task, such as health-log photos and uploaded documents. See [Vision Tasks](/docs/admin/vision-tasks). |
 | | **Care Context Prompts**, **Sample Notes** | Prompts and sample notes used by care features. |
-| Support | **Patient Channels** | Patient messaging channels: **Unattributed emergencies**, **Shared numbers** (every phone number more than one linked patient shares, across every organisation) and **Unroutable inbound** messages. |
-| | **Support Requests** | Requests sent from **Contact support**. See [Billing & Support](/docs/admin/billing-and-support#support-requests). |
-| | **Bug Reports** | Reports sent with **Report a bug**, with triage statuses. See [Billing & Support](/docs/admin/billing-and-support#bug-reports). |
+| Support | **Support Requests** | Requests sent from **Contact support**. See [Billing & Support](/docs/admin/billing-and-support#support-requests). |
+| | **Bug Reports** | Reports sent with **Report a problem**, with triage statuses. See [Billing & Support](/docs/admin/billing-and-support#bug-reports). |
 
-An organisation's page under **Organisations** also has a **Features** card, for per-organisation switches. See [Billing & Support](/docs/admin/billing-and-support#organisation-features).
+Patient channels, caregiver access, organisations, services, the directory, referral requests, claims and physician verifications are in the [platform admin panel in Medbot CMS](/cms/platform-administration). The old addresses for them in the Medbot app redirect there. An organisation's **Features** card, for per-organisation switches, is on its page in that panel: see [Billing & Support](/docs/admin/billing-and-support#organisation-features).
+
+## Teams
+
+**Teams** (`/admin/teams`) lists every research team, for support. A team has no clinic and no patient records, so nothing here reaches a chart. The cards show **Teams**, **People in teams**, **Pending invitations** and **Need attention**. Filter by **All**, **Active**, **Needs attention** or **Archived**, or by plan, and search with "Search by team name or email".
+
+Open a team to see its plan and who it is billed to, its **Members** with their team role and seat, its **Seats and billing** against the billing account's contract, and counts of its **Work** (counts only: review titles and content stay with the team). A team with no admin shows **This team has no admin**.
+
+| | Admin | Superadmin |
+| --- | --- | --- |
+| See teams and their people | Yes | Yes |
+| Resend an invitation | Yes | Yes |
+| Change a member's role, withdraw an invitation, **Remove from team**, rename (**Rename team**), **Archive this team** and **Restore this team** | No | Yes |
+
+The role rules are the ones people in the team meet: a team always keeps at least one admin. See [Research Teams](/docs/teams).
+
+## Checking model prices
+
+A model is billed at a price an admin sets by hand, in US dollars per million tokens (per minute for audio and realtime models). To catch a price that has drifted, the **Models**, **Audio Models** and **Realtime Models** pages compare each model's price with the provider's public price list. Medbot reads Vercel AI Gateway's list for models billed through the gateway and for OpenAI models (OpenAI publishes no price feed of its own), and AWS's price list for models billed through Bedrock.
+
+- A **Published prices** summary sits above the list. Its headline says how many models are billed at a price that differs from the published one, or that all of them match. **Check again** reads the lists again. Each differing model has a **Review** button, and a fold-out lists models that have no published price to compare.
+- In **Change price** (or **Set price**) the **Published price** panel shows what the provider lists, where it was read from, a link to the provider's pricing page and any caveats. **Use published price** copies the numbers into the form.
+- The **add model** form shows the published price for the model you are adding, before you add it.
+
+Nothing is saved on its own: a price changes only when you select **Save price**, which records it as a new price from then on.
 
 ## Confirmations
 

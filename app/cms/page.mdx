@@ -2,35 +2,33 @@
 
 ## What is an organisation?
 
-An **organisation** is a clinic as a tenant of Medbot CMS: its own staff, its own locations, its own patients, and, crucially, **its own Medplum server**. Everything the CMS does happens inside exactly one organisation at a time.
+An **organisation** is a clinic, hospital or care group as a tenant of Medbot CMS: its own staff, its own locations, its own patients, and, crucially, **its own patient records**, kept apart from every other organisation's. It owns one or more [services](/cms/services): a clinic is one kind of service, and an inpatient ward or a remote care service are others. Everything the CMS does happens inside exactly one organisation at a time.
 
-Medbot CMS is multi-organisation, and it is where everything an organisation does lives: its clinic operations, its [care services](/cms/services) and its administration. Medbot web is for each person's own work. Any signed-in user can create an organisation (hosted by Medbot, or on their own Medplum project), add staff to it with roles, and run every clinic workflow (patients, queue, sessions, results, documents, rostering, inventory, billing) scoped to the organisation they have chosen for this sign-in. A user who belongs to more than one switches between them.
+Medbot CMS is multi-organisation, and it is where everything an organisation does lives: its clinic operations, its [care services](/cms/services) and its administration. Medbot web is for each person's own work. Any signed-in user can create an organisation, add staff to it with roles, and run every clinic workflow (patients, queue, sessions, results, documents, rostering, inventory, billing) scoped to the organisation they have chosen for this sign-in. A user who belongs to more than one switches between them.
 
-> This is a change from the single-tenant CMS. There is no "first admin" bootstrap step and no Medplum credentials in environment variables any more: the first admin is whoever creates the organisation, and each organisation's Medplum credentials are entered through the app (or set up by Medbot) and stored encrypted.
+> This is a change from the single-tenant CMS. There is no "first admin" bootstrap step: the first admin is whoever creates the organisation. Medbot makes the organisation's patient records store as part of creating it, so there is nothing to connect or configure.
 
 ## Key concepts
 
 | Concept | What it is |
 | --- | --- |
-| **Organisation** | The tenant. Carries a name, a slug, a **country** and **time zone**, an active flag, a join code, and its own Medplum server details. |
-| **Self-managed or Medbot-hosted** | A self-managed organisation brings its own Medplum project and credentials. A [Medbot-hosted](/cms/hosted-organisations) one has its Medplum project set up and managed by Medbot. |
+| **Organisation** | The tenant. Carries a name, a slug, a **country** and **time zone**, an active flag, a join code, and its own patient records store. |
+| **Service** | What an organisation delivers care through. Only a service has a queue, takes appointments and has a roster; the organisation and its locations hold what services share, such as the day's session, rooms and display boards. See [Services](/cms/services) and [Modes of Care](/cms/services/modes-of-care). |
 | **Membership** | A person's place in one organisation, with exactly one [role](/cms/members-and-roles) there. The same person can be a member of several organisations, with a different role in each. |
 | **Current organisation** | The one the CMS is rendering right now. Chosen on the [welcome screen](/cms/switching#the-welcome-screen) at every sign-in and changed from the sidebar switcher. See [Choosing & Switching](/cms/switching). |
 | **Join code** | A short code an admin hands to a new hire so they can request access from the app. See [Join an Organisation](/cms/join-an-organisation). |
 | **Access request** | A pending request to join, filed by join code and resolved by an admin from the staff screen. |
-| **Medplum credentials** | The client id, client secret and base URL of the organisation's own Medplum server. Held encrypted by the backend; never exposed to the browser. See [Medplum Credentials](/cms/medplum-credentials). |
 | **Country-specific integrations** | National services available to organisations in one country. Today that means [SmartCMS](/cms/smartcms) for organisations in Singapore. |
 
 ## What you can do
 
 1. **Create an organisation** and become its first administrator: [Create an Organisation](/cms/create-organisation).
-2. **Let Medbot host it** if you have no Medplum server, by choosing **Hosted by Medbot** on the same form: [Medbot-Hosted Organisations](/cms/hosted-organisations).
-3. **Join an existing one** with a join code, or have an admin invite you by email: [Join an Organisation](/cms/join-an-organisation).
+2. **Join an existing one** with a join code, or have an admin invite you by email: [Join an Organisation](/cms/join-an-organisation).
    Doctors can also have a small organisation of their own for themselves and their family: [Physician Family Organisation](/cms/physician-family-organisation).
-4. **Belong to several** and choose which one to work in: [Choosing & Switching](/cms/switching).
-5. **Bring in staff and patients**, one at a time or in bulk from a CSV file: [Members & Roles](/cms/members-and-roles) and [Seeding Staff & Patients](/cms/seed-data).
-6. **Administer the organisation**: rename it, set its country and time zone, choose its integrations, rotate its join code, manage its Medplum connection: [Organisation Settings](/cms/settings). Decide which AI providers and regions its AI may use: [AI Policy](/cms/ai-policy).
-7. **Connect to Singapore's national systems** through SmartCMS: verify CHAS at check-in, claim CHAS, Medisave and other subsidies from the bill, and send registry and disease reports: [SmartCMS](/cms/smartcms).
+3. **Belong to several** and choose which one to work in: [Choosing & Switching](/cms/switching).
+4. **Bring in staff and patients**, one at a time or in bulk from a CSV file: [Members & Roles](/cms/members-and-roles) and [Seeding Staff & Patients](/cms/seed-data).
+5. **Administer the organisation**: rename it, set its country and time zone, choose its integrations, rotate its join code: [Organisation Settings](/cms/settings). Decide which AI providers and regions its AI may use: [AI Policy](/cms/ai-policy).
+6. **Connect to Singapore's national systems** through SmartCMS: verify CHAS at check-in, claim CHAS, Medisave and other subsidies from the bill, and send registry and disease reports: [SmartCMS](/cms/smartcms).
 
 ## The organisations screen
 

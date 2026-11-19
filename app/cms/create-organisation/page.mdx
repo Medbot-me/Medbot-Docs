@@ -4,9 +4,9 @@ Any signed-in user can create an organisation. The creator becomes its first **a
 
 Reach the form from `/organisations/new`: from **Set up a new healthcare organisation** on the [first-sign-in screen](/cms/getting-started#if-you-have-no-organisation-yet), or from **Create organisation** on the [organisations screen](/cms/switching#the-organisations-screen), the [welcome screen](/cms/switching#the-welcome-screen) or the [sidebar switcher](/cms/switching#the-sidebar-switcher).
 
-Setting up an organisation is part of the first-sign-in flow: the form, and the services and team steps after it, fill the screen with your setup progress on a panel beside them (**Organisation details**, **Singapore integrations** for Singapore only, **Record storage**, **Set up services**, **Add your team**). Only trying Medbot out? The first step links to **Create a demo organisation**, with synthetic data, instead; see [A demo organisation instead](#a-demo-organisation-instead).
+Setting up an organisation is part of the first-sign-in flow: the form, and the services and team steps after it, fill the screen with your setup progress on a panel beside them (**Organisation details**, **Singapore integrations** for Singapore only, **Set up services**, **Add your team**). Only trying Medbot out? The first step links to **Create a demo organisation**, with synthetic data, instead; see [A demo organisation instead](#a-demo-organisation-instead).
 
-> **No Medplum server?** On Medbot's production service you do not need one: the form's last step offers **Hosted by Medbot**, which makes a Medplum project for the organisation as you create it. See [Medbot-Hosted Organisations](/cms/hosted-organisations). A deployment without Medbot's own Medplum server does not offer it, and a note under the form points you to app.medplum.com to create a project and a client for it.
+> **Nothing to connect.** Medbot makes the organisation's own patient records store as it creates the organisation. The form asks for no server, client ID or secret, and there is no choice between hosting it with Medbot or bringing your own. If this Medbot deployment cannot make organisations just now, the page says **New organisations cannot be set up right now** with the reason, and a **Back** button.
 
 ## Verify your email first
 
@@ -14,7 +14,7 @@ Opening `/organisations/new` with an email address that is not verified yet send
 
 ## How many you can create
 
-Each person may create **one** organisation (the deployment can raise this). The limit counts the active organisations you created yourself, hosted or self-managed; a [demo organisation](/cms/services/demo-services#your-demo-organisation) does not count, and organisations you joined are not yours. Past the limit the form shows the reason the server gave and creates nothing. Medbot platform superadmins have no limit.
+Each person may create **one** organisation (the deployment can raise this). The limit counts the active organisations you created yourself; a [demo organisation](/cms/services/demo-services#your-demo-organisation) does not count, and organisations you joined are not yours. Past the limit the form shows the reason the server gave and creates nothing. Medbot platform superadmins have no limit.
 
 Two more checks apply:
 
@@ -23,19 +23,9 @@ Two more checks apply:
 
 A doctor who wants a CMS only for themselves and their family can use a [physician family organisation](/cms/physician-family-organisation) instead, free on every plan.
 
-## Before you start
-
-Skip this section if you will choose **Hosted by Medbot**. For **My own Medplum project**, you need an OAuth client on the Medplum server this clinic will use:
-
-1. Sign up at [Medplum](https://app.medplum.com/signin) if the clinic has no project yet.
-2. Create an OAuth client in Medplum.
-3. Copy its **Client ID** and **Client Secret**.
-
-These go into the form below, not into an environment variable. The CMS holds no Medplum credentials of its own.
-
 ## The wizard
 
-The form is a short wizard, headed "Set up a new healthcare organisation · step N of M" above the step's name. The number of steps depends on the country. **Back** returns to the step before, or from the first step to the first-sign-in screen.
+The form is a short wizard, headed "Set up a new healthcare organisation · step N of M" above the step's name. The number of steps depends on the country: two for Singapore, one elsewhere. **Back** returns to the step before, or from the first step to the first-sign-in screen.
 
 ### Step 1: Organisation details
 
@@ -55,33 +45,20 @@ Shown only when the country is Singapore: "Choose the national services this org
 
 Choosing a module does not connect anything by itself: each clinic location still needs its HE code and Synapxe's approval.
 
-### Step 3: Where records are stored
+### Creating it
 
-"&lt;Organisation&gt;'s patient records live in a Medplum project." Where the deployment hosts Medplum projects, the step offers two choices:
-
-- **Hosted by Medbot** (selected by default): "Medbot makes a Medplum project for this organisation now. Nothing else to enter."
-- **My own Medplum project**: "Enter its client ID and secret." The fields below appear.
-
-On a deployment without hosting, only the fields are shown.
-
-| Field | Required | Notes |
-| --- | --- | --- |
-| **Medplum base URL** | No | Defaults to `https://api.medplum.com`. Set it for a self-hosted Medplum. |
-| **Medplum client ID** | Yes | From step 2 of "Before you start". |
-| **Medplum client secret** | Yes | Write-only: it is never shown back to you. |
-
-Click **Create &lt;organisation name&gt;**. If the server refuses, for example because you are past your limit or it cannot store credentials just now, the form shows **Could not create organisation** with the reason.
+On the last step (**Organisation details**, or **Singapore integrations** for a Singapore organisation) the button reads **Create &lt;organisation name&gt;**. If the server refuses, for example because you are past your limit, the form shows **Could not create organisation** with the reason.
 
 ## What happens on submit
 
-For a hosted organisation, Medbot first creates the Medplum project, its owner membership and a client for it; if the organisation then cannot be created, those are deleted again. For your own project, the credentials are **validated against Medplum before anything is created**, so a bad client id or secret fails the form rather than leaving a half-built organisation behind. Either way, the backend then creates, in one transaction:
+Medbot first makes the organisation's patient records store, then, in one go:
 
 - the **organisation** itself, with a generated slug and join code, its country, time zone and any SmartCMS modules
 - the creator's **membership** as `admin`, with their name and email
-- the **encrypted Medplum credentials**
+- the admin's own Practitioner record in the organisation's records, so they can act clinically from their first sign-in
 - a default **clinic location**, "Main Clinic"
 
-It then creates the admin's own Practitioner record on that organisation's Medplum and stores its id. If that step fails, the organisation is deactivated and the error surfaced rather than leaving an admin who cannot act clinically.
+If any step fails, everything made so far is removed again, the records store included, and the form shows the reason instead of leaving a half-built organisation or an admin who cannot act clinically.
 
 The API refuses SmartCMS modules for any country other than Singapore.
 

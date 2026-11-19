@@ -1,42 +1,88 @@
-import { ImageZoom } from "nextra/components";
-
 # Platform Administration
 
-> **Note:** Only Medbot platform superadmins see these screens. No clinic role, including Clinic Admin, gives access.
+> **Note:** Only Medbot platform **admins** and **superadmins** see these screens. No clinic role, including Clinic Admin, gives access.
 
-Platform administration is where Medbot operations staff look after Medbot-hosted organisations, look up caregiver access, and handle paid record-service requests. The screens appear in the sidebar under **Platform**, which has three items: **Hosted organisations**, **Caregiver access** and **Record services**. Some of the same queues are also in the admin area of the Medbot web app. A clinic gets a hosted organisation by creating one with **Hosted by Medbot**: see [Medbot-Hosted Organisations](/cms/hosted-organisations). Nothing about that needs a platform administrator.
+The platform admin panel is where Medbot operations staff look after every organisation on Medbot: its services, the directory and referrals, requests that need a decision, support access to a clinic, and the platform's own status. It is in Medbot CMS at `/admin`. Accounts, research teams, billing accounts and AI settings are in the [Admin Panel in the Medbot web app](/docs/admin), which the panel's sidebar links to as **Web admin console**.
 
-If a person without the superadmin role opens these addresses, the page says **404 | This page could not be found.** The screens are hidden on purpose.
+A platform role (**admin** or **superadmin**) is held on the user account. It is separate from any organisation role and gives no access to a clinic's patients by itself. Platform roles are changed in the web console's **User Management**, not here. A clinic does not need a platform administrator to set itself up: see [Create an Organisation](/cms/create-organisation).
 
-## Hosted organisations
+Open the panel from **Platform → Platform admin** in the Home tab's sidebar. The panel has its own sidebar with four sections, and **Back to clinic workspace** leaves it. If someone without a platform role opens these addresses, the page says **404 | This page could not be found.** The screens are hidden on purpose.
 
-Open **Platform → Hosted organisations** (`/admin/organisations`). The page lists every organisation Medbot provisioned and holds credentials for. If there are none it says **No hosted organisations yet.** Each entry shows the organisation's name and slug, whether it is **Active** or **Offboarded**, its base URL, its Medplum project, and its client ID with when it was last verified, or "No credentials configured yet." The last verification error, if any, is shown in red.
+No patient data is shown anywhere in the panel, only counts and states.
 
-- **Set credentials** or **Rotate credentials** opens **Medplum credentials — &lt;name&gt;**. Enter the **New client ID** and **New client secret** (and an optional **Base URL**) and select **Save credentials**. A **Credentials updated** message confirms it. An organisation's own Clinic Admin cannot change credentials for a hosted organisation.
-- **Offboard** ends access after the confirmation "Its staff can no longer sign in and every active PHR link is discharged. This can be reversed."
-- **Reactivate** restores it: "Its staff will be able to sign in again immediately."
+## What an admin and a superadmin can do
 
-## Platform admins
+Both roles open every screen. The difference is who decides:
 
-At the bottom of the hosted organisations page, **Platform admins** grants or removes the superadmin role by email.
+| What | Admin | Superadmin |
+| --- | --- | --- |
+| Overview, requests, system status, service notices, audit log | Full | Full, and **Export as CSV** of the audit log |
+| Record services, caregiver search and revocation, referral requests | Work and decide | Work and decide |
+| Organisation claims and physician verifications | View and prepare | Decide |
+| Organisations, services, directory | View | View |
+| Offboard or reactivate an organisation, remove its health records, feature switches, AI credits | No | Yes |
+| Support access | Ask, and wait for approval | Start, and approve others' |
 
-1. Enter the person's **Email** and select **Search**.
-2. If they have never signed in, you see "No account found for that email yet". They must sign in once before they can be promoted.
-3. Choose the role in the list and select **Save**. A **Role updated** message confirms it.
+Items that need a superadmin carry a **Superadmin** badge, and an admin sees **Escalate** where a superadmin would see **Review**.
 
-## Caregiver access
+## Platform
 
-Open **Platform → Caregiver access** (`/admin/caregivers`) to look up [caregiver access](/cms/patient-portal#caregiver-access) across every organisation, for example when a patient or family member contacts Medbot support.
+- **Overview** (`/admin`): the number of organisations (active and offboarded), open requests with how long the oldest has waited, how many active organisations have no patient records store, and the platform's status. **Needs attention** lists the oldest requests, and **Recent admin activity** the latest changes.
+- **Requests** (`/admin/requests`): one queue, oldest first, over **Organisation claims**, **Physician verifications**, **Record services** and **Referral requests**. Filter it by kind. A row opens that request's own page, where it is decided.
+- **Bug reports** (`/admin/bug-reports`): bug reports sent from the patient portal and the web app, triaged here. Filter by status and organisation, and set a status and note on each. See [Billing & Support](/docs/admin/billing-and-support#bug-reports) for the statuses.
+- **System status** (`/admin/status`): the platform's components with their status and response time, each active organisation's **Patient records store** (**Ready**, or **Not set up** with organisations lacking one listed first), and service notices. See [Service notices](#service-notices).
+- **Audit log** (`/admin/audit`): "Every platform change and every support access session, across all organisations. Entries cannot be edited or deleted." Filter by **Everyone**, **Platform admins** or **Medbot**, and by period, or search by person, change or organisation. Each entry has the person, a summary and the reason they gave. Patient identifiers are never shown: what a person opened during a support session is in the organisation's own [audit log](/cms/patient-records#audit-log), which its Clinic Admins read.
+
+## Organisations
+
+### Organisations
+
+Open **Organisations** (`/admin/organisations`) for every organisation. Filter by **All**, **Active**, **Offboarded**, **Hosted** or **Self-managed**, and search by name or slug. Demo organisations are labelled. Organisations made before Medbot's own patient records store was introduced may still show a hosting badge; it makes no difference to how they work.
+
+An organisation's page shows:
+
+- **Overview**: slug, join code, country, time zone and when it was created.
+- **Health records**: whether the organisation has its patient records store (**Ready** or **No records store yet**). There are no credentials to set, rotate or verify: Medbot makes the store when the organisation is created, and an organisation's own admins have nothing to configure.
+- **Features**: per-organisation switches. See [Billing & Support](/docs/admin/billing-and-support#organisation-features).
+- **AI credits** (superadmin): the **Balance**, **Granted in total** and **Used in total**, and a form to grant credits with a reason. Every model call made for the organisation is metered against its plan allowance first, then this balance.
+- **Staff**, **Services** (each opens in **Services**) and **Locations**.
+
+A superadmin also has these buttons:
+
+- **Offboard**, after the confirmation "Its staff can no longer sign in and every active patient record link is discharged. This can be reversed." **Reactivate** restores it: "Its staff can sign in again immediately."
+- **Remove health records**, available only once an organisation is offboarded and still has its store. "Every patient record, document and file it holds is deleted for good. This cannot be reversed. The organisation, its members and its audit trail stay." Type the organisation's name and select **Remove for good**.
+
+### Services, Directory and Referral requests
+
+- **Services** (`/admin/services`): every service on Medbot, read-only. Filter by **All**, **Published**, **Draft** or **Archived**.
+- **Directory** (`/admin/directory`): providers not yet on Medbot. See [Provider Directory](/docs/admin/directory).
+- **Referral requests** (`/admin/directory/interests`): patients' requests to be referred. See [Referral Requests](/docs/admin/referral-requests).
+
+Organisation claims are under **Requests → Organisation claims** (`/admin/requests/claims`): see [Claims Review](/docs/admin/claims). Physician verifications are under `/admin/requests/physician-verifications`: see [Billing & Support](/docs/admin/billing-and-support#physician-verifications).
+
+## Patients and access
+
+### Support access
+
+Open **Support access** (`/admin/support-access`) to work inside one clinic for a limited time. It is the only way anyone at Medbot reaches a clinic's charts.
+
+1. Choose the **Organisation**, enter the **Support request** reference and a **Reason**, and choose how long it **Ends after**: 30 minutes, 1 hour or 4 hours.
+2. Confirm that everything you open is recorded against you.
+3. A superadmin selects **Start support access**. An admin selects **Send to a superadmin**, and the session starts when a superadmin approves it. A superadmin cannot approve their own.
+
+While it lasts, the session gives the person a temporary superuser membership in that one organisation, which shows in the organisation's staff list. It stops by itself at the end time, and the person or a superadmin can end it early. Each person can have one open session per organisation. Sessions, who approved them and how much time is left are listed on the page and recorded in the audit log.
+
+### Caregiver access
+
+Open **Caregiver access** (`/admin/caregivers`) to look up [caregiver access](/cms/patient-portal#caregiver-access) across every organisation, for example when a patient or family member contacts Medbot support.
 
 - **Search** by email, user id or PHR patient id. Results show the grants the person holds or that exist on that record, with each grant's history.
 - **Revoke** ends a grant at once, after the confirmation "Revoke this caregiver?".
 - **Invite** a caregiver on a patient's behalf. A platform invite requires a written **basis** for the access, and the caregiver still has to accept it. The patient sees the grant as added by **Medbot support**.
 
-The same screen is also in the Medbot web app's admin area, under **Caregiver Access**.
+### Record services
 
-## Record services
-
-Open **Platform → Record services** (`/admin/record-services`). Patients can pay the Medbot team to upload their documents or reconcile their history into their health record. This queue is where that work is done. The page explains: claiming a request opens that patient's record to you until you mark it ready, and every view is shown to the patient.
+Open **Record services** (`/admin/record-services`). Patients can pay the Medbot team to upload their documents or reconcile their history into their health record. This queue is where that work is done. The page explains: claiming a request opens that patient's record to you until you mark it ready, and every view is shown to the patient.
 
 Tabs show the requests by status, each with a count: **Paid, unclaimed**, **In progress**, **With the patient**, **Completed** and **Refunded**. The table has the columns **Request**, **Services**, **Paid**, **Since** and **Assigned**. The services are **Upload documents** and **Reconcile history**.
 
@@ -50,8 +96,22 @@ Select a request to open it. It shows what the patient asked for and has these s
 
 The request then moves to **With the patient**. **History and access log** at the bottom records who did what.
 
+### Patient channels
+
+Open **Patient channels** (`/admin/channels`) for patient messaging channels across every organisation: **Unattributed emergencies**, **Shared numbers** (every phone number more than one linked patient shares) and **Unroutable inbound** messages.
+
+## Patient safety
+
+- **Emergency wording** (`/admin/patient-safety/wording`): the advice a patient sees in Ask Medbot when an answer matches one of Medbot's red flags. Each red flag shows its live version and its history of versions. A change goes live only after a second admin approves it. Built-in wording is machine-translated in languages other than English, and crisis wording for possible self-harm is fixed in code and cannot be edited.
+- **Care team alerts** (`/admin/patient-safety/alerts`): when a patient's answer matches a red flag, Medbot always shows emergency advice first. These rules decide whether a linked clinic is also told, checked in order, the first match deciding. The page also lists published services that have not yet said what they look after, which the second rule needs, and the recent red-flag answers (without patient names).
+
+## Service notices
+
+From **System status**, an admin can publish a **Service notice**: a banner at the top of the CMS for signed-in staff. Choose the kind (**Degraded service**, **Outage** or **Planned maintenance**), who sees it under **Shown to** (**All organisations**, **Organisations in one country**, **Hosted organisations only** or **One organisation**), and the **Message**; a preview shows how staff will see it. Staff see a new notice on their next page, and **End** removes it.
+
 ## Related
 
-- [Medbot-Hosted Organisations](/cms/hosted-organisations): how a clinic gets one, and how it differs.
+- [Admin Panel in the Medbot web app](/docs/admin): users, teams, billing accounts, AI and support.
+- [Create an Organisation](/cms/create-organisation): how a clinic sets itself up.
 - [Seeding Staff & Patients](/cms/seed-data): how a new organisation's staff and patients are brought in.
-- [Roles & Permissions](/cms/roles-and-permissions): clinic roles, which are separate from the superadmin role.
+- [Roles & Permissions](/cms/roles-and-permissions): clinic roles, which are separate from platform roles.

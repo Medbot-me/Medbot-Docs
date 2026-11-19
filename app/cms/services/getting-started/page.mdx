@@ -35,43 +35,38 @@ The service starts as a draft. A real organisation then goes on to its team step
 
 ## 2. Walk through the setup wizard
 
-The wizard has seven steps, shown as numbered pills you can jump between freely. Every step is optional, and you can click **Skip setup for now** at any point and come back later. Only the service's owner (or a Medbot platform administrator) can open the wizard.
+The wizard has four steps, shown as a list you can jump between freely, each with a one-line status such as "Just you so far" or "Using defaults". Medbot has filled in a working default for each, so you can publish at any point and come back; select **Finish later** to leave. Only the service's owner (or a Medbot platform administrator) can open the wizard. A service made from a template is further along: its wizard says the template filled in how the service runs and its patient agent, and what is left is the care team and the patients.
 
 ### Step 1: Care team
 
 Add people from your organisation to the service. Each joins with the role or roles they already hold in the organisation; there is no role to choose. See [Care Team](/cms/services/care-team).
 
-### Step 2: SOP and Instructions
+### Step 2: How the service runs
 
-Describe, in plain language, how this service runs: who does what, when to escalate, and how to use the content library. A starting set of protocols is filled in for you. Adjust it and click **Save**; Medbot then turns it into the agent context that every service agent run is given. See [Service Context & Content](/cms/services/context-and-content).
+Plain-language rules every agent in this service follows, each starting from a default written for the service's name and specialty:
 
-### Step 3: Referral criteria
+- **Protocols and instructions**: who does what, when to escalate, and what agents should tell patients. Medbot turns it into the agent context that every service agent run is given. See [Service Context & Content](/cms/services/context-and-content).
+- **What this service looks after**: the **Conditions you treat** and the **Symptoms you assess, even before a diagnosis**, and the patients you do not see (**Patients you don't see**). It decides which red-flag alerts and Ask Medbot referrals reach the service: Medbot will not alert you about, or suggest your service to, the patients you exclude. **Required before you publish**: a service that lists nothing it looks after cannot be published (a demo service is exempt), and the publish buttons say so and link here. Setting it needs the service's owner or a Clinic Admin.
+- **Referral criteria**: which referrals the service accepts. The screening agent drafts a verdict against them; a person always decides. See [Referrals](/cms/services/referrals#referral-criteria).
+- **When a patient is added**: the enrolment notice and the onboarding agent. See [Patients & Cohort](/cms/services/patients#what-happens-when-a-patient-is-added).
 
-Describe which referrals this service accepts and at what thresholds. Medbot's screening agent checks each incoming referral against this text and drafts a verdict; a person always decides. See [Referrals](/cms/services/referrals#referral-criteria).
+### Step 3: Patient agent
 
-### Step 4: Agents
+- **Chat in the patient portal**: whether enrolled patients can chat with the service's patient agent in the patient portal (on by default), and how it hands over. See [Patient Agent](/cms/services/patient-agent).
+- **Education and counselling**: the service's content library, where one set of references and education materials is added once, with the settings for the education encounter. See [Service Context & Content](/cms/services/context-and-content#content-library) and [AI Encounters](/cms/services/encounters#settings).
+- **Pre-visit history**: the questions patients answer before a booked visit, and where any red flags go. See [Pre-visit History & Escalations](/cms/services/pre-visit-and-escalations).
 
-The four default agents are already here, shown as **Default agents** cards. Rewrite their instructions, or add agents alongside them. Services created before the defaults existed have an **Add missing default agents** button. See [Service Agents](/cms/services/agents).
+Agent instructions, models and subagents are on the service's **Agents** page; setup does not need them. See [Service Agents](/cms/services/agents).
 
-### Step 5: Settings
+### Step 4: Patients and publish
 
-- **Patient agent**: whether enrolled patients can chat with the service's patient agent in the patient portal (on by default). See [Patient Agent](/cms/services/patient-agent).
-- **AI encounters**: which encounters the service offers and how each is set up. See [AI Encounters](/cms/services/encounters#settings).
-- **On patient added**: the enrolment notice and the onboarding agent. See [Patients & Cohort](/cms/services/patients#what-happens-when-a-patient-is-added).
+**What patients will get** summarises the care team, protocols, patient agent, education, pre-visit history and the notice sent when a patient is added, so you can check it before anyone is enrolled. **Add patients** adds them to the cohort from the organisation's patient directory; each gets the enrolment notice as soon as they are added. This step is deliberately **last**, so everything else is in place before real patients start receiving notices. See [Patients & Cohort](/cms/services/patients). In a demo organisation, the step also has the **Demo patients** panel.
 
-### Step 6: Content library
-
-Upload counselling protocols and reference material for the service's agents, or attach documents already uploaded elsewhere. See [Service Context & Content](/cms/services/context-and-content#content-library).
-
-### Step 7: Patients
-
-Add patients to the cohort from the organisation's Medplum patient directory. This step is deliberately **last**, so the agents, protocols, content and care team are in place before real patients start receiving notices. See [Patients & Cohort](/cms/services/patients).
-
-Use **← Back** and **Next: &lt;step&gt; →** to move between steps. On the last step, click **Finish setup** to publish the service (from `draft` to `published`). Every step remains editable afterwards.
+Select **Publish service** to publish (from `draft` to `published`), or **Keep as draft**. Every step remains editable afterwards. Earlier links to the seven-step wizard's steps open the step that now holds their content.
 
 ## 3. Continue setup later
 
-If you skipped the wizard, the **Services** list shows a **Continue setup** link next to your own drafts, and the service's page shows a draft banner with a **Finish setup** button (the **Finish setting up** card, with **Mark setup complete**, for a service made from a template).
+If you left the wizard, the **Services** list shows a **Continue setup** link next to your own drafts, and a service made from a template shows a **Finish setting up** card on its page, with **Mark setup complete**.
 
 ## 4. The service page
 

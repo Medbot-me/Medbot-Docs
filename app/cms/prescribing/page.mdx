@@ -1,0 +1,91 @@
+# Prescribing & Medications
+
+A patient's **Medications** page is where clinical staff see what the patient takes and write prescriptions. Open it with **Medications** in the open patient's card in the sidebar (`/patients/[id]/medications`), or from a row's menu on the **Medications** card of the chart **Overview**. The same prescribing form also sits in the **Medications** tab of the [notes workspace](/cms/patient-notes) and in a service's consult screen.
+
+> **Note:** Writing orders in Medbot is available only when your deployment has turned it on. If it is off, the **Medications** page still lists the patient's medicines, but it has no **Current orders** card and no row actions.
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| Open the **Medications** page and read the lists | Yes | No | Yes | Yes |
+| Draft a prescription, amend or stop a medicine, repeat one | Yes | No | Yes | Yes |
+| Sign a prescription | Yes | No | Yes | Only a nurse an administrator has [authorised to prescribe](/cms/staff#authorising-a-nurse-to-prescribe) |
+| Record the patient's weight for a weight-based dose | Yes | No | Yes | Yes |
+
+A Patient service associate and an Allied health professional can read the page, but they cannot draft or sign prescriptions. A Receptionist who opens it sees "Medications are open to clinical staff only." A nurse who is not authorised can draft a prescription and leave it for a prescriber. See [Allergies & Medication Safety](/cms/allergies-and-medication-safety#allergy-alerts-when-prescribing).
+
+## The Medications page
+
+The page has up to three parts, top to bottom.
+
+| Part | What it shows |
+| --- | --- |
+| **Current orders** | This visit's unsigned orders, beside the form that writes them. "Unsigned orders are not sent until you sign." Without an open encounter it says orders are drafted and signed against the open encounter, and offers to start one if you may. |
+| **Active medications** | What the patient is still taking, with when it started and whether it was **Prescribed here** or **Recorded from elsewhere**. They carry over to this visit without reordering. |
+| **Previous medications** | What the patient has stopped or finished. |
+
+If the lists cannot be loaded, the page says "Medications could not be loaded. Do not assume this patient takes no medications." with **Try again**.
+
+Each row has a menu of actions. Each one opens the prescribing form, prefilled, and the result is a draft you sign like any other order:
+
+| Action | On | What it does |
+| --- | --- | --- |
+| **Amend order** | An active medicine | Change the dose, frequency or duration. Once signed, the amended order replaces the old one. |
+| **Stop medication** | An active medicine | Asks for a **Reason for stopping** and adds a stop to the drafts. There are no further doses once the stop is signed, and it cannot be backdated. |
+| **Repeat** | A previous medicine | Starts a new order with the same medicine and dose instructions. Choose the product, duration and quantity again. |
+
+The chart **Overview**'s **Medications** card lists the same medicines, with the same row menu. Choosing an action there opens this page with the form already filled in.
+
+## Writing a prescription
+
+1. Under **Medication**, search "Search by name" and choose the product. The strength is in the product's name.
+2. Set **Each dose**. The stepper counts in the medicine's own unit, for example tablets, capsules or mL, and moves by the usual step for that form. For a form with no fixed unit, choose the **Dose unit** first.
+3. Choose the **Frequency**: once, twice, three, four or five times daily (**OD**, **BD**, **TDS**, **QDS**, **5X**), every morning (**OM**), every night (**ON**), every 4, 6 or 8 hours, **Weekly, on chosen days**, **Single dose**, **As needed** or **Other**. A weekly order needs at least one **Days of the week**. **Other** asks for **Frequency in words**.
+4. Optionally set the duration. Enter a number of days, weeks or months, and choose what it means: **For** (take it on schedule, then finish the course) or **Up to** (take it for no longer than this, which adds "Up to N days." to the instructions). A single dose has no duration.
+5. Check the **Quantity to supply**.
+6. Add **Instructions**, for example "Take after food". An as-needed order must say what it is for and the most in 24 hours, for example "for pain, max 4 times a day".
+7. Read the checks under the form, which name what was checked: allergies, current medications and drug interactions. Then select **Add to drafts**.
+
+**Start over** clears the form. The drafts are listed as **Unsigned medications** (or **Unsigned orders**) until you sign them.
+
+### The dose in mg
+
+For a tablet or capsule with one strength in its name, the form shows what one dose weighs next to the count: "1 tablet = 500 mg", "1/2 tablet = 250 mg", "1.5 tablets = 75 mcg". Nothing is shown for a combination product, a strength per volume, a name with no strength, or part of a capsule. The weight is for checking only. The instructions and the quantity still use the count.
+
+### The quantity
+
+Medbot works out the quantity as the dose, times the doses a day, times the days. It shows **Worked out** beside the number. Select **Edit** to type your own, and **Use worked-out amount** to go back. It is worked out only when the dose is counted in the medicine's stock unit, because dispensing takes whole stock units off the shelf. Where it cannot be, for example a dose in mg, a medicine that is not stocked, or a bottle whose size the name does not state, the form says why and asks you to enter the number of packs, bottles or boxes to supply. Medbot never fills in a number you did not choose.
+
+## Oral liquids dosed by weight
+
+When the clinic has published a [dosing rule](/cms/dosing-rules) that names the product, the form switches to a weight-based dose.
+
+1. **Dosing rule** shows whose limits the dose is checked against: the clinic's rule, or, for a doctor who keeps their own version, **My version**. A doctor starts on their own version and can switch to the clinic rule for one order. Each rule opens in a window with its limits, so you do not leave the order to read it.
+2. The rule needs a recent weight. If the patient has none, or it is older than the rule allows, select **Record weight**, enter the **Weight** and save it. It is saved to the patient's vitals for this visit and the dose is worked out from it. If the weight changes while you write the order, the form says so and works the dose out again.
+3. The rule also has an age range. A patient outside it cannot be dosed by the rule, and the form says why.
+4. The form shows the **Recommended dose** and **Recommended volume** for the patient's weight, with the working, the measurable volumes in range, and the **Daily maximum**. A product whose concentration the rule does not list cannot be dosed by weight.
+5. Enter **Each dose** in mL, choose **How often** (every 4, 6, 8, 12 or 24 hours, or times a day) and tick **As needed (PRN)** where it applies. The dose in mg appears beside the volume, and the label text is written for you under **Write on label as**. Add anything else under **Other instructions (optional)**.
+6. The form shows the status: **Within range**, **Below range**, **Above range** or **Over daily maximum**.
+
+Going past a limit has a consequence, depending on the limit:
+
+| Limit | What happens |
+| --- | --- |
+| Below or above the recommended dose, or past the maximum single dose or daily maximum | An alert asks for a **reason**: **Clinical judgement documented in notes**, **Specialist advice**, **Weight not representative (e.g. oedema)** or **Other**. The rule's severe limit policy can also need a second clinician to co-sign. Co-signing is not available in this form, so the order cannot be added: change the dose, or ask a senior clinician to prescribe it. |
+| More doses in 24 hours than the rule allows | The order is blocked: change the frequency. |
+
+The order records which rule and version it was checked against, the weight used, the range, and any reasons given. For an as-needed or weight-based liquid, the form suggests a quantity with its working, for example "Suggested: 2 bottles", and offers **Use 2 bottles**. It never fills it in for you.
+
+If the clinic publishes a new version of the rule while you are writing, the form says "The dosing rule changed since you started this order" and asks you to enter the dose again against the limits now in force. Until the clinic's rules have loaded, an oral liquid cannot be ordered, so that Medbot does not skip a rule that applies.
+
+## Signing
+
+Select **Review and sign** on the drafts. The window asks "Sign n orders?" and says that signing makes them active under your name. **Keep as drafts** leaves without signing. Each prescription is checked against the patient's allergies, current medications and interactions first. An alert needs an amendment or an override with a reason before it can be signed, and a nurse who is not authorised to prescribe can only **Leave for the prescriber**. See [Allergies & Medication Safety](/cms/allergies-and-medication-safety).
+
+## Related
+
+- [Dosing Rules](/cms/dosing-rules): publish the limits a weight-based dose is checked against.
+- [Formulary](/cms/formulary): the medicines you choose from.
+- [Allergies & Medication Safety](/cms/allergies-and-medication-safety): checks and overrides at signing.
+- [Orders & Order Sets](/cms/orders-and-order-sets): service and consumable orders.

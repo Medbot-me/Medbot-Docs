@@ -6,7 +6,7 @@ Only an **administrator of that organisation** can open it. A non-admin member s
 
 The page works on the organisation named in its own URL rather than the one you currently have selected, so an admin of several can manage any of them without [switching](/cms/switching) first.
 
-The page has these sections, in order. In a [physician family organisation](/cms/physician-family-organisation), **Integrations**, **Join code** and **Seed data** are not shown.
+The settings open as a window over the page you were on, with a searchable menu of sections down the side and one section shown at a time; edits in one section survive while you look at another. **Open as a page** opens the same menu as the full page at the address above, and on a phone the menu comes first, then the section. A link such as `#integrations` opens the matching section. The sections are described below. In a [physician family organisation](/cms/physician-family-organisation), **Integrations**, **Join code** and **Seed data** are not shown. In a [demo organisation](/cms/services/demo-services#your-demo-organisation), **Join code** and **Seed data** are not shown either, because a demo organisation takes no real people.
 
 Your own name and appearance are not here: they are under **Settings** in your account menu (see [Getting Started](/cms/getting-started#4-your-name-and-appearance)). Which AI providers and regions the organisation's AI may use is on its own page, [AI Policy](/cms/ai-policy).
 
@@ -24,12 +24,16 @@ A Singapore organisation with SmartCMS modules cannot change its country until t
 
 ## Patient branding
 
-How your patients see the clinic on the patient portal and in the notices they receive. Leave a field empty to use the default; "Powered by Medbot" stays under your name on the portal.
+How your patients see your organisation on the patient portal and in the notices they receive. Leave a field empty to use the default; "Powered by Medbot" stays under your name on the portal.
 
-- **Clinic display name**: shown on the portal and in notice text. Default: the organisation's name.
+- **Organisation display name**: shown on the portal and in notice text. Default: the organisation's name.
 - **Notification sender name**: opens every notice, before the service name, for example "Orchard Clinic · IVF". It does not change the phone number or WhatsApp sender.
 - **Save branding** saves both.
 - **Logo**: PNG, JPEG or WebP, up to 512 KB and 4096 pixels a side; a square image works best. Choose a file to upload it ("Logo saved"), or **Remove logo**.
+
+## Patient appointments
+
+What patients may do with their appointments on the patient portal. **Online cancellation closes** sets how many hours before the start a patient can still cancel on their own (0 to 168, a week; empty uses the default of 24). After that, the portal asks them to call the clinic. Changes of time are always requests your staff confirm. Select **Save**.
 
 ## Integrations
 
@@ -57,6 +61,10 @@ The short code an admin hands to a new hire so they can request access before be
 **Regenerate join code** issues a new one. The previous code stops working immediately; use it if a code has been shared too widely or has leaked. Regenerating does not affect anyone who has already joined.
 
 The full flow around this code is described in [Join an Organisation](/cms/join-an-organisation).
+
+## Queue
+
+Organisation-wide defaults for the queue, shown when the page is for the organisation you are signed in to. **Requeue places** (1 to 20) is how many ready patients a requeued patient goes behind, **Keep remarks for (months)** (1 to 48) is how long staff remarks on the queue and their edit history are kept before they are deleted. A service can set its own requeue places in its Workstation settings, and a doctor their own in Settings. See [Reception Queue](/cms/reception-queue).
 
 ## Plan
 
@@ -100,10 +108,6 @@ These pages are no longer in the sidebar for Clinic Admins. When downtime entrie
 ## Seed data
 
 "Add staff and patients in bulk from a CSV file. Safe to repeat: people who already exist are skipped." **Seed staff & patients** opens the seeding page. See [Seeding Staff & Patients](/cms/seed-data).
-
-## Medplum credentials
-
-Managing the organisation's connection to its own Medplum server. This section has its own page: [Medplum Credentials](/cms/medplum-credentials). For a [Medbot-hosted organisation](/cms/hosted-organisations) it only shows the base URL and a **Verify connection** button, because Medbot manages the credentials.
 
 ## A note on enforcement
 

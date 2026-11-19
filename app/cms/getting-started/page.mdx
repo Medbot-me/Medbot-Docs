@@ -87,7 +87,7 @@ Each role has one home page in a service, whatever kind of service it is:
 
 | Role | Home page |
 | --- | --- |
-| Doctor, Nurse | The service's **Workstation** |
+| Doctor, Nurse, Patient service associate, Allied health professional | The service's **Workstation** |
 | Clinic Admin, Receptionist | The service's **Referrals** |
 
 A badge at the top reads, for example, **Doctor home**, with shortcuts under it, each shown only when your role can open its page:
@@ -108,7 +108,7 @@ At the top of the sidebar is the **switcher**: the organisation's name and, unde
 Under the switcher, two tabs split the CMS:
 
 - **Home**: the Home assistant (**New chat**), **Tasks** for the care services, your saved **Chats**, and the **Organisation** group (Patients, Staff, Agents, Settings, AI policy).
-- **CMS**: the clinic's work. The service you are working in comes first, with its pages for your role and your home page at the top. Then **Clinical**, **Operations**, and **Admin** (Billing, Claims, Pharmacy).
+- **CMS**: the clinic's work. In the general clinic, **All services** sits under the clinic's name, followed by the clinic's own pages (Inbox, Tasks, Queue, Session, Appointments, Roster, Results, Content library, Templates), the **Ask Medbot** group, then **Pharmacy**, **Billing** and **Claims**. Inside a care service, the service's own pages come first, with your home page at the top.
 
 Both tabs have **Search**. A patient you have open shows as a card under it. You only see items your role may use:
 
@@ -118,19 +118,19 @@ Both tabs have **Search**. A patient you have open shows as a card under it. You
 | Home › Organisation: Patients, Agents | Yes | Yes | Yes | Yes |
 | Home › Organisation: Staff, Settings, AI policy | Yes | No | No | No |
 | Home › Organisation: Downtime recovery | No (in Settings) | Yes | Yes | Yes |
-| CMS › Clinical: Results, Templates, Photo capture, Tasks | Yes | Yes | Yes | Yes |
-| CMS › Clinical: Inbox | Yes | Yes | No | No |
-| CMS › Clinical: Explanation library | Yes | No | Yes | No |
-| CMS › Clinical: Approved answers, Patient questions | Yes | No | Yes | Yes |
-| CMS › Clinical: Answer reports, Patient concerns | No | No | Yes | Yes |
-| CMS › Operations: Queue, Appointments, Roster | Yes | Yes | Yes | Yes |
-| CMS › Operations: Session | Yes | Yes | No | No |
-| CMS › Admin › Billing: Billing, Catalog | Yes | Yes | No | No |
-| CMS › Admin › Billing: Billable services, Devices & substances | Yes | No | Yes | Yes |
-| CMS › Admin › Claims: Claims (Singapore) | Yes | Yes | Yes | No |
-| CMS › Admin › Pharmacy: Formulary, Inventory, Stock, Order sets | Yes | No | Yes | Yes |
-| CMS › Admin › Pharmacy: Medication safety | Yes | No | No | No |
-| Home › Platform: Hosted organisations, Caregiver access, Record services | Medbot platform superadmins only, whatever their clinic role | | | |
+| CMS: Results, Templates, Tasks, Queue, Appointments, Roster | Yes | Yes | Yes | Yes |
+| CMS: Inbox | Yes | Yes | No | No |
+| CMS: Session | Yes | Yes | No | No |
+| CMS › Ask Medbot: Approved answers, Patient questions | Yes | No | Yes | Yes |
+| CMS › Ask Medbot: Answer reports, Patient concerns | No | No | Yes | Yes |
+| CMS › Pharmacy: Formulary, Inventory, Stock, Order sets | Yes | No | Yes | Yes |
+| CMS › Pharmacy: Medication safety | Yes | No | No | No |
+| CMS › Pharmacy: Dosing rules | Yes | No | Yes | No |
+| CMS › Pharmacy: Dose overrides | Yes | No | No | No |
+| CMS › Billing: Billing, Catalog | Yes | Yes | No | No |
+| CMS › Billing: Billable services, Devices & substances | Yes | No | Yes | Yes |
+| CMS › Claims: Claims (Singapore) | Yes | Yes | Yes | No |
+| Home › Platform: Platform admin (the [platform admin panel](/cms/platform-administration)) | Medbot platform admins and superadmins only, whatever their clinic role | | | |
 
 **Claims → Reports** shows to the roles that work on at least one of the organisation's reports; see [Reports](/cms/smartcms/reports). Downtime devices and System status are linked from **Downtime and status** in the organisation's [Settings](/cms/settings).
 
@@ -147,6 +147,7 @@ For what each role can do on each page, see [Roles & Permissions](/cms/roles-and
 Open **Settings** from your account menu. Both sections apply to you only and do not change anything for other staff. Settings for the whole clinic are in [Organisation Settings](/cms/settings).
 
 - **Profile**: your **Full name**, "How your name appears on organisations you create or join." Change it and select **Save name** ("Name saved"). If your account has no name yet, the section says "Your account has no name yet. Add one so organisations you create or join can show it."
+- **Queue** (doctors and nurses only): **Requeue places**, how far back your own patients go when you requeue a called patient who did not come. Turn on **Use my own number**, enter 1 to 20 and select **Save**. With it off, your patients follow the service's number or the organisation's. See [When a called patient does not come](/cms/reception-queue#when-a-called-patient-does-not-come).
 - **Appearance**: how the CMS looks for you.
 
 The account menu also has **Contact support**, which opens Medbot's [support page](/docs/plans-and-billing#contact-support) in a new tab.

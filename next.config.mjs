@@ -21,6 +21,19 @@ export default withNextra({
         permanent: true,
       },
 
+      // Medplum was replaced by Medbot's own patient records store: there are
+      // no organisation credentials to manage and no hosted/own choice.
+      {
+        source: '/cms/medplum-credentials',
+        destination: '/cms/scoping',
+        permanent: true,
+      },
+      {
+        source: '/cms/hosted-organisations',
+        destination: '/cms/create-organisation',
+        permanent: true,
+      },
+
       // Services moved from the Medbot app to Medbot CMS (Home and CMS split).
       {
         source: '/docs/services',

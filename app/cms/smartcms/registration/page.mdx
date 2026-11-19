@@ -51,7 +51,7 @@ After an HE code change, the location on the SmartCMS tab also shows a reminder:
 
 ## Practitioners
 
-A staff member's registration number is part of their membership and is also written to their Practitioner record in the organisation's Medplum. It is set in the **Add staff** dialog and corrected later with the **Edit registration** row action on `/staff`. Both are admin-only. See [Members & Roles](/cms/members-and-roles).
+A staff member's registration number is part of their membership and is also written to their Practitioner record in the organisation's patient records. It is set in the **Add staff** dialog and corrected later with the **Edit registration** row action on `/staff`. Both are admin-only. See [Members & Roles](/cms/members-and-roles).
 
 | Role | Field label | Helper | Format | Example |
 | --- | --- | --- | --- | --- |
@@ -74,7 +74,7 @@ For a doctor in a Singapore organisation, the **Add staff** dialog also asks for
 
 ## For administrators upgrading an existing deployment
 
-Before this change, every staff licence number was written to Medplum under a placeholder system, `http://hospital.org/mcr`, whatever the role. Medbot still reads the old system as an alias, but it should be migrated once per environment, from `apps/api`:
+Before this change, every staff licence number was written to the patient records under a placeholder system, `http://hospital.org/mcr`, whatever the role. Medbot still reads the old system as an alias, but it should be migrated once per environment, from `apps/api`:
 
 ```bash
 # dry run over every organisation: lists what would change

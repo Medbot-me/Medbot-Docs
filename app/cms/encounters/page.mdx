@@ -19,11 +19,13 @@ An encounter is the record of one visit. Doctors and nurses attach vitals, notes
 | Order a Screen for Life screening (Singapore) | Yes | No | Yes | Yes |
 | Record a developmental screening (Singapore) | Yes | No | Yes | No |
 
-On the chart, **Start Encounter** is shown to Clinic Admins, Doctors and Nurses, and only while the patient has no encounter in progress. The actions menu on the Patients page offers it to every role: a Receptionist who submits the form there sees "Something went wrong while starting the encounter." Ask a Doctor, Nurse or Clinic Admin to start it.
+On the chart, **Start Encounter** is shown to Clinic Admins, Doctors and Nurses, and only while the patient has no encounter in progress. A Patient service associate and an Allied health professional can also start encounters, through the consult kinds they lead (see [Starting a consult from the patient list](#starting-a-consult-from-the-patient-list)). The Patients page's actions menu offers consults only to the roles that lead one: a Receptionist has none. A Receptionist who reaches the form some other way sees "Something went wrong while starting the encounter." Ask a Doctor, Nurse or Clinic Admin to start it.
+
+Staff-led consults and assistant-led AI encounters are different things. A **consult** is an encounter a member of staff leads. An **AI encounter** is a conversation an assistant has with the patient, for a history before a visit, health education, or financial counselling.
 
 ## Starting an encounter
 
-1. On the chart's **Overview** or **Encounters**, select **Start Encounter** (on a phone, in the bar at the bottom of the screen). Or select **Start Encounter** in the actions menu on the Patients page.
+1. On the chart's **Overview** or **Encounters**, select **Start Encounter** (on a phone, in the bar at the bottom of the screen). Or start a [consult from the Patients page](#starting-a-consult-from-the-patient-list).
 2. Choose the **Encounter class**: **Ambulatory** (the default), **Emergency**, **Virtual**, **Home Health** or **Inpatient**.
 3. Choose the **Status**: **Planned**, **Arrived**, **Triaged** or **In Progress** (the default).
 4. Choose the **Priority**: **Routine** (the default), **Urgent**, **ASAP** or **STAT**.
@@ -38,6 +40,18 @@ In a [physician family organisation](/cms/physician-family-organisation#visits-t
 _The Start Encounter dialog_
 
 You cannot start an encounter for an inactive patient. The button is disabled and the app says "Cannot start an encounter for an inactive patient."
+
+### Starting a consult from the patient list
+
+The actions menu on each row of the Patients page leads with **Consult, led by you**: the consult kinds your role leads. Choosing one starts a consult in one click, as an ambulatory encounter that is in progress with routine priority, and opens the patient's [notes workspace](/cms/patient-notes) to write in. The kinds are:
+
+| Role | Consult kinds it can lead |
+| --- | --- |
+| Doctor, Nurse | **Clinical consult**, **Financial counselling**, **Health education**, **Diet counselling**, **Physiotherapy**, **Pharmacy counselling** |
+| Patient service associate | **Financial counselling** |
+| Allied health professional | **Health education**, and the one their profession names: **Diet counselling** (dietitian), **Physiotherapy** (physiotherapist) or **Pharmacy counselling** (pharmacist) |
+
+In a [physician family organisation](/cms/physician-family-organisation#visits-the-care-category) the full **Start Encounter** form opens instead, because it needs a care category. An inactive patient's consults are greyed out.
 
 ### Which encounter counts as current
 
@@ -63,6 +77,24 @@ Visits from the queue finish when the doctor, or the lead nurse of a nurse-led v
 
 <ImageZoom src="/images/cms/encounters/04-encounters-page.png" alt="The Encounters page with a table of encounters and the Orders card" />
 _The Encounters page_
+
+## Starting an AI encounter
+
+An AI encounter is led by an assistant, not by staff. One **Start AI encounter** window starts it from every place that offers it: the patient list, a service's patient page and Workstation queue, a visit panel, and the reception queue's **Start AI encounter** button.
+
+1. Choose the **Kind**: **History taking** ("Collects the story before the consult and flags red-flag answers"), **Health education** ("Explains the condition and plan using your approved content") or **Financial counselling** ("Walks through estimated costs, subsidies and payment options"). A service offers the kinds it has turned on. The general clinic offers health education and financial counselling. A kind the patient already has open is not offered again.
+2. Choose **How the patient takes it**: **Send a link** (the patient opens it on their own phone, in the patient portal) or **On this device** (hand a tablet or kiosk to the patient now, in the clinic). **On this device** is offered inside a care service only. For it, choose the **Conversation mode**, **Text** or **Voice**, and for voice the **Assistant look**: **Let the patient choose**, **Orb** or **Face**.
+3. Enter a **Reason, shown to the patient**, such as "Starting insulin, from today's consult". It is optional, and gives the assistant a head start.
+4. Inside a service, tick the **References and protocols** to attach. They start ticked from the kind's defaults in the service's settings.
+5. Select **Send link** or **Hand over the device**. A link goes on the channel the patient agreed to be contacted on and expires after 7 days. If the link could not be sent, the window says "AI encounter started, link not sent" and gives the link to copy.
+
+From the patient list you can also send one to several patients. Choose a care service in the sidebar, tick the patients, and select **Start AI encounter for n patients**. Patients without a phone number are skipped, and every outcome is listed.
+
+A journey step of an AI encounter kind in a service's visit can also be started by staff from the visit.
+
+### AI encounters across services
+
+A patient's chart has an **AI encounters** section (`/patients/[id]/ai-encounters`) listing every AI encounter the organisation started for the patient: from the general clinic and from each care service. Filter by source with the buttons above the list: **All sources**, **Whole organisation** or a service, each with its count. It opens on the service the sidebar is set to. Each row shows the kind and its state. The list shows the reason and a summary, never the transcript. The patient list's **Latest AI encounter** column shows the most recent one for each patient, or **None**.
 
 ## The Encounters page
 
@@ -167,5 +199,6 @@ Both are claimed on the visit's bill. See [Claims Workflow](/cms/smartcms/claims
 
 - [Vitals](/cms/vitals): record readings on the encounter.
 - [Orders & Order Sets](/cms/orders-and-order-sets): place and cancel orders.
+- [Prescribing & Medications](/cms/prescribing): write, amend and stop prescriptions.
 - [Vaccinations](/cms/vaccinations): record a vaccination.
 - [Patient Records & Consent](/cms/patient-records): the chart itself.

@@ -4,7 +4,8 @@ export default {
   "connected-clinics": "Connected Clinics",
   "clinic-sharing": "Sharing with Your Clinics",
   "ask-medbot": "Ask Medbot",
-  messages: "Messages",
+  messages: "Chats",
+  notifications: "Notifications",
   "health-log": "Health Log",
   "health-plan": "Health Plan",
   devices: "Connected Devices",
@@ -21,5 +22,6 @@ export default {
   family: "Family",
   caregivers: "Caregivers & Family Access",
   invites: "Invites & Join Links",
+  "report-a-problem": "Report a Problem",
   "mobile-app": "Mobile App",
 };

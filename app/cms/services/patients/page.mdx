@@ -4,15 +4,15 @@ import { ImageZoom } from "nextra/components";
 
 ## The organisation's patient directory
 
-A service's patients come from **the organisation's own Medplum patient directory**, the same patients the clinic sees in the CMS. They are not owned by any one service, and the same patient can be in several services' cohorts.
+A service's patients come from **the organisation's own patient directory**, the same patients the clinic sees in the CMS. They are not owned by any one service, and the same patient can be in several services' cohorts.
 
 New patients are added to the organisation, not to a service. An organisation admin or receptionist registers them in Medbot CMS (see [Registering a patient](/cms/patient-records#registering-a-patient)), or an admin adds them in bulk by [seeding from a CSV file](/cms/seed-data). On their home page in a service, admins and receptionists have an **Add patient** shortcut: "Register a patient, then add them to &lt;service&gt;".
 
 ## Adding a patient to the cohort
 
-From **Patients** under the service's name in the CMS sidebar (or the wizard's last step), click **Add patient to cohort**. In **Add patient to cohort**:
+From **Patients** under the service's name in the CMS sidebar (or the wizard's last step, **Patients and publish**), click **Add patient to cohort**. In **Add patient to cohort**:
 
-1. **Search by name…** among the organisation's Medplum patients. Patients already in this cohort are not offered.
+1. **Search by name…** among the organisation's patients. Patients already in this cohort are not offered.
 2. Check the enrolment preview (below), which shows how Medbot will tell the patient.
 3. Optionally add **Clinical notes**: referral letters, consult notes, discharge summaries. They are saved as the patient's **first encounter note** for this service, and their **patient context** is generated from it.
 4. Click **Add to cohort**.

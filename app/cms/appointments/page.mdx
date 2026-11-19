@@ -2,7 +2,7 @@ import { ImageZoom } from "nextra/components";
 
 # Appointments
 
-Appointments is the clinic's list of booked visits. Find it at **Operations → Appointments** (`/appointments`). Receptionists and Clinic Admins book, edit, and cancel appointments and answer booking requests from the patient portal. Doctors and nurses can look at the list but not change it.
+Appointments is the clinic's list of booked visits. Find it at **Appointments** (`/appointments`). Receptionists and Clinic Admins book, edit, and cancel appointments and answer booking requests from the patient portal. Every appointment is for one [service](/cms/services/appointments): the booking form and booking requests ask which. Doctors and nurses can look at the list but not change it.
 
 ## Who can do this
 
@@ -34,15 +34,14 @@ Times are always shown in Singapore time, whatever the time zone of your compute
 
 1. Select **New Appointment**.
 2. Search for the patient and select them. Their details appear below the search box.
-3. Choose the **Clinic location**, the **Date**, and the **Time**. Times run from 8:00 AM to 5:30 PM in half hour steps.
-4. Choose the **Duration**: 15, 30, 45, 60, or 90 minutes.
-5. Choose the **Practitioner**. Only doctors and nurses who can work at the chosen location are listed, doctors first. A nurse is shown with **(nurse-led visit)** after their name. See [Session Setup](/cms/session-setup) and [Nurse-led visits](#nurse-led-visits).
-6. Choose the **Service type**. You can also choose a **Reason** and add **Notes**.
-7. Select **Book appointment**.
+3. Choose the **Service**: one of your organisation's services that takes appointments (an inpatient service does not). With only one, it is chosen for you; with none, the form says "No service takes appointments yet".
+4. Choose the **Clinic location**, the **Date**, and the **Time**. Times run from 8:00 AM to 5:30 PM in half hour steps.
+5. Choose the **Duration**: 15, 30, 45, 60, or 90 minutes.
+6. Choose the **Practitioner**. Only doctors and nurses who can work at the chosen location are listed, doctors first. A nurse is shown with **(nurse-led visit)** after their name. See [Session Setup](/cms/session-setup) and [Nurse-led visits](#nurse-led-visits).
+7. Choose the **Service type**. You can also choose a **Reason** and add **Notes**.
+8. Select **Book appointment**.
 
 You return to the appointment list. The new appointment shows as **Booked**.
-
-> **Note:** The patient search box in the booking form currently lists only the first 20 patients of your organization. A patient beyond that cannot be found by name there.
 
 ### Nurse-led visits
 
@@ -61,7 +60,7 @@ A booking is refused when the patient or the practitioner already has an appoint
 
 ### Booking with the agent
 
-Select **Use agent** to book by describing the visit in words. The agent looks up the patient and the doctor and suggests a booking. A staff member reviews the suggestion and approves it before anything is booked.
+Select **Use agent** to book by describing the visit in words. The agent looks up the patient and the doctor and suggests a booking. A staff member reviews the suggestion, chooses the **Service** the appointment is for, and approves it before anything is booked.
 
 ## Responding to portal booking requests
 
@@ -69,7 +68,7 @@ Patients can ask for a visit from the [patient portal](/patient/visits). A reque
 
 1. Select **Booking requests**. The page counts the requests waiting.
 2. Read the **Requested date**, the **Time preference**, and the **Reason**.
-3. Under **Exact appointment time**, set the **Date**, **Time**, and **Duration**, and choose the **Assigned clinician**. As when booking, a nurse is listed with **(nurse-led visit)**.
+3. Under **Exact appointment time**, set the **Date**, **Time**, and **Duration**, and choose the **Assigned clinician**. Choose the **Service** too, unless the patient already asked about one (it is chosen for you) or your organisation has only one. A request to change the time of an existing appointment keeps that appointment's service. As when booking, a nurse is listed with **(nurse-led visit)**.
 4. Choose one of the answers below.
 
 | Answer | What it does |
@@ -86,7 +85,7 @@ What the patient sees: after **Counter-propose**, the patient's request shows **
 
 Select the three dot button at the end of an appointment row, then choose **Edit** or **Cancel appointment**.
 
-**Edit** opens a form with the **Date**, **Time**, **Duration**, **Practitioner**, **Service type**, **Reason**, and **Notes**. You cannot change the patient or the location. Select **Save changes**.
+**Edit** opens a form with the **Date**, **Time**, **Duration**, **Practitioner**, **Service type**, **Reason**, and **Notes**. You cannot change the patient, the location or the service: to move an appointment to another service, cancel it and book a new one. Select **Save changes**.
 
 <ImageZoom src="/images/cms/appointments/04-edit-appointment.png" alt="The Edit appointment form over the appointment list, showing date, time, duration, practitioner, service type, reason, and notes" />
 _Editing an appointment_

@@ -7,7 +7,7 @@ Terms used across the CMS documentation, each with one meaning. Where a term is 
 | **Organization** | A clinic's account: its staff, locations, and patients. The screen spells it **Organisation**. A person's role is set per organization. |
 | **Clinic location** | One physical site of an organization. Sessions, rooms, and the queue are scoped to one location at a time. |
 | **Member** | A person's place in one organization in one role. Someone with two roles in the same organization, such as Doctor and Clinic Admin, has two memberships. |
-| **Role** | Clinic Admin, Receptionist, Doctor, or Nurse, held per organization. A person can hold more than one role in an organization and works as one at a time, switching from the sidebar switcher or the **Working as** menu. See [Roles & Permissions](/cms/roles-and-permissions) and [Switching role](/cms/switching#switching-role). |
+| **Role** | Clinic Admin, Receptionist, Doctor, Nurse, Patient service associate, or Allied health professional, held per organization. A person can hold more than one role in an organization and works as one at a time, switching from the sidebar switcher or the **Working as** menu. See [Roles & Permissions](/cms/roles-and-permissions) and [Switching role](/cms/switching#switching-role). |
 | **Home tab** | The half of the sidebar with the Home assistant, care-service tasks and the organisation's administration. See [Home and CMS](/cms/overview#home-and-cms). |
 | **CMS tab** | The half of the sidebar with the current care service and clinic operations. A patient's chart opens here. See [Home and CMS](/cms/overview#home-and-cms). |
 | **Care service** | A programme of care the organisation runs, with its own referrals, workstation and care team. Its pages sit at the top of the CMS tab. See [Services](/cms/services). |
@@ -17,7 +17,13 @@ Terms used across the CMS documentation, each with one meaning. Where a term is 
 | **AI policy** | Which AI providers and regions the organisation's AI may use, and its default model. Set by a Clinic Admin. See [AI Policy](/cms/ai-policy). |
 | **Session** | A clinic location's working day: which staff are on duty and which rooms are open. Opened from [Session Setup](/cms/session-setup). |
 | **Shift** | One rostered block of work for one staff member. See [Rostering](/cms/rostering). |
-| **Queue ticket** | The number a checked-in patient is called by. See [Reception Queue](/cms/reception-queue). |
+| **Queue ticket** | The number a checked-in patient is called by. It carries the service's prefix, for example `DIA014`. See [Reception Queue](/cms/reception-queue). |
+| **Missed Queue** | The list of patients who were called and did not come, until they are returned to the queue or recorded as having left. See [The Missed Queue](/cms/reception-queue#the-missed-queue). |
+| **Requeue** | Putting a called patient who did not come back behind the next few patients ready to be seen. See [When a called patient does not come](/cms/reception-queue#when-a-called-patient-does-not-come). |
+| **Remark** | A short note on a queue row for other staff. Not part of the patient's record. See [Remarks](/cms/reception-queue#remarks). |
+| **Consult** | An encounter a member of staff leads, as opposed to an AI encounter. See [Starting a consult from the patient list](/cms/encounters#starting-a-consult-from-the-patient-list). |
+| **AI encounter** | A conversation an assistant has with a patient: history taking, health education or financial counselling. See [Starting an AI encounter](/cms/encounters#starting-an-ai-encounter). |
+| **Dosing rule** | The limits a clinic sets for dosing an oral liquid by the patient's weight. See [Dosing Rules](/cms/dosing-rules). |
 | **Stage** | Where a checked-in patient is in the visit: Nurse, Doctor, Investigations, Dispensary, or Completed. |
 | **Appointment** | A booked time slot for a patient. |
 | **Booking request** | A patient's request from the portal that is not yet an appointment. |
@@ -41,7 +47,7 @@ Terms used across the CMS documentation, each with one meaning. Where a term is 
 | **Lot** | A batch of stock received into inventory, with its own quantity and expiry. See [Inventory & Stock](/cms/inventory-and-stock). |
 | **Ping** | A short task or message sent to a staff member. See [Tasks & Staff Pings](/cms/tasks). |
 | **Task Inbox** | The care services' tasks waiting for you, such as plan approvals and patients' questions. At **Home → Tasks** (`/services/inbox`). Different from pings. See [The Task Inbox](/cms/tasks#the-task-inbox). |
-| **Note template** | Reusable note text, offered in every note editor's `/` menu and Templates panel. Managed at **Clinical → Templates** (`/templates`). See [Note templates](/cms/patient-notes#note-templates). |
+| **Note template** | Reusable note text, offered in every note editor's `/` menu and Templates panel. Managed at **Templates** (`/templates`). See [Note templates](/cms/patient-notes#note-templates). |
 | **Billable service** | A clinical procedure the clinic charges for, at **Billing → Billable services** (`/billable-services`). Not the same as a care service. See [Services & Consumables](/cms/services-and-consumables). |
 | **Patient portal** | A separate, patient-facing app where a clinic's patients manage their care. See [Patient Portal](/cms/patient-portal). |
 | **MCR, SNB** | Registration numbers for doctors (Medical Council) and nurses (Nursing Board), entered on the staff form. |
