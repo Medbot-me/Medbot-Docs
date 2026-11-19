@@ -12,11 +12,12 @@ If you have no clinic linked, the page says "You have no clinic linked, so nothi
 
 | Idea | What it means |
 | --- | --- |
-| **Urgent message** | A message Medbot's red-flag screen treats as an emergency. It always goes to your linked clinics, and you are told whether it did. This cannot be turned off. |
+| **Urgent message** | A message Medbot's red-flag screen treats as an emergency. Medbot tells the linked clinic that is treating you for this now, or else the clinics that look after this kind of problem, and you are told who was told. If you mention self-harm, every linked clinic is told. This cannot be turned off. |
 | **Concern** | Something Medbot noticed in your chat that a clinician should review, but that is not an emergency. On by default, per clinic. |
 | **Your chats** | How much of your Ask Medbot chats a clinic's doctors and nurses may read. **Nothing** by default. |
 | **Report** | Whether the topics of your chats are counted, with no names, in the clinic's report. Off by default. |
 | **Care program assistant** | Whether a clinic's care program assistant may see your whole record, not only what that clinic holds. Off by default. |
+| **Medical history** | Whether a clinic's doctors and nurses may see the conditions you entered in your [medical history](/patient/medical-history), and doctors may code or confirm them. Off by default. |
 | **Scanned results** | Lab reports you scanned yourself. Each one is shared only if you say so, and only with the clinics you choose. |
 
 Only doctors and nurses at the clinic can read what you share. Receptionists and clinic administrators cannot. Every time a doctor or nurse reads it, that is recorded.
@@ -60,6 +61,12 @@ Off unless you turn it on. A question the clinic answers this way may later be q
 
 Off unless you turn it on. It applies only to a clinic that runs a care program you are in.
 
+### Share my medical history
+
+> &lt;clinic&gt;'s doctors and nurses can see the conditions you entered, and doctors can code or confirm them. Every change is kept with who made it.
+
+Off unless you turn it on. When it is on, the clinic can review what you reported, and you see its review in your [medical history](/patient/medical-history#a-clinics-review). Turning it off stops the clinic seeing your history from now on. What the clinic already wrote in its own notes stays with the clinic, and any coding a doctor added stays on your entries, which you can change.
+
 ## Scanned results
 
 The **Scanned results** section lists the lab reports you scanned. See [Scanned Lab Reports](/patient/lab-reports).
@@ -72,7 +79,7 @@ Tick **Share with &lt;clinic&gt;?** under a report to share it. If sharing faile
 
 Each Ask Medbot conversation has a **Who can see this chat** card. It says, for each clinic, whether it sees nothing, a summary and its topics, or the chat and a summary, and from which date. It shows the summary the clinic can read, if one has been written.
 
-- Select **Don't share this chat** to keep that one chat from every clinic, whatever your clinic choices. A message in it that looks urgent still goes to your clinics.
+- Select **Don't share this chat** to keep that one chat from every clinic, whatever your clinic choices. A message in it that looks urgent is still treated as urgent, and the clinics that look after it are still told.
 - Select **Share this chat again** to undo it.
 - **Manage sharing** opens this page.
 

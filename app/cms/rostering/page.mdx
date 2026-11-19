@@ -2,7 +2,7 @@ import { ImageZoom } from "nextra/components";
 
 # Rostering
 
-The roster is the clinic's staff schedule. Find it at **Operations → Roster** (`/roster`). It is a week grid with one column for each day and one row for each role: **Doctors**, **Nurses**, and **Reception**. Receptionists and Clinic Admins build and change the week. Only a Clinic Admin can publish it.
+The roster is the clinic's staff schedule. Find it at **Roster** (`/roster`). It is a week grid with one column for each day and one row for each role: **Doctors**, **Nurses**, and **Reception**. Receptionists and Clinic Admins build and change the week. Only a Clinic Admin can publish it.
 
 ## Who can do this
 
@@ -22,8 +22,9 @@ Use the arrows to move between weeks, or select **Today**. Weeks start on Monday
 
 1. In a day's cell, select **Shift**.
 2. Check the **Date** and **Role**. Set the **Start time** and **End time**.
-3. Choose the **Session**: **Morning**, **Afternoon**, **Evening**, or **Full day**. You can add a **Label**, for example "Cover for Dr Tan".
-4. Select **Save**. A message says "Shift created".
+3. Choose the **Service** the shift is for (see [Which service a shift is for](#which-service-a-shift-is-for)).
+4. Choose the **Session**: **Morning**, **Afternoon**, **Evening**, or **Full day**. You can add a **Label**, for example "Cover for Dr Tan".
+5. Select **Save**. A message says "Shift created".
 
 The shift appears in the grid with its times, its session, and **Unassigned**. To put someone on it, select the swap icon (**Assign staff**), choose a **Staff member**, add a **Reason** if you like, and select **Assign**. The list only offers staff of the right role, so a Doctor shift lists only doctors. A person cannot be put on two shifts that overlap. Once a shift has someone on it, the same icon reads **Replace staff**, and the earlier names stay on the shift as a history.
 
@@ -34,11 +35,19 @@ _A week of shifts with staff assigned_
 
 ## Recurring shift patterns
 
-Select **New recurrence** to make a repeating pattern in one step. Tick the **Days of week**, set the **Start time**, **End time**, **Role**, and **Session**, and choose **Starting from** and **For how many weeks**. You can choose who to **Assign to** and add a **Label**. Select **Generate shifts**. Running the same pattern again is safe, because it skips the dates that already have shifts.
+Select **New recurrence** to make a repeating pattern in one step. Tick the **Days of week**, set the **Start time**, **End time**, **Role**, **Service** and **Session**, and choose **Starting from** and **For how many weeks**. You can choose who to **Assign to** and add a **Label**. Select **Generate shifts**. Running the same pattern again is safe, because it skips the dates that already have shifts.
 
 ## The roster assistant
 
 Some Medbot deployments show a **Roster assistant** box above the grid. It is not shown when the deployment has no assistant turned on. Type the change you want in plain words, for example "Dr Tan is working Thursdays 12 to 5pm for the next 4 weeks", and select **Preview**. The assistant lists what it would do and marks anything that deletes or cancels. Select **Apply** to run the changes, or **Discard** to drop them. Nothing changes until you select **Apply**.
+
+## Which service a shift is for
+
+A roster belongs to services. Every shift names the **Service** it is worked in, and a service's own roster (in the service's sidebar, for a service of any mode) shows its shifts. The organisation's **Roster** shows every service's shifts, each card naming its service. A new shift starts with the service whose roster you are on, or with your organisation's only service. A shift is placed at that service's location. Archived services and other organisations' services cannot be chosen.
+
+The front desk is the one exception. A shift for the **Receptionist** role can instead be **All services (front desk)**: one shift for a receptionist who works every service at a location, shown on each service's roster with an **All services** badge. Doctors and nurses always have a service, because the rotation and the Workstation's "my patients" depend on it. If an older all-services shift belongs to a clinician, it shows **All services** until you save a change to it, which asks for a service.
+
+The roster assistant follows the same rule: it gives a front-desk shift all services, and a clinician's shift your only service, or asks you to add it on the grid when there are several.
 
 ## Publishing a week (Clinic Admin only)
 

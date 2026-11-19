@@ -2,9 +2,9 @@
 
 > **Note:** Roles are set per organisation. A person can be a Clinic Admin at one clinic and a Nurse at another, or hold more than one role in the same clinic, such as Doctor and Clinic Admin. They work as one role at a time, chosen from the [sidebar switcher or the **Working as** menu](/cms/switching#switching-role), and every check below runs against that active role in the organisation they have currently chosen. Roles do not add up: to do a Clinic Admin task, switch to Clinic Admin. A Clinic Admin [previewing another role](/cms/switching#previewing-another-role) sees that role's navigation but keeps the Clinic Admin column below.
 
-Medbot CMS is built around four clinic roles, plus one internal account that is not a real clinic role. Every action re-checks the signed-in user's role before it reads or writes clinic data. What you see on a page only controls what is visible, so a role's real boundary is enforced at the action, not on the screen. When a role cannot do something, the control is hidden or disabled, and an action attempted anyway is refused.
+Medbot CMS is built around four main clinic roles, two further roles for counselling and allied health staff, and one internal account that is not a real clinic role. Every action re-checks the signed-in user's role before it reads or writes clinic data. What you see on a page only controls what is visible, so a role's real boundary is enforced at the action, not on the screen. When a role cannot do something, the control is hidden or disabled, and an action attempted anyway is refused.
 
-This page is the master list. Every **Who can do this** table on a feature page agrees with the matrix below.
+This page is the master list. Every **Who can do this** table on a feature page agrees with the matrix below. The matrix has a column for each of the four main roles. The two further roles are set out in [Patient service associate and Allied health professional](#patient-service-associate-and-allied-health-professional) and are not repeated in each row.
 
 ## The four clinic roles
 
@@ -13,6 +13,28 @@ This page is the master list. Every **Who can do this** table on a feature page 
 **Receptionist** runs the front desk. A Receptionist registers patients, updates contact details and communication consent, books and edits appointments, manages today's session setup, operates the reception queue, files and views diagnostic results, and views and prints existing patient documents. A Receptionist can build and adjust roster drafts, but only a Clinic Admin can publish a week.
 
 **Doctor** and **Nurse** read patient, practitioner, and appointment data through their clinical workflows. Both record and correct vitals, record vaccinations, view the formulary, and view and print patient documents. Both compose letters and memos, file and view diagnostic results, and draft result explanations for patients. A Doctor can additionally compose referrals, issue medical certificates, sign off, reassign, or withdraw results, and approve, send, or withdraw result explanations. A Nurse cannot. Neither role registers patients, books appointments, nor manages staff, sessions, the queue, the formulary, the results rota, or roster publishing.
+
+## Patient service associate and Allied health professional
+
+Two further roles can be given to staff from the [Staff](/cms/staff) page. Neither prescribes, orders, dispenses, manages inventory or submits claims.
+
+**Patient service associate** counsels patients, for example on their costs, and works the front desk's queue. A Patient service associate:
+
+- works the [reception queue](/cms/reception-queue) as a Receptionist does: checks patients in, adds walk-ins, calls patients, routes them, takes payments, and cancels and reopens appointments. They cannot open [Session Setup](/cms/session-setup) or mark a visit **Completed**
+- reads accounts and invoices on [Billing](/cms/billing), but does not create or change them, and does not see the catalog
+- opens and reads patient charts, starts and closes encounters, and writes and claims progress notes
+- leads **Financial counselling** consults
+- sees results, and reviews patients' requests to change their name or date of birth
+- does not register patients. That stays with Receptionists and Clinic Admins.
+
+**Allied health professional** is a dietitian, physiotherapist, pharmacist or health educator. The profession is chosen when the role is given, and shown beside it, for example "Allied health professional · Dietitian". An Allied health professional:
+
+- sees the whole location's queue, read-only, and can leave remarks on it
+- opens and reads patient charts, starts and closes encounters, and writes and claims progress notes
+- leads **Health education** consults, and the consult their profession names: **Diet counselling** for a dietitian, **Physiotherapy** for a physiotherapist and **Pharmacy counselling** for a pharmacist
+- sees results.
+
+A Doctor or Nurse can lead every consult kind. Both further roles can see the roster, and both open on a service's **Workstation**. They cannot write a consultation note, nurse note, referral, certificate, order or prescription, or dispense.
 
 ## The Superuser account
 
@@ -37,6 +59,10 @@ Each row is one task. A cell reads **Yes**, **View only**, or **No**. Notes belo
 | [Invite, review or revoke a patient's caregivers](/cms/patient-portal#caregiver-access) | Yes | Yes | Yes | Yes |
 | [See a patient's encounters](/cms/encounters) | Yes | Yes | Yes | Yes |
 | [Start an encounter](/cms/encounters) | Yes | No | Yes | Yes |
+| [Start a consult from the patient list](/cms/encounters#starting-a-consult-from-the-patient-list) | No | No | Yes | Yes |
+| [Open a patient's Medications page](/cms/prescribing) | Yes | No | Yes | Yes |
+| [Draft or amend a prescription, stop or repeat a medicine](/cms/prescribing#writing-a-prescription) | Yes | No | Yes | Yes |
+| [Sign a prescription](/cms/prescribing#signing) | Yes | No | Yes | Authorised nurses only |
 | [Read clinical notes](/cms/encounters) | Yes | Yes | Yes | Yes |
 | [Write a consultation note](/cms/encounters) | Yes | No | Yes | No |
 | [Write a progress note](/cms/encounters) | Yes | No | Yes | Yes |
@@ -123,15 +149,19 @@ A Doctor sees only the patients assigned to them in the queue; a Nurse sees ever
 | [Book with the agent](/cms/appointments) | Yes | Yes | No | No |
 | [Edit or cancel an appointment](/cms/appointments) | Yes | Yes | No | No |
 | [Answer a booking request](/cms/appointments) | Yes | Yes | No | No |
-| [See today's queue](/cms/reception-queue) | Yes | Yes | View only | View only |
+| [See today's queue](/cms/reception-queue) | Yes | Yes | Own patients | Yes |
 | [Check a patient in](/cms/reception-queue) | Yes | Yes | No | No |
 | [Call a patient to a room](/cms/reception-queue) | Yes | Yes | No | No |
 | [Route a patient to a stage](/cms/reception-queue#routing-a-patient) | Yes | Yes | No | No |
 | [Take payment, void a payment, or mark the visit paid](/cms/reception-queue#taking-payment) | Yes | Yes | No | No |
 | [Assign or change the doctor](/cms/reception-queue) | Yes | Yes | No | No |
+| [Add a walk-in to the queue](/cms/reception-queue#adding-a-walk-in) | Yes | Yes | No | No |
 | [Cancel an appointment, mark a no-show, or reopen](/cms/reception-queue) | Yes | Yes | No | No |
-| [Arrange a session for the patient](/cms/reception-queue) | No | No | Yes | No |
-| [Complete the visit and send the outcome](/cms/reception-queue) | No | No | Yes | No |
+| [Call a patient, use Did not come, return a patient from the Missed Queue](/cms/reception-queue#when-a-called-patient-does-not-come) | Yes | Yes | Own patients | Nurse-led visits they lead |
+| [Record that a patient left before finishing](/cms/reception-queue#when-a-patient-leaves) | Yes | Yes | No | No |
+| [Add or edit a queue remark](/cms/reception-queue#remarks) | Yes | Yes | Yes | Yes |
+| [Start an AI encounter from the queue](/cms/reception-queue#starting-an-ai-encounter-and-completing-the-visit) | No | No | Yes | Nurse-led visits they lead |
+| [Complete the visit and send the outcome](/cms/reception-queue#starting-an-ai-encounter-and-completing-the-visit) | No | No | Yes | Nurse-led visits they lead |
 | [Open today's session](/cms/session-setup) | Yes | Yes | No | No |
 | [Mark who is working today](/cms/session-setup) | Yes | Yes | No | No |
 | [Add and assign rooms](/cms/session-setup) | Yes | Yes | No | No |
@@ -150,7 +180,7 @@ A Doctor sees only the patients assigned to them in the queue; a Nurse sees ever
 | [Correct a record](/cms/attendance) | Yes | No | No | No |
 | [Export a timesheet](/cms/attendance) | Yes | No | No | No |
 
-A Doctor and a Nurse see the appointment list and the queue read only, and each sees a shorter view of their own work. Only a Clinic Admin can reopen or correct an attendance record, and never their own.
+A Doctor and a Nurse see the appointment list read only. In the queue, a Doctor sees their own patients and a Nurse sees every patient at the location. Each can call, requeue and return only the patients they lead, and cannot check patients in. Only a Clinic Admin can reopen or correct an attendance record, and never their own.
 
 ## Billing
 
@@ -203,6 +233,9 @@ The **Patient Care Summary** button is in the patient header for a Doctor only, 
 | [Add, edit, retire, or delete a medication](/cms/formulary) | Yes | No | No | No |
 | [See ingredients, ATC classes, and safety coverage](/cms/formulary#ingredients-and-atc-classes) | Yes | No | View only | View only |
 | [Re-enrich a medication or pick its ingredients by hand](/cms/formulary#picking-ingredients-by-hand) | Yes | No | No | No |
+| [Read the dosing rules](/cms/dosing-rules) | Yes | No | Yes | No |
+| [Create, edit, publish or retire a dosing rule, read the dose overrides log](/cms/dosing-rules#creating-a-rule-clinic-admin) | Yes | No | No | No |
+| [Keep your own version of a dosing rule](/cms/dosing-rules#your-own-version-doctor) | No | No | Yes | No |
 | [See inventory lots and the stock overview](/cms/inventory-and-stock) | Yes | No | Yes | Yes |
 | [Receive stock (log a delivery)](/cms/inventory-and-stock) | Yes | No | No | Yes |
 | [Adjust a lot's quantity](/cms/inventory-and-stock) | Yes | No | No | Yes |
@@ -215,6 +248,7 @@ The **Patient Care Summary** button is in the patient header for a Doctor only, 
 | --- | --- | --- | --- | --- |
 | [See the staff list](/cms/staff) | Yes | No | No | No |
 | [Add a staff member](/cms/staff) | Yes | No | No | No |
+| [Authorise a nurse to prescribe, or end it](/cms/staff#authorising-a-nurse-to-prescribe) | Yes | No | No | No |
 | [Change a role or registration number](/cms/staff) | Yes | No | No | No |
 | [Give a staff member another role](/cms/staff#giving-someone-another-role) | Yes | No | No | No |
 | [Deactivate or reactivate a staff member or one of their roles](/cms/staff#deactivating-and-reactivating) | Yes | No | No | No |

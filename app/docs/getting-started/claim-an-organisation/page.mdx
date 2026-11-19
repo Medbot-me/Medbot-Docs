@@ -21,7 +21,6 @@ Anyone signed in can make a claim. If your organisation is not listed, [create i
    - **Clinic or practitioner licence number**.
    - **Links that show your connection** (optional, up to five, one per line).
    - **Anything else we should know**.
-   - **Medplum**: choose **Our own Medplum project** (the default) or **Medbot hosts it for us**.
 5. Select **Submit claim**.
 
 <ImageZoom src="/images/docs/organisations/02-claim-form.png" alt="The claim form filled in for a listed clinic" />
@@ -43,10 +42,8 @@ While a claim is open you can select **Cancel claim**.
 
 ## Finish setup
 
-If you chose **Our own Medplum project**, a **Finish setup** card appears once the claim is **Verified**. Enter your Medplum **Client ID** and **Client secret**, and optionally the **Medplum base URL (optional)**, then select **Finish setup**.
+Once the claim is **Verified**, you are emailed and a **Finish setup** card appears on your claim: "Your claim is verified. Finish setup to bring your organisation onto Medbot with you as its first admin. Medbot keeps its health records for you; there is nothing else to enter." Select **Finish setup**. Medbot creates the organisation and its patient records store, and you become its first admin. A Medbot administrator can also create the organisation for you from the claim.
 
-If you chose **Medbot hosts it for us**, Medbot sets up the Medplum project and emails you when it is ready.
-
-<ImageZoom src="/images/docs/organisations/03-claim-status.png" alt="A verified claim for a Medbot-hosted organisation, waiting for Medbot to set up its Medplum project" />
+<ImageZoom src="/images/docs/organisations/03-claim-status.png" alt="A verified claim, with the Finish setup card" />
 
 When setup is complete, the page says the organisation is on Medbot. Select **Open it**: the **Organisations** page says "&lt;organisation&gt; is on Medbot, with you as its first admin." Select **Open it** there to start working in it in Medbot CMS.

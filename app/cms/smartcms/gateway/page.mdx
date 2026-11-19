@@ -193,7 +193,7 @@ The client itself never retries: each attempt needs a new `msgID`, and `SCG_03` 
 
 ### Domain events
 
-The CMS announces writes it makes straight to Medplum through `POST /domain-events` (for example `medbot/invoice.issued`, `medbot/immunization.recorded`, `medbot/referral.issued`); `apps/api` emits `visit.completed` itself. Each event has a `smartcms-on-*` Inngest function. Every handler first passes a shared gate: the organisation is in Singapore, subscribes to the handler's group, and, when the event names a location, that location is entitled in the configured environment. Handlers re-read the source record, so a forged event does nothing.
+The CMS announces writes it makes straight to the patient records store through `POST /domain-events` (for example `medbot/invoice.issued`, `medbot/immunization.recorded`, `medbot/referral.issued`); `apps/api` emits `visit.completed` itself. Each event has a `smartcms-on-*` Inngest function. Every handler first passes a shared gate: the organisation is in Singapore, subscribes to the handler's group, and, when the event names a location, that location is entitled in the configured environment. Handlers re-read the source record, so a forged event does nothing.
 
 ## Sequencing
 

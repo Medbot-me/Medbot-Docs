@@ -7,10 +7,15 @@ The **Visits** tab covers your visits from start to finish:
 - [past visits and their summaries](#visit-list-and-summaries)
 - [today's visit](#todays-visit): registering when you arrive and following the queue
 - [after your visit](#after-your-visit): the summary your clinician sends and the steps they arranged
-- [appointment requests](#appointment-requests) you send to the clinic
+
+Your appointments are on their own page, [Appointments](#appointments), which the Visits tab links to. It is also in the menu, under **Care**:
+
+- [upcoming appointments](#upcoming-appointments), with [cancel](#cancelling-an-appointment) and [change time](#changing-the-time)
+- [requests you send to the clinic](#booking-or-asking-for-an-appointment), and [where every request stands](#your-requests)
 - [appointments your clinic offers you](#offers-from-your-clinic)
 - [the check-in before an offered appointment](#pre-visit-check-in)
 - [telling Medbot about your visit](#telling-medbot-about-your-visit) before a booked one
+- [past and cancelled appointments](#past-and-cancelled-appointments), and [booking again](#book-again)
 
 ## Visit list and summaries
 
@@ -19,7 +24,7 @@ The **Visits** screen lists your completed visits, newest first. Each row shows 
 Above the list are two cards:
 
 - **Today's visit**, only on a day you have an appointment. See [Today's visit](#todays-visit).
-- **Appointment requests** ("Request a visit or respond to the clinic"). See [Appointment requests](#appointment-requests).
+- **Appointments** ("Upcoming appointments and your requests"). See [Appointments](#appointments).
 
 Opening a visit shows its **Visit summary**:
 
@@ -69,7 +74,7 @@ Below that, a step list shows how far through the visit you are. It starts with 
 
 ### Getting told when it is your turn
 
-While you wait, you can turn on **Notify me when it is my turn**. When reception calls you, you get a notification in the portal's bell and a text message (SMS): "It is your turn. Please proceed to" and the room.
+While you wait, you can turn on **Notify me when it is my turn**. When reception calls you, you get a notification in the portal and a text message (SMS): "It is your turn. Please proceed to" and the room.
 
 ### Sessions your clinician arranged
 
@@ -101,15 +106,73 @@ At the end of a consultation, the doctor may confirm further steps for you. For 
 
 The card disappears once nothing is left to do.
 
-## Appointment requests
+## Appointments
 
-Appointment requests have their own screen. Select the **Appointment requests** card on **Visits**. The **Visits** tab stays highlighted while you are there.
+**Appointments** is one place for every appointment and every request. Open it from the menu, under **Care**, or from the **Appointments** card on **Visits**. On **Home**, an **Appointments** card shows your next appointment and how many requests need your reply or are waiting on the clinic. It appears only when there is something to show. The **Visits** tab is not highlighted while you are on Appointments.
 
-The screen lists your requests. With none, it says "No appointment requests".
+The page has, in this order:
+
+1. **From your clinic**: links waiting for you to confirm, and appointments the clinic has offered. See [Offers from your clinic](#offers-from-your-clinic).
+2. **Upcoming**: your next appointments.
+3. **Before your visit**: questions to answer first. See [Before your visit](#before-your-visit).
+4. **Your requests**: every request you have made.
+5. **Past and cancelled**: the last year.
+
+The **Request an appointment** button at the top starts a new request.
+
+If Medbot could not reach one of your clinics, a notice says so: "We could not reach &lt;clinic&gt; just now, so some of your appointments may be missing."
+
+### Upcoming appointments
+
+**Upcoming** lists the appointments you have booked or the clinic has booked for you, at every clinic you are connected to and for your services. Each card shows the date, who you will see, the clinic or service and where, the reason, and a status: **Booked**, or **Change requested** if you have asked to move it. A follow-up after a visit says **Follow-up visit**. With none, it says "No upcoming appointments."
+
+### Cancelling an appointment
+
+Select **Cancel appointment** on a card. Confirm with **Cancel appointment** again, or choose **Keep appointment**. You can add a **Reason** ("Reason (optional)"). The clinic is told straight away and the time can be offered to someone else.
+
+You can cancel online until the clinic's cutoff, which the card shows: "You can cancel online until" a date and time. Each clinic sets its own cutoff, from 0 to 168 hours before the appointment, and 24 hours if it has not chosen. After it, the card says "Online cancellation has closed. To cancel, call the clinic on" the clinic's number. If you have already registered your arrival, the card says "Speak to the front desk to make any change."
+
+An appointment you booked with a service can be cancelled the same way, with a plain confirmation: "Cancel your appointment on" the date. A caregiver needs "Can make changes" access.
+
+### Changing the time
+
+Select **Change time** on a card. The page, **Change appointment time**, shows the current appointment.
+
+- **At a clinic.** Tell the clinic when suits you better: choose a **Preferred date** and **Time of day**, add a reason if you like, and select **Send request**. Your current appointment stays booked until the clinic confirms the new time. The card says "You asked to move this appointment. It stays booked until the clinic confirms a new time." The clinic can confirm, suggest another time, or decline. If it suggests one, you accept or decline it, as for any [proposed time](#responding-to-a-proposed-time).
+- **With a service.** Pick a new time from its open times, then select **Move appointment**. It moves as soon as you confirm.
+
+You can have one open change request for an appointment. If you cancel the appointment, or the clinic cancels it or marks it as missed, the request closes.
+
+### Past and cancelled appointments
+
+**Past and cancelled** lists the last year, newest first. Each shows how it ended: **Attended**, **Missed**, **Past**, **Cancelled by you** or **Cancelled by the clinic**. An appointment that is over with nothing recorded is **Past**, never **Missed**. For an attended visit, **Visit summary** opens it. With none, it says "No past or cancelled appointments in the last year."
+
+### Book again
+
+Select **Book again** on a past or cancelled appointment to ask for another one like it. The **Book again** page shows the **Previous appointment**.
+
+- **At a clinic**, it is a request like a [general appointment](#booking-or-asking-for-an-appointment): choose a preferred date and time of day, and the clinic confirms or suggests another time.
+- **With a service**, pick a time from its open times.
+
+Before booking again after a visit that was completed, Medbot checks whether you already have a follow-up. If you do, the page says **You may already have a follow-up booked** and names it: the follow-up linked to that visit, another appointment at the same clinic booked after it, or a request still waiting on the clinic. Choose **Change that appointment instead**, **Yes, I need another appointment**, or **Back to appointments**. If the check itself fails, the page says so, offers **Check again**, and still lets you ask for another appointment.
+
+### Your requests
+
+**Your requests** lists every request you have made and where it stands, so you do not have to remember where you sent it. Each row says its kind, its status, and when you asked. Under the list, a line explains each kind on show:
+
+| Kind | What it is |
+| --- | --- |
+| **Appointment request** | Sent to a clinic you are connected to, which confirms a time or suggests another. This also covers a **Change of time** and a **Book again** request. |
+| **Request to join a clinic** | Asks a clinic on Medbot to take you on. If it accepts, it offers you a time. See [Ask a clinic to see you](/patient/connected-clinics#ask-a-clinic-to-see-you). Its status is **Awaiting the clinic**, **Accepted** or **Declined**. |
+| **Contact request** | Medbot passes your details to a provider that is not on Medbot. They contact you directly, and no appointment is booked here. See [Find Care](/patient/find-care#ask-them-to-contact-you). This was called a referral request. |
+
+You can withdraw an appointment request the clinic has not yet answered, or a contact request that is still open: select **Withdraw**, and confirm "Withdraw this request?" with **Withdraw** or **Keep request**. Closed requests are hidden. Select **Show N closed requests** to see them. With nothing open, the list says "You have no open requests."
+
+A caregiver does not see the person's contact requests here, because they are the signed-in person's own.
 
 ### Booking or asking for an appointment
 
-Select **New request**. The **Request an appointment** form starts with **Clinic**. Pick one of your connected clinics ("Select a clinic").
+Select **Request an appointment** (or **New request**). The **Request an appointment** form starts with **Clinic**. Pick one of your connected clinics ("Select a clinic").
 
 If you are enrolled in services at that clinic, a **Book with** choice appears. Pick **General appointment (clinic confirms)** or one of your services.
 
@@ -124,25 +187,23 @@ If you are enrolled in services at that clinic, a **Book with** choice appears. 
 
 Select **Submit request**. This is a request, not a confirmed booking. The clinic will answer in the portal.
 
-### Booked with your services
-
-Appointments you booked yourself with a service are listed on **Appointment requests** under **Booked with your services**. Each shows the service, the date and time, who you will see, and a **Confirmed** badge. To cancel, select **Cancel**, then **Cancel appointment** (or **Keep it**). A caregiver needs "Can make changes" access to cancel.
+You can also ask [Ask Medbot](/patient/ask-medbot#book-change-or-cancel-an-appointment) to take you to this form.
 
 ### Before your visit
 
-If a service you booked asks questions first, a **Before your visit** section on this screen has **Start** or **Continue**. See [Telling Medbot about your visit](#telling-medbot-about-your-visit). Do not confuse it with the five-question [check-in](#pre-visit-check-in) that has the same title.
+If a service you booked asks questions first, a **Before your visit** section on this page has **Start** or **Continue**. See [Telling Medbot about your visit](#telling-medbot-about-your-visit). Do not confuse it with the five-question [check-in](#pre-visit-check-in) that has the same title.
 
 ### What happens to a general request
 
 A general request does not book anything until the clinic answers.
 
-Staff review it from the CMS's [Appointments → Booking requests](/cms/appointments#responding-to-portal-booking-requests) screen. Each request shows where it stands:
+Staff review it from the CMS's [Appointments → Booking requests](/cms/appointments#responding-to-portal-booking-requests) screen, where a request to change a time or to book again is labelled as such. Each request shows where it stands:
 
 | Status | What it means |
 | --- | --- |
 | **Awaiting the clinic** | Submitted. Staff have not reviewed it yet. |
 | **Clinic proposed a new time** | Staff suggested a different time. You need to respond. |
-| **Confirmed** | Accepted. A real appointment now exists. |
+| **Confirmed** | Accepted. A real appointment now exists. For a change of time, the original appointment moves to the new time. |
 | **Declined** | Staff turned the request down. |
 | **You declined the proposed time** | You turned down the clinic's suggested time. |
 | **Expired** | The request lapsed without an answer. |
@@ -152,16 +213,18 @@ Staff review it from the CMS's [Appointments → Booking requests](/cms/appointm
 
 When staff suggest a different time, the request shows "The clinic proposed" and the date and time, with any note from the clinic. Select **Accept proposed time** or **Decline proposed time**. Accepting creates the appointment at the clinic. Declining closes the request without one.
 
-### Changing an upcoming appointment
+### A reminder's change link
 
-A reminder from your care program may include a link to change your appointment. It opens **Appointment requests** with a card: "Need to change an upcoming appointment?"
+A reminder from your care program may include a link to change your appointment. It opens **Appointments** with a card: "Need to change an upcoming appointment?"
 
 - **Ask about changing it** asks Medbot for you.
 - **Request a new time** opens the request form.
 
+To change a particular appointment, use **Change time** on its card.
+
 ## Offers from your clinic
 
-Some services, such as a specialist referral, offer you an appointment instead of waiting for you to ask. Offers appear on **Appointment requests** under **From your clinic**.
+Some services, such as a specialist referral, offer you an appointment instead of waiting for you to ask. Offers appear on **Appointments** under **From your clinic**.
 
 The clinic tells you about an offer by SMS or WhatsApp. That message only carries a link. The date, time and place are only shown in the portal. Home also shows a card, for example "Sunrise Diabetes Service has offered you an appointment" with an **Open** button.
 
@@ -217,7 +280,7 @@ A note on the screen reminds you that this is a quick check, not a diagnosis. If
 
 Select **Send to my care team**. You see "Thank you, your answers were sent". Your doctor reads them before the visit.
 
-If you have not answered, you get a reminder message about 3 days before the visit, and another about 2 days before. Its link opens **Appointment requests**. If you still have not answered a day before the visit, clinic staff are asked to contact you by phone. You can still answer in the portal until the visit.
+If you have not answered, you get a reminder message about 3 days before the visit, and another about 2 days before. Its link opens **Appointments**. If you still have not answered a day before the visit, clinic staff are asked to contact you by phone. You can still answer in the portal until the visit.
 
 If an answer is not accepted, the screen tells you why:
 
@@ -239,17 +302,17 @@ A [caregiver](/patient/caregivers) sees the same Visits screens for the person t
 | See the queue tracker | Yes | Yes |
 | Turn on **Notify me when it is my turn** | No | Yes |
 | Register when you arrive | No | Yes |
-| Book with a service, or cancel a booking | No | Yes |
-| Make an appointment request, or accept or decline a proposed time | No | Yes |
+| Book with a service, or cancel a booking or appointment | No | Yes |
+| Make an appointment request, ask to change a time or book again, or accept or decline a proposed time | No | Yes |
 | Answer an offer from the clinic | No | Yes |
 | Fill in a pre-visit check-in | No | Yes |
 | Confirm a link to a clinic | No | No, only the patient |
 
 ## Notifications
 
-Visits sends these notifications to the bell on Home:
+Visits sends these notifications to the [Notifications](/patient/notifications) tab:
 
 - **It is your turn**, if you turned on **Notify me when it is my turn**
 - **Your visit summary is ready**
 
-For the full list, see [Home screen and notifications](/patient/ask-medbot#home-screen-and-notifications).
+For the full list, see [Notifications](/patient/notifications).

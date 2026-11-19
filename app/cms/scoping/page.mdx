@@ -6,8 +6,8 @@
 
 | Store | Holds | How organisations are separated |
 | --- | --- | --- |
-| **Medplum** (per organisation) | The clinical record: patients, practitioners, appointments, encounters, observations, immunisations, documents | A different Medplum server per organisation. Not a shared store with a filter on it. |
-| **Postgres** (shared) | Operational state Medplum does not model: queue tickets, clinic sessions, visits, rosters and attendance, locations and rooms, displays, inventory, order sets, booking requests, clinic-inbox threads, notes claimed onto a patient chart, SMS/WhatsApp channel links, SmartCMS entitlements, claims queue and message logs | One database, every row carrying the organisation it belongs to — directly, or through its location or parent row |
+| **Patient records store** (per organisation) | The clinical record: patients, practitioners, appointments, encounters, observations, immunisations, documents | Medbot's own FHIR store keeps each organisation in a **tenant of its own**. A request is made with a credential bound to one tenant, and the store refuses to read or write another's rows. Not a shared table with a filter on it. |
+| **Postgres** (shared) | Operational state the records store does not hold: queue tickets, clinic sessions, visits, rosters and attendance, locations and rooms, displays, inventory, order sets, booking requests, clinic-inbox threads, notes claimed onto a patient chart, SMS/WhatsApp channel links, SmartCMS entitlements, claims queue and message logs | One database, every row carrying the organisation it belongs to — directly, or through its location or parent row |
 
 ## Which organisation a request is for
 
@@ -15,14 +15,13 @@ The organisation a page renders is the one chosen on the [welcome screen](/cms/s
 
 ## Clinical data: the FHIR proxy
 
-The CMS never talks to Medplum directly. Every clinical read and write goes to the backend, which forwards it to **that organisation's** Medplum using credentials only it holds.
+The CMS never talks to the patient records store directly. Every clinical read and write goes to the backend, which forwards it to **that organisation's** tenant of the store using credentials only it holds.
 
 What this means in practice:
 
-- No Medplum client id or secret exists in any CMS environment variable, and the browser never sees a Medplum token.
-- Rotating an organisation's [credentials](/cms/medplum-credentials) takes effect immediately across every clinical screen.
-- A request for an organisation you are not an active member of does not reach Medplum at all.
-- Bulk data export (`$export`) is refused through the proxy.
+- No records-store credential exists in any CMS environment variable, and the browser never sees one. Nobody enters or rotates credentials per organisation: an organisation's tenant is made with the organisation, and an administrator has nothing to configure.
+- A request for an organisation you are not an active member of does not reach the records store at all.
+- Only two operations pass the proxy beyond ordinary reads and writes: a patient's full record (`$everything`) and pricing a catalogue item (`$apply`, which the backend answers itself). Bulk data export (`$export`) and every other operation is refused.
 
 Every active clinic role may pass the proxy. The per-feature role rules — who may issue a medical certificate, who may acknowledge a result — are enforced by the CMS's own checks before the request ever gets there, not by the proxy.
 
@@ -35,7 +34,7 @@ Consequences worth knowing:
 - **A location belongs to one organisation.** Naming a location from another organisation is rejected rather than quietly accepted.
 - **"Clinic-wide" means this clinic.** Listing clinic-wide order sets is filtered to the caller's organisation — a bare visibility check on a shared table would otherwise leak one clinic's sets into another's.
 - **Doctor eligibility in the queue** means an active `doctor` member *of this organisation*.
-- **Scheduled jobs**, like end-of-day attendance finalisation, run per organisation over each one's own locations and its own Medplum.
+- **Scheduled jobs**, like end-of-day attendance finalisation, run per organisation over each one's own locations and its own records.
 - **Rosters and sessions check the organisation on every write.** A shift, a session's staff, or a room can only be created or changed at a location of your own organisation, with your own organisation's members.
 - **Stock, lots, and medication and vaccination movements** carry the organisation directly, and a request body can never set a record's organisation or its acting member.
 - **A note claimed onto a patient chart** belongs to the organisation that claimed it.

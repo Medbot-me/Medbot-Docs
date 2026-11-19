@@ -6,7 +6,7 @@ A **Service** is a named care pathway run by an organisation in Medbot CMS. It i
 
 Examples of a service: "Colorectal SOC: Referral to Discharge", "Post-op Cardiac Rehab", "Diabetes Management: Primary Care".
 
-> **Services were called Care Programs.** The feature was renamed and reworked: services now use the organisation's own roles instead of care roles, and patients come from the organisation's Medplum directory. See [What changed](#what-changed-from-care-programs).
+> **Services were called Care Programs.** The feature was renamed and reworked: services now use the organisation's own roles instead of care roles, and patients come from the organisation's patient directory. See [What changed](#what-changed-from-care-programs).
 
 > **Services are in Medbot CMS.** Services, their Workstation, referrals, the Task Inbox and the kiosk used to be in the Medbot web app and are now in Medbot CMS. Old web app links to them redirect to the CMS, and a kiosk keeps its URLs.
 
@@ -28,7 +28,7 @@ Services belong to an organisation. In Medbot CMS:
 | **Mode of care** | How the service delivers care: **Outpatient**, **Inpatient**, **Remote** or **Hybrid**. It decides what the Workstation shows. See [Modes of Care](/cms/services/modes-of-care). |
 | **Care team** | The organisation members who staff the service. Each joins with the role or roles they already hold in the organisation (Admin, Doctor, Nurse, Receptionist). There are no service-specific roles. |
 | **Coverage** | Who is covering a role right now (for a rota with leave), so Medbot can notify "whoever is the covering Nurse today" rather than a named person. |
-| **Cohort** | The patients enrolled in this service, taken from the organisation's Medplum patient directory. A patient can be in several services' cohorts. |
+| **Cohort** | The patients enrolled in this service, taken from the organisation's patient directory. A patient can be in several services' cohorts. |
 | **SOP and Instructions** | Plain-language description of how the service runs, who does what and when to escalate. Medbot turns it into the agent context every agent run is given. |
 | **Content library** | Reference material and counselling protocols the service's agents and AI encounters can draw on. |
 | **Service agent** | An AI agent scoped to this service, with an **audience** (Staff, Patient or Onboarding), tools and markdown instructions. Every service starts with four default agents. |
@@ -70,7 +70,7 @@ Anyone else gets "not found". The owner edits the service's details, finishes it
 | Six default care roles (Consultant, Clinic nurse, PSA, Dietitian, Care coordinator, Pharmacist) and a special `Patient` role, managed per program | No service roles. Each care team member's roles are their organisation roles. |
 | Agents scoped to a care role | Agents have an **audience**: Staff, Patient or Onboarding. |
 | **Workflow** tab and wizard step | **SOP and Instructions** (wizard step 2, and a card on **Overview**). |
-| Platform-wide patient directory with add/edit/delete | The organisation's Medplum patients, registered in Medbot CMS. |
+| Platform-wide patient directory with add/edit/delete | The organisation's patients, registered in Medbot CMS. |
 | Welcome message authored in the Content Library | A single enrolment notice sent by Medbot, with an optional note from the care team. |
 | Patient agent over SMS and WhatsApp | Patient agent in the patient portal. SMS and WhatsApp only notify. |
 | Freeform "Other skills" on agents | Removed. Old tags show as **Legacy tag** badges. |

@@ -2,7 +2,9 @@ import { ImageZoom } from "nextra/components";
 
 # Ask Medbot
 
-The Ask Medbot box ("Ask Medbot about your health…") is on **Home**, the portal's landing tab. Home also has the **Log something** menu, a list of your readings, and cards for anything the clinic is waiting on. See [Home screen and notifications](#home-screen-and-notifications).
+The Ask Medbot box ("Ask Medbot, or tell it what to log…") is on **Home**, the portal's landing tab. It is also on the Ask Medbot screen, and on the **Chats** tab until you have a chat. Home also has your plan's goals for today, your latest entries, the **Log something** menu, and cards for anything the clinic is waiting on. See [Home screen](#home-screen).
+
+Under the box, a line says what you can do: "Ask a question, book an appointment, or say what you ate, felt or measured."
 
 Ask Medbot works with or without a clinic. It reads your own record and can explain general health terms. It does not diagnose you or advise you on your medicines, and it can make mistakes.
 
@@ -67,12 +69,23 @@ A report is not a way to ask for urgent help. Its words are deleted when the con
 Each question starts a **conversation** that is saved, so the patient can ask follow-ups ("Ask a follow-up…") and come back to it later. Answers come back whole, not word by word.
 
 - **Recent conversations** on the Ask Medbot screen (`/ask`) lists past conversations, titled from their first question.
-- On Home, **Continue asking** reopens the latest conversation in place of the try-asking suggestions.
-- The Messages hub shows the three most recent conversations, with **See all**.
+- On Home, select the Ask box and your two latest conversations show under it, with **See all**.
+- The [Chats](/patient/messages) tab shows the three most recent conversations, with **See all**.
 - **Delete conversation** in a conversation's header removes it. Conversations are deleted automatically after 180 days.
 - Each conversation has a **Who can see this chat** card, saying what each of your clinics can read of it. Select **Don't share this chat** to keep it from every clinic. See [One chat at a time](/patient/clinic-sharing#one-chat-at-a-time).
 
 A caregiver sees your conversations only if you turned on their **AI chats** switch. See [Choosing what they can see](/patient/caregivers#choosing-what-they-can-see).
+
+## Starter badges
+
+Under the Ask Medbot box, a row of badges under **Try asking** starts something in one tap. On Home they appear while the box has focus and go away when you tap elsewhere. On the Ask Medbot screen they are always showing. They are:
+
+- **Write what I ate**: starts the box with "I ate " for you to finish. Medbot then turns it into a meal entry. See [Log something by telling Medbot](#log-something-by-telling-medbot).
+- **Photo of what I ate**: opens your camera and turns the photo into a meal entry.
+- **Build a health plan**, when you have no plan in use. It starts the [plan builder](/patient/health-plan) in a chat. With a plan in use it is **Health plan check-in** instead, which opens your plan's check-in. If Medbot cannot tell whether you have a plan, neither is shown.
+- **Last blood test** ("What did my last blood test show?") and **Next appointment** ("When is my next appointment?"): ask Medbot that question.
+
+A caregiver who cannot make changes, or who is not shown your health log, sees the question badges only.
 
 ## Send a photo or a file
 
@@ -80,7 +93,7 @@ You can send Medbot a photo or a file as well as a question. Select the paper cl
 
 If you typed a question, Medbot answers it first. Then it deals with the file:
 
-- **A photo of a reading or a meal.** For example, a blood pressure monitor, an oximeter, a thermometer, a food label, your plate or a watch screen. Medbot reads it into a card headed "Medbot read these from your photo". The card holds the same form as the [Health Log](/patient/health-log), already filled in. Check each number against your device, correct anything wrong, then save. Nothing is saved until you do. Calories read from a meal photo are only an estimate. Select **Don't save** if you do not want it. Once saved, the card says **Saved to your log**, and the entry shows **From photo** in your log.
+- **A photo of a reading or a meal.** For example, a blood pressure monitor, an oximeter, a thermometer, a food label, your plate or a watch screen. Medbot reads it into a card headed "Medbot read these from your photo". The card holds the same form as the [Health Log](/patient/health-log), already filled in. Check each number against your device, correct anything wrong, then save. A photo of a meal gets a card headed "Medbot estimated this meal from your photo": one line per food or drink, each marked **Estimate**. Change anything you know better. Nothing is saved until you do. Select **Don't save** if you do not want it. Once saved, the card says **Saved to your log**, and the entry shows **From photo** in your log.
 - **A PDF, or a photo of a letter or report.** Medbot keeps it in your health record as a document and reads it in the background. A document card shows "Reading this document…", then how many items it found, or that it could not read it. Select the card to review what it found on the [Documents step](/patient/medical-history#step-3-documents) of your medical history. Nothing is added to your record until you approve it there. A lab report's values are checked on their own screen first. See [Scanned Lab Reports](/patient/lab-reports).
 
 The photo of a reading or a meal is read once and **not kept**. The conversation shows that you sent a photo, but not the photo itself. A document you send is kept.
@@ -96,18 +109,45 @@ If your message raises a red flag, Medbot answers with the emergency advice belo
 | "You have sent a lot of photos in the last hour. Try again later." | You can send up to 15 photos and files an hour. |
 | "You cannot add to this record." | You are a caregiver with read-only access. |
 
+## Log something by telling Medbot
+
+You can log in your own words, without opening the **Log** tab. On Home, type what you ate, felt, measured or did into the Ask Medbot box, for example "Chicken rice for lunch" or "BP 128/82". Medbot first checks whether the words read like something to log. If they do, a card appears under the box, headed "Medbot drafted a diet entry" (or a vitals, symptom or exercise entry): "Check it before saving. Nothing is saved until you do." The card shows the entry as lines you can read. Each has a label **From your words**, and a meal's numbers are marked **Estimated**.
+
+- **Save to health log** saves it. The card then says **Saved to your health log**, with **See your log**.
+- **Edit**, or **Check and save** when Medbot could not fill in everything, opens the same form as the [Health Log](/patient/health-log), already filled in.
+- **Discard draft** throws it away. Nothing is saved.
+- **Ask about this instead** sends your words as a question.
+
+If the words are not something to log, Medbot answers them as a question, as before. A photo of a meal from the **Photo of what I ate** badge gives the same card, marked **From photo**. If your words raise a red flag, Medbot answers with the emergency advice and logs nothing. See [Red-flag screening](#red-flag-screening).
+
+The same works on the Ask Medbot screen. In the [Health Log](/patient/health-log#log-something), **Log something** does the same thing from its own box. A caregiver who cannot make changes, or who is not shown the health log, cannot log from the box.
+
+## Book, change or cancel an appointment
+
+Ask Medbot books nothing itself. If you ask it to book an appointment, it says to tap **Request an appointment** below, and the answer carries that button. It opens the [request form](/patient/visits#booking-or-asking-for-an-appointment). If you ask to change or cancel an appointment, the answer carries an **Appointments** button, which opens your [appointments](/patient/visits#appointments), where each has **Cancel appointment** and **Change time**.
+
 ## Red-flag screening
 
 Before anything else, every message is checked for warning signs of an emergency, such as chest pain, signs of a stroke, a seizure, a baby with a fever, or poisoning. The check runs in English, Chinese, Malay and Tamil on every message, whatever your language, including mixed-language messages.
 
 A message that trips it is **not** answered as a normal question. Instead you get set emergency advice in your language, telling you to call 995 or get care now. Thoughts of self-harm get their own reply. An answer to a red flag never reads a photo or file you sent with it.
 
-With a clinic linked, Medbot tries to alert your clinics first, then the banner tells you what happened:
+With a clinic linked, Medbot tries to alert a clinic that should know, then the banner tells you what happened:
 
 - "This looked urgent. We've let your care team know."
 - "This looks urgent. No one has been alerted for you." With no clinic linked, nobody is ever alerted.
 
-The emergency reply still appears if something else goes wrong, for example if the conversation could not be saved. Urgent messages always go to your linked clinics. You cannot turn this off, even for a chat you chose not to share.
+Medbot does not alert every linked clinic. It alerts the linked clinic that is treating you for this now, if there is one. Otherwise it alerts the linked clinics with a service that looks after this kind of problem. A service says what it looks after in its own settings. If no linked clinic fits, no one is alerted. Thoughts of self-harm are the exception: every linked clinic is told.
+
+Under the emergency reply, a card says exactly what happened:
+
+- **Medbot told &lt;clinics&gt;**, with why: "You're having care with them for this now." or "They look after this kind of problem, and you're linked to them." It adds "They get a short note about this answer and your phone number, not this chat." If nobody is watching for alerts there right now, it says "No one is watching for alerts there right now. Don't wait for them to call." Otherwise it says "This isn't monitored around the clock. Don't wait for them to call."
+- **No one has been alerted for you**: "Medbot didn't find a linked clinic that looks after this kind of problem. Call 995 or go to an emergency department yourself."
+- For self-harm, **Medbot let your linked clinics know**.
+
+Emergency wording that Medbot's administrators have reviewed and approved may replace the advice sentence. The lines saying who was told, and that Medbot is an automated assistant, are always Medbot's own.
+
+The emergency reply still appears if something else goes wrong, for example if the conversation could not be saved. You cannot turn alerting off, even for a chat you chose not to share.
 
 The portal is not an emergency service. This check exists to get you to a person quickly, not to triage you.
 

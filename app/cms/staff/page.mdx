@@ -10,6 +10,7 @@ The staff page is where a Clinic Admin adds the people who work in the organizat
 | Add a staff member | Yes | No | No | No |
 | Change a role or registration number | Yes | No | No | No |
 | Give a staff member another role | Yes | No | No | No |
+| Authorise a nurse to prescribe, or end the authorisation | Yes | No | No | No |
 | Deactivate or reactivate a staff member or one of their roles | Yes | No | No | No |
 
 A [physician family organisation](/cms/physician-family-organisation) has no other staff: **Staff** is not in its sidebar. Other roles do not see **Staff** in the sidebar. If they open the address directly, the page says the action requires the admin role. Someone who is a Clinic Admin and also holds another role must be [working as Clinic Admin](/cms/switching#switching-role) to use this page.
@@ -18,7 +19,7 @@ A [physician family organisation](/cms/physician-family-organisation) has no oth
 
 1. Select **Add Staff**. The **Add staff** shortcut on a service's home page (`/staff?add=1`) opens the same form directly.
 2. Enter the person's **Email**, **First name**, and **Last name**.
-3. Choose a **Role**: **Clinic Admin**, **Doctor**, **Receptionist**, or **Nurse**.
+3. Choose a **Role**: **Clinic Admin**, **Doctor**, **Receptionist**, **Nurse**, **Patient service associate**, or **Allied health professional**. For an Allied health professional, a **Profession** list appears: choose **Dietitian**, **Physiotherapist**, **Pharmacist** or **Health educator**. It is required for that role and does not appear for any other. See [Patient service associate and Allied health professional](/cms/roles-and-permissions#patient-service-associate-and-allied-health-professional).
 4. For a Doctor, enter the **Medical License Number** (the MCR number, for example `M12345A`). For a Nurse, enter the **Nursing Registration Number** (the SNB number, for example `N123456`). Both are required for those roles. The number is checked as you type and is shown in capital letters without spaces.
 5. Select **Add staff**. A **Staff added** message confirms it.
 
@@ -36,7 +37,7 @@ To let someone in with a join code instead, see [Join an Organization](/cms/join
 
 ## The staff list
 
-The table shows each person's **Name**, **Email**, **Role**, **License** (the registration number for a Doctor or Nurse role, or a dash), and **Status** (**Active** or **Deactivated**). A person who was invited but has not yet joined is listed under the name they were added with, or as "Invited" when no name was recorded.
+The table shows each person's **Name**, **Email**, **Role** (an Allied health professional's profession follows it, for example "Allied health professional · Dietitian", and a nurse an administrator has authorised to prescribe carries a **Prescriber** badge), **License** (the registration number for a Doctor or Nurse role, or a dash), and **Status** (**Active** or **Deactivated**). A person who was invited but has not yet joined is listed under the name they were added with, or as "Invited" when no name was recorded.
 
 A person who holds more than one role has **one row per role**. The rows are sorted by name, so a person's roles sit together, with the role they were given first at the top. Each row has its own license, status, and actions menu: you change, deactivate, or reactivate one role at a time.
 
@@ -70,9 +71,23 @@ Open the actions menu on the row of the role you want to change.
   - If the change would drop a registration number, the dialog warns you before you save, for example: "Changing &lt;name&gt; to Clinic Admin removes their Medical License Number from this role and from their practitioner record, because Clinic Admin carries no registration number. If &lt;name&gt; should keep working as a Doctor, use "Add another role" instead of changing this one."
 - **Edit registration** corrects the registration number. It appears only for roles that carry one.
 
+Choosing **Allied health professional** in **Edit role** or **Add another role** asks for the **Profession**. Changing a person's role away from Allied health professional clears their profession, and a change of profession is recorded with their role history.
+
 To keep the person's current role and add a new one, use **Add another role**, not **Edit role**.
 
 A changed role applies everywhere in this organization from the person's next page load. A person's roles in one organization do not affect their roles in another.
+
+## Authorising a nurse to prescribe
+
+Only a doctor or a Clinic Admin can sign a prescription. A nurse who is qualified to prescribe, for example an advanced practice nurse, can be authorised by a Clinic Admin.
+
+1. Open the actions menu on the nurse's row and select **Authorise to prescribe**.
+2. Read the confirmation, "Authorise &lt;name&gt; to prescribe?" The nurse can then sign prescriptions, override a medication alert with a reason, and close a visit that dispenses, as a doctor does. The authorisation is recorded with your name and the time, and added to their practitioner record. Do this only for a nurse who is qualified to prescribe.
+3. Select **Authorise to prescribe**. The row shows a **Prescriber** badge.
+
+To end it, select **End authorisation to prescribe** on the same row and confirm. The nurse can no longer sign prescriptions. Their drafts stay, and go to a prescriber for review.
+
+The menu item is greyed out, with the reason, for a nurse who is deactivated ("Reactivate them first.") or who has no practitioner record yet ("They need a practitioner record first: what they sign names it."). Without the authorisation a nurse can still draft prescriptions and leave them for a prescriber. See [Prescribing & Medications](/cms/prescribing).
 
 ## Deactivating and reactivating
 

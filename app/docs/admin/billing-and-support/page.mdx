@@ -1,6 +1,6 @@
 # Billing & Support
 
-> **For Medbot platform administrators only.** Billing accounts and physician verifications are for superadmins; support requests and bug reports are for every platform administrator. For what customers see, read [Plans & Billing](/docs/plans-and-billing).
+> **For Medbot platform administrators only.** Billing accounts are for superadmins; support requests and bug reports are for every platform administrator. Physician verifications and organisation features are in the [platform admin panel in Medbot CMS](/cms/platform-administration): every administrator can read them, and superadmins decide and switch. For what customers see, read [Plans & Billing](/docs/plans-and-billing).
 
 ## Billing accounts
 
@@ -37,11 +37,11 @@ Legacy accounts are moved to a current plan with a script run by the Medbot team
 
 ## Physician verifications
 
-**Physician verifications** (`/admin/physician-verifications`): "Doctors who want a physician family organisation. Check each MCR number and name against the SMC register before verifying it."
+**Physician verifications** (in Medbot CMS, under **Requests**, at `/admin/requests/physician-verifications`; the old address in the Medbot app redirects there): "Doctors who want a physician family organisation. Check each MCR number and name against the SMC register before verifying it."
 
 1. Choose a status tab: **Pending** (the default), **Verified**, **Rejected** or **Revoked**.
 2. Each row shows the **Person**, their **MCR**, the **Status** and when it was **Submitted**. **Search the SMC register** opens the register's search page.
-3. For a pending request, select **Verify** or **Reject**. For a verified one, **Revoke**. Rejecting and revoking ask for a **Note**: "Say why, so they know what to fix. They are shown this note."
+3. For a pending request, select **Verify** or **Reject**. For a verified one, **Revoke**. Platform admins can read the queue and prepare; only a superadmin decides. Rejecting and revoking ask for a **Note**: "Say why, so they know what to fix. They are shown this note."
 
 A verified doctor can then create their [physician family organisation](/cms/physician-family-organisation). Revoking stops them creating one.
 
@@ -57,13 +57,13 @@ Each request is also emailed to the support inbox with its plan and priority, an
 
 ## Bug reports
 
-**Bug Reports** now have a status: **New**, **Triaged**, **In progress**, **Resolved** or **Won't fix**. Filter the list by status. On a report, set the status and an admin note: "Resolved or Won't fix records when it was closed; reopening clears it. The reporter never sees the note."
+**Bug Reports**, here and in the CMS panel's **Bug reports**, have a status: **New**, **Triaged**, **In progress**, **Resolved** or **Won't fix**. Filter the list by status. On a report, set the status and an admin note: "Resolved or Won't fix records when it was closed; reopening clears it. The reporter never sees the note."
 
 Deleting a report asks "Delete this bug report?" first: the report and its screenshot are removed for good. To keep it on record, mark it resolved instead.
 
 ## Organisation features
 
-An organisation's page under **Organisations** has a **Features** card: "Switched per organisation, for Enterprise pilots. The clinic sees these, read-only, in its CMS settings."
+An organisation's page under **Organisations** in the [platform admin panel in Medbot CMS](/cms/platform-administration#organisations) has a **Features** card: "Switched per organisation, for Enterprise pilots. The clinic sees these, read-only, in its CMS settings."
 
 The one feature today is **Care pathway engine** (on by default): "Protocol-driven care pathways (such as IVF cycles) on the organisation's services. Off: no service can switch its pathway engine on, and switching this off turns it off on every service." A superadmin switches it on or off, with an optional **Note** (for example the pilot agreement), or resets it to the default.
 

@@ -29,12 +29,26 @@ An active link can be stopped at any time with **Stop syncing**. Stopping a sync
 
 ## Connecting another clinic
 
-**Connect another clinic** on the profile screen runs the same flow as first-time linking — pick the clinic, enter the identifier and date of birth held on that clinic's chart, then the six-digit code — and returns to the profile when the code verifies.
+**Connect another clinic** on the profile screen runs the same flow as first-time linking, for a clinic that already has a chart for you: pick the clinic, enter the identifier and date of birth held on that clinic's chart, then the six-digit code. It returns to the profile when the code verifies. The list holds real clinics only. If you have not been seen at a clinic before, [ask it to see you](#ask-a-clinic-to-see-you) instead.
 
-Connections matter beyond Results: the Messages hub grows one front-desk thread per connected clinic, and an appointment request asks which clinic before it asks for a location. A clinic with no active link is not offered anywhere in the portal.
+Connections matter beyond Results: the [Chats](/patient/messages) tab grows one front-desk thread per connected clinic, and an appointment request asks which clinic before it asks for a location. A clinic with no active link is not offered anywhere in the portal.
 
 ## What a clinic sees of yours
 
-Connecting a clinic brings its records to you. It does not let the clinic read what you do in Medbot Health. Urgent messages always reach your linked clinics, and concerns from Ask Medbot go to them unless you turn that off. Anything more, such as your chats or the lab reports you scanned, the clinic sees only if you choose. See [Sharing with Your Clinics](/patient/clinic-sharing).
+Connecting a clinic brings its records to you. It does not let the clinic read what you do in Medbot Health. An urgent message from Ask Medbot goes to the linked clinics that look after that kind of problem, and concerns go to your linked clinics unless you turn that off. Anything more, such as your chats or the lab reports you scanned, the clinic sees only if you choose. See [Sharing with Your Clinics](/patient/clinic-sharing).
 
-Not sure which clinic to pick? [Find Care](/patient/find-care) lists clinics on Medbot. Select **Connect** next to one to start.
+## Ask a clinic to see you
+
+If you have never been seen at a clinic on Medbot, there is no chart to connect to yet. Ask the clinic to see you instead. Select **Connect** next to a clinic in [Find Care](/patient/find-care), or next to a clinic near you after a guided session. A clinic you are already connected to shows **Request an appointment** instead.
+
+1. On **Ask to be seen**, under **Ask &lt;clinic&gt; to see you**, choose a **Service**. Under **What would you like help with?**, write a sentence or two.
+2. Tick the consent: you agree to share your name, date of birth and contact details with the clinic so they can arrange your care, and to connect your Medbot account to your record there once they accept.
+3. Select **Send request**.
+
+The request goes to that service's reception. Staff there accept it by naming your chart there, which connects your Medbot account to it, and offer you an appointment time. Or they decline it. Either way you get a notification: **&lt;clinic&gt; accepted your request** or **&lt;clinic&gt; can't take your request**. A time they offer is in [Appointments](/patient/visits#offers-from-your-clinic). Once the clinic is connected, it shows under **Connected clinics** like any other, and you give permission as usual. See [Consent](#consent).
+
+Your request is listed in [Appointments](/patient/visits#your-requests) as **Request to join a clinic**, with the status **Awaiting the clinic**, **Accepted** or **Declined**. You can ask a clinic once at a time: if a request is waiting, the page says "You've already asked &lt;clinic&gt; to see you."
+
+Only clinics that are really on Medbot are offered. A clinic that is not taking requests through Medbot yet says so instead of **Connect**.
+
+Not sure which clinic to pick? [Find Care](/patient/find-care) lists clinics on Medbot.

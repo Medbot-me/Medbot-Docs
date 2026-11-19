@@ -1,6 +1,6 @@
 # Members & Roles
 
-Staff belong to an organisation through a **membership**. A membership is one role for one person: it carries the person's name, email, role, professional registration number where the role has one, their Practitioner record on that organisation's Medplum, and whether it is active. In Singapore organisations, a doctor's membership can also hold their NRIC or FIN.
+Staff belong to an organisation through a **membership**. A membership is one role for one person: it carries the person's name, email, role, professional registration number where the role has one, their Practitioner record in that organisation's patient records, and whether it is active. In Singapore organisations, a doctor's membership can also hold their NRIC or FIN.
 
 A person can hold several roles in the same organisation, as several memberships under one sign-in. See [One person, several roles](#one-person-several-roles).
 
@@ -8,7 +8,7 @@ Members are managed from `/staff`, which lists the current organisation's member
 
 ## Roles
 
-An organisation uses four clinic roles. Each membership has exactly one; a person who needs two holds two memberships.
+An organisation uses six clinic roles. Each membership has exactly one; a person who needs two holds two memberships.
 
 | Role | Shown as | Broadly |
 | --- | --- | --- |
@@ -16,14 +16,18 @@ An organisation uses four clinic roles. Each membership has exactly one; a perso
 | `receptionist` | Receptionist | Front desk: registering patients, appointments, today's session setup, the queue, patient documents, diagnostic result upload and viewing. |
 | `doctor` | Doctor | Clinical work: patient and appointment reads, vitals, vaccinations, formulary, documents, referrals, medical certificates (only a Doctor issues them), and acknowledging, reassigning or withdrawing results. |
 | `nurse` | Nurse | As `doctor`, minus referrals, medical certificates and results acknowledgement. |
+| `patient_service_associate` | Patient service associate | Works the front desk's queue and leads financial counselling consults, reads billing, and writes progress notes. Does not register patients, prescribe or order. |
+| `allied_health_professional` | Allied health professional | A dietitian, physiotherapist, pharmacist or health educator. Reads charts and the queue, leads their own consults and writes progress notes. Does not prescribe or order. |
 
 The full matrix of what each role can do lives in [Roles & Permissions](/cms/roles-and-permissions).
 
-The same four roles are used across Medbot. A person's role on a [Service](/cms/services) care team is their role in the organisation, not a separate service role, and it decides the service page the CMS opens on for them: the **Workstation** for a Doctor or Nurse, **Referrals** for a Clinic Admin or Receptionist (see [Where the CMS opens](/cms/switching#where-the-cms-opens)).
+The same roles are used across Medbot. A person's role on a [Service](/cms/services) care team is their role in the organisation, not a separate service role, and it decides the service page the CMS opens on for them: the **Workstation** for a Doctor, Nurse, Patient service associate or Allied health professional, **Referrals** for a Clinic Admin or Receptionist (see [Where the CMS opens](/cms/switching#where-the-cms-opens)).
 
 A fifth role, `superuser`, exists for internal and testing accounts. It passes every role check. It is not a clinic role anyone should be given in normal use; on staging it can be created by [CSV seeding](/cms/seed-data) for test accounts.
 
-Separately, a **platform superadmin** is a Medbot-wide role on the user account, not a membership, used to run [Medbot-hosted organisations](/cms/hosted-organisations#for-medbot-platform-administrators). It gives no access to any clinic's data by itself.
+`superuser` is also what a Medbot [support access](/cms/platform-administration#support-access) session grants, for a limited time: while one lasts, the person shows in the staff list, and the membership ends by itself at the session's end.
+
+Separately, a **platform admin** or **superadmin** is a Medbot-wide role on the user account, not a membership, used to run the [platform admin panel](/cms/platform-administration). It gives no access to any clinic's data by itself.
 
 ## Adding a member
 
@@ -44,7 +48,7 @@ The number is checked as it is typed ("MCR number must look like M12345A."), and
 
 - **NRIC or FIN (optional)**: doctors in **Singapore** organisations only. It is needed before that doctor's SmartCMS claims can be submitted. It is checksum-validated, and only ever shown masked (`*****567D`) once saved.
 
-Adding a member creates their Practitioner record on the organisation's own Medplum alongside their membership row, with the registration number as an identifier, so they can act clinically from their first sign-in. The NRIC or FIN stays on the membership only and is never written to the Practitioner record. If any step fails, the ones before it are undone rather than leaving a half-created member.
+Adding a member creates their Practitioner record in the organisation's own patient records alongside their membership row, with the registration number as an identifier, so they can act clinically from their first sign-in. The NRIC or FIN stays on the membership only and is never written to the Practitioner record. If any step fails, the ones before it are undone rather than leaving a half-created member.
 
 **Add Staff** is only for people the organisation does not have yet. Adding someone already on the staff, or already invited, is refused with a message pointing to their row: give an existing member a second role with **Add another role** (below), not by adding them again.
 
@@ -77,7 +81,7 @@ A person can hold more than one role in the same organisation, for example Docto
 - The same role cannot be held twice. A deactivated role is reactivated, not added again.
 - A registration number belongs to its registry, not to the person. The Doctor role carries the MCR number and the Nurse role the SNB number; each is entered for that role, and a Clinic Admin or Receptionist role carries none.
 - The person works as one role at a time and [switches between them](/cms/switching#switching-role) from the sidebar switcher or the **Working as** menu at the top of the screen. Permissions are those of the active role only; they do not add up across roles.
-- What they write is recorded as the role they are working in, not the role they were given first. That includes what the CMS writes to the organisation's Medplum server, so a document a Doctor writes is authored as the Doctor, even by someone whose first role there was Clinic Admin.
+- What they write is recorded as the role they are working in, not the role they were given first. That includes what the CMS writes to the organisation's patient records, so a document a Doctor writes is authored as the Doctor, even by someone whose first role there was Clinic Admin.
 
 For example, a doctor who also runs the clinic works as Clinic Admin to manage staff and as Doctor to issue a medical certificate.
 

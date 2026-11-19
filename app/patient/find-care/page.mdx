@@ -2,9 +2,11 @@ import { ImageZoom } from "nextra/components";
 
 # Find Care
 
-**Find a clinic or service** helps you find clinics, connect to the ones on Medbot, or ask to be referred to one that is not.
+**Find a clinic or service** helps you find clinics, ask the ones on Medbot to see you, or ask one that is not on Medbot to contact you.
 
-Open it from **Profile**, then **Preferences**, then **Find a clinic or service**. Only the patient can use it, not a caregiver.
+Open it from the menu, under **Care**, or from **Profile**, then **Preferences**, then **Find a clinic or service**. Only the patient can use it, not a caregiver.
+
+Medbot offers you real clinics only. Demo organisations are never listed.
 
 ## Search
 
@@ -14,26 +16,38 @@ Each result shows the name, address and up to three specialties, with a badge: *
 
 | Button | When | What it does |
 | --- | --- | --- |
-| **Connect** | A clinic on Medbot | Starts [connecting](/patient/connected-clinics) |
+| **Connect** | A clinic on Medbot | Asks the clinic to see you. See [Ask a clinic to see you](/patient/connected-clinics#ask-a-clinic-to-see-you) |
 | **Request an appointment** | A clinic you are connected to | Opens the [appointment form](/patient/visits#booking-or-asking-for-an-appointment) |
 | **View** | A clinic not on Medbot yet | Opens its details |
 
 If nothing matches, you see "No clinics match your search."
 
-## Ask to be referred
+**Connect** is a request, not a link. It goes to the clinic's reception, who accept it by naming your chart there, and offer you a time, or decline it. You are told either way. Until the clinic accepts, nothing of yours is connected.
 
-For a clinic that is not on Medbot yet, select **View**. The **Ask to be referred** page shows what the clinic offers and its phone or website, if known. You can also contact them yourself.
+## Find care near you
+
+Select **Find care near you** ("Clinics, A&E, pharmacies and dentists nearby") to see places near where you are. Choose what you are looking for: **GP clinic**, **Emergency (A&E)**, **Hospital**, **Pharmacy**, **Dentist** or **Specialist**. Select **Use my location** to sort by distance, or Medbot uses the postal code in your profile. Your location is used only for that search and is not saved.
+
+Medbot clinics come first, headed by the clinic's name and the kinds of care it offers, for example "Diabetes clinic · Physiotherapy". A clinic you are connected to shows **Your clinic**. The places after them come from the map and may be out of date, so call ahead to check opening hours and services. Each row has **Directions**, **Call**, **Website** and **Map** where they are known. In an emergency, call 995 and do not wait to find a place here.
+
+You can also reach it from **Ask Medbot**, under the question box.
+
+## Ask them to contact you
+
+For a clinic that is not on Medbot yet, select **View**. The **Ask them to contact you** page shows what the clinic offers and its phone or website, if known. You can also contact them yourself.
 
 1. Choose a **Service**, or leave "The clinic, any service".
 2. Check your name, email and phone. Give at least one way for the clinic to reach you.
-3. Under "Why would you like to be referred?", say why.
+3. Under "Why would you like them to contact you?", say why.
 4. Tick the consent box.
 5. Select **Send my request**.
 
-Medbot passes your request on to the clinic by email or phone, and they contact you directly. Only your name, contact details and reason are shared. Your health record, results and messages are not.
+Medbot passes your request on to the clinic by email or phone, and they contact you directly. No appointment is booked in Medbot. Only your name, contact details and reason are shared. Your health record, results and messages are not.
 
-<ImageZoom src="/images/patient/find-care/01-ask-to-be-referred.png" alt="The Ask to be referred page for a clinic that is not on Medbot yet, with the service, contact details and consent" />
+<ImageZoom src="/images/patient/find-care/01-ask-to-be-referred.png" alt="The page for a clinic that is not on Medbot yet, with the service, contact details and consent" />
 
 ## Follow your requests
 
-Select **Your referral requests**. Each request shows the service, the clinic, the date and a status: **Received**, **Passed to the clinic**, **In touch**, **Closed** or **Withdrawn**. Select **Withdraw** to cancel a request.
+Select **Your contact requests**. Each request shows the service, the clinic, the date and a status: **Received**, **Passed to the clinic**, **In touch**, **Closed** or **Withdrawn**. Select **Withdraw** to cancel a request.
+
+Contact requests are also listed in [Appointments](/patient/visits#your-requests), beside your appointment requests and your requests to join a clinic. The page there says what each kind does.
