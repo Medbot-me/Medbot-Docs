@@ -81,7 +81,7 @@ Resolved and entered-in-error records stay in the history and no longer count as
 
 ## Allergy alerts when prescribing
 
-> **Note:** Prescribing happens in the **Medications** tab of the bottom dock in the [Patient Notes Workspace](/cms/patient-notes). Your deployment must turn that dock on. It is off by default.
+> **Note:** Prescribing happens on a patient's **Medications** page, in the **Medications** tab of the bottom dock in the [Patient Notes Workspace](/cms/patient-notes), and in a service's consult screen. See [Prescribing & Medications](/cms/prescribing). Your deployment must turn order writing on. It is off by default.
 
 ### The allergy strip
 
@@ -110,8 +110,8 @@ A drug can be checked fully only when its [formulary](/cms/formulary) entry has 
 **Add to drafts** is replaced by these choices:
 
 - **Amend order** returns you to the drug field so you can choose a different drug.
-- **Override** (Clinic Admins and Doctors) shows **Reason for going ahead**. Choose a reason, fill in **Explain** if it is required, then select **Override and add to drafts**.
-- **Leave for the prescriber** (Nurses) adds the draft with the alert still open. The draft is marked **Needs prescriber review**, and a doctor gives the reason before signing.
+- **Override** (Clinic Admins, Doctors and nurses an administrator has [authorised to prescribe](/cms/staff#authorising-a-nurse-to-prescribe)) shows **Reason for going ahead**. Choose a reason, fill in **Explain** if it is required, then select **Override and add to drafts**.
+- **Leave for the prescriber** (Nurses who are not authorised to prescribe) adds the draft with the alert still open. The draft is marked **Needs prescriber review**, and a doctor gives the reason before signing.
 - **Cancel** clears the prescription.
 
 An override reason is the prescriber's record of why they went ahead despite the alert. The reasons are:

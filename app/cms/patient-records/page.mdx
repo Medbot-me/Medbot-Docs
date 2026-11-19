@@ -38,6 +38,8 @@ _The Patients page_
 
 Patients with no phone or email on file carry a **No contact on file** badge.
 
+The **Latest AI encounter** column shows each patient's most recent [AI encounter](/cms/encounters#ai-encounters-across-services), or **None**. A row's actions menu starts a [consult or an AI encounter](/cms/encounters#starting-a-consult-from-the-patient-list) for that patient.
+
 A **Demo** badge beside a name marks a demo patient: a made-up record created for a product demo, not a real person. The same **Demo** chip shows in the patient's header, and every chart page of a demo patient starts with a strip saying **Demo patient**, which explains the record is synthetic and is removed from the service's Demo panel. Demo patients behave like any other patient while you work with them. Nothing in the staff app creates or deletes them.
 
 ## Registering a patient
@@ -46,7 +48,8 @@ A **Demo** badge beside a name marks a demo patient: a made-up record created fo
 2. Choose the **Identifier type**: **NRIC**, **FIN** or **Passport**, then enter the number. The form says **Valid** when the number is acceptable, or explains why not.
 3. Enter **Given name**, **Family name** and **Date of birth**. These are required. **Sex** defaults to **Unknown**.
 4. Optionally add a phone number, an email address, the **Preferred contact channel** (**Phone** or **Email**), communication consent and an address.
-5. Select **Register patient**. The new patient's chart opens.
+5. In a Singapore organisation that subscribes to SmartCMS, the form also asks for **Race**, **Residential status**, **Nationality** and **Country of birth**. Race and nationality are searchable lists with the common choices first: race shows **Main groups**, then **Detailed groups**, then **Other races** A to Z, and nationality shows **Singapore**, then **Southeast and East Asia**, then **Other nationalities** A to Z. Every code stays selectable, and the same lists are used when you edit a patient's demographics from the chart.
+6. Select **Register patient**. The new patient's chart opens.
 
 In a [physician family organisation](/cms/physician-family-organisation#patients-yourself-and-family), the button is **Register yourself or family**, the form also asks **Who this patient is to you**, and **Invite to self-register** is not offered.
 
@@ -65,7 +68,7 @@ _The duplicate identifier message_
 
 ## The patient chart
 
-A chart opens in the **CMS** tab, with the patient as a card at the top of the sidebar listing the chart's sections: **Overview**, **Accounts**, **Encounters**, **Notes**, **Results**, **Photos**, **Vaccinations**, **Documents** and **Messages**, and for some roles **Shared by patient** and **Audit log**. **Notes** appears only when your deployment has turned the [notes workspace](/cms/patient-notes) on. **Photos** holds [clinical photos](/cms/clinical-photos). **Accounts** is visible to Clinic Admins and Receptionists only. **Audit log** is visible to Clinic Admins only (see [Audit log](#audit-log)). Select the cross on the card (**Close patient**) to leave the chart. On a phone the sections are a row of tabs under the patient's name.
+A chart opens in the **CMS** tab, with the patient as a card at the top of the sidebar listing the chart's sections: **Overview**, **Medications**, **Accounts**, **Encounters**, **AI encounters**, **Notes**, **Results**, **Photos**, **Vaccinations**, **Documents** and **Messages**, and for some roles **Shared by patient** and **Audit log**. **Medications** is for clinical staff: see [Prescribing & Medications](/cms/prescribing). **AI encounters** lists the patient's [AI encounters across services](/cms/encounters#ai-encounters-across-services). **Notes** appears only when your deployment has turned the [notes workspace](/cms/patient-notes) on. **Photos** holds [clinical photos](/cms/clinical-photos). **Accounts** is visible to Clinic Admins and Receptionists only. **Audit log** is visible to Clinic Admins only (see [Audit log](#audit-log)). Select the cross on the card (**Close patient**) to leave the chart. On a phone the sections are a row of tabs under the patient's name.
 
 ### The chart header
 
@@ -99,7 +102,7 @@ Each section's own buttons sit at the top right. On a phone they are a bar along
 | --- | --- |
 | **Allergies** | Drug allergies and intolerances, or "No known drug allergies". Not shown to Receptionists. See [Allergies & Medication Safety](/cms/allergies-and-medication-safety) |
 | **Patient-reported intake** | Answers from a self-registration, only for patients who registered themselves. Shown under **Allergies** |
-| **Problem list** and **Medications** | The patient's conditions, with a count of active ones, and their medicines, with a filter between active and all. Read only, and shown to doctors, nurses and Clinic Admins. If a list cannot be loaded, the card says so ("Do not assume this patient has no problems.") with **Try again**, never an empty list |
+| **Problem list** and **Medications** | The patient's conditions, with a count of active ones, and their medicines, with a filter between active and all. Shown to doctors, nurses, Clinic Admins and clinical staff in the other roles. Each medicine has a menu to amend, stop or repeat it, which opens the [Medications page](/cms/prescribing) with the form filled in, where your deployment lets you write orders. If a list cannot be loaded, the card says so ("Do not assume this patient has no problems.") with **Try again**, never an empty list |
 | **Vitals** | See [Vitals](/cms/vitals) |
 | **Diagnoses (ICD-10-AM)** | Singapore only. See [Coding the visit's diagnoses](/cms/encounters#coding-the-visits-diagnoses-singapore) |
 | **Recent results** | The patient's three latest results, each with when it was received and **Awaiting review** or who reviewed it. Select one to open it on **Results**, or **All results**. See [Diagnostic Results](/cms/diagnostic-results) |

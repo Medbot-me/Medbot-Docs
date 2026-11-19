@@ -191,15 +191,37 @@ If you raise the same concern again within 7 days, Medbot adds what you said to 
 
 With no linked clinic, or with concerns turned off, the card asks **Would you like a clinic to see this?** It says what Medbot noticed and "Nothing has been shared with anyone."
 
-Choose **Share with a clinic** or **Not now**. Medbot does not send anything until you agree.
+Choose **Answer a few questions first**, **Share with a clinic** or **Not now**. Medbot does not send anything until you agree.
 
 1. After **Share with a clinic**, read "Share this with a clinic?". It lists what the clinic will receive: a short summary of what you told Medbot, your name, date of birth and phone number, and medicines and allergies from your record. It does not get the rest of the chat. Select **Read the summary before sharing** to see the summary first.
 2. Tick the consent box, then select **Choose a clinic**. To keep it private, select **Not now, keep it in my record**.
-3. On **Choose a clinic**, search by clinic or service. Your own clinics are listed first. Select **Send to** the clinic you want.
+3. On **Choose a clinic**, search by clinic or service. Your own clinics are listed first, then other registered clinics nearby. Select **Send to** the clinic you want.
+
+#### Clinics that are not on Medbot
+
+The list also has **Other clinics nearby, not on Medbot**, from the map. Each row says how your summary reaches it:
+
+- **Medbot emails them a secure link.** Medbot knows an email address for the clinic. The email holds no details about you. The clinic opens the link and enters a six-digit code that only you have. Wrong codes lock the link, and it stops working after 14 days or if you withdraw the referral.
+- **Not on Medbot. You show them your summary yourself.** Nothing is sent. You show the clinic the summary when you call or visit.
+
+After you agree, the status page shows what to do next. For an emailed referral it says "Give &lt;clinic&gt; this code": tell them the code when you call or visit, because they need it to open your summary. It also says whether they have opened it yet. For one you carry, it shows "Show this at &lt;clinic&gt;" with the summary and the clinic's phone number. Either way the clinic contacts you, and no appointment is booked in Medbot. A clinic that is not on Medbot never sees your health record.
+
+### Answer a few questions first
+
+On the concern card, **Answer a few questions first** ("About 3 minutes, here in this chat. They help the clinic decide quickly.") asks you a short, fixed set of questions in the chat, one at a time, about eight in all. There is one set for a cough or breathing problem and one for anything else. The questions are the same for everyone and are not written by a model.
+
+- You answer with a tap or by typing: yes or no, choose one, choose all that apply, a score from 0 ("No pain") to 10 ("Worst pain"), or how often. A progress line shows "Question 3 of 8".
+- If an answer is a warning sign, such as coughing up blood, the questions **pause** and you get the emergency reply, with who was told. Nothing has been sent to a clinic. Select **I've got help, finish the questions** to carry on, or **Skip to the referral**.
+- Select **Skip the rest** at any point. The referral will say which questions were not answered.
+- At the end, **Check your answers**, then **Confirm answers**. Your confirmed answers are added to the summary. Nothing has been sent yet: select **Choose where to send it** to go on as above.
 
 ### Following a concern
 
 Follow it on the **Escalation** page. It shows whether the concern was sent, is being reviewed, or has a reply, and what the clinic suggests: book an appointment, try another service, go to the emergency department, or no action needed.
+
+- **Book an appointment at this clinic.** If you are linked to the clinic, it adds you to its referrals and the page follows it: "&lt;clinic&gt; added you to its referrals. Reception will offer you a time.", then "&lt;clinic&gt; offered you a time. Choose it in Appointments.", then "Your appointment at &lt;clinic&gt; is booked." If you are not linked, select **Ask &lt;clinic&gt; to see me**. That sends the same request as **Connect** in [Find Care](/patient/connected-clinics#ask-a-clinic-to-see-you), filled in from your concern, to the clinic's reception, who connect you to your record there and offer you a time.
+- **Suggest another service.** Select **Send to** that service to send it the same summary.
+- **Send it somewhere else.** When the clinic suggested another service or needed no action, when an emailed clinic has not opened your summary after three days, or when you are carrying it, select **Choose another place**. It makes a new copy of the same summary, once, and you agree to share it again.
 
 You can **Add something to the summary**. You can also select **Withdraw sharing with this clinic** at any time. This stops the clinic contacting you, and a copy stays in your record. A draft you never send expires after 7 days. Shared concerns also appear in [Health Records](/patient/health-records).
 
@@ -219,31 +241,34 @@ Alongside answering, Ask Medbot classifies the question for whether a **guided c
 - **Health education**
 - **Financial counselling**
 
-A session is only ever offered this way, with consent — there is no separate picker to start one from. Accepting creates a thread in [Messages](/patient/messages) with the session's own identity. A red-flagged message triggers no other offer: the only card beside the emergency reply is the history of that warning sign. See [Record what happened for your doctor](#record-what-happened-for-your-doctor).
+A session is only ever offered this way, with consent — there is no separate picker to start one from. Accepting creates a thread in [Chats](/patient/messages) with the session's own identity. A red-flagged message triggers no other offer: the only card beside the emergency reply is the history of that warning sign. See [Record what happened for your doctor](#record-what-happened-for-your-doctor).
 
 A session does not require the patient to be enrolled in any care program. When it completes, its summary is saved to the patient's own [Health Records](/patient/health-records), kept separate from any clinic's chart.
 
-## Home screen and notifications
+## Home screen
 
-**Home** is the first tab, with a house icon. It opens with a greeting and, beside it, the **Log something** button. Below are cards when there is something for you to do, then the Ask Medbot box, then **Your readings**. On a wide screen, **Your readings** sits in a column on the right.
+**Home** is the first tab, with a house icon. It opens with a greeting. Below it, in this order, are cards when there is something for you to do, then the Ask Medbot box, then today's goals from your health plan, then your latest entries and the **Log something** button. On a wide screen, your latest entries and **Log something** sit in a column on the right.
 
 The cards you may see are:
 
-- **Family.** "Look after a child or parent, or share your record with someone you trust." Opens [Family](/patient/family).
-- **Add your Garmin data.** An offer to [connect Garmin](/patient/devices), with **Not now** to hide it.
-- **An appointment offer or check-in.** For example "Sunrise Diabetes Service has offered you an appointment", with an **Open** button. See [Offers from your clinic](/patient/visits#offers-from-your-clinic).
-- **Steps from your visit.** Steps your doctor confirmed at the end of your latest consultation. See [Steps from your visit](/patient/visits#steps-from-your-visit).
-- **A session from your care team.** For example "Your care team at Sunrise Clinic would like to go through a history taking with you", with a **Start** button.
+- **A session from your care team**, at the very top. A card headed **From your clinic** names the kind of session (**History taking**, **Health education** or **Financial counselling**), the clinic, and why or which visit it is for, for example "Before your visit on" a date. It has one button, **Start session**, or **Continue session** for one you have begun. With several, they are listed in one card, each with **Start** or **Continue**.
 - **Today's visit.** On the day of an appointment, a card reads "Your appointment today at" and the time. It has a **Register and get my queue number** button. See [Today's visit](/patient/visits#todays-visit).
+- **An appointment offer or check-in.** For example "Sunrise Diabetes Service has offered you an appointment", with an **Open** button. See [Offers from your clinic](/patient/visits#offers-from-your-clinic).
+- **Appointments.** Your next appointment, and how many requests need your reply or are waiting on the clinic. It opens [Appointments](/patient/visits#appointments).
 - **Your stay.** If you are in hospital, a card shows where you are admitted: the organisation, ward and bed, the date you were admitted, which day of your stay it is, and your expected discharge date.
+- **Steps from your visit.** Steps your doctor confirmed at the end of your latest consultation. See [Steps from your visit](/patient/visits#steps-from-your-visit).
 - **Add your medical history.** Shown while your record has no conditions, medicines or allergies. See [Medical History](/patient/medical-history).
-- **Tell Medbot about your visit.** A reminder to answer a few questions before a booked visit. See [Pre-visit History](/patient/pre-visit-history).
 - **Your health plan.** "&lt;clinic&gt; replied about your health plan" with **See their reply**, when a clinic has reviewed the plan you sent, or "&lt;clinic&gt; proposed a health plan for you" with **See the plan**. See [Health Plan](/patient/health-plan).
-- **Continue asking.** Your most recent Ask Medbot conversation. With none yet, Home shows **Try asking** suggestions instead.
+
+Your family is no longer on Home. Find it in the menu, under **Account**. See [Family](/patient/family).
 
 If your account's email is not verified yet, a **Verify your email** banner sits at the top of every page. See [Verify your email](/patient/getting-started#verify-your-email).
 
 Medbot Health follows your device's light or dark setting.
+
+### Ask Medbot on Home
+
+The Ask Medbot box comes first after the cards. Ask a question, or tell Medbot what you ate, felt or measured. Select the box and the [starter badges](#starter-badges) and your two latest chats show under it. See [Log something by telling Medbot](#log-something-by-telling-medbot) and [Conversations](#conversations).
 
 ### Log something
 
@@ -252,7 +277,7 @@ Medbot Health follows your device's light or dark setting.
 | Item | What it does |
 | --- | --- |
 | **Vitals** | Opens the vitals form. **Photograph your monitor** opens the camera instead. |
-| **Meal** | Opens the meal form. **Photo of your plate** opens the camera instead. |
+| **Meal** | Opens the meal page. **Photo of your plate** opens the camera instead. |
 | **Symptom** | Opens the symptom form. See [Log a symptom](/patient/health-log#log-a-symptom). |
 | **Exercise** | Opens the exercise form. |
 | **Document** | Choose a letter, report or PDF, or a photo of one. |
@@ -268,31 +293,9 @@ A caregiver with read-only access sees the menu, but cannot use the photo and do
 
 **Your readings** is a short list of what you logged. It states facts only. It never says whether a reading is good or bad.
 
-- **Your streak.** One line, such as "5 day streak". With nothing logged today it adds "Not logged yet today". With no streak yet, it says "Log something today to start a streak".
-- **A row for each measure** you logged in the last 30 days. It shows your latest value, who entered it (**You**, **Caregiver**, **Medbot team** or **Garmin**) and when, and for a vital such as blood pressure, how many days it was in range, for example "6 of 7 days in range". That counts the days your last reading fell inside a general adult range, out of the days you took one.
-- **A footnote** names each general adult range used, once, and says: "Counted against general adult reference ranges, not the targets your doctor set for you." Ask your doctor about your own targets.
+- **Your streak.** One line, such as "5 day streak", with a dot for each of your last seven days. With nothing logged today it adds "Not logged yet today". With no streak yet, it says "Log something today to start a streak".
+- **Your latest entries**, of any kind: a meal, a reading, a symptom or some exercise. Each shows what it was, what kind of entry it is and the day, and the value. A reading synced from Garmin says **Garmin** instead of the kind. With nothing logged, it says "Nothing logged yet. Log something to see it here." When a Garmin reading is shown, the card says "Includes Garmin device-sourced data".
 
-Readings synced from a device do not count towards your streak.
+Home no longer shows who entered a reading, how many days it was in range, or reference ranges. Readings synced from a device do not count towards your streak.
 
-Select **See your log** to open the [Log](/patient/health-log) tab. With nothing logged in the last 30 days, the list says "No readings in the last 30 days."
-
-### The notification bell
-
-The bell at the top of Home shows how many notifications you have not read. Select it to see the list, then select a notification to open it. With none, it says "No notifications yet."
-
-| Notification | Why you get it |
-| --- | --- |
-| A session "encounter waiting" or "session waiting", for example **History taking encounter waiting** | Your care team or clinic has a guided care session for you. |
-| A session "encounter completed" | A guided care session has finished. |
-| **It is your turn** | Reception called you, and you turned on **Notify me when it is my turn**. See [Today's visit](/patient/visits#getting-told-when-it-is-your-turn). |
-| **Your visit summary is ready** | Your clinician sent the summary of today's visit. See [Your visit summary](/patient/visits#your-visit-summary). |
-| **Your care team replied** | A member of your care team replied in one of your sessions. |
-| **Tell Medbot about your visit** | You booked a visit with a service that asks a few questions first. See [Pre-visit History](/patient/pre-visit-history). |
-| **Your visit is coming up** | A reminder to answer those questions. |
-| **Review your pre-visit history** | Medbot finished your questions. Check them, then choose whether to send them to the clinic. |
-| **Your clinic saw your red flag** | The clinic has seen a warning sign you told Medbot about. |
-| **Sent to** a clinic | A concern was sent to a clinic. See [Concerns from Ask Medbot](#concerns-from-ask-medbot). |
-| A clinic replied (**&lt;clinic&gt; replied**) | The clinic answered a concern you shared. |
-| **&lt;clinic&gt; replied about your health plan**, **&lt;clinic&gt; proposed a health plan for you** or **&lt;clinic&gt; suggested goals for your health plan** | A clinic reviewed the plan you sent, or proposed one after a visit. See [Health Plan](/patient/health-plan). |
-| **Your doctor has explained your results** (or **Your doctor updated the explanation of your results**) | A doctor-approved explanation is ready. See [Your doctor's explanation](/patient/results#your-doctors-explanation). |
-| Caregiver access changes | Someone was given or lost access to your record, or your access to someone else's changed. See [Caregivers](/patient/caregivers#notifications). |
+Select **See your log** to open the [Log](/patient/health-log) tab.
