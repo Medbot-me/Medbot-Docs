@@ -27,13 +27,15 @@ https://docs.medbot.me/help/<surface>/<app path>[?topic=<topic>]
 | Surface          | App                               | Falls back to                      |
 | ---------------- | --------------------------------- | ---------------------------------- |
 | `cms`            | Medbot CMS (cms.medbot.me)        | `/cms`                             |
-| `cms-desktop`    | Medbot CMS desktop                | `/cms/downtime/cms-desktop`        |
+| `cms-desktop`    | Medbot CMS desktop (reserved)     | `/cms/downtime/cms-desktop`        |
 | `patient`        | Medbot Health (health.medbot.me)  | `/patient`                         |
-| `patient-mobile` | Medbot Health mobile              | `/patient/mobile-app`              |
+| `patient-mobile` | Medbot Health mobile (reserved)   | `/patient/mobile-app`              |
 | `app`            | Medbot app (app.medbot.me)        | `/docs`                            |
 | `desktop`        | Medbot desktop                    | `/docs/desktop-and-mobile/desktop` |
-| `mobile`         | Medbot mobile                     | `/docs/desktop-and-mobile/mobile`  |
+| `mobile`         | Medbot mobile (reserved)          | `/docs/desktop-and-mobile/mobile`  |
 | `agents`         | The AI agents module, in any app  | `/docs/agents`                     |
+
+Surfaces marked reserved are routed but not yet linked from any app.
 
 Examples: `/help/cms/queue` opens Reception Queue,
 `/help/cms/patients/<id>/medications` opens Prescribing, and

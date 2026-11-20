@@ -24,7 +24,9 @@ export async function GET(
     topic: searchParams.get('topic'),
     referer: request.headers.get('referer')
   })
-  // Temporary: the rules change as the docs grow, and a browser must not
-  // cache an old answer.
-  return NextResponse.redirect(new URL(target, request.url), 307)
+  // Temporary, and never cached: the rules change as the docs grow, and the
+  // answer can depend on the Referer.
+  const response = NextResponse.redirect(new URL(target, request.url), 307)
+  response.headers.set('Cache-Control', 'no-store, private')
+  return response
 }
