@@ -10,4 +10,5 @@ export default {
   "ai-policy": "AI Policy",
   scoping: "How Scoping Works",
   "platform-administration": "Platform Administration",
+  "feedback-inbox": "Feedback Inbox",
 };
