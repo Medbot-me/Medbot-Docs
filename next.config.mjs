@@ -1,5 +1,6 @@
 import nextra from 'nextra'
- 
+import { REFERER_HOSTS } from './lib/help-routing.mjs'
+
 // Set up Nextra with its configuration
 const withNextra = nextra({
   // ... Add Nextra-specific options here
@@ -9,6 +10,42 @@ const withNextra = nextra({
 export default withNextra({
   async redirects() {
     return [
+      // Context-aware entry from the apps (see lib/help-routing.mjs). A link
+      // to the docs home from an app, or one that names its app with
+      // `?from=`, opens that app's guides instead of the all-products home.
+      // `/help` reads the Referer again and picks the guide.
+      {
+        source: '/',
+        has: [{ type: 'query', key: 'from' }],
+        destination: '/help',
+        permanent: false,
+      },
+      ...REFERER_HOSTS.map(([host]) => ({
+        source: '/',
+        has: [
+          {
+            type: 'header',
+            key: 'referer',
+            // Anchored here too, in case a router does not anchor `has`.
+            value: `^https?://${host}(?:[:/?#].*)?$`,
+          },
+        ],
+        destination: '/help',
+        permanent: false,
+      })),
+
+      // Links the Medbot app used before these pages existed.
+      {
+        source: '/docs/bug-report',
+        destination: '/docs/advanced#report-a-problem',
+        permanent: true,
+      },
+      {
+        source: '/docs/account',
+        destination: '/docs/advanced#account-settings',
+        permanent: true,
+      },
+
       // Care Programs were renamed to Services.
       {
         source: '/docs/care-programs',
