@@ -56,7 +56,9 @@ export default {
   "system-status": "System Status",
   "-- platform": { type: "separator", title: "Platform" },
   "platform-administration": "Platform Administration",
+  "feedback-inbox": "Feedback Inbox",
   "-- reference": { type: "separator", title: "Reference" },
   glossary: "Glossary",
   troubleshooting: "Troubleshooting",
+  "send-feedback": "Send Feedback",
 };
