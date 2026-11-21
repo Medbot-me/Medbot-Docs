@@ -4,4 +4,5 @@ export default {
   devices: "Downtime Laptops",
   "working-offline": "Working During an Outage",
   recovery: "Recovery After an Outage",
+  "system-status": "System Status",
 };

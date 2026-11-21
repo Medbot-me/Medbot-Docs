@@ -75,7 +75,7 @@ Medbot never discards a report waiting for a doctor on its own. Prepared claims 
 
 "Sent to the National Immunisation Registry when a vaccination with a product code is recorded here."
 
-When a vaccination given at the clinic is recorded with an SDD product code, Medbot notifies NIR without review. Columns: **Patient**, **Vaccine**, **Given**, **Status**, **NIR reference** (NIR's acknowledgement number) and **Actions**. The same status also appears in the **NIR** column of the patient's vaccination list (see [Vaccinations](/cms/vaccinations)).
+When a vaccination given at the clinic is recorded with an SDD product code, Medbot notifies NIR without review. Columns: **Patient**, **Vaccine**, **Given**, **Status**, **NIR reference** (NIR's acknowledgement number) and **Actions**. The same status also appears in the **NIR** column of the patient's vaccination list (see [Vaccinations](/cms/clinical-care/vaccinations)).
 
 | Status | What it means | Action |
 | --- | --- | --- |
@@ -265,7 +265,7 @@ An admin sees "Only a doctor completes and submits this report." Once sent: "The
 
 "Referral letters contributed to the National Electronic Health Record, and cancelled there when voided here. A letter that may mention termination of pregnancy, sterilisation or organ transplant is held until a doctor confirms the patient’s consent."
 
-- **Issuing** a referral letter (see [Documents & Certificates](/cms/documents-and-certificates)) sends it to NEHR automatically.
+- **Issuing** a referral letter (see [Documents & Certificates](/cms/clinical-care/documents-and-certificates)) sends it to NEHR automatically.
 - **Voiding** a letter NEHR has, or may have, sends a cancellation. A letter voided before it was sent is simply not sent.
 - **Every day at 00:15** Singapore time, Medbot sends the previous day's reconciliation file for every connected location, even one that sent nothing.
 
@@ -303,7 +303,7 @@ You choose afresh each time the dialog opens, including after a failed send.
 
 ### On the patient's Documents
 
-Where the organisation contributes referrals to NEHR, Clinic Admins and doctors also see NEHR on the patient's [Documents](/cms/documents-and-certificates):
+Where the organisation contributes referrals to NEHR, Clinic Admins and doctors also see NEHR on the patient's [Documents](/cms/clinical-care/documents-and-certificates):
 
 - **The Documents card** has an **NEHR** column with each referral letter's status, the same as on Reports, or its cancellation's once it is voided. Other documents show a dash. A line under the list says "Only referral letters go to NEHR." with a link to **Track them on Reports**.
 - **Opening a referral letter** shows **National record (NEHR)** with its status (or **Not sent to NEHR**), when it was last updated, any cancellation and its status, and **View on Reports**.
@@ -322,7 +322,7 @@ If the letter will be held, a second note says "Held for consent before NEHR. A 
 A location with no HE code sends nothing to SmartCMS, NEHR referral letters included. Settings warns about it:
 
 - In the **Singapore registration** card (see [Singapore Registration](/cms/smartcms/registration)), an active location with no HE code reads "No HE code: SmartCMS sends nothing from this location, NEHR referral letters included."
-- In [Organisation Settings](/cms/settings#integrations), under the modules, with **Referral contribution to NEHR** subscribed: "Referral letters from … are not sent to NEHR until it has an HE code." with **Add HE codes**.
+- In [Organisation Settings](/cms/administration/settings#integrations), under the modules, with **Referral contribution to NEHR** subscribed: "Referral letters from … are not sent to NEHR until it has an HE code." with **Add HE codes**.
 - On [SmartCMS Settings](/cms/smartcms/settings#referral-contribution-to-nehr), the **Referral contribution to NEHR** card lists the locations: "No HE code at …: referral letters from there are not sent to NEHR."
 
 ## Related
@@ -331,6 +331,6 @@ A location with no HE code sends nothing to SmartCMS, NEHR referral letters incl
 - [SmartCMS Settings](/cms/smartcms/settings): approving a location for each module.
 - [Claims Workflow](/cms/smartcms/claims): coding diagnoses, and the claims queue.
 - [Claims Agent](/cms/smartcms/claims-agent): what agents may prepare and send.
-- [Vaccinations](/cms/vaccinations): recording a vaccination with its product code.
-- [Documents & Certificates](/cms/documents-and-certificates): issuing and voiding referral letters.
+- [Vaccinations](/cms/clinical-care/vaccinations): recording a vaccination with its product code.
+- [Documents & Certificates](/cms/clinical-care/documents-and-certificates): issuing and voiding referral letters.
 - [Allergies & Medical Alerts (CMIS)](/cms/smartcms/cmis): reporting drug allergies and medical alerts.

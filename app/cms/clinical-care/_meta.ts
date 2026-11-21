@@ -1,0 +1,17 @@
+export default {
+  "patient-records": "Patient Records & Consent",
+  encounters: "Encounters & Clinical Notes",
+  vitals: "Vitals",
+  "allergies-and-medication-safety": "Allergies & Medication Safety",
+  vaccinations: "Vaccinations",
+  "orders-and-order-sets": "Orders & Order Sets",
+  prescribing: "Prescribing & Medications",
+  "diagnostic-results": "Diagnostic Results",
+  "documents-and-certificates": "Documents & Certificates",
+  "clinical-photos": "Clinical Photos",
+  messaging: "Clinic Messaging",
+  tasks: "Tasks & Staff Pings",
+  "patient-notes": "Patient Notes Workspace",
+  "patient-portal": "Patient Portal",
+  "patient-concerns": "Patient Concerns & Shared Chats",
+};

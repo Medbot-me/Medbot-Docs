@@ -1,0 +1,68 @@
+# How Scoping Works
+
+"Scoped to an organisation" is not a UI filter. It runs through every layer of the CMS, and it is worth understanding when something is unexpectedly missing — or unexpectedly present.
+
+## Two stores, two kinds of separation
+
+| Store | Holds | How organisations are separated |
+| --- | --- | --- |
+| **Patient records store** (per organisation) | The clinical record: patients, practitioners, appointments, encounters, observations, immunisations, documents | Medbot's own FHIR store keeps each organisation in a **tenant of its own**. A request is made with a credential bound to one tenant, and the store refuses to read or write another's rows. Not a shared table with a filter on it. |
+| **Postgres** (shared) | Operational state the records store does not hold: queue tickets, clinic sessions, visits, rosters and attendance, locations and rooms, displays, inventory, order sets, booking requests, clinic-inbox threads, notes claimed onto a patient chart, SMS/WhatsApp channel links, SmartCMS entitlements, claims queue and message logs | One database, every row carrying the organisation it belongs to — directly, or through its location or parent row |
+
+## Which organisation a request is for
+
+The organisation a page renders is the one chosen on the [welcome screen](/cms/administration/switching#the-welcome-screen) **for the current sign-in session**. The choice is bound to that session, so a second tab, a stale cookie from an earlier sign-in, or another person on the same browser cannot carry an organisation over. Whatever the choice, the server re-checks an active membership in that organisation on every request.
+
+## Clinical data: the FHIR proxy
+
+The CMS never talks to the patient records store directly. Every clinical read and write goes to the backend, which forwards it to **that organisation's** tenant of the store using credentials only it holds.
+
+What this means in practice:
+
+- No records-store credential exists in any CMS environment variable, and the browser never sees one. Nobody enters or rotates credentials per organisation: an organisation's tenant is made with the organisation, and an administrator has nothing to configure.
+- A request for an organisation you are not an active member of does not reach the records store at all.
+- Only two operations pass the proxy beyond ordinary reads and writes: a patient's full record (`$everything`) and pricing a catalogue item (`$apply`, which the backend answers itself). Bulk data export (`$export`) and every other operation is refused.
+
+Every active clinic role may pass the proxy. The per-feature role rules — who may issue a medical certificate, who may acknowledge a result — are enforced by the CMS's own checks before the request ever gets there, not by the proxy.
+
+## Operational data: the organisation column
+
+Operational tables carry the organisation directly (visits, clinic-inbox threads, order sets, catalog prices, staff pings, access requests, and others), or derive it from their clinic location (sessions, rooms, displays, booking requests, shifts, attendance, review duties, stock), or from their parent row.
+
+Consequences worth knowing:
+
+- **A location belongs to one organisation.** Naming a location from another organisation is rejected rather than quietly accepted.
+- **"Clinic-wide" means this clinic.** Listing clinic-wide order sets is filtered to the caller's organisation — a bare visibility check on a shared table would otherwise leak one clinic's sets into another's.
+- **Doctor eligibility in the queue** means an active `doctor` member *of this organisation*.
+- **Scheduled jobs**, like end-of-day attendance finalisation, run per organisation over each one's own locations and its own records.
+- **Rosters and sessions check the organisation on every write.** A shift, a session's staff, or a room can only be created or changed at a location of your own organisation, with your own organisation's members.
+- **Stock, lots, and medication and vaccination movements** carry the organisation directly, and a request body can never set a record's organisation or its acting member.
+- **A note claimed onto a patient chart** belongs to the organisation that claimed it.
+- **SMS and WhatsApp channel links**, conversation context and message preferences can only be read or changed by staff of the organisation they belong to.
+
+## Country and module gating
+
+Some surfaces depend on the organisation's **country** and the national-service **modules** it subscribes to, on top of the user's role. Today that means the [SmartCMS](/cms/smartcms/modules) screens, **Claims** and **Reports**, which exist only for organisations in Singapore that subscribe to a matching module. Outside Singapore those pages answer **not found**, exactly as for any organisation you cannot see. A Singapore organisation without the matching module gets a "not allowed" page that tells staff to ask an admin to turn the module on. Either way the API refuses the matching endpoints.
+
+## Denials look like absence
+
+When you are not a member of an organisation, or your membership is inactive, requests for it answer **not found** rather than **forbidden**. The app deliberately does not confirm that an organisation exists to someone who cannot see it. A page that shows "not found" where you expected settings usually means the membership, not the URL.
+
+## The service and the previewed role
+
+Two more choices are kept alongside the organisation: the care service you are working in, and, for a Clinic Admin, a role being previewed. Neither grants anything.
+
+- **The service** (`medbot_service`) decides which service's pages the CMS tab shows and where the CMS opens. It counts only when it names the current organisation and a service you may open; otherwise it is ignored. Every service page still checks your access.
+- **A previewed role** (`medbot_preview_role`) changes the sidebar, the phone's bar, search and the home page to another role's. It lasts the browser session and counts only for an administrator's own membership. Every page, every API check and every record of who did what still use the administrator's real role, so a preview never lets an administrator sign notes as a doctor.
+
+Signing out clears both. See [Choosing & Switching](/cms/administration/switching).
+
+## Across the Medbot apps
+
+[Care services](/cms/services) are part of the organisation and are run from Medbot CMS: a service belongs to one organisation, its care team is drawn from that organisation's members, and each member's role on a service is their role in the organisation. Medbot web is personal only: it has no organisation scope, so nothing done there is scoped to a clinic, and its old organisation pages redirect to Medbot CMS.
+
+The [Home assistant](/cms/home-assistant) works inside one organisation too. A conversation belongs to the person who started it, in the organisation they started it in, and it reads only that organisation's records through the same role checks as the CMS pages.
+
+## What is still single-organisation
+
+The [patient portal](/patient) is a separate app with its own patient accounts, and a patient's relationship to a clinic is a [connected-clinic link](/patient/connected-clinics) rather than a CMS membership. Patient-facing screens are organised around the patient's own health record, which can span several clinics — the mirror image of the CMS's one-organisation-at-a-time model.
