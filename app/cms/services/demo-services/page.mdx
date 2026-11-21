@@ -4,6 +4,8 @@ import { ImageZoom } from "nextra/components";
 
 A **demo service** is a fully configured service filled with made-up patients, so you can show how a service runs, or learn it yourself, without touching real records. Demo patients have no real phone, email or ID number, so nothing is ever sent to a real person.
 
+> **Step-by-step guides.** [Use Cases](/cms/use-cases) walks through a demo service from creating the demo organisation to every feature it shows. Start with [IVF & Assisted Reproduction](/cms/use-cases/ivf).
+
 Demo services live only in a **demo organisation**: your own organisation for showing Medbot, with synthetic data only. Loading demo patients there also makes **demo sign-ins** for the care team and the patients, so the people you show it to can sign in as each person and try every part themselves. Nothing demo remains in a clinic's real organisation.
 
 ## Your demo organisation
@@ -50,12 +52,13 @@ The demo sign-in addresses are not lost: the next demo organisation that loads t
    | **Cataract surgery** | Ophthalmology | An eye clinic and day surgery list: visual acuity, eye pressure, dilation and biometry steps, red flags for a painful red eye or worsening vision after surgery and for flashes, floaters or a curtain, a pre-operative history on the portal, and eye-drop, eye-shield and recovery education. |
    | **IVF and assisted reproduction** | Reproductive medicine | A fertility centre: monitoring visits with scan and hormone blood-test steps, red flags for OHSS after the trigger, trigger errors and bleeding or pain, injection-technique and cycle-stage education, and written cost estimates from the clinic price list. |
 
+   In a demo organisation, choosing a template that has a step-by-step guide, such as **IVF and assisted reproduction**, shows a **Step-by-step guide** card linking to it.
 3. The **Name** is pre-filled with the template's name; change it if you like. The template sets the specialty, protocols, referral criteria, AI encounters, red flags, agents and visit steps. You can change any of them afterwards. Every template makes an **Outpatient** service; change the mode later with **Edit service details** if you need to.
 4. Click **Create from template**.
 
 The service opens on its page as a **draft**, skipping the setup wizard: see [Finish setting up](#finish-setting-up).
 
-<ImageZoom src="/images/cms/services/demo-services/01-new-service-template-picker.png" alt="The New Service page with the template cards" />
+<ImageZoom src="/images/docs/services/demo-services/01-new-service-template-picker.png" alt="The New Service page with the template cards" />
 
 In a demo organisation the service shows an amber **Demo** chip beside its status ("Demo data - synthetic, not a real patient record"). Any member of the organisation can create one.
 
@@ -83,17 +86,19 @@ The **Demo patients** panel (with a **Synthetic data** chip) sits on a demo serv
 1. Click **Load demo patients**.
 2. In **Load demo patients**, choose a **Demo patient set**. Each shows a name, a **Bundled** badge and a description. A set already loaded in another service is greyed out.
 
-   Each template has one set: **General practice — a morning clinic** (seven patients: diabetes, hypertension and kidney disease reviews, a fever, a stomach bug and a cataract referral), **Cataract surgery — clinic and day surgery list** (six patients from a new referral to second-eye surgery, including a day 4 patient with increasing pain and redness) and **Orchard Fertility Centre: fourteen cycles** (IVF at every stage).
+   Each template has one set: **General practice — a morning clinic** (seven patients: diabetes, hypertension and kidney disease reviews, a fever, a stomach bug and a cataract referral), **Cataract surgery — clinic and day surgery list** (six patients from a new referral to second-eye surgery, including a day 4 patient with increasing pain and redness) and **Orchard Fertility Centre: fourteen cycles** (IVF at every stage; see the [IVF guide](/cms/use-cases/ivf#the-fourteen-cycles)).
 3. Choose which patients to load. If the set has several conditions, archetypes or sites, filter with **Condition**, **Archetype** and **Site**. Quick buttons choose **One per archetype**, **Two per archetype**, **All shown** or **None**; or tick patients individually under **Patients (N shown)**.
 4. Click **Load N patient(s)**.
 
-<ImageZoom src="/images/cms/services/demo-services/02-load-demo-patients-dialog.png" alt="The Load demo patients dialog with the bundled set, the Condition filter, All shown and None, the patient list and the Load 6 patients button" />
+<ImageZoom src="/images/docs/services/demo-services/02-load-demo-patients-dialog.png" alt="The Load demo patients dialog with the bundled set, the Condition filter, All shown and None, the patient list and the Load 6 patients button" />
 
 Patients are dated relative to today, so their story is current whenever you load them. The panel's status line tracks progress ("Loading demo patients - N of M ready.") and ends with "N demo patients loaded." If some steps fail it says so, and you can try again.
 
+In a demo organisation, a service made from a template with a step-by-step guide shows a **Step-by-step guide** card at the top of the panel, linking to it: for the IVF template, [IVF & Assisted Reproduction](/cms/use-cases/ivf).
+
 Each loaded patient shows their name (a link to their patient page), a summary and tags. An **In patient portal** badge appears once their portal copy is ready. Demo patients carry a **Demo** chip in the cohort roster, on their patient page, and on the Workstation boards. Use the link at the foot of the panel to see them in today's queue on the Workstation.
 
-<ImageZoom src="/images/cms/services/demo-services/03-demo-panel-loaded.png" alt="The Demo patients panel with loaded patients and the reset and remove buttons" />
+<ImageZoom src="/images/docs/services/demo-services/03-demo-panel-loaded.png" alt="The Demo patients panel with loaded patients and the reset and remove buttons" />
 
 ## Demo sign-ins
 
