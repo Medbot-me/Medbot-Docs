@@ -3,6 +3,7 @@ import {
   BackpackIcon,
   BinocularsIcon,
   BotIcon,
+  FlaskConicalIcon,
   HeartPulseIcon,
   HospitalIcon,
   MicroscopeIcon,
@@ -208,6 +209,23 @@ export default function Page() {
               title="Medical report writing"
               description="Streamline medical report writing with Medbot."
               href="/docs/use-cases/medical-report"
+            />
+          </div>
+
+          <div className="mt-24">
+            <SectionHeading
+              align="left"
+              eyebrow="Medbot CMS use cases"
+              title="Run a clinical area end to end"
+              description="Set up a demo service with synthetic patients, then try every feature as the care team and as the patients."
+            />
+          </div>
+          <div className="mt-12 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+            <FeatureRow
+              icon={FlaskConicalIcon}
+              title="IVF and assisted reproduction"
+              description="Create a demo fertility centre with fourteen treatment cycles and follow them from the cycles board to the patient's My cycle."
+              href="/cms/use-cases/ivf"
             />
           </div>
         </div>

@@ -6,6 +6,8 @@ export default {
   "roles-and-permissions": "Roles & Permissions",
   "-- guides": { type: "separator", title: "Guides by Role" },
   guides: "Guides by Role",
+  "-- use-cases": { type: "separator", title: "Use Cases" },
+  "use-cases": "Use Cases",
   "-- services": { type: "separator", title: "Care Services" },
   services: "Services",
   "-- patients": { type: "separator", title: "Patients & Clinical Care" },
