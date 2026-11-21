@@ -28,7 +28,7 @@ The new account appears on the **Accounts** tab of the Billing page with its nam
 
 1. On **Billing → Accounts**, open the actions menu on the account's row (**Actions for** the account name).
 2. Select **Add items**.
-3. Search for a **Charge item definition** and select it. Only active definitions with a base price are listed, each with its price. Definitions come from the [Billable Catalog](/cms/billable-catalog).
+3. Search for a **Charge item definition** and select it. Only active definitions with a base price are listed, each with its price. Definitions come from the [Billable Catalog](/cms/billing/billable-catalog).
 4. Enter a **Quantity** (a positive number) and select **Add charge item**.
 
 Repeat for each line. Items wait on the account as billable until you generate an invoice. Each charge takes its **Bill category** from the catalog item when you add it. The category decides where the charge is totalled on the bill.
@@ -65,7 +65,7 @@ A charge that is being invoiced at that moment cannot be removed: "This charge i
 - No billable items: "No billable charge items on this account. Add charge items before generating an invoice."
 - An item with no catalog entry shows **No price definition**, and the dialog asks you to fix it before generating.
 - An item that is already on an invoice, or is being invoiced by someone else at the same moment, is skipped. If nothing is left, generating is refused with a message that the items may already be billed.
-- In Singapore every price must be in SGD. Otherwise you see, for example, "A bill here is in SGD; these charges are priced in USD. Reprice them in the catalog." Fix the price in the [Billable Catalog](/cms/billable-catalog).
+- In Singapore every price must be in SGD. Otherwise you see, for example, "A bill here is in SGD; these charges are priced in USD. Reprice them in the catalog." Fix the price in the [Billable Catalog](/cms/billing/billable-catalog).
 
 When generating fails, the dialog keeps your choices and shows the reason above the list. Select **Try again** when it is fixed.
 
@@ -73,7 +73,7 @@ When generating fails, the dialog keeps your choices and shows the reason above 
 
 The generated invoice, its PDF, and the **Invoices** tab show the same bill.
 
-- **Receipt number.** An issued bill gets a receipt number such as `MAIN-RC-2026-000123`: the clinic location's code, `RC`, the year of the visit, and a running number for that location. The code is the location's **Code** from [Session Setup](/cms/session-setup), in capitals. If the visit's location cannot be found, the bill shows its invoice number instead.
+- **Receipt number.** An issued bill gets a receipt number such as `MAIN-RC-2026-000123`: the clinic location's code, `RC`, the year of the visit, and a running number for that location. The code is the location's **Code** from [Session Setup](/cms/front-desk/session-setup), in capitals. If the visit's location cannot be found, the bill shows its invoice number instead.
 - **Category totals.** The bill totals its lines under **Consultation**, **Prescription**, **Investigation** and **Others**, from each charge's bill category. In Singapore these are also the CHAS claim buckets.
 - **Net** and **Total.** Catalog prices include GST. **Total** is the sum of the lines. **Net** is the total without the GST it contains.
 - **GST.** When the organisation is GST-registered on the visit date, the bill shows a line such as "GST 9% included" with the GST amount. The rate follows the visit date (9% from 2024). The PDF also prints the GST registration number. Set the registration under [Singapore Registration](/cms/smartcms/registration). A visit before the **Registered from** date has no GST line.
@@ -156,14 +156,14 @@ What the patient sees: a completed visit's invoice is also available to the pati
 
 ## Taking payment at the counter
 
-Payments are taken from the **Bill** column of the [Reception Queue](/cms/reception-queue#taking-payment), not from this page. The **Take payment** dialog shows the bill's cash due, plus anything a payer refused or paid short, and records each payment with its method. Medbot marks the visit paid once the payments cover what is owed on the issued bill. If a payer later refuses a claim or pays short, the queue shows an amber **Owes $X** button to reception and Clinic Admins until the balance is taken. A payment taken before the visit is billed is kept, but the visit is not marked paid until the bill is issued.
+Payments are taken from the **Bill** column of the [Reception Queue](/cms/front-desk/reception-queue#taking-payment), not from this page. The **Take payment** dialog shows the bill's cash due, plus anything a payer refused or paid short, and records each payment with its method. Medbot marks the visit paid once the payments cover what is owed on the issued bill. If a payer later refuses a claim or pays short, the queue shows an amber **Owes $X** button to reception and Clinic Admins until the balance is taken. A payment taken before the visit is billed is kept, but the visit is not marked paid until the bill is issued.
 
 Taking payment does not change the invoice's **Status** on the **Invoices** tab, and it does not print a receipt. For a receipt, print the invoice. See [Finding and reprinting invoices](#finding-and-reprinting-invoices).
 
 ## Related
 
-- [Reception Queue](/cms/reception-queue#taking-payment): take payment for a visit.
-- [Billable Catalog](/cms/billable-catalog): the priced items you bill, and their bill categories.
-- [Services & Consumables](/cms/services-and-consumables): the clinical services that carry prices.
+- [Reception Queue](/cms/front-desk/reception-queue#taking-payment): take payment for a visit.
+- [Billable Catalog](/cms/billing/billable-catalog): the priced items you bill, and their bill categories.
+- [Services & Consumables](/cms/billing/services-and-consumables): the clinical services that carry prices.
 - [Singapore Registration](/cms/smartcms/registration): the GST registration the bill uses.
 - [SmartCMS (Singapore)](/cms/smartcms): the claims the bill can carry.

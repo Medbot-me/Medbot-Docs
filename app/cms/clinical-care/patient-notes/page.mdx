@@ -1,0 +1,82 @@
+# Patient Notes Workspace
+
+The notes workspace is a full-page writing area attached to a patient's chart. It lists the notes filed for one patient and lets clinicians claim an existing note into the chart. Open it with **Notes** in the open patient's card in the sidebar, **New note** at the top of the chart's **Overview**, or **Write a note** (**Open notes** once one is written) on **Encounters**. You can also go to `/notes`, where you first search for the patient. There is no top-level **Notes** link in the sidebar.
+
+> **Note:** The notes workspace is available only when your Medbot deployment has turned it on. If it is off, the **Notes** entry is missing and the page shows "not found".
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| Open a patient's notes and read the list | Yes | Yes | Yes | Yes |
+| Claim an existing note into the chart | Yes | No | Yes | Yes |
+| Start a new note | Yes | No | Yes | Yes |
+| Remove or delete a note | Yes | No | Yes | Yes |
+
+A Receptionist opens the workspace in read-only mode and does not see the buttons for changing notes. A Patient service associate and an Allied health professional can open the workspace, see the **Chart** tab, claim and write notes, as a Nurse can.
+
+## Finding a patient's notes
+
+1. Go to `/notes`. There is no sidebar link for it. This opens a page that says "Search for a patient to view the notes claimed into their chart."
+2. Type in **Search patients by name...** and select the patient. From a patient's chart, select **Notes** in the open patient's card to go straight there.
+
+The workspace is laid out as a workbench with three areas:
+
+- On the left, the **Notes** dock, with the tabs **Notes**, **Chart**, **Templates** and **Resources**. Everyone except a Receptionist sees **Chart**.
+- In the centre, the note you are writing.
+- On the right, the **AI** dock, with the tabs **Chat** and **Agents**.
+
+The **Notes** tab lists the patient's notes under **Search notes**. An empty chart says "No notes in this patient's chart yet." Type in **Search notes** to filter the list by title. Each row shows the title and when it was last updated.
+
+### Note templates
+
+Your note templates are offered in three places in the note you are writing:
+
+- **The `/` menu.** Type `/` in the note and choose a template under **Templates**.
+- **An empty note.** A new, empty note shows a button for each template. Select one to fill the note with it.
+- **The Templates tab** in the **Notes** dock. Each template has **Insert**, which adds it where the cursor is, and **Copy**. A template with a smart phrase shows it under its title. **New** and **Manage** open the CMS **Templates** page (`/templates`) in a new browser tab.
+
+The list holds your own templates under **My templates**, then the default templates you have not copied under **Defaults**. They are the same templates as on **Templates** (`/templates`) in the CMS tab and on the [Templates](/docs/workspace/templates) page in Medbot web. A care service's consult editor offers the same list.
+
+A Receptionist, who opens the workspace read-only, can copy a template but not insert one.
+
+### Previewing a note or encounter
+
+Select the eye icon on a note (**Preview beside the open note**) to open it read-only in a second tab beside the note you are writing. Select **Open for editing** in the preview to switch to that note.
+
+The **Chart** tab shows the patient, their allergies, problems and medications, and their encounters. Select a past encounter to preview its orders and latest note in the centre. Only one preview is open at a time.
+
+### Orders and diagnoses
+
+A bottom dock holds tabs for the visit's clinical work. It starts collapsed, and a status line in its bar counts unsigned orders.
+
+- **Medications** and **Orders** draft and sign prescriptions and service orders for the open encounter. See [Prescribing & Medications](/cms/clinical-care/prescribing). Your deployment may leave them off, which is the default. Prescriptions drafted there are checked against the patient's allergies. See [Allergies & Medication Safety](/cms/clinical-care/allergies-and-medication-safety#allergy-alerts-when-prescribing).
+- **Diagnoses** codes the visit's diagnoses, in an organisation that codes them (Singapore). It is the same card, with the same data and **Save diagnoses** button, as the chart **Overview**'s, so claims and MOH reports still read them from one place. See [Coding the visit's diagnoses](/cms/clinical-care/encounters#coding-the-visits-diagnoses-singapore). Clinic Admins and Doctors edit it. Without an open visit, the tab says so.
+
+The dock's name follows what it holds: **Orders and diagnoses**, **Orders** or **Diagnoses**.
+
+## Typing into an empty editor
+
+On a patient with no note yet, you can simply start typing in the empty editor, in the body or the title. The first typing creates the note that **New** would, against the same open encounter and with the same default title, and then opens it in place. Text you type while it is being created is kept. If creating the note fails, the editor says "Could not create the note. Keep typing to try again." and keeps your text. With no open encounter, the editor is read-only and says "Start a visit to write a note."
+
+## Claiming an existing note
+
+A note you wrote elsewhere in Medbot can be filed into a patient's chart.
+
+1. Select the link icon (**Claim an existing note**).
+2. In **Claim a note into this patient's chart**, search under **Note** ("Search your notes by title...") and pick one of your own notes.
+3. Optionally, fill in **Encounter id (optional)** to link the note to a visit. Leave it blank to link to the patient only.
+4. Select **Claim**.
+
+If claiming fails, the window shows the reason.
+
+## Starting and removing notes
+
+Select **New** to start a note. It is available only while the patient has an open encounter. Otherwise the button is disabled and its tooltip says "This patient has no open encounter to note against." See [Encounters & Clinical Notes](/cms/clinical-care/encounters).
+
+Use the three-dot **Note actions** menu on a row to choose **Remove from chart** (for a claimed note, which keeps the note itself) or **Delete note**.
+
+## Related
+
+- [Encounters & Clinical Notes](/cms/clinical-care/encounters): consultation notes and progress notes on the chart.
+- [Roles & Permissions](/cms/roles-and-permissions): what each role can do.

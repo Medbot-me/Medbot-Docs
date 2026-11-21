@@ -2,16 +2,16 @@
 
 Medbot CMS needs its servers to open charts, save notes and run the queue. When those servers, or the clinic's own internet, stop answering, the clinic keeps working on **downtime laptops**: computers that hold an encrypted copy of the charts their desk needs and let staff record what they do. When Medbot is back, what was recorded is uploaded, checked by the people who wrote it, and joins the chart.
 
-This section covers the whole cycle: preparing laptops before anything goes wrong, working through an outage, and recovering afterwards. For how Medbot tells you something is wrong in the first place, see [System Status](/cms/system-status).
+This section covers the whole cycle: preparing laptops before anything goes wrong, working through an outage, and recovering afterwards. For how Medbot tells you something is wrong in the first place, see [System Status](/cms/downtime/system-status).
 
-Clinic Admins open **Downtime devices**, **Downtime recovery** and **System status** from the **Downtime and status** section of [Organisation Settings](/cms/settings#downtime-and-status), in the **Home** tab. Doctors, nurses and receptionists open **Downtime recovery** from **Organisation → Downtime recovery** in the Home tab sidebar. Times on these pages, and on the printed outage report, are in Singapore time.
+Clinic Admins open **Downtime devices**, **Downtime recovery** and **System status** from the **Downtime and status** section of [Organisation Settings](/cms/administration/settings#downtime-and-status), in the **Home** tab. Doctors, nurses and receptionists open **Downtime recovery** from **Organisation → Downtime recovery** in the Home tab sidebar. Times on these pages, and on the printed outage report, are in Singapore time.
 
 ## The cycle at a glance
 
 | Stage | What happens | Who | See |
 | --- | --- | --- | --- |
 | **Before an outage** | An administrator enrolls a laptop at each desk that needs one, chooses its desk profile, and sets how long laptops wait before they switch over. Each person signs in on the laptop once, while it is online, and chooses an offline passphrase. | Clinic Admin enrolls. Every role signs in. | [Downtime Laptops](/cms/downtime/devices), [Working During an Outage](/cms/downtime/working-offline#before-an-outage) |
-| **Medbot slows or stops** | A banner appears in the CMS, and a page that cannot load names the service that is down. On a laptop, the Medbot CMS desktop app shows the downtime workspace by itself once Medbot has not answered for the organisation's wait (5 minutes unless changed). | Automatic | [System Status](/cms/system-status), [Medbot CMS Desktop App](/cms/downtime/cms-desktop) |
+| **Medbot slows or stops** | A banner appears in the CMS, and a page that cannot load names the service that is down. On a laptop, the Medbot CMS desktop app shows the downtime workspace by itself once Medbot has not answered for the organisation's wait (5 minutes unless changed). | Automatic | [System Status](/cms/downtime/system-status), [Medbot CMS Desktop App](/cms/downtime/cms-desktop) |
 | **During downtime** | Staff unlock the laptop with their passphrase, look up charts, print forms, register walk-ins and record vitals, allergies, notes and visit times. Each entry is signed on the laptop. Without a laptop, the clinic uses paper. | Every role, within what their role and the laptop's profile allow | [Working During an Outage](/cms/downtime/working-offline) |
 | **Ending downtime** | A doctor or administrator ends downtime on each laptop, and ends the outage in the CMS once the laptops have uploaded what they hold. Downtime never ends by itself. | Doctor or Clinic Admin | [Ending downtime](/cms/downtime/working-offline#ending-downtime), [Ending an outage](/cms/downtime/recovery#ending-an-outage) |
 | **Recovery** | Authors verify their uploaded entries within 72 hours. Reception matches walk-ins. Paper notes and paper prescriptions are entered. An administrator works through everything the outage affected until it is reconciled, and prints the outage report. | Clinicians verify. Clinic Admin and Receptionist match walk-ins. Clinic Admin reconciles. | [Recovery After an Outage](/cms/downtime/recovery) |
@@ -60,5 +60,5 @@ What a person can record on a laptop also depends on the laptop's [desk profile]
 - Enrolling and managing laptops: [Downtime Laptops](/cms/downtime/devices).
 - What to do when Medbot is down: [Working During an Outage](/cms/downtime/working-offline).
 - What to do when Medbot is back: [Recovery After an Outage](/cms/downtime/recovery).
-- Banners, error pages and the status page: [System Status](/cms/system-status).
+- Banners, error pages and the status page: [System Status](/cms/downtime/system-status).
 - How SmartCMS claims and reports wait out a national gateway outage: [Gateway Outages & Deadlines](/cms/smartcms/outages).

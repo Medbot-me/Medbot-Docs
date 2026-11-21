@@ -56,7 +56,7 @@ The [claims agent](/cms/smartcms/claims-agent) can also prepare claims every eve
 
 ## 1. Check-in and CHAS verification
 
-When a patient checks in at the [reception queue](/cms/reception-queue) for the first time that day, Medbot asks MHCP for their CHAS card, chronic balance and acute balance. Verification never blocks check-in. If it fails, the patient is still checked in.
+When a patient checks in at the [reception queue](/cms/front-desk/reception-queue) for the first time that day, Medbot asks MHCP for their CHAS card, chronic balance and acute balance. Verification never blocks check-in. If it fails, the patient is still checked in.
 
 The patient header then shows a **CHAS badge** to every clinic role:
 
@@ -70,7 +70,7 @@ If verification fails, the badge says why, for example:
 
 | Message | What to do |
 | --- | --- |
-| "Not verified: the patient has no Singapore NRIC (S or T) recorded." | Record the patient's NRIC on their [identifiers](/cms/patient-records). |
+| "Not verified: the patient has no Singapore NRIC (S or T) recorded." | Record the patient's NRIC on their [identifiers](/cms/clinical-care/patient-records). |
 | "Not verified: … is not connected to SmartCMS for CHAS. It needs an HE code and CHAS switched on in the SmartCMS settings." | An admin finishes the location's [SmartCMS settings](/cms/smartcms/settings). |
 | "Not verified: SmartCMS is switched off on this Medbot server." | Nothing is sent from this server. Contact Medbot. |
 | "Not verified: MHCP's answer could not be read. Try again later." | Select **Verify now** later. |
@@ -79,7 +79,7 @@ A card verified more than 30 days ago, or in an earlier year than the visit, is 
 
 ## 2. Code the diagnoses
 
-CHAS, Medisave, Screen for Life and the national reports all need the visit's diagnoses coded in **ICD-10-AM**. On the patient chart's **Overview**, the **Diagnoses (ICD-10-AM)** card covers the current visit. See [Encounters & Clinical Notes](/cms/encounters).
+CHAS, Medisave, Screen for Life and the national reports all need the visit's diagnoses coded in **ICD-10-AM**. On the patient chart's **Overview**, the **Diagnoses (ICD-10-AM)** card covers the current visit. See [Encounters & Clinical Notes](/cms/clinical-care/encounters).
 
 - Search by code or name, for example `J06.9` or "diabetes", and select **Add a diagnosis**.
 - Add complications, and pick from the suggested CDMP conditions for a chronic visit.
@@ -93,7 +93,7 @@ Coding a notifiable disease prepares a disease notification. A visit with a chro
 
 - **Screen for Life.** The **Screen for Life** panel on the encounter checks eligibility with HPB and the patient's CHAS history (**Check eligibility**), then **Order screening**. **Check claim history** asks eCHAS for the patient's earlier screening claims and lists them under **Screening claims on record (eCHAS)**.
 - **Developmental screening.** The **Childhood developmental screening (CDS)** panel shows the child's previous claims (**Check CDS history**) and records a screening (**Record screening**). It warns when MHCP already has a claim for that milestone, because a second one is rejected unless appealed.
-- **Vaccinations.** Choosing the **SDD product** when you record a vaccination lets Medbot claim the vaccination subsidy and notify the National Immunisation Registry. The **Vaccination subsidy (VSS)** panel checks eligibility. See [Vaccinations](/cms/vaccinations).
+- **Vaccinations.** Choosing the **SDD product** when you record a vaccination lets Medbot claim the vaccination subsidy and notify the National Immunisation Registry. The **Vaccination subsidy (VSS)** panel checks eligibility. See [Vaccinations](/cms/clinical-care/vaccinations).
 
 ## 3. Bill the visit
 
@@ -111,7 +111,7 @@ Below the charges, the dialog shows a panel for each claim the visit can carry. 
 | **Diagnoses (ICD-10-AM)** | Filled in from the diagnoses coded at the visit. |
 | **Referred to (optional)** | Where the patient was referred, if anywhere. |
 
-PHPC also asks for the **Patient type** and any justification MHCP requires. The charges are grouped by their **Bill category** from the [Billable Catalog](/cms/billable-catalog).
+PHPC also asks for the **Patient type** and any justification MHCP requires. The charges are grouped by their **Bill category** from the [Billable Catalog](/cms/billing/billable-catalog).
 
 ### Screen for Life, vaccination and CDS subsidies
 
@@ -255,7 +255,7 @@ A few more statuses come from Medbot itself:
 
 ### Claims today
 
-**Claims today** (`/claims/today`) shows every patient checked in at one clinic location on one day: their bill, the status of each claim on it, and what they still owe. Open it with **Claims today** on the **Claims** page. It is read only: work claims in the queue, bills in [Billing](/cms/billing), and payments at the [reception queue](/cms/reception-queue).
+**Claims today** (`/claims/today`) shows every patient checked in at one clinic location on one day: their bill, the status of each claim on it, and what they still owe. Open it with **Claims today** on the **Claims** page. It is read only: work claims in the queue, bills in [Billing](/cms/billing), and payments at the [reception queue](/cms/front-desk/reception-queue).
 
 Choose the **Clinic** and the **Date**. It opens on today at the organisation's default location. For an earlier day the heading reads **Claims by day**. The page refreshes itself every 20 seconds.
 
@@ -273,9 +273,9 @@ Tiles at the top total the day: **Patients billed**, **Claimed**, **Approved so 
 
 Doctors see the page without the **Paid** column, the **Cash collected** and **Paid, still owing** tiles, and the **Owes after paid** filter.
 
-When you open the row of such a patient, a note says "The queue shows this visit as paid, but $X is still owed. Take it from the Bill column of the queue." The queue shows the same figure as an amber **Owes $X** button; see [Reception Queue](/cms/reception-queue#when-the-visit-is-marked-paid).
+When you open the row of such a patient, a note says "The queue shows this visit as paid, but $X is still owed. Take it from the Bill column of the queue." The queue shows the same figure as an amber **Owes $X** button; see [Reception Queue](/cms/front-desk/reception-queue#when-the-visit-is-marked-paid).
 
-To take a balance for one of today's patients, use **Take payment** in the [Reception Queue](/cms/reception-queue#taking-payment). Its dialog starts from the same owed figure as **Patient pays**.
+To take a balance for one of today's patients, use **Take payment** in the [Reception Queue](/cms/front-desk/reception-queue#taking-payment). Its dialog starts from the same owed figure as **Patient pays**.
 
 **What the patient owes.** The bill's cash due assumes each scheme pays its share. **Patient pays** adds back whatever a payer refused or paid short, and the share of any claim staff discarded, because no payer will pay it. A claim that can no longer be sent counts as refused. A claim MHCP is still deciding, or that is under appeal, being cancelled or recovered, is not counted against the patient yet: the figure is marked "est.". A claim whose answer was lost (**Not confirmed**) is never charged to the patient. It shows as needing attention until staff find out what happened. For Medisave, only the submission in force counts, so an amendment or cancellation CPF accepted replaces the first claim's amount. The note under the table says: "“est.” marks an amount a payer has not answered yet: it changes if the payer approves less than was claimed."
 

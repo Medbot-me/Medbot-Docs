@@ -51,7 +51,7 @@ Values are shown exactly as the record has them, never rounded or converted. A c
 
 Each reply has **Copy reply**, and the latest has **Ask again**, which asks the same question afresh. If the assistant cannot answer, it says so with **Try again**.
 
-The assistant always runs on the organisation's default model. The box shows **Organisation default model**: you cannot choose another. A Clinic Admin sets that model in the [AI policy](/cms/ai-policy).
+The assistant always runs on the organisation's default model. The box shows **Organisation default model**: you cannot choose another. A Clinic Admin sets that model in the [AI policy](/cms/administration/ai-policy).
 
 ## Running a clinic day
 
@@ -61,7 +61,7 @@ A doctor or nurse can run a day of clinic from a Home chat: call the next patien
 
 ### Starting
 
-1. Set the CMS to a service that runs a queue, a clinic or a hybrid service. See [Choosing & Switching](/cms/switching#choosing-a-service).
+1. Set the CMS to a service that runs a queue, a clinic or a hybrid service. See [Choosing & Switching](/cms/administration/switching#choosing-a-service).
 2. On a new chat on **Home**, select **Start my clinic**. It is offered to a Doctor or Nurse, and to a Clinic Admin covering for support. Without a service set, it is not offered, and the ordinary assistant works as before.
 
 This opens a conversation for that service, you and today. Starting your clinic again the same day reopens it. It appears under **Chats** like any other conversation. The suggestions in it are "Who is waiting?", "Who is next?", "Show any red flags" and "What appointments do we have today?"
@@ -80,9 +80,9 @@ A panel beside the chat has two tabs. On a narrow screen it opens from a button 
 | **Call patient** | Choose a room and select **Start consult**, or **Not now**. The patient is called in and the consult opens with them. A patient who has not arrived cannot be called. |
 | **Recording** | Record and transcribe the consult. While it is listening, the recorder replaces the message box. When it stops, review the drafted summary and add its sections to the consult note with **Add all** (or **Add remaining** once some are in), **Regenerate** it, or **Discard** it. **Open note editor** takes you to the consult screen. |
 | **Note change** | When you ask for a change to a summary section by voice, **Accept change** applies it to the draft, or select **Not now**. |
-| **Orders and prescriptions** | The assistant drafts orders for the open consult and proposes a prescription. **Review and sign** shows the unsigned medications. A prescription is checked and signed as in [Prescribing & Medications](/cms/prescribing#signing): only a doctor, a Clinic Admin or an [authorised nurse](/cms/staff#authorising-a-nurse-to-prescribe) can sign it. Any other nurse can draft it and leave it for a prescriber. |
+| **Orders and prescriptions** | The assistant drafts orders for the open consult and proposes a prescription. **Review and sign** shows the unsigned medications. A prescription is checked and signed as in [Prescribing & Medications](/cms/clinical-care/prescribing#signing): only a doctor, a Clinic Admin or an [authorised nurse](/cms/administration/staff#authorising-a-nurse-to-prescribe) can sign it. Any other nurse can draft it and leave it for a prescriber. |
 | **End the consult** | Choose the next steps to add for the patient, then confirm. Ending the consult also calls the next arrived patient in the same press. The card says if that call did not go through, with a **Call** button to try again. Unsigned orders are not signed by ending the consult. |
-| **Follow-ups** | After clinic, the assistant proposes an AI encounter for each patient seen today, with its kind and reason open to change. A patient with no phone number is skipped. Links go out only when you send them. See [Starting an AI encounter](/cms/encounters#starting-an-ai-encounter). |
+| **Follow-ups** | After clinic, the assistant proposes an AI encounter for each patient seen today, with its kind and reason open to change. A patient with no phone number is skipped. Links go out only when you send them. See [Starting an AI encounter](/cms/clinical-care/encounters#starting-an-ai-encounter). |
 
 ### Closing the clinic
 
@@ -99,5 +99,5 @@ Conversations are yours alone, in that organisation. Nobody else sees them, and 
 ## Related
 
 - [Staff App Overview](/cms/overview): the Home and CMS tabs.
-- [AI Policy](/cms/ai-policy): which AI providers and regions the organisation's AI may use, and its default model.
-- [Patient Records & Consent](/cms/patient-records), [Reception Queue](/cms/reception-queue), [Appointments](/cms/appointments) and [Billing](/cms/billing): the pages the cards link to.
+- [AI Policy](/cms/administration/ai-policy): which AI providers and regions the organisation's AI may use, and its default model.
+- [Patient Records & Consent](/cms/clinical-care/patient-records), [Reception Queue](/cms/front-desk/reception-queue), [Appointments](/cms/front-desk/appointments) and [Billing](/cms/billing): the pages the cards link to.

@@ -1,6 +1,6 @@
 # Roles & Permissions
 
-> **Note:** Roles are set per organisation. A person can be a Clinic Admin at one clinic and a Nurse at another, or hold more than one role in the same clinic, such as Doctor and Clinic Admin. They work as one role at a time, chosen from the [sidebar switcher or the **Working as** menu](/cms/switching#switching-role), and every check below runs against that active role in the organisation they have currently chosen. Roles do not add up: to do a Clinic Admin task, switch to Clinic Admin. A Clinic Admin [previewing another role](/cms/switching#previewing-another-role) sees that role's navigation but keeps the Clinic Admin column below.
+> **Note:** Roles are set per organisation. A person can be a Clinic Admin at one clinic and a Nurse at another, or hold more than one role in the same clinic, such as Doctor and Clinic Admin. They work as one role at a time, chosen from the [sidebar switcher or the **Working as** menu](/cms/administration/switching#switching-role), and every check below runs against that active role in the organisation they have currently chosen. Roles do not add up: to do a Clinic Admin task, switch to Clinic Admin. A Clinic Admin [previewing another role](/cms/administration/switching#previewing-another-role) sees that role's navigation but keeps the Clinic Admin column below.
 
 Medbot CMS is built around four main clinic roles, two further roles for counselling and allied health staff, and one internal account that is not a real clinic role. Every action re-checks the signed-in user's role before it reads or writes clinic data. What you see on a page only controls what is visible, so a role's real boundary is enforced at the action, not on the screen. When a role cannot do something, the control is hidden or disabled, and an action attempted anyway is refused.
 
@@ -16,11 +16,11 @@ This page is the master list. Every **Who can do this** table on a feature page 
 
 ## Patient service associate and Allied health professional
 
-Two further roles can be given to staff from the [Staff](/cms/staff) page. Neither prescribes, orders, dispenses, manages inventory or submits claims.
+Two further roles can be given to staff from the [Staff](/cms/administration/staff) page. Neither prescribes, orders, dispenses, manages inventory or submits claims.
 
 **Patient service associate** counsels patients, for example on their costs, and works the front desk's queue. A Patient service associate:
 
-- works the [reception queue](/cms/reception-queue) as a Receptionist does: checks patients in, adds walk-ins, calls patients, routes them, takes payments, and cancels and reopens appointments. They cannot open [Session Setup](/cms/session-setup) or mark a visit **Completed**
+- works the [reception queue](/cms/front-desk/reception-queue) as a Receptionist does: checks patients in, adds walk-ins, calls patients, routes them, takes payments, and cancels and reopens appointments. They cannot open [Session Setup](/cms/front-desk/session-setup) or mark a visit **Completed**
 - reads accounts and invoices on [Billing](/cms/billing), but does not create or change them, and does not see the catalog
 - opens and reads patient charts, starts and closes encounters, and writes and claims progress notes
 - leads **Financial counselling** consults
@@ -40,7 +40,7 @@ A Doctor or Nurse can lead every consult kind. Both further roles can see the ro
 
 Superuser is not a real clinic role. It is an internal and testing account that passes every role check, so one login can exercise every role's work without swapping accounts. It is not offered on the staff form; it is set directly on an account. Because it bypasses the role list rather than being granted the sum of every role's permissions, a few controls that look for one specific role stay hidden to it. Signing off a result, composing on a patient's Documents, issuing a medical certificate, and the Displays panel on Session setup all require signing in as the role that owns them. Approving a result explanation also needs a linked clinician profile, which a Superuser account usually lacks.
 
-> **Note:** Platform administration screens are seen only by Medbot platform superadmins, a Medbot staff identity that is not a clinic role. No clinic role, including Clinic Admin, gives access. See [Platform Administration](/cms/platform-administration).
+> **Note:** Platform administration screens are seen only by Medbot platform superadmins, a Medbot staff identity that is not a clinic role. No clinic role, including Clinic Admin, gives access. See [Platform Administration](/cms/administration/platform-administration).
 
 ## Permissions matrix
 
@@ -50,89 +50,89 @@ Each row is one task. A cell reads **Yes**, **View only**, or **No**. Notes belo
 
 | Task | Clinic Admin | Receptionist | Doctor | Nurse |
 | --- | --- | --- | --- | --- |
-| [See the patient list and open a chart](/cms/patient-records) | Yes | Yes | Yes | Yes |
-| [Register a patient](/cms/patient-records) | Yes | Yes | No | No |
-| [Invite a patient to self-register](/cms/patient-records) | Yes | Yes | No | No |
-| [Deactivate a patient](/cms/patient-records) | Yes | Yes | No | No |
-| [Edit contact details](/cms/patient-records) | Yes | Yes | Yes | Yes |
-| [Record or change communication consent](/cms/patient-records) | Yes | Yes | Yes | Yes |
-| [Invite, review or revoke a patient's caregivers](/cms/patient-portal#caregiver-access) | Yes | Yes | Yes | Yes |
-| [See a patient's encounters](/cms/encounters) | Yes | Yes | Yes | Yes |
-| [Start an encounter](/cms/encounters) | Yes | No | Yes | Yes |
-| [Start a consult from the patient list](/cms/encounters#starting-a-consult-from-the-patient-list) | No | No | Yes | Yes |
-| [Open a patient's Medications page](/cms/prescribing) | Yes | No | Yes | Yes |
-| [Draft or amend a prescription, stop or repeat a medicine](/cms/prescribing#writing-a-prescription) | Yes | No | Yes | Yes |
-| [Sign a prescription](/cms/prescribing#signing) | Yes | No | Yes | Authorised nurses only |
-| [Read clinical notes](/cms/encounters) | Yes | Yes | Yes | Yes |
-| [Write a consultation note](/cms/encounters) | Yes | No | Yes | No |
-| [Write a progress note](/cms/encounters) | Yes | No | Yes | Yes |
-| [Amend or retract a consultation note](/cms/encounters) | Yes | No | Yes | No |
-| [Amend or retract a progress note](/cms/encounters) | Yes | No | Yes | Yes |
-| [See vitals and their history](/cms/vitals) | Yes | Yes | Yes | Yes |
-| [Record vitals](/cms/vitals) | Yes | No | Yes | Yes |
-| [Correct a reading](/cms/vitals) | Yes | No | Yes | Yes |
-| [See a patient's allergies](/cms/allergies-and-medication-safety) | Yes | No | Yes | Yes |
-| [Add an allergy or record "No known drug allergies"](/cms/allergies-and-medication-safety#adding-an-allergy) | No | No | Yes | Yes |
-| [Edit, resolve or mark an allergy entered in error](/cms/allergies-and-medication-safety#correcting-an-allergy) | No | No | Yes | No |
-| [Override an allergy alert and sign a prescription](/cms/allergies-and-medication-safety#allergy-alerts-when-prescribing) | Yes | No | Yes | No |
-| [Open the Medication safety report](/cms/allergies-and-medication-safety#medication-safety-report) | Yes | No | No | No |
-| [See a patient's vaccinations](/cms/vaccinations) | Yes | Yes | Yes | Yes |
-| [Record, edit or void a vaccination](/cms/vaccinations) | Yes | No | Yes | Yes |
-| [Order a vaccination service](/cms/vaccinations) | Yes | No | Yes | Yes |
-| [Register a vaccination service in the catalog](/cms/vaccinations) | Yes | No | No | No |
-| [See an encounter's orders](/cms/orders-and-order-sets) | Yes | Yes | Yes | Yes |
-| [Apply an order set to an encounter](/cms/orders-and-order-sets) | Yes | No | Yes | Yes |
-| [Cancel an order](/cms/orders-and-order-sets) | Yes | No | Yes | Yes |
-| [Open the Order sets page and build your own sets](/cms/orders-and-order-sets) | Yes | No | Yes | Yes |
-| [Edit, share, retire or delete a set someone else owns](/cms/orders-and-order-sets) | Yes | No | No | No |
-| [See results and open a result](/cms/diagnostic-results) | Yes | Yes | Yes | Yes |
-| [File an incoming result](/cms/diagnostic-results) | Yes | Yes | Yes | Yes |
-| [Sign off a result](/cms/diagnostic-results) | No | No | Yes | No |
-| [Reassign a review to another doctor](/cms/diagnostic-results) | Yes | No | Yes | No |
-| [Withdraw a misfiled result](/cms/diagnostic-results) | Yes | No | Yes | No |
-| [Change the results review rota](/cms/diagnostic-results) | Yes | No | No | No |
-| [See the results review rota](/cms/diagnostic-results) | Yes | View only | View only | View only |
-| [Draft and edit a result explanation](/cms/diagnostic-results#explaining-results-to-the-patient) | No | No | Yes | Yes |
-| [Approve, send, or withdraw a result explanation](/cms/diagnostic-results#approving) | No | No | Yes | No |
-| [Withdraw an explanation whose result was withdrawn](/cms/diagnostic-results#withdrawing-an-explanation) | Yes | No | Yes | No |
-| [Open and print an approved explanation](/cms/diagnostic-results#approving) | Yes | Yes | Yes | Yes |
-| [Edit explanation library wording](/cms/diagnostic-results#the-explanation-library) | Yes | No | Yes | No |
-| [Approve or retire library wording](/cms/diagnostic-results#the-explanation-library) | No | No | Yes | No |
-| [See documents, and download, print, or email them](/cms/documents-and-certificates) | Yes | Yes | Yes | Yes |
-| [Compose a letter or memo](/cms/documents-and-certificates) | Yes | No | Yes | Yes |
-| [Compose a referral letter](/cms/documents-and-certificates) | Yes | No | Yes | No |
-| [Issue a medical certificate](/cms/documents-and-certificates) | No | No | Yes | No |
-| [Void a letter or memo](/cms/documents-and-certificates) | Yes | No | Yes | Yes |
-| [Void a referral letter or medical certificate](/cms/documents-and-certificates) | Yes | No | Yes | No |
-| [See clinical photos](/cms/clinical-photos) | Yes | Yes | Yes | Yes |
-| [Take or upload clinical photos](/cms/clinical-photos) | Yes | Yes | Yes | Yes |
-| [Open a Sensitive photo, or turn Sensitive off](/cms/clinical-photos#sensitive-photos) | No | No | Yes | Yes |
-| [File ultrasound measurements, or release an ultrasound image to the patient](/cms/clinical-photos#ultrasound-photos) | No | No | Yes | Yes |
-| [Import prior history from outside records](/cms/diagnostic-results#prior-history-from-outside-records) | No | No | Yes | Yes |
-| [See a patient's problem list and medications on the chart](/cms/patient-records#the-patient-chart) | Yes | No | Yes | Yes |
-| [See a patient's audit log](/cms/patient-records#audit-log) | Yes | No | No | No |
-| [Edit or void a clinical photo](/cms/clinical-photos) | Yes | Own photos | Yes | Yes |
-| [File a photographed paper report as a result](/cms/clinical-photos#filing-a-paper-report-as-a-result) | Yes | Yes | Yes | Yes |
-| [Read and reply to clinic inbox threads](/cms/messaging) | Yes | Yes | No | No |
-| [Close an inbox thread](/cms/messaging) | Yes | Yes | No | No |
-| [Read a patient's Messages section](/cms/messaging) | Yes | Yes | Yes | Yes |
-| [Send a message from a patient's chart](/cms/messaging) | Yes | No | Yes | No |
-| [Send a ping](/cms/tasks) | Yes | Yes | Yes | Yes |
-| [Receive, acknowledge, and finish pings](/cms/tasks) | Yes | Yes | Yes | Yes |
-| [See the pings you sent](/cms/tasks) | Yes | Yes | Yes | Yes |
-| [Open a patient's notes and read the list](/cms/patient-notes) | Yes | Yes | Yes | Yes |
-| [Claim an existing note into the chart](/cms/patient-notes) | Yes | No | Yes | Yes |
-| [Start a new note](/cms/patient-notes) | Yes | No | Yes | Yes |
-| [Remove or delete a note](/cms/patient-notes) | Yes | No | Yes | Yes |
-| [Make a portal invite for an existing patient](/cms/patient-portal) | Yes | Yes | Yes | Yes |
-| [Invite a new patient to self-register](/cms/patient-portal) | Yes | Yes | No | No |
-| [Answer portal messages in the clinic inbox](/cms/patient-portal) | Yes | Yes | No | No |
-| [Read the Patient concerns inbox](/cms/patient-concerns#patient-concerns) | No | No | Yes | Yes |
-| [Read the Shared by patient tab](/cms/patient-concerns#shared-by-patient) | No | No | Yes | Yes |
-| [Read answer reports](/cms/patient-concerns#answer-reports) | No | No | Yes | Yes |
-| [See and draft approved answers](/cms/patient-concerns#approved-answers) | Yes | No | Yes | Yes |
-| [Approve or retire an approved answer](/cms/patient-concerns#approved-answers) | No | No | Yes | Yes |
-| [Read the patient questions report and common questions](/cms/patient-concerns#patient-questions-and-common-questions) | Yes | No | Yes | Yes |
+| [See the patient list and open a chart](/cms/clinical-care/patient-records) | Yes | Yes | Yes | Yes |
+| [Register a patient](/cms/clinical-care/patient-records) | Yes | Yes | No | No |
+| [Invite a patient to self-register](/cms/clinical-care/patient-records) | Yes | Yes | No | No |
+| [Deactivate a patient](/cms/clinical-care/patient-records) | Yes | Yes | No | No |
+| [Edit contact details](/cms/clinical-care/patient-records) | Yes | Yes | Yes | Yes |
+| [Record or change communication consent](/cms/clinical-care/patient-records) | Yes | Yes | Yes | Yes |
+| [Invite, review or revoke a patient's caregivers](/cms/clinical-care/patient-portal#caregiver-access) | Yes | Yes | Yes | Yes |
+| [See a patient's encounters](/cms/clinical-care/encounters) | Yes | Yes | Yes | Yes |
+| [Start an encounter](/cms/clinical-care/encounters) | Yes | No | Yes | Yes |
+| [Start a consult from the patient list](/cms/clinical-care/encounters#starting-a-consult-from-the-patient-list) | No | No | Yes | Yes |
+| [Open a patient's Medications page](/cms/clinical-care/prescribing) | Yes | No | Yes | Yes |
+| [Draft or amend a prescription, stop or repeat a medicine](/cms/clinical-care/prescribing#writing-a-prescription) | Yes | No | Yes | Yes |
+| [Sign a prescription](/cms/clinical-care/prescribing#signing) | Yes | No | Yes | Authorised nurses only |
+| [Read clinical notes](/cms/clinical-care/encounters) | Yes | Yes | Yes | Yes |
+| [Write a consultation note](/cms/clinical-care/encounters) | Yes | No | Yes | No |
+| [Write a progress note](/cms/clinical-care/encounters) | Yes | No | Yes | Yes |
+| [Amend or retract a consultation note](/cms/clinical-care/encounters) | Yes | No | Yes | No |
+| [Amend or retract a progress note](/cms/clinical-care/encounters) | Yes | No | Yes | Yes |
+| [See vitals and their history](/cms/clinical-care/vitals) | Yes | Yes | Yes | Yes |
+| [Record vitals](/cms/clinical-care/vitals) | Yes | No | Yes | Yes |
+| [Correct a reading](/cms/clinical-care/vitals) | Yes | No | Yes | Yes |
+| [See a patient's allergies](/cms/clinical-care/allergies-and-medication-safety) | Yes | No | Yes | Yes |
+| [Add an allergy or record "No known drug allergies"](/cms/clinical-care/allergies-and-medication-safety#adding-an-allergy) | No | No | Yes | Yes |
+| [Edit, resolve or mark an allergy entered in error](/cms/clinical-care/allergies-and-medication-safety#correcting-an-allergy) | No | No | Yes | No |
+| [Override an allergy alert and sign a prescription](/cms/clinical-care/allergies-and-medication-safety#allergy-alerts-when-prescribing) | Yes | No | Yes | No |
+| [Open the Medication safety report](/cms/clinical-care/allergies-and-medication-safety#medication-safety-report) | Yes | No | No | No |
+| [See a patient's vaccinations](/cms/clinical-care/vaccinations) | Yes | Yes | Yes | Yes |
+| [Record, edit or void a vaccination](/cms/clinical-care/vaccinations) | Yes | No | Yes | Yes |
+| [Order a vaccination service](/cms/clinical-care/vaccinations) | Yes | No | Yes | Yes |
+| [Register a vaccination service in the catalog](/cms/clinical-care/vaccinations) | Yes | No | No | No |
+| [See an encounter's orders](/cms/clinical-care/orders-and-order-sets) | Yes | Yes | Yes | Yes |
+| [Apply an order set to an encounter](/cms/clinical-care/orders-and-order-sets) | Yes | No | Yes | Yes |
+| [Cancel an order](/cms/clinical-care/orders-and-order-sets) | Yes | No | Yes | Yes |
+| [Open the Order sets page and build your own sets](/cms/clinical-care/orders-and-order-sets) | Yes | No | Yes | Yes |
+| [Edit, share, retire or delete a set someone else owns](/cms/clinical-care/orders-and-order-sets) | Yes | No | No | No |
+| [See results and open a result](/cms/clinical-care/diagnostic-results) | Yes | Yes | Yes | Yes |
+| [File an incoming result](/cms/clinical-care/diagnostic-results) | Yes | Yes | Yes | Yes |
+| [Sign off a result](/cms/clinical-care/diagnostic-results) | No | No | Yes | No |
+| [Reassign a review to another doctor](/cms/clinical-care/diagnostic-results) | Yes | No | Yes | No |
+| [Withdraw a misfiled result](/cms/clinical-care/diagnostic-results) | Yes | No | Yes | No |
+| [Change the results review rota](/cms/clinical-care/diagnostic-results) | Yes | No | No | No |
+| [See the results review rota](/cms/clinical-care/diagnostic-results) | Yes | View only | View only | View only |
+| [Draft and edit a result explanation](/cms/clinical-care/diagnostic-results#explaining-results-to-the-patient) | No | No | Yes | Yes |
+| [Approve, send, or withdraw a result explanation](/cms/clinical-care/diagnostic-results#approving) | No | No | Yes | No |
+| [Withdraw an explanation whose result was withdrawn](/cms/clinical-care/diagnostic-results#withdrawing-an-explanation) | Yes | No | Yes | No |
+| [Open and print an approved explanation](/cms/clinical-care/diagnostic-results#approving) | Yes | Yes | Yes | Yes |
+| [Edit explanation library wording](/cms/clinical-care/diagnostic-results#the-explanation-library) | Yes | No | Yes | No |
+| [Approve or retire library wording](/cms/clinical-care/diagnostic-results#the-explanation-library) | No | No | Yes | No |
+| [See documents, and download, print, or email them](/cms/clinical-care/documents-and-certificates) | Yes | Yes | Yes | Yes |
+| [Compose a letter or memo](/cms/clinical-care/documents-and-certificates) | Yes | No | Yes | Yes |
+| [Compose a referral letter](/cms/clinical-care/documents-and-certificates) | Yes | No | Yes | No |
+| [Issue a medical certificate](/cms/clinical-care/documents-and-certificates) | No | No | Yes | No |
+| [Void a letter or memo](/cms/clinical-care/documents-and-certificates) | Yes | No | Yes | Yes |
+| [Void a referral letter or medical certificate](/cms/clinical-care/documents-and-certificates) | Yes | No | Yes | No |
+| [See clinical photos](/cms/clinical-care/clinical-photos) | Yes | Yes | Yes | Yes |
+| [Take or upload clinical photos](/cms/clinical-care/clinical-photos) | Yes | Yes | Yes | Yes |
+| [Open a Sensitive photo, or turn Sensitive off](/cms/clinical-care/clinical-photos#sensitive-photos) | No | No | Yes | Yes |
+| [File ultrasound measurements, or release an ultrasound image to the patient](/cms/clinical-care/clinical-photos#ultrasound-photos) | No | No | Yes | Yes |
+| [Import prior history from outside records](/cms/clinical-care/diagnostic-results#prior-history-from-outside-records) | No | No | Yes | Yes |
+| [See a patient's problem list and medications on the chart](/cms/clinical-care/patient-records#the-patient-chart) | Yes | No | Yes | Yes |
+| [See a patient's audit log](/cms/clinical-care/patient-records#audit-log) | Yes | No | No | No |
+| [Edit or void a clinical photo](/cms/clinical-care/clinical-photos) | Yes | Own photos | Yes | Yes |
+| [File a photographed paper report as a result](/cms/clinical-care/clinical-photos#filing-a-paper-report-as-a-result) | Yes | Yes | Yes | Yes |
+| [Read and reply to clinic inbox threads](/cms/clinical-care/messaging) | Yes | Yes | No | No |
+| [Close an inbox thread](/cms/clinical-care/messaging) | Yes | Yes | No | No |
+| [Read a patient's Messages section](/cms/clinical-care/messaging) | Yes | Yes | Yes | Yes |
+| [Send a message from a patient's chart](/cms/clinical-care/messaging) | Yes | No | Yes | No |
+| [Send a ping](/cms/clinical-care/tasks) | Yes | Yes | Yes | Yes |
+| [Receive, acknowledge, and finish pings](/cms/clinical-care/tasks) | Yes | Yes | Yes | Yes |
+| [See the pings you sent](/cms/clinical-care/tasks) | Yes | Yes | Yes | Yes |
+| [Open a patient's notes and read the list](/cms/clinical-care/patient-notes) | Yes | Yes | Yes | Yes |
+| [Claim an existing note into the chart](/cms/clinical-care/patient-notes) | Yes | No | Yes | Yes |
+| [Start a new note](/cms/clinical-care/patient-notes) | Yes | No | Yes | Yes |
+| [Remove or delete a note](/cms/clinical-care/patient-notes) | Yes | No | Yes | Yes |
+| [Make a portal invite for an existing patient](/cms/clinical-care/patient-portal) | Yes | Yes | Yes | Yes |
+| [Invite a new patient to self-register](/cms/clinical-care/patient-portal) | Yes | Yes | No | No |
+| [Answer portal messages in the clinic inbox](/cms/clinical-care/patient-portal) | Yes | Yes | No | No |
+| [Read the Patient concerns inbox](/cms/clinical-care/patient-concerns#patient-concerns) | No | No | Yes | Yes |
+| [Read the Shared by patient tab](/cms/clinical-care/patient-concerns#shared-by-patient) | No | No | Yes | Yes |
+| [Read answer reports](/cms/clinical-care/patient-concerns#answer-reports) | No | No | Yes | Yes |
+| [See and draft approved answers](/cms/clinical-care/patient-concerns#approved-answers) | Yes | No | Yes | Yes |
+| [Approve or retire an approved answer](/cms/clinical-care/patient-concerns#approved-answers) | No | No | Yes | Yes |
+| [Read the patient questions report and common questions](/cms/clinical-care/patient-concerns#patient-questions-and-common-questions) | Yes | No | Yes | Yes |
 
 A medical certificate prints the issuing doctor's MCR number, so only the Doctor role issues one. A Clinic Admin who is also a doctor switches to their Doctor role to issue it. A Clinic Admin can still void one.
 
@@ -144,41 +144,41 @@ A Doctor sees only the patients assigned to them in the queue; a Nurse sees ever
 
 | Task | Clinic Admin | Receptionist | Doctor | Nurse |
 | --- | --- | --- | --- | --- |
-| [See the appointment list](/cms/appointments) | Yes | Yes | View only | View only |
-| [Book a new appointment](/cms/appointments) | Yes | Yes | No | No |
-| [Book with the agent](/cms/appointments) | Yes | Yes | No | No |
-| [Edit or cancel an appointment](/cms/appointments) | Yes | Yes | No | No |
-| [Answer a booking request](/cms/appointments) | Yes | Yes | No | No |
-| [See today's queue](/cms/reception-queue) | Yes | Yes | Own patients | Yes |
-| [Check a patient in](/cms/reception-queue) | Yes | Yes | No | No |
-| [Call a patient to a room](/cms/reception-queue) | Yes | Yes | No | No |
-| [Route a patient to a stage](/cms/reception-queue#routing-a-patient) | Yes | Yes | No | No |
-| [Take payment, void a payment, or mark the visit paid](/cms/reception-queue#taking-payment) | Yes | Yes | No | No |
-| [Assign or change the doctor](/cms/reception-queue) | Yes | Yes | No | No |
-| [Add a walk-in to the queue](/cms/reception-queue#adding-a-walk-in) | Yes | Yes | No | No |
-| [Cancel an appointment, mark a no-show, or reopen](/cms/reception-queue) | Yes | Yes | No | No |
-| [Call a patient, use Did not come, return a patient from the Missed Queue](/cms/reception-queue#when-a-called-patient-does-not-come) | Yes | Yes | Own patients | Nurse-led visits they lead |
-| [Record that a patient left before finishing](/cms/reception-queue#when-a-patient-leaves) | Yes | Yes | No | No |
-| [Add or edit a queue remark](/cms/reception-queue#remarks) | Yes | Yes | Yes | Yes |
-| [Start an AI encounter from the queue](/cms/reception-queue#starting-an-ai-encounter-and-completing-the-visit) | No | No | Yes | Nurse-led visits they lead |
-| [Complete the visit and send the outcome](/cms/reception-queue#starting-an-ai-encounter-and-completing-the-visit) | No | No | Yes | Nurse-led visits they lead |
-| [Open today's session](/cms/session-setup) | Yes | Yes | No | No |
-| [Mark who is working today](/cms/session-setup) | Yes | Yes | No | No |
-| [Add and assign rooms](/cms/session-setup) | Yes | Yes | No | No |
-| [Add a clinic location](/cms/session-setup) | Yes | No | No | No |
-| [Add, view, and revoke displays](/cms/session-setup) | Yes | No | No | No |
-| [Add a display](/cms/display-boards) | Yes | No | No | No |
-| [See the list of displays](/cms/display-boards) | Yes | No | No | No |
-| [Revoke a display](/cms/display-boards) | Yes | No | No | No |
-| [See the roster](/cms/rostering) | Yes | Yes | View only | View only |
-| [Add, edit, or cancel a shift](/cms/rostering) | Yes | Yes | No | No |
-| [Assign or replace the staff member on a shift](/cms/rostering) | Yes | Yes | No | No |
-| [Create a recurring pattern of shifts](/cms/rostering) | Yes | Yes | No | No |
-| [Publish a week](/cms/rostering) | Yes | No | No | No |
-| [See the attendance page](/cms/attendance) | Yes | No | No | No |
-| [Finalize or reopen a day](/cms/attendance) | Yes | No | No | No |
-| [Correct a record](/cms/attendance) | Yes | No | No | No |
-| [Export a timesheet](/cms/attendance) | Yes | No | No | No |
+| [See the appointment list](/cms/front-desk/appointments) | Yes | Yes | View only | View only |
+| [Book a new appointment](/cms/front-desk/appointments) | Yes | Yes | No | No |
+| [Book with the agent](/cms/front-desk/appointments) | Yes | Yes | No | No |
+| [Edit or cancel an appointment](/cms/front-desk/appointments) | Yes | Yes | No | No |
+| [Answer a booking request](/cms/front-desk/appointments) | Yes | Yes | No | No |
+| [See today's queue](/cms/front-desk/reception-queue) | Yes | Yes | Own patients | Yes |
+| [Check a patient in](/cms/front-desk/reception-queue) | Yes | Yes | No | No |
+| [Call a patient to a room](/cms/front-desk/reception-queue) | Yes | Yes | No | No |
+| [Route a patient to a stage](/cms/front-desk/reception-queue#routing-a-patient) | Yes | Yes | No | No |
+| [Take payment, void a payment, or mark the visit paid](/cms/front-desk/reception-queue#taking-payment) | Yes | Yes | No | No |
+| [Assign or change the doctor](/cms/front-desk/reception-queue) | Yes | Yes | No | No |
+| [Add a walk-in to the queue](/cms/front-desk/reception-queue#adding-a-walk-in) | Yes | Yes | No | No |
+| [Cancel an appointment, mark a no-show, or reopen](/cms/front-desk/reception-queue) | Yes | Yes | No | No |
+| [Call a patient, use Did not come, return a patient from the Missed Queue](/cms/front-desk/reception-queue#when-a-called-patient-does-not-come) | Yes | Yes | Own patients | Nurse-led visits they lead |
+| [Record that a patient left before finishing](/cms/front-desk/reception-queue#when-a-patient-leaves) | Yes | Yes | No | No |
+| [Add or edit a queue remark](/cms/front-desk/reception-queue#remarks) | Yes | Yes | Yes | Yes |
+| [Start an AI encounter from the queue](/cms/front-desk/reception-queue#starting-an-ai-encounter-and-completing-the-visit) | No | No | Yes | Nurse-led visits they lead |
+| [Complete the visit and send the outcome](/cms/front-desk/reception-queue#starting-an-ai-encounter-and-completing-the-visit) | No | No | Yes | Nurse-led visits they lead |
+| [Open today's session](/cms/front-desk/session-setup) | Yes | Yes | No | No |
+| [Mark who is working today](/cms/front-desk/session-setup) | Yes | Yes | No | No |
+| [Add and assign rooms](/cms/front-desk/session-setup) | Yes | Yes | No | No |
+| [Add a clinic location](/cms/front-desk/session-setup) | Yes | No | No | No |
+| [Add, view, and revoke displays](/cms/front-desk/session-setup) | Yes | No | No | No |
+| [Add a display](/cms/front-desk/display-boards) | Yes | No | No | No |
+| [See the list of displays](/cms/front-desk/display-boards) | Yes | No | No | No |
+| [Revoke a display](/cms/front-desk/display-boards) | Yes | No | No | No |
+| [See the roster](/cms/front-desk/rostering) | Yes | Yes | View only | View only |
+| [Add, edit, or cancel a shift](/cms/front-desk/rostering) | Yes | Yes | No | No |
+| [Assign or replace the staff member on a shift](/cms/front-desk/rostering) | Yes | Yes | No | No |
+| [Create a recurring pattern of shifts](/cms/front-desk/rostering) | Yes | Yes | No | No |
+| [Publish a week](/cms/front-desk/rostering) | Yes | No | No | No |
+| [See the attendance page](/cms/front-desk/attendance) | Yes | No | No | No |
+| [Finalize or reopen a day](/cms/front-desk/attendance) | Yes | No | No | No |
+| [Correct a record](/cms/front-desk/attendance) | Yes | No | No | No |
+| [Export a timesheet](/cms/front-desk/attendance) | Yes | No | No | No |
 
 A Doctor and a Nurse see the appointment list read only. In the queue, a Doctor sees their own patients and a Nurse sees every patient at the location. Each can call, requeue and return only the patients they lead, and cannot check patients in. Only a Clinic Admin can reopen or correct an attendance record, and never their own.
 
@@ -192,11 +192,11 @@ A Doctor and a Nurse see the appointment list read only. In the queue, a Doctor 
 | [Generate an invoice](/cms/billing) | Yes | Yes | No | No |
 | [Download or print an invoice](/cms/billing) | Yes | Yes | No | No |
 | [Void an invoice, or correct a bill](/cms/billing#voiding-and-correcting-a-bill) | Yes | Yes | No | No |
-| [See the catalog](/cms/billable-catalog) | Yes | Yes | No | No |
-| [Create, import, or delete a charge item definition](/cms/billable-catalog) | Yes | No | No | No |
-| [Manage vaccination services](/cms/billable-catalog) | Yes | No | No | No |
-| [See services, devices, and substances](/cms/services-and-consumables) | Yes | No | Yes | Yes |
-| [Add, edit, price, retire, or delete an entry](/cms/services-and-consumables) | Yes | No | No | No |
+| [See the catalog](/cms/billing/billable-catalog) | Yes | Yes | No | No |
+| [Create, import, or delete a charge item definition](/cms/billing/billable-catalog) | Yes | No | No | No |
+| [Manage vaccination services](/cms/billing/billable-catalog) | Yes | No | No | No |
+| [See services, devices, and substances](/cms/billing/services-and-consumables) | Yes | No | Yes | Yes |
+| [Add, edit, price, retire, or delete an entry](/cms/billing/services-and-consumables) | Yes | No | No | No |
 
 ## SmartCMS (Singapore)
 
@@ -229,33 +229,33 @@ The **Patient Care Summary** button is in the patient header for a Doctor only, 
 
 | Task | Clinic Admin | Receptionist | Doctor | Nurse |
 | --- | --- | --- | --- | --- |
-| [Search and view medications](/cms/formulary) | Yes | No | View only | View only |
-| [Add, edit, retire, or delete a medication](/cms/formulary) | Yes | No | No | No |
-| [See ingredients, ATC classes, and safety coverage](/cms/formulary#ingredients-and-atc-classes) | Yes | No | View only | View only |
-| [Re-enrich a medication or pick its ingredients by hand](/cms/formulary#picking-ingredients-by-hand) | Yes | No | No | No |
-| [Read the dosing rules](/cms/dosing-rules) | Yes | No | Yes | No |
-| [Create, edit, publish or retire a dosing rule, read the dose overrides log](/cms/dosing-rules#creating-a-rule-clinic-admin) | Yes | No | No | No |
-| [Keep your own version of a dosing rule](/cms/dosing-rules#your-own-version-doctor) | No | No | Yes | No |
-| [See inventory lots and the stock overview](/cms/inventory-and-stock) | Yes | No | Yes | Yes |
-| [Receive stock (log a delivery)](/cms/inventory-and-stock) | Yes | No | No | Yes |
-| [Adjust a lot's quantity](/cms/inventory-and-stock) | Yes | No | No | Yes |
-| [Create, edit, delete, or import lots](/cms/inventory-and-stock) | Yes | No | No | No |
-| [Set a reorder threshold](/cms/inventory-and-stock) | Yes | No | No | No |
+| [Search and view medications](/cms/pharmacy/formulary) | Yes | No | View only | View only |
+| [Add, edit, retire, or delete a medication](/cms/pharmacy/formulary) | Yes | No | No | No |
+| [See ingredients, ATC classes, and safety coverage](/cms/pharmacy/formulary#ingredients-and-atc-classes) | Yes | No | View only | View only |
+| [Re-enrich a medication or pick its ingredients by hand](/cms/pharmacy/formulary#picking-ingredients-by-hand) | Yes | No | No | No |
+| [Read the dosing rules](/cms/pharmacy/dosing-rules) | Yes | No | Yes | No |
+| [Create, edit, publish or retire a dosing rule, read the dose overrides log](/cms/pharmacy/dosing-rules#creating-a-rule-clinic-admin) | Yes | No | No | No |
+| [Keep your own version of a dosing rule](/cms/pharmacy/dosing-rules#your-own-version-doctor) | No | No | Yes | No |
+| [See inventory lots and the stock overview](/cms/pharmacy/inventory-and-stock) | Yes | No | Yes | Yes |
+| [Receive stock (log a delivery)](/cms/pharmacy/inventory-and-stock) | Yes | No | No | Yes |
+| [Adjust a lot's quantity](/cms/pharmacy/inventory-and-stock) | Yes | No | No | Yes |
+| [Create, edit, delete, or import lots](/cms/pharmacy/inventory-and-stock) | Yes | No | No | No |
+| [Set a reorder threshold](/cms/pharmacy/inventory-and-stock) | Yes | No | No | No |
 
 ## Administration
 
 | Task | Clinic Admin | Receptionist | Doctor | Nurse |
 | --- | --- | --- | --- | --- |
-| [See the staff list](/cms/staff) | Yes | No | No | No |
-| [Add a staff member](/cms/staff) | Yes | No | No | No |
-| [Authorise a nurse to prescribe, or end it](/cms/staff#authorising-a-nurse-to-prescribe) | Yes | No | No | No |
-| [Change a role or registration number](/cms/staff) | Yes | No | No | No |
-| [Give a staff member another role](/cms/staff#giving-someone-another-role) | Yes | No | No | No |
-| [Deactivate or reactivate a staff member or one of their roles](/cms/staff#deactivating-and-reactivating) | Yes | No | No | No |
-| [See a staff member's audit log](/cms/staff#a-staff-members-audit-log) | Yes | No | No | No |
-| [Change patient branding, or see where the organisation's data lives](/cms/settings#patient-branding) | Yes | No | No | No |
-| [Switch between your own roles](/cms/switching#switching-role) | Yes | Yes | Yes | Yes |
-| [Preview another role's view](/cms/switching#previewing-another-role) | Yes | No | No | No |
+| [See the staff list](/cms/administration/staff) | Yes | No | No | No |
+| [Add a staff member](/cms/administration/staff) | Yes | No | No | No |
+| [Authorise a nurse to prescribe, or end it](/cms/administration/staff#authorising-a-nurse-to-prescribe) | Yes | No | No | No |
+| [Change a role or registration number](/cms/administration/staff) | Yes | No | No | No |
+| [Give a staff member another role](/cms/administration/staff#giving-someone-another-role) | Yes | No | No | No |
+| [Deactivate or reactivate a staff member or one of their roles](/cms/administration/staff#deactivating-and-reactivating) | Yes | No | No | No |
+| [See a staff member's audit log](/cms/administration/staff#a-staff-members-audit-log) | Yes | No | No | No |
+| [Change patient branding, or see where the organisation's data lives](/cms/administration/settings#patient-branding) | Yes | No | No | No |
+| [Switch between your own roles](/cms/administration/switching#switching-role) | Yes | Yes | Yes | Yes |
+| [Preview another role's view](/cms/administration/switching#previewing-another-role) | Yes | No | No | No |
 
 Switching role is open to anyone who holds more than one active role in the organisation. A preview changes only the sidebar, search and the home page: what the Clinic Admin can do, and who their changes are recorded as, stay their own.
 
@@ -263,8 +263,8 @@ Switching role is open to anyone who holds more than one active role in the orga
 
 | Task | Clinic Admin | Receptionist | Doctor | Nurse |
 | --- | --- | --- | --- | --- |
-| [See the status banner](/cms/system-status#the-status-banner) | Yes | Yes | Yes | Yes |
-| [Open System status](/cms/system-status#the-system-status-page) | Yes | No | No | No |
+| [See the status banner](/cms/downtime/system-status#the-status-banner) | Yes | Yes | Yes | Yes |
+| [Open System status](/cms/downtime/system-status#the-system-status-page) | Yes | No | No | No |
 | [Enroll, revoke and configure downtime laptops](/cms/downtime/devices) | Yes | No | No | No |
 | [Sign in to a downtime laptop, find patients and print](/cms/downtime/working-offline) | Yes | Yes | Yes | Yes |
 | [Register a walk-in or mark a patient arrived on a laptop](/cms/downtime/working-offline#recording-care) | Yes | Yes | Yes | Yes |
@@ -284,4 +284,4 @@ On a laptop, the [desk profile](/cms/downtime/devices#desk-profiles) also limits
 ## Related
 
 - Follow your role's working day in the Guides by Role: [Receptionist](/cms/guides/receptionist), [Nurse](/cms/guides/nurse), [Doctor](/cms/guides/doctor), or [Admin](/cms/guides/admin).
-- Look up a term in the [Glossary](/cms/glossary).
+- Look up a term in the [Glossary](/cms/reference/glossary).

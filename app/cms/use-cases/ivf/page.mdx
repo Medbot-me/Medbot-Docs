@@ -193,7 +193,7 @@ At the meeting, add a **Note (optional)** such as "Discussed at the weekly meeti
 
 ### Ask about the clinic
 
-Below the board, **Ask about the clinic** answers questions from the board and nothing else, with the rows each answer rests on. Try the suggestions: "Who is likely to trigger this week, and is anyone missing something?", "Who is coming in tomorrow?", "Which cycles need a decision?" or "Is anyone on leave this week?". It cannot change anything, and it declines questions the board cannot answer. It uses the organisation's [AI policy](/cms/ai-policy).
+Below the board, **Ask about the clinic** answers questions from the board and nothing else, with the rows each answer rests on. Try the suggestions: "Who is likely to trigger this week, and is anyone missing something?", "Who is coming in tomorrow?", "Which cycles need a decision?" or "Is anyone on leave this week?". It cannot change anything, and it declines questions the board cannot answer. It uses the organisation's [AI policy](/cms/administration/ai-policy).
 
 ## Protocols
 
@@ -274,7 +274,7 @@ Open the **Task Inbox** as **Dr Lim**. **Treatment plan version 2: sign the medi
 
 <ImageZoom src="/images/cms/use-cases/ivf/16b-sign-orders.png" alt="The Sign 2 orders dialog for cetrorelix and follitropin alfa, with its safety warnings and the After signing choice" />
 
-Signing is the one place an order becomes active, so the safety checks run there. Ordering must be turned on for your deployment; see [Prescribing & Medications](/cms/prescribing).
+Signing is the one place an order becomes active, so the safety checks run there. Ordering must be turned on for your deployment; see [Prescribing & Medications](/cms/clinical-care/prescribing).
 
 ### Approve the message to the patient
 
@@ -343,9 +343,9 @@ Once released, the patient sees the image under **Scan images** in **My cycle**:
 
 <ImageZoom src="/images/cms/use-cases/ivf/29-portal-scan-images.png" width={360} alt="Scan images in My cycle on a phone, with the released ultrasound scan and the note that it is not a diagnosis" />
 
-A scan printout can also be photographed from a phone with **Add photos** → **Ultrasound**. See [Clinical Photos](/cms/clinical-photos#ultrasound-photos).
+A scan printout can also be photographed from a phone with **Add photos** → **Ultrasound**. See [Clinical Photos](/cms/clinical-care/clinical-photos#ultrasound-photos).
 
-**Hormone results.** File an E2 or LH result on **Results** with **File result**: see [Diagnostic Results](/cms/diagnostic-results). Filed results appear on the stimulation chart and in **Before the consult**, and the rules run again: a lead follicle at the antagonist threshold raises **Antagonist start due**, three follicles at 17 mm raise **Trigger criteria met**, and a high count or E2 at the trigger starts the **OHSS watch**.
+**Hormone results.** File an E2 or LH result on **Results** with **File result**: see [Diagnostic Results](/cms/clinical-care/diagnostic-results). Filed results appear on the stimulation chart and in **Before the consult**, and the rules run again: a lead follicle at the antagonist threshold raises **Antagonist start due**, three follicles at 17 mm raise **Trigger criteria met**, and a high count or E2 at the trigger starts the **OHSS watch**.
 
 ## The patient's My cycle
 
@@ -396,7 +396,7 @@ On a patient's **Stimulation chart**:
 
 Sign in as **Grace Ho**, the admin.
 
-- **AI policy** (Home → **AI policy**) decides which AI providers and regions the organisation's AI may use, and its default model. It covers the plan and protocol dictation, **Ask about the clinic**, the review pack's summary and the patient assistant. See [AI Policy](/cms/ai-policy).
+- **AI policy** (Home → **AI policy**) decides which AI providers and regions the organisation's AI may use, and its default model. It covers the plan and protocol dictation, **Ask about the clinic**, the review pack's summary and the patient assistant. See [AI Policy](/cms/administration/ai-policy).
 - **Where your data lives**, from the organisation's **Settings** (**See where your data lives**), lists where the clinical record, the database and files are kept, and who handles them.
 - A patient's **Audit log** (on the patient's chart, for administrators) lists every chart read, change, approval and message. For Mei Lin it shows Siti approving the message, the agent sending it with the plan version, and each dose she confirmed. Filter it with **Action**.
 
@@ -420,11 +420,11 @@ Outside a demo organisation, IVF cycle tracking is turned on per service by Medb
 - **No Cycles tab, Protocols page or Cycle part.** IVF cycle tracking turns on when the Orchard set loads. Check the **Demo patients** panel says "14 demo patients loaded". If loading failed, use the panel's retry.
 - **The numbers differ from this guide.** The story is dated from the day you loaded it, and the board reads the real clock. Use **Reset and reload** on the morning of a demonstration.
 - **A demo sign-in does not work.** A reset ends the sign-ins and the next load gives a new password. Copy it again from **Demo sign-ins**.
-- **"Read it" fails.** Dictation, **Ask about the clinic** and the review pack's summary need an AI model that the organisation's [AI policy](/cms/ai-policy) allows.
+- **"Read it" fails.** Dictation, **Ask about the clinic** and the review pack's summary need an AI model that the organisation's [AI policy](/cms/administration/ai-policy) allows.
 
 ## Related pages
 
 - [Demo Services](/cms/services/demo-services): demo organisations, templates, demo patients and sign-ins
 - [IVF Cycles](/cms/services/ivf-cycles): the feature reference
 - [Workstation](/cms/services/workstation), [Patient Agent](/cms/services/patient-agent) and [Pre-visit History & Escalations](/cms/services/pre-visit-and-escalations)
-- [Prescribing & Medications](/cms/prescribing), [Clinical Photos](/cms/clinical-photos) and [Diagnostic Results](/cms/diagnostic-results)
+- [Prescribing & Medications](/cms/clinical-care/prescribing), [Clinical Photos](/cms/clinical-care/clinical-photos) and [Diagnostic Results](/cms/clinical-care/diagnostic-results)

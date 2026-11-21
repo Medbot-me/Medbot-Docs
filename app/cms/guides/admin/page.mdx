@@ -4,16 +4,16 @@ This guide follows a Clinic Admin's work and links to the full page for each tas
 
 ## Your home page
 
-The CMS opens on the **Referrals** page of the service you are working in, with shortcuts to **Add patient** and **Add staff**. Change service, organisation or role from the switcher at the top of the sidebar. See [Choosing & Switching](/cms/switching).
+The CMS opens on the **Referrals** page of the service you are working in, with shortcuts to **Add patient** and **Add staff**. Change service, organisation or role from the switcher at the top of the sidebar. See [Choosing & Switching](/cms/administration/switching).
 
 ## Setting up the clinic
 
-If you are creating the organisation, its setup steps let you set up the first service from a template and invite your colleagues or load them from a CSV file. See [Create an Organisation](/cms/create-organisation#after-creating).
+If you are creating the organisation, its setup steps let you set up the first service from a template and invite your colleagues or load them from a CSV file. See [Create an Organisation](/cms/administration/create-organisation#after-creating).
 
-1. [Add staff members](/cms/staff) and set each person's role and registration number, or profession for an Allied health professional. To give an existing member a second role (for example, a doctor who also helps run the clinic), use **Add another role** on their row. To let a nurse sign prescriptions, [authorise them to prescribe](/cms/staff#authorising-a-nurse-to-prescribe).
-2. Add clinic locations, rooms, and public displays in [Session Setup](/cms/session-setup) and [Patient-Facing Displays](/cms/display-boards).
-3. Build the [billable catalog](/cms/billable-catalog), [services and consumables](/cms/services-and-consumables), and the [formulary](/cms/formulary). Publish [dosing rules](/cms/dosing-rules) for any oral liquid the clinic doses by weight.
-4. Under **Queue** in [Organisation Settings](/cms/settings#queue), set how many places a requeued patient moves back and how long queue remarks are kept.
+1. [Add staff members](/cms/administration/staff) and set each person's role and registration number, or profession for an Allied health professional. To give an existing member a second role (for example, a doctor who also helps run the clinic), use **Add another role** on their row. To let a nurse sign prescriptions, [authorise them to prescribe](/cms/administration/staff#authorising-a-nurse-to-prescribe).
+2. Add clinic locations, rooms, and public displays in [Session Setup](/cms/front-desk/session-setup) and [Patient-Facing Displays](/cms/front-desk/display-boards).
+3. Build the [billable catalog](/cms/billing/billable-catalog), [services and consumables](/cms/billing/services-and-consumables), and the [formulary](/cms/pharmacy/formulary). Publish [dosing rules](/cms/pharmacy/dosing-rules) for any oral liquid the clinic doses by weight.
+4. Under **Queue** in [Organisation Settings](/cms/administration/settings#queue), set how many places a requeued patient moves back and how long queue remarks are kept.
 
 ### Singapore clinics (SmartCMS)
 
@@ -27,22 +27,22 @@ If you are creating the organisation, its setup steps let you set up the first s
 
 ## Running the week
 
-1. Draft and [publish the roster](/cms/rostering#publishing-a-week-clinic-admin-only). Only a Clinic Admin can publish.
-2. Review and correct [attendance](/cms/attendance), then finalize and export timesheets.
-3. Manage the [results review rota](/cms/diagnostic-results) so incoming results reach a doctor.
+1. Draft and [publish the roster](/cms/front-desk/rostering#publishing-a-week-clinic-admin-only). Only a Clinic Admin can publish.
+2. Review and correct [attendance](/cms/front-desk/attendance), then finalize and export timesheets.
+3. Manage the [results review rota](/cms/clinical-care/diagnostic-results) so incoming results reach a doctor.
 
 ## Oversight during the day
 
-- Step into any front-desk or clinical task as a backstop: [reception queue](/cms/reception-queue), [appointments](/cms/appointments), [vitals](/cms/vitals), and [documents](/cms/documents-and-certificates).
-- Manage [inventory and stock](/cms/inventory-and-stock), including reorder thresholds.
-- Read the [dose overrides log](/cms/dosing-rules#the-dose-overrides-log) (**Pharmacy → Dose overrides**).
-- Review how allergy alerts are answered in the [Medication safety report](/cms/allergies-and-medication-safety#medication-safety-report) (**Pharmacy → Medication safety**).
-- When the status banner shows a problem, open **System status** from **Downtime and status** in [Organisation Settings](/cms/settings) for what is down, the SmartCMS backlog, the downtime laptops and entries awaiting verification. See [System Status](/cms/system-status).
+- Step into any front-desk or clinical task as a backstop: [reception queue](/cms/front-desk/reception-queue), [appointments](/cms/front-desk/appointments), [vitals](/cms/clinical-care/vitals), and [documents](/cms/clinical-care/documents-and-certificates).
+- Manage [inventory and stock](/cms/pharmacy/inventory-and-stock), including reorder thresholds.
+- Read the [dose overrides log](/cms/pharmacy/dosing-rules#the-dose-overrides-log) (**Pharmacy → Dose overrides**).
+- Review how allergy alerts are answered in the [Medication safety report](/cms/clinical-care/allergies-and-medication-safety#medication-safety-report) (**Pharmacy → Medication safety**).
+- When the status banner shows a problem, open **System status** from **Downtime and status** in [Organisation Settings](/cms/administration/settings) for what is down, the SmartCMS backlog, the downtime laptops and entries awaiting verification. See [System Status](/cms/downtime/system-status).
 - Decide claims held for a [nurse-led visit](/cms/smartcms/claims#claims-on-a-nurse-led-visit) (Singapore).
 
 ## Seeing what your team sees
 
-To check what a Doctor, Nurse or Receptionist opens on and sees in the sidebar, [preview their role](/cms/switching#previewing-another-role) from the **Role** column of the sidebar switcher, and select **Back to admin** when done. A preview changes navigation only: you keep your own access, and anything you change is recorded as you.
+To check what a Doctor, Nurse or Receptionist opens on and sees in the sidebar, [preview their role](/cms/administration/switching#previewing-another-role) from the **Role** column of the sidebar switcher, and select **Back to admin** when done. A preview changes navigation only: you keep your own access, and anything you change is recorded as you.
 
 ## After an outage
 
@@ -52,4 +52,4 @@ To check what a Doctor, Nurse or Receptionist opens on and sees in the sidebar, 
 
 ## Not in this role
 
-A Clinic Admin cannot sign off a result, arrange a session, or complete a visit; those belong to a doctor. A Clinic Admin cannot reopen or correct their own attendance record. Platform administration is not a clinic role at all; see [Platform Administration](/cms/platform-administration). A Clinic Admin can see a patient's allergies but cannot record or change them. A Clinic Admin does not issue medical certificates; an admin who is also a doctor switches to their Doctor role to issue one. Previewing the Doctor view is not enough: it never lets you act as a doctor. For the full boundary, see [Roles & Permissions](/cms/roles-and-permissions).
+A Clinic Admin cannot sign off a result, arrange a session, or complete a visit; those belong to a doctor. A Clinic Admin cannot reopen or correct their own attendance record. Platform administration is not a clinic role at all; see [Platform Administration](/cms/administration/platform-administration). A Clinic Admin can see a patient's allergies but cannot record or change them. A Clinic Admin does not issue medical certificates; an admin who is also a doctor switches to their Doctor role to issue one. Previewing the Doctor view is not enough: it never lets you act as a doctor. For the full boundary, see [Roles & Permissions](/cms/roles-and-permissions).

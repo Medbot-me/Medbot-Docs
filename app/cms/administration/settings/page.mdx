@@ -1,0 +1,116 @@
+# Organisation Settings
+
+Settings for one organisation live at `/organisations/[id]/settings`. For the organisation you are signed in to, open **Organisation → Settings** in the **Home** tab sidebar. `/organisation-settings` also goes there, and old organisation settings links from Medbot web redirect to it. For any other organisation you administer, use the **Settings** link beside it on the [organisations screen](/cms#the-organisations-screen).
+
+Only an **administrator of that organisation** can open it. A non-admin member sees "Only an administrator of &lt;name&gt; can manage its settings"; a non-member gets a plain "not found". The app does not distinguish an organisation you cannot see from one that does not exist.
+
+The page works on the organisation named in its own URL rather than the one you currently have selected, so an admin of several can manage any of them without [switching](/cms/administration/switching) first.
+
+The settings open as a window over the page you were on, with a searchable menu of sections down the side and one section shown at a time; edits in one section survive while you look at another. **Open as a page** opens the same menu as the full page at the address above, and on a phone the menu comes first, then the section. A link such as `#integrations` opens the matching section. The sections are described below. In a [physician family organisation](/cms/administration/physician-family-organisation), **Integrations**, **Join code** and **Seed data** are not shown. In a [demo organisation](/cms/services/demo-services#your-demo-organisation), **Join code** and **Seed data** are not shown either, because a demo organisation takes no real people.
+
+Your own name and appearance are not here: they are under **Settings** in your account menu (see [Getting Started](/cms/getting-started#4-your-name-and-appearance)). Which AI providers and regions the organisation's AI may use is on its own page, [AI Policy](/cms/administration/ai-policy).
+
+## General
+
+- **Name**: the clinic's display name, shown in the switcher, on the organisations list, and anywhere the organisation is named.
+- **Slug**: its short identifier, unique across Medbot.
+- **Country**: decides which [integrations](#integrations) are available.
+- **Time zone**: the organisation's local time zone.
+- **Active / Inactive**: shown as a badge. An inactive organisation is not selectable and its members cannot act in it.
+
+**Save changes** applies all four fields together and is disabled until something actually changes.
+
+A Singapore organisation with SmartCMS modules cannot change its country until the modules are cleared: "Clear the SmartCMS modules under Integrations before changing the country."
+
+## Patient branding
+
+How your patients see your organisation on the patient portal and in the notices they receive. Leave a field empty to use the default; "Powered by Medbot" stays under your name on the portal.
+
+- **Organisation display name**: shown on the portal and in notice text. Default: the organisation's name.
+- **Notification sender name**: opens every notice, before the service name, for example "Orchard Clinic · IVF". It does not change the phone number or WhatsApp sender.
+- **Save branding** saves both.
+- **Logo**: PNG, JPEG or WebP, up to 512 KB and 4096 pixels a side; a square image works best. Choose a file to upload it ("Logo saved"), or **Remove logo**.
+
+## Patient appointments
+
+What patients may do with their appointments on the patient portal. **Online cancellation closes** sets how many hours before the start a patient can still cancel on their own (0 to 168, a week; empty uses the default of 24). After that, the portal asks them to call the clinic. Changes of time are always requests your staff confirm. Select **Save**.
+
+## Integrations
+
+Country-specific national services, at `#integrations`.
+
+- **Singapore:** the card is titled **Singapore integrations**: "The SmartCMS services this clinic uses. Each one also needs Synapxe's approval for every location before it connects." Pick modules in the module picker (or **Use GP starter**) and click **Save integrations**. See [Modules & Gating](/cms/smartcms/modules).
+  Once at least one module is saved, a **SmartCMS settings** button opens the organisation's SmartCMS tab (`/organisations/[id]/smartcms`). There an admin switches services on per location, tests the connection and exports the Synapxe onboarding rows. Only an administrator can open it. See [SmartCMS Settings](/cms/smartcms/settings).
+  With **Referral contribution to NEHR** ticked, a note under the modules names every active location that has no HE code: "Referral letters from &lt;locations&gt; are not sent to NEHR until it has an HE code." (or "until they have" for several). **Add HE codes** jumps to [Singapore registration](#singapore-registration). See [Locations without an HE code](/cms/smartcms/reports#locations-without-an-he-code).
+- **Anywhere else:** "No country-specific integrations are available for &lt;country&gt;."
+
+## Singapore registration
+
+Singapore organisations only, at `#registration`: the organisation's **UEN** and **GST** registration, saved with **Save registration**, and the details of each clinic location.
+
+Under **Clinic locations**, one location is shown at a time. If the organisation has more than one, choose it from the **Clinic** dropdown. The choice is kept in the page address as `?location=<id>`, so a link can open a given clinic, for example the **Edit codes** link on the SmartCMS tab. Unsaved edits survive switching between clinics.
+
+Each location has its **HE code**, **Hospital Code**, **Contact email** and **Contact phone**, saved together with its own **Save**. Replacing an HE code or Hospital Code that is already set asks for confirmation first, because it switches SmartCMS services at that location off. The dialog is titled, for example, "Change the HE code of Main Clinic?" and its button is **Change the code**. Setting a code for the first time needs no confirmation.
+
+See [Singapore Registration](/cms/smartcms/registration) for the formats and what to do after changing a code.
+
+## Join code
+
+The short code an admin hands to a new hire so they can request access before being invited by email. The section shows the current code with a **Copy** button.
+
+**Regenerate join code** issues a new one. The previous code stops working immediately; use it if a code has been shared too widely or has leaked. Regenerating does not affect anyone who has already joined.
+
+The full flow around this code is described in [Join an Organisation](/cms/administration/join-an-organisation).
+
+## Queue
+
+Organisation-wide defaults for the queue, shown when the page is for the organisation you are signed in to. **Requeue places** (1 to 20) is how many ready patients a requeued patient goes behind, **Keep remarks for (months)** (1 to 48) is how long staff remarks on the queue and their edit history are kept before they are deleted. A service can set its own requeue places in its Workstation settings, and a doctor their own in Settings. See [Reception Queue](/cms/front-desk/reception-queue).
+
+## Plan
+
+The organisation's [plan](/docs/plans-and-billing), with **Past due** or **Cancelled** beside it when it is not active, and where it comes from:
+
+| Source | Meaning |
+| --- | --- |
+| **Billed to a Medbot billing account** | The clinic is attached to a billing account and takes its plan. Shows **Seats billed** and **Seats in use** too. |
+| **Follows the owner's own plan** | A physician family organisation. |
+| **Legacy: not attached to a billing account** | An organisation from before plans, with no limits. |
+| **Demo organisation: exempt from plan limits** | A demo organisation. |
+
+Below that: **Current period ends** and each limit (**Research questions**, **Agents**, **Clinic organisations**, **Storage**). "To change the plan or its seats, contact Medbot." On a dedicated deployment: "Billing is by agreement with your organisation."
+
+## Features
+
+Per-organisation features that Medbot switches, for example **Care pathway engine**, each with whether it is on and whether that is the default or Medbot's choice. Read-only here: "To change a feature, contact Medbot."
+
+## AI credits
+
+"The organisation's AI work is paid from its own credit balance." **Manage credits** opens the balance, usage and credit purchase (`/organisations/[id]/credits`).
+
+On a plan with monthly credits, that page also shows the **Monthly allowance**: credits left of those granted, "Resets on &lt;date&gt;. Pooled across everyone on the plan and used before the top-up balance. Unused credits expire when the allowance resets." The balance then reads **Top-up balance** and **Top-up credits used, all time**, and the page says "Every member's AI work for &lt;organisation&gt; is paid from the plan's monthly allowance first, then from the top-up balance." See [AI Usage & Credits](/docs/ai-usage#monthly-allowance).
+
+## Data location
+
+"Where this organisation's data is kept and which processors handle it, as far as this deployment's configuration shows." **See where your data lives** opens `/organisations/[id]/data-location`, a report generated from the deployment's configuration each time it opens. It lists, under **Where your data is kept**, each store that holds the organisation's records, and under **Who handles it**, each service that processes data on its behalf, with who operates it and where. Items under **In progress** are listed so the page does not read as complete. Only an administrator of the organisation can open it.
+
+## Downtime and status
+
+"How the clinic keeps working through an outage, and catches up after one." Shown only when the page is for the organisation you are signed in to, because these pages act on that one. Each link opens its page:
+
+| Link | What it opens |
+| --- | --- |
+| **Downtime devices** | Enrolling and revoking the organisation's downtime laptops (`/downtime-devices`). See [Downtime Laptops](/cms/downtime/devices). |
+| **Downtime recovery** | Reviewing and filing what was recorded while the clinic was offline (`/downtime-recovery`). See [Recovery After an Outage](/cms/downtime/recovery). |
+| **System status** | The health of the services the organisation depends on (`/status`). See [System Status](/cms/downtime/system-status). |
+
+These pages are no longer in the sidebar for Clinic Admins. When downtime entries are past their verification target, the **Settings** item in the sidebar shows the count. Doctors, nurses and receptionists, who cannot open Settings, have **Organisation → Downtime recovery** in the Home tab instead.
+
+## Seed data
+
+"Add staff and patients in bulk from a CSV file. Safe to repeat: people who already exist are skipped." **Seed staff & patients** opens the seeding page. See [Seeding Staff & Patients](/cms/administration/seed-data).
+
+## A note on enforcement
+
+Every action on this page is re-checked server-side against your membership and role **in that specific organisation**, independently of anything the page itself decided. The page's gating is there to show you a helpful message, not to be the security boundary.
+
+The API also accepts only the fields each action declares. A request that tries to slip in anything else, such as a join code on a general update or a role on a user profile, is rejected outright rather than silently applied.
