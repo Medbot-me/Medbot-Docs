@@ -66,7 +66,7 @@ export default async function RootLayout({
           pageMap={pageMap}
           docsRepositoryBase="https://github.com/Medbot-me/Medbot-Docs/tree/main"
           footer={footer}
-          sidebar={{ autoCollapse: false }}
+          sidebar={{ defaultMenuCollapseLevel: 1, autoCollapse: true }}
         >
           {children}
         </Layout>

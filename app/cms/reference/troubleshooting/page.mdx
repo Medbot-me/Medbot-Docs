@@ -1,0 +1,110 @@
+# Troubleshooting
+
+Common questions and what to do next. If a control is missing or disabled, it is usually a role limit; check [Roles & Permissions](/cms/roles-and-permissions).
+
+## I was invited but cannot see the organisation
+
+An invitation is claimed only once your email address is verified. If the **Verify your email** banner is at the top of the screen, select **Enter code** and enter the code Medbot emailed you (or **Send a new code**). The organisation appears once it is verified. Make sure you registered with the address the invitation was sent to. See [Join an Organisation](/cms/administration/join-an-organisation#route-1-the-admin-invites-you-by-email).
+
+## An email code does not arrive, or says no account uses the address
+
+Email codes sign in existing accounts only. If you have no Medbot account yet, select **Create an account** (or **Set up your clinic**) and register first. See [Getting Started](/cms/getting-started#new-to-medbot).
+
+## I signed in but landed on a "choose your organization" screen
+
+You choose an organization once per sign-in session, even if you belong to only one. Select **Enter as** on the one you want to work in. See [Choosing & Switching](/cms/administration/switching).
+
+## I have two roles but can only do one role's work
+
+You work as one role at a time, and permissions do not add up across roles. Use the **Working as** button at the right of the top bar to switch to the role that can do the task. If you do not see that button, you hold only one active role in this organization; ask your Clinic Admin to add another role. See [Switching role](/cms/administration/switching#switching-role).
+
+## A button I expected is missing or greyed out
+
+What you can do depends on your role in the current organization. For example, only a Clinic Admin and a Receptionist can check a patient in, and only a Doctor can sign off a result. Check the **Who can do this** table on the feature page, or the full [Roles & Permissions](/cms/roles-and-permissions) matrix.
+
+## A page I used is missing from the sidebar
+
+The sidebar shows one tab at a time. Patients, staff, agents, settings and the AI policy are in the **Home** tab under **Organisation**. Results, the queue, appointments, billing, claims and pharmacy are in the **CMS** tab. Or use **Search** (⌘K or Ctrl+K) and type the page's name. See [Staff App Overview](/cms/overview#the-sidebar).
+
+Downtime devices, downtime recovery and system status are no longer in the sidebar for Clinic Admins: open them from the **Downtime and status** section of [Organisation Settings](/cms/administration/settings#downtime-and-status). Billable services moved from `/services` to **Billing → Billable services** (`/billable-services`); `/services` is now the organisation's [care services](/cms/services).
+
+## An organisation link from Medbot web opens Medbot CMS
+
+Organisation features moved from Medbot web to Medbot CMS: services, the Task Inbox, organisation patients and members, settings and the AI policy. Old links redirect to the matching CMS page. Medbot web is now for your personal work.
+
+## The Home assistant says it cannot look something up
+
+What the [Home assistant](/cms/home-assistant) can read follows your role. For example, only Clinic Admins, Doctors and Nurses get a patient's summary and results, and only Clinic Admins and Receptionists unpaid invoices. It never changes the record: open the page its card links to.
+
+## I cannot choose the Home assistant's model
+
+The Home assistant always runs on the organisation's default model, which a Clinic Admin sets in the [AI policy](/cms/administration/ai-policy).
+
+## The reception queue is empty or says "No session yet today"
+
+Nobody has opened a session for the location yet. Select **Create session**, or open one from [Session Setup](/cms/front-desk/session-setup). Also confirm you have chosen the right location at the top of the [Reception Queue](/cms/front-desk/reception-queue).
+
+## A patient checked in but has no doctor
+
+Check-in assigns the next doctor marked active in the session. If no doctor is marked active, the patient still gets a ticket but no doctor. Mark a doctor active in [Session Setup](/cms/front-desk/session-setup), then assign the doctor on the row.
+
+## I cannot call a patient to a room
+
+Only rooms set up for today's session are listed. Add or assign rooms in [Session Setup](/cms/front-desk/session-setup) first.
+
+## I cannot publish the roster
+
+Only a Clinic Admin can publish a week. A Receptionist can build and adjust a draft. See [Rostering](/cms/front-desk/rostering#publishing-a-week-clinic-admin-only).
+
+## A staff member reads as absent for a shift they worked
+
+Attendance is derived from activity in the app during a published shift, not from a clock-in button. A shift with no recorded activity reads as **Absent**. A Clinic Admin can [correct the record](/cms/front-desk/attendance#finalizing-and-correcting) with a reason.
+
+## I cannot correct my own attendance
+
+A Clinic Admin cannot reopen or correct their own record. Another Clinic Admin has to do it. See [Attendance](/cms/front-desk/attendance).
+
+## A voided document or record is still in the list
+
+Voiding keeps the record for the history and marks it as voided, rather than removing it. This is deliberate. See [Documents & Certificates](/cms/clinical-care/documents-and-certificates#voiding-a-document).
+
+## A page says "Medbot cannot reach" a service
+
+A service Medbot depends on is down. Your record is not missing and nothing has been deleted. Select **Try again** in a moment. If it continues, switch to your clinic's downtime laptop, or follow your clinic's downtime procedure on paper. See [System Status](/cms/downtime/system-status#when-a-page-cannot-load) and [Working During an Outage](/cms/downtime/working-offline).
+
+## A form says "We could not confirm this was saved"
+
+The save may have reached Medbot before the answer was lost. What you typed is still in the form. Check the record before trying again, so nothing is entered twice. See [When a form cannot save](/cms/downtime/system-status#when-a-form-cannot-save).
+
+## An amber or red banner is at the top of every page
+
+Medbot is degraded (amber) or has a major outage (red). The banner says what is affected and what still works. See [The status banner](/cms/downtime/system-status#the-status-banner).
+
+## A claim or report shows "Waiting for SmartCMS to recover"
+
+The SmartCMS gateway is down. The submission is held, not lost, and is sent by itself when the gateway answers again. You do not need to resubmit it. See [Gateway Outages & Deadlines](/cms/smartcms/outages).
+
+## A claim is held because the visit is nurse-led
+
+The scheme needs the attending doctor's MCR number, which a nurse-led visit does not have. If a doctor has since taken part in the visit, select **Submit (check visit)**. Otherwise a Clinic Admin decides whether to **Submit as nurse-led**. See [Claims on a nurse-led visit](/cms/smartcms/claims#claims-on-a-nurse-led-visit).
+
+## A downtime laptop is read-only or locked
+
+A laptop that has not reached Medbot for more than 72 hours turns read-only, and after 7 days it locks. Connect it to the network and select **Connect to Medbot now**. A laptop whose clock looks wrong keeps everyone out until its clock agrees with Medbot's. See [Safety locks](/cms/downtime/working-offline#safety-locks).
+
+## I typed my offline passphrase wrong too many times
+
+After the 10th wrong passphrase in a row you are locked out of that laptop until a Clinic Admin re-enrolls you from its **Session** tab. Nothing is erased. See [Unlocking the laptop](/cms/downtime/working-offline#unlocking-the-laptop).
+
+## The downtime laptop is still in downtime although Medbot is back
+
+Downtime never ends by itself. A doctor or Clinic Admin selects **End downtime** on the laptop, and ends the outage in the CMS once the laptops have uploaded. See [Ending downtime](/cms/downtime/working-offline#ending-downtime).
+
+## A reminder says downtime entries are overdue
+
+Entries you wrote on a downtime laptop are waiting for you to verify them, past the 72-hour target. Select **Review them**, or open **Downtime recovery**. See [Recovery After an Outage](/cms/downtime/recovery).
+
+## Related
+
+- [Roles & Permissions](/cms/roles-and-permissions): the full permissions matrix.
+- [Glossary](/cms/reference/glossary): what each term means.

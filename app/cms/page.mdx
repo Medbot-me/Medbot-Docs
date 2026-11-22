@@ -14,20 +14,20 @@ Medbot CMS is multi-organisation, and it is where everything an organisation doe
 | --- | --- |
 | **Organisation** | The tenant. Carries a name, a slug, a **country** and **time zone**, an active flag, a join code, and its own patient records store. |
 | **Service** | What an organisation delivers care through. Only a service has a queue, takes appointments and has a roster; the organisation and its locations hold what services share, such as the day's session, rooms and display boards. See [Services](/cms/services) and [Modes of Care](/cms/services/modes-of-care). |
-| **Membership** | A person's place in one organisation, with exactly one [role](/cms/members-and-roles) there. The same person can be a member of several organisations, with a different role in each. |
-| **Current organisation** | The one the CMS is rendering right now. Chosen on the [welcome screen](/cms/switching#the-welcome-screen) at every sign-in and changed from the sidebar switcher. See [Choosing & Switching](/cms/switching). |
-| **Join code** | A short code an admin hands to a new hire so they can request access from the app. See [Join an Organisation](/cms/join-an-organisation). |
+| **Membership** | A person's place in one organisation, with exactly one [role](/cms/administration/members-and-roles) there. The same person can be a member of several organisations, with a different role in each. |
+| **Current organisation** | The one the CMS is rendering right now. Chosen on the [welcome screen](/cms/administration/switching#the-welcome-screen) at every sign-in and changed from the sidebar switcher. See [Choosing & Switching](/cms/administration/switching). |
+| **Join code** | A short code an admin hands to a new hire so they can request access from the app. See [Join an Organisation](/cms/administration/join-an-organisation). |
 | **Access request** | A pending request to join, filed by join code and resolved by an admin from the staff screen. |
 | **Country-specific integrations** | National services available to organisations in one country. Today that means [SmartCMS](/cms/smartcms) for organisations in Singapore. |
 
 ## What you can do
 
-1. **Create an organisation** and become its first administrator: [Create an Organisation](/cms/create-organisation).
-2. **Join an existing one** with a join code, or have an admin invite you by email: [Join an Organisation](/cms/join-an-organisation).
-   Doctors can also have a small organisation of their own for themselves and their family: [Physician Family Organisation](/cms/physician-family-organisation).
-3. **Belong to several** and choose which one to work in: [Choosing & Switching](/cms/switching).
-4. **Bring in staff and patients**, one at a time or in bulk from a CSV file: [Members & Roles](/cms/members-and-roles) and [Seeding Staff & Patients](/cms/seed-data).
-5. **Administer the organisation**: rename it, set its country and time zone, choose its integrations, rotate its join code: [Organisation Settings](/cms/settings). Decide which AI providers and regions its AI may use: [AI Policy](/cms/ai-policy).
+1. **Create an organisation** and become its first administrator: [Create an Organisation](/cms/administration/create-organisation).
+2. **Join an existing one** with a join code, or have an admin invite you by email: [Join an Organisation](/cms/administration/join-an-organisation).
+   Doctors can also have a small organisation of their own for themselves and their family: [Physician Family Organisation](/cms/administration/physician-family-organisation).
+3. **Belong to several** and choose which one to work in: [Choosing & Switching](/cms/administration/switching).
+4. **Bring in staff and patients**, one at a time or in bulk from a CSV file: [Members & Roles](/cms/administration/members-and-roles) and [Seeding Staff & Patients](/cms/administration/seed-data).
+5. **Administer the organisation**: rename it, set its country and time zone, choose its integrations, rotate its join code: [Organisation Settings](/cms/administration/settings). Decide which AI providers and regions its AI may use: [AI Policy](/cms/administration/ai-policy).
 6. **Connect to Singapore's national systems** through SmartCMS: verify CHAS at check-in, claim CHAS, Medisave and other subsidies from the bill, and send registry and disease reports: [SmartCMS](/cms/smartcms).
 
 ## The organisations screen
@@ -35,20 +35,21 @@ Medbot CMS is multi-organisation, and it is where everything an organisation doe
 `/organisations` lists every organisation the signed-in user belongs to, with their role in each and a **Current** badge on the active one. From it they can switch to another, open **Settings** on any they administer, **Create organisation**, or **Claim an existing organisation** that Medbot already lists. The same screen shows:
 
 - a banner when the user has just claimed an organisation: "&lt;name&gt; is on Medbot, with you as its first admin.", with **Open it**
-- the demo organisation, and a doctor's [physician family organisation](/cms/physician-family-organisation)
+- the demo organisation, and a doctor's [physician family organisation](/cms/administration/physician-family-organisation)
 - **Your claims**, each with its status. "A Medbot administrator reviews every claim."
-- **Join with a code**, to [request to join](/cms/join-an-organisation) with a join code from an admin
+- **Join with a code**, to [request to join](/cms/administration/join-an-organisation) with a join code from an admin
 
 Unlike every other staff page, this one does not require an organisation to be chosen. A brand-new user with no memberships is sent to onboarding instead, to join or set up an organisation (see [Getting Started](/cms/getting-started)). Opened with no memberships at all, the empty state says "You don't belong to any organisation yet. Create one or ask an administrator for a join code."
 
 ## Inside an organisation
 
-Once an organisation is chosen, the sidebar has two tabs. **Home** holds the [Home assistant](/cms/home-assistant), care-service tasks and the organisation's administration (patients, staff, agents, settings and the [AI policy](/cms/ai-policy)). **CMS** holds the care service you are working in and the clinic's operations. See [Staff App Overview](/cms/overview#home-and-cms).
+Once an organisation is chosen, the sidebar has two tabs. **Home** holds the [Home assistant](/cms/home-assistant), care-service tasks and the organisation's administration (patients, staff, agents, settings and the [AI policy](/cms/administration/ai-policy)). **CMS** holds the care service you are working in and the clinic's operations. See [Staff App Overview](/cms/overview#home-and-cms).
 
 ## Where to go next
 
-- Setting up a clinic for the first time: [Create an Organisation](/cms/create-organisation), then [Seeding Staff & Patients](/cms/seed-data).
-- Getting a new hire in: [Join an Organisation](/cms/join-an-organisation) and [Members & Roles](/cms/members-and-roles).
-- Understanding what "scoped to an organisation" actually means: [How Scoping Works](/cms/scoping).
+- Setting up a clinic for the first time: [Create an Organisation](/cms/administration/create-organisation), then [Seeding Staff & Patients](/cms/administration/seed-data).
+- Trying Medbot, or showing it to a clinic, with synthetic patients: the step-by-step [Use Cases](/cms/use-cases), such as [IVF & Assisted Reproduction](/cms/use-cases/ivf).
+- Getting a new hire in: [Join an Organisation](/cms/administration/join-an-organisation) and [Members & Roles](/cms/administration/members-and-roles).
+- Understanding what "scoped to an organisation" actually means: [How Scoping Works](/cms/administration/scoping).
 - Running a clinic in Singapore: [SmartCMS](/cms/smartcms).
 - The day-to-day clinic workflows inside an organisation: [Staff App Overview](/cms/overview) and the [guides by role](/cms/guides/admin).

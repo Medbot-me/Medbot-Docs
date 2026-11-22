@@ -4,13 +4,15 @@
 
 A service with IVF cycles turned on tracks each patient's treatment cycle from a protocol, from cycle day 1 through monitoring scans to the end of the cycle.
 
+> **Try it end to end.** [IVF & Assisted Reproduction](/cms/use-cases/ivf) is a step-by-step guide: create a demo organisation and the IVF demo service, load the fourteen Orchard cycles, and explore every feature on this page as the care team and the patients, with screenshots.
+
 ## For the care team
 
 - **Start a cycle.** On a patient's page in the service, the **Start a cycle** card asks for the **Protocol**, the **Responsible doctor** and, if known, **Cycle day 1**. Doctors, nurses and admins can start one. The responsible doctor defaults to the protocol's owner, else the signed-in doctor, else the only active doctor.
 - **Cycles on the Workstation.** A **Cycles** tab joins the [Workstation](/cms/services/workstation) views. It has three views: **Board** shows the running cycles and what needs attention, **Tomorrow** shows who is due tomorrow, and **Weekly review** is a review pack you can print.
 - **Protocols.** The service's protocol library lists each protocol with its prerequisites, activities, adopted parameters and rules, and its **Versions**. A doctor can teach a protocol's values by voice. Every value Medbot fills in by default must be confirmed.
 - **Plans and proposals.** Medbot reads the clinical notes and proposes plan changes for a doctor to approve. Approving a plan drafts the medication orders, which the doctor signs in one step. Messages telling the patient what changed follow the service's [message approval policy](/cms/services/patient-agent#message-approval-policy).
-- **Scans and history.** Ultrasound measurements and prior history from other centres are filed in Medbot CMS. See [Ultrasound photos](/cms/clinical-photos#ultrasound-photos) and [Prior history](/cms/diagnostic-results#prior-history-from-outside-records).
+- **Scans and history.** Ultrasound measurements and prior history from other centres are filed in Medbot CMS. See [Ultrasound photos](/cms/clinical-care/clinical-photos#ultrasound-photos) and [Prior history](/cms/clinical-care/diagnostic-results#prior-history-from-outside-records).
 - **Partners.** A cycle can be linked to the patient's partner, whose evidence counts on the readiness checklist.
 - **Cycle summary.** A PDF summary of the cycle can be produced at the end.
 

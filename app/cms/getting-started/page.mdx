@@ -4,7 +4,7 @@ This page walks a new staff member through signing in, their first sign-in, choo
 
 ## Before you start
 
-You need a Medbot sign-in and a place in an organisation. Your Clinic Admin adds you from [Staff](/cms/staff), which emails you an invitation if you have no Medbot sign-in yet, or shares a join code (see [Join an Organisation](/cms/join-an-organisation)). If your clinic does not use Medbot yet, see [Create an Organisation](/cms/create-organisation).
+You need a Medbot sign-in and a place in an organisation. Your Clinic Admin adds you from [Staff](/cms/administration/staff), which emails you an invitation if you have no Medbot sign-in yet, or shares a join code (see [Join an Organisation](/cms/administration/join-an-organisation)). If your clinic does not use Medbot yet, see [Create an Organisation](/cms/administration/create-organisation).
 
 ## 1. Sign in or create your account
 
@@ -63,11 +63,11 @@ You land on **Welcome to Medbot CMS** (`/onboarding`): "How are you getting star
 
 | Choice | What it is for |
 | --- | --- |
-| **Set up a new healthcare organisation** | "For a clinic, hospital or remote care service. You become its first administrator." See [Create an Organisation](/cms/create-organisation). Where you may make a demo organisation, you also choose between **A real organisation** and **A demo organisation** ("Synthetic data only. Ready in one click."). |
-| **Join my healthcare organisation** | "Use the join code from your organisation's administrator." Enter the **Join code** and select **Request access**. See [Join an Organisation](/cms/join-an-organisation#route-2-you-request-access-with-a-join-code). |
+| **Set up a new healthcare organisation** | "For a clinic, hospital or remote care service. You become its first administrator." See [Create an Organisation](/cms/administration/create-organisation). Where you may make a demo organisation, you also choose between **A real organisation** and **A demo organisation** ("Synthetic data only. Ready in one click."). |
+| **Join my healthcare organisation** | "Use the join code from your organisation's administrator." Enter the **Join code** and select **Request access**. See [Join an Organisation](/cms/administration/join-an-organisation#route-2-you-request-access-with-a-join-code). |
 | **Claim my organisation's listing** | "Your healthcare organisation is already listed on Medbot. A Medbot administrator reviews every claim." **Find my organisation** opens the claim search. See [Claim an Organisation](/docs/getting-started/claim-an-organisation). |
 
-A join code that matches an invitation for your address links you straight away and opens the welcome screen. Otherwise your request waits for an administrator, on a page of its own (see [Waiting for approval](/cms/join-an-organisation#waiting-for-approval)).
+A join code that matches an invitation for your address links you straight away and opens the welcome screen. Otherwise your request waits for an administrator, on a page of its own (see [Waiting for approval](/cms/administration/join-an-organisation#waiting-for-approval)).
 
 ### The welcome screen
 
@@ -77,7 +77,7 @@ When you sign in again, the welcome screen shows **Welcome back** and **Choose t
 2. If the organisation has more than one care service you can open, **Where are you working today?** (`/choose-service`) asks which one: "Choose a service. The CMS opens on the home page for your role there." The service you used last is selected and marked **Last used**. Select **Open &lt;service&gt;**.
 3. The CMS opens on your role's home page in that service (see [Your home page](#your-home-page)). With one service the choice is skipped; with none, the CMS opens on the **Queue**.
 
-The welcome screen has **Join with code**, **Create organisation**, **Manage organisations**, and **Sign out**. The service screen has **Switch organisation** and **Skip and open the queue**. You see the welcome screen once each time you sign in. To change organisation, service or role later, see [Choosing & Switching](/cms/switching).
+The welcome screen has **Join with code**, **Create organisation**, **Manage organisations**, and **Sign out**. The service screen has **Switch organisation** and **Skip and open the queue**. You see the welcome screen once each time you sign in. To change organisation, service or role later, see [Choosing & Switching](/cms/administration/switching).
 
 > **Note:** You work as one role at a time. If you belong to two organisations, you can be a Doctor in one and a Nurse in the other. If you hold more than one role in the same organisation, for example Doctor and Clinic Admin, you enter as one of them and switch from the sidebar switcher or the **Working as** menu (see step 3).
 
@@ -95,7 +95,7 @@ A badge at the top reads, for example, **Doctor home**, with shortcuts under it,
 | Shortcut | Shown to | Opens |
 | --- | --- | --- |
 | **Add patient** | Clinic Admin, Receptionist | Registering a patient, to add them to the service |
-| **Add staff** | Clinic Admin | The **Add staff member** dialog on [Staff](/cms/staff) (`/staff?add=1`) |
+| **Add staff** | Clinic Admin | The **Add staff member** dialog on [Staff](/cms/administration/staff) (`/staff?add=1`) |
 | **Book appointment** | Receptionist | A new appointment |
 | **Service patients** and **Referrals** | Doctor, Nurse | Everyone enrolled in the service, and the patients referred to it |
 
@@ -103,7 +103,7 @@ The service pages themselves are described in [Services](/cms/services).
 
 ## 3. Learn the sidebar
 
-At the top of the sidebar is the **switcher**: the organisation's name and, under it, the service and the role you are working as, for example "Diabetes review · Doctor". Open it to change organisation, service or role; see [Choosing & Switching](/cms/switching#the-sidebar-switcher). With the sidebar collapsed, only the organisation's initials show.
+At the top of the sidebar is the **switcher**: the organisation's name and, under it, the service and the role you are working as, for example "Diabetes review · Doctor". Open it to change organisation, service or role; see [Choosing & Switching](/cms/administration/switching#the-sidebar-switcher). With the sidebar collapsed, only the organisation's initials show.
 
 Under the switcher, two tabs split the CMS:
 
@@ -130,24 +130,24 @@ Both tabs have **Search**. A patient you have open shows as a card under it. You
 | CMS › Billing: Billing, Catalog | Yes | Yes | No | No |
 | CMS › Billing: Billable services, Devices & substances | Yes | No | Yes | Yes |
 | CMS › Claims: Claims (Singapore) | Yes | Yes | Yes | No |
-| Home › Platform: Platform admin (the [platform admin panel](/cms/platform-administration)) | Medbot platform admins and superadmins only, whatever their clinic role | | | |
+| Home › Platform: Platform admin (the [platform admin panel](/cms/administration/platform-administration)) | Medbot platform admins and superadmins only, whatever their clinic role | | | |
 
-**Claims → Reports** shows to the roles that work on at least one of the organisation's reports; see [Reports](/cms/smartcms/reports). Downtime devices and System status are linked from **Downtime and status** in the organisation's [Settings](/cms/settings).
+**Claims → Reports** shows to the roles that work on at least one of the organisation's reports; see [Reports](/cms/smartcms/reports). Downtime devices and System status are linked from **Downtime and status** in the organisation's [Settings](/cms/administration/settings).
 
 On a phone the **Home** and **CMS** tabs sit under the top bar, and a bar at the bottom holds the tab's main pages, **Search** and **More**.
 
 At the bottom of the sidebar you see your name, which opens your account menu.
 
-If you hold more than one role in the organisation, a rounded **Working as** button at the right of the top bar shows the role you are working as. Open it and choose another role to switch; the sidebar and every page then follow that role. See [Switching role](/cms/switching#switching-role). If your deployment is a test environment, a strip at the top of the screen reads **STAGING** and says the data is test data only.
+If you hold more than one role in the organisation, a rounded **Working as** button at the right of the top bar shows the role you are working as. Open it and choose another role to switch; the sidebar and every page then follow that role. See [Switching role](/cms/administration/switching#switching-role). If your deployment is a test environment, a strip at the top of the screen reads **STAGING** and says the data is test data only.
 
 For what each role can do on each page, see [Roles & Permissions](/cms/roles-and-permissions).
 
 ## 4. Your name and appearance
 
-Open **Settings** from your account menu. Both sections apply to you only and do not change anything for other staff. Settings for the whole clinic are in [Organisation Settings](/cms/settings).
+Open **Settings** from your account menu. Both sections apply to you only and do not change anything for other staff. Settings for the whole clinic are in [Organisation Settings](/cms/administration/settings).
 
 - **Profile**: your **Full name**, "How your name appears on organisations you create or join." Change it and select **Save name** ("Name saved"). If your account has no name yet, the section says "Your account has no name yet. Add one so organisations you create or join can show it."
-- **Queue** (doctors and nurses only): **Requeue places**, how far back your own patients go when you requeue a called patient who did not come. Turn on **Use my own number**, enter 1 to 20 and select **Save**. With it off, your patients follow the service's number or the organisation's. See [When a called patient does not come](/cms/reception-queue#when-a-called-patient-does-not-come).
+- **Queue** (doctors and nurses only): **Requeue places**, how far back your own patients go when you requeue a called patient who did not come. Turn on **Use my own number**, enter 1 to 20 and select **Save**. With it off, your patients follow the service's number or the organisation's. See [When a called patient does not come](/cms/front-desk/reception-queue#when-a-called-patient-does-not-come).
 - **Appearance**: how the CMS looks for you.
 
 The account menu also has **Contact support**, which opens Medbot's [support page](/docs/plans-and-billing#contact-support) in a new tab.
@@ -156,11 +156,11 @@ The account menu also has **Contact support**, which opens Medbot's [support pag
 
 - If the sidebar does not show a page, your role cannot open it.
 - If you open a page by address and see "This action requires one of the following roles", check the switcher at the top of the sidebar: if you hold another role that can open the page, switch to it. Otherwise ask your Clinic Admin whether you should have another role.
-- A Clinic Admin [previewing another role](/cms/switching#previewing-another-role) still has only their own access, so a page the previewed role could open may refuse them.
+- A Clinic Admin [previewing another role](/cms/administration/switching#previewing-another-role) still has only their own access, so a page the previewed role could open may refuse them.
 - If you are asked to log in again, sign in and choose your organisation again.
 
 ## Next steps
 
-- Reception: [Reception Queue](/cms/reception-queue) and [Appointments](/cms/appointments).
-- Nurses and doctors: [Patient Records & Consent](/cms/patient-records) and [Vitals](/cms/vitals).
-- Clinic Admins: [Staff](/cms/staff) and [Organisation Settings](/cms/settings).
+- Reception: [Reception Queue](/cms/front-desk/reception-queue) and [Appointments](/cms/front-desk/appointments).
+- Nurses and doctors: [Patient Records & Consent](/cms/clinical-care/patient-records) and [Vitals](/cms/clinical-care/vitals).
+- Clinic Admins: [Staff](/cms/administration/staff) and [Organisation Settings](/cms/administration/settings).

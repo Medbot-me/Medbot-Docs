@@ -6,7 +6,7 @@ import { ImageZoom } from "nextra/components";
 
 A service's patients come from **the organisation's own patient directory**, the same patients the clinic sees in the CMS. They are not owned by any one service, and the same patient can be in several services' cohorts.
 
-New patients are added to the organisation, not to a service. An organisation admin or receptionist registers them in Medbot CMS (see [Registering a patient](/cms/patient-records#registering-a-patient)), or an admin adds them in bulk by [seeding from a CSV file](/cms/seed-data). On their home page in a service, admins and receptionists have an **Add patient** shortcut: "Register a patient, then add them to &lt;service&gt;".
+New patients are added to the organisation, not to a service. An organisation admin or receptionist registers them in Medbot CMS (see [Registering a patient](/cms/clinical-care/patient-records#registering-a-patient)), or an admin adds them in bulk by [seeding from a CSV file](/cms/administration/seed-data). On their home page in a service, admins and receptionists have an **Add patient** shortcut: "Register a patient, then add them to &lt;service&gt;".
 
 ## Adding a patient to the cohort
 
@@ -29,7 +29,7 @@ Once you choose a patient, the dialog shows two columns. On the left:
 - **Notify by**: the channels Medbot will try (WhatsApp, SMS, email), with the patient's preferred one marked "preferred"
 - **After you add** the patient: what happens next
 
-<ImageZoom src="/images/cms/services/patients/01-add-patient-enrolment-preview.png" alt="The Add patient to cohort dialog with a patient chosen, the Notify by channels, what happens after you add them and a preview of the notice" />
+<ImageZoom src="/images/docs/services/patients/01-add-patient-enrolment-preview.png" alt="The Add patient to cohort dialog with a patient chosen, the Notify by channels, what happens after you add them and a preview of the notice" />
 
 On the right, **Preview** shows the exact message for the channel. It also warns you if nothing will be sent, for example when enrolment notices are off for the service ("Turn them on in Patient notifications"), when the patient has opted out of messages, or when there is no phone number or email on file.
 
