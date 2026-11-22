@@ -4,7 +4,7 @@ Any signed-in user can create an organisation. The creator becomes its first **a
 
 Reach the form from `/organisations/new`: from **Set up a new healthcare organisation** on the [first-sign-in screen](/cms/getting-started#if-you-have-no-organisation-yet), or from **Create organisation** on the [organisations screen](/cms/administration/switching#the-organisations-screen), the [welcome screen](/cms/administration/switching#the-welcome-screen) or the [sidebar switcher](/cms/administration/switching#the-sidebar-switcher).
 
-Setting up an organisation is part of the first-sign-in flow: the form, and the services and team steps after it, fill the screen with your setup progress on a panel beside them (**Organisation details**, **Singapore integrations** for Singapore only, **Set up services**, **Add your team**). Only trying Medbot out? The first step links to **Create a demo organisation**, with synthetic data, instead; see [A demo organisation instead](#a-demo-organisation-instead).
+Setting up an organisation is part of the first-sign-in flow: the form, and the services and team steps after it, fill the screen with your setup progress on a panel beside them (**Organisation details**, **Singapore integrations** for Singapore only, **Public profile**, **Set up services**, **Add your team**). Only trying Medbot out? The first step links to **Create a demo organisation**, with synthetic data, instead; see [A demo organisation instead](#a-demo-organisation-instead).
 
 > **Nothing to connect.** Medbot makes the organisation's own patient records store as it creates the organisation. The form asks for no server, client ID or secret, and there is no choice between hosting it with Medbot or bringing your own. If this Medbot deployment cannot make organisations just now, the page says **New organisations cannot be set up right now** with the reason, and a **Back** button.
 
@@ -25,7 +25,7 @@ A doctor who wants a CMS only for themselves and their family can use a [physici
 
 ## The wizard
 
-The form is a short wizard, headed "Set up a new healthcare organisation · step N of M" above the step's name. The number of steps depends on the country: two for Singapore, one elsewhere. **Back** returns to the step before, or from the first step to the first-sign-in screen.
+The form is a short wizard, headed "Set up a new healthcare organisation · step N of M" above the step's name. The number of steps depends on the country: three for Singapore, two elsewhere. **Back** returns to the step before, or from the first step to the first-sign-in screen.
 
 ### Step 1: Organisation details
 
@@ -41,13 +41,33 @@ The form is a short wizard, headed "Set up a new healthcare organisation · step
 
 ### Step 2: Singapore integrations (Singapore only)
 
-Shown only when the country is Singapore: "Choose the national services this organisation will use. Nothing here is required, and you can change it later in settings." Choose the [SmartCMS modules](/cms/smartcms/modules) the clinic intends to use, or click **Use GP starter** for the usual general-practice set (CHAS, Medisave, National Immunisation Registry, Disease notification). **Skip for now** leaves them empty; they can be chosen later in settings.
+Shown only when the country is Singapore: "Choose the national services this organisation will use. Nothing here is required, and you can change it later in settings." Choose the [SmartCMS modules](/cms/smartcms/modules) the clinic intends to use, or click **Use GP starter** for the usual general-practice set (CHAS, Medisave, National Immunisation Registry, Disease notification). **Continue** with none chosen leaves them empty; they can be chosen later in settings.
 
 Choosing a module does not connect anything by itself: each clinic location still needs its HE code and Synapxe's approval.
 
+### Last step: Public profile
+
+"What patients see about &lt;organisation&gt;. Nothing here is required, and you can change it later in Organisation settings." The step is marked **Optional** in the progress panel.
+
+| Field | Notes |
+| --- | --- |
+| **Photo of your organisation** | "Your frontage, reception or team." PNG, JPEG or WebP, up to 2 MB. A wide image works best. |
+| **Logo** | Shown beside your name. Up to 512 KB; a square image works best. |
+| **About &lt;organisation&gt;** | Up to 600 characters. "For the public. Say who you see and what you offer. Leave out patient details." |
+| **Address**, **Postal code**, **Phone** | Saved on the organisation's main clinic location. |
+| **Website** (optional) | For example `orchardclinic.sg`. |
+
+Below them, **Connect to the patient portal** ("List &lt;organisation&gt; in Find care so patients can see this profile.") is on by default. While it is on:
+
+- **Take bookings from Find care** (on by default): "Patients who find you can book an appointment. Services with open times confirm straight away; other requests go to your team to confirm or propose a time."
+- **Appointment requests go to**: **Receptionist** (the default), **Nurse** or **Doctor**, "Who confirms a request from a new patient." You choose which services patients can book when you set each one up.
+- **How patients see it in Find care** previews your listing, with **Book online** while bookings are on. "Self-referrals are separate: they come from Ask Medbot, with the history it took, and arrive in Referrals."
+
+All of it can be changed later in [Public profile](/cms/administration/settings#public-profile).
+
 ### Creating it
 
-On the last step (**Organisation details**, or **Singapore integrations** for a Singapore organisation) the button reads **Create &lt;organisation name&gt;**. If the server refuses, for example because you are past your limit, the form shows **Could not create organisation** with the reason.
+On the last step the button reads **Create &lt;organisation name&gt;**, which creates the organisation with its public profile. **Skip for now** beside it creates the organisation without the public profile, as before. A photo, logo or website that cannot be used is named under the form, and **Create** stays disabled until it is fixed. If the server refuses, for example because you are past your limit, the form shows **Could not create organisation** with the reason.
 
 ## What happens on submit
 
@@ -93,10 +113,10 @@ The team step ends with **Choose where to start**, once the organisation has a s
 
 | Role | Badge | Home | What it opens on |
 | --- | --- | --- | --- |
-| **Clinic Admin** | Your role | Referrals | "Referrals, adding patients and staff, and service setup." |
+| **Clinic Admin** | Your role | Workstation | "Referrals, adding patients and staff, and service setup." |
 | **Doctor** | Preview | Workstation | "Today's visits, escalations and unsigned notes." |
 | **Nurse** | Preview | Workstation | "Pre-visit check-ins, caseload and escalations." |
-| **Receptionist** | Preview | Referrals | "New referrals, bookings and arrivals." |
+| **Receptionist** | Preview | Workstation | "New referrals, bookings and arrivals." |
 
 3. Select **Open &lt;service&gt;**, or **Preview &lt;service&gt; as &lt;role&gt;**.
 

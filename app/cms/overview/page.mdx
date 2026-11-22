@@ -30,7 +30,7 @@ Under the switcher at the top of the sidebar are two tabs, **Home** and **CMS**.
 
 | Tab | What it holds |
 | --- | --- |
-| **Home** | The [Home assistant](/cms/home-assistant), your care-service [Tasks](/cms/clinical-care/tasks#the-task-inbox), and the organisation's administration: **Patients**, **Staff**, **Agents**, **Settings** and **AI policy**. Selecting **Home** opens a new chat (`/home`). |
+| **Home** | The [Home assistant](/cms/home-assistant), [Notifications](/cms/clinical-care/notifications), and the organisation's administration: **Patients**, **Staff**, **Agents**, **Settings** and **AI policy**. Selecting **Home** opens a new chat (`/home`). |
 | **CMS** | The pages of the care service you are working in, then clinic operations: results, notes and messages, the queue, sessions, appointments, the roster, pharmacy, billing and claims. A patient's chart opens here. Selecting **CMS** opens your home page in the current service, or the queue when no service is set. |
 
 The switcher above the tabs changes the organisation, the care service and the role you work as. See [Choosing & Switching](/cms/administration/switching).
@@ -45,7 +45,7 @@ The sidebar shows the current tab's pages, and only those your role may open. Gr
 | --- | --- |
 | **Search** | The search palette. See [Search](#search). |
 | **New chat** | A new conversation with the [Home assistant](/cms/home-assistant). |
-| **Tasks** | The care services' [Task Inbox](/cms/clinical-care/tasks#the-task-inbox) (`/services/inbox`), with the number of tasks waiting for you. |
+| **Notifications** | [Notifications](/cms/clinical-care/notifications) (`/notifications`): pings, the care services' tasks and patient messages, with the number waiting for you. |
 | **Chats** | Your recent conversations with the Home assistant, under **Today**, **Previous 7 days** and **Older**. |
 | **Organisation** | **Patients** (the [patient list](/cms/clinical-care/patient-records)), **Staff** ([Staff](/cms/administration/staff), Clinic Admins), **Agents** (the organisation's agents, `/agents`), **Settings** ([Organisation Settings](/cms/administration/settings), Clinic Admins), **AI policy** ([AI Policy](/cms/administration/ai-policy), Clinic Admins), and for doctors, nurses and receptionists **Downtime recovery** ([Recovery After an Outage](/cms/downtime/recovery)). |
 
@@ -59,7 +59,7 @@ Medbot platform administrators also see a **Platform** group. See [Platform Admi
 | The open patient | When a chart is open, a card with the patient's name and their chart sections. See [The open patient](#the-open-patient). |
 | The care service | When you are working inside a service: its name, with its pages for your role, starting with **Home**, and a link back to the general clinic. See [Services](/cms/services). |
 | The clinic's name | In the general clinic, the organisation's name heads the list, with a settings button for Clinic Admins, and **All services** sits directly under it. The services themselves are not listed in the sidebar: reach one from **All services**, from the switcher at the top, or from search. |
-| The clinic's pages | One group: **Inbox**, **Tasks** (staff pings), **Queue**, **Session** (with **Rooms**, **Displays** and **Create session**), **Appointments**, **Roster** (with **Attendance**), **Results**, **Identity changes**, **Content library** and **Templates**. |
+| The clinic's pages | One group: **Queue**, **Session** (with **Rooms**, **Displays** and **Create session**), **Appointments**, **Roster** (with **Attendance**), **Results**, **Identity changes**, **Content library** and **Templates**. |
 | **Ask Medbot** | A group that opens and closes: **Approved answers**, **Answer reports**, **Patient concerns** and **Patient questions**. |
 | **Pharmacy** | **Formulary**, **Inventory**, **Stock**, **Order sets**, **Medication safety**, **Dosing rules** and **Dose overrides**. |
 | **Billing** | **Billing**, **Catalog**, **Billable services** and **Devices & substances**. |
@@ -79,27 +79,27 @@ A page that does not exist shows **This page could not be found**, with **Go to 
 
 ## Search
 
-**Search** at the top of the sidebar opens one search box over the organisation. Press ⌘K or Ctrl+K to open it from anywhere, or select **Search** on a phone's bottom bar. Type at least two characters.
+**Search** at the top of the sidebar opens one search box over the organisation. Press ⌘K or Ctrl+K to open it from anywhere, or select **Search** on a phone's bottom bar. Type at least two characters. The same box also runs commands for your role; see [Command Palette & Shortcuts](/cms/reference/keyboard-shortcuts).
 
 What it finds depends on the tab you opened it from, and each source only for the roles whose page it comes from:
 
-| Tab | Filter chips | What is searched |
-| --- | --- | --- |
-| **Home** | **All**, **Patients**, **Services**, **Staff**, **Pages** | Patients, the Home tab's pages, and staff (Clinic Admins only) |
-| **CMS** | **All**, **Patients**, **Appointments**, **Results**, **Formulary**, **Pages** | Patients, care services, the CMS tab's pages, appointments, results, and formulary medicines (Clinic Admins, Doctors and Nurses) |
+| Tab | Filter chips |
+| --- | --- |
+| **Home** | **All**, **Patients**, **Appointments**, **Results**, **Formulary**, **Pages** |
+| **AI** | **All**, **Patients**, **Services**, **Staff**, **Pages** |
 
 A chip narrows the list to one kind. Patients are found the same way as on the [patient list](/cms/clinical-care/patient-records#finding-a-patient). Appointments come from the most recent 200, and results from the last 180 days of the results inbox, so older ones are not found here.
 
-With nothing typed, the box offers your **Recent searches**. They are kept only until the browser tab closes, because a search can be a patient's name.
+With nothing typed, the box offers **Find patient** first, then your **Recent patients** and **Recent searches**. They are kept only until the browser tab closes or you sign out, because a search can be a patient's name.
 
 ## On a phone
 
-On a phone the sidebar becomes a sheet, the **Home** and **CMS** tabs sit under the header, and a bar along the bottom of the screen holds:
+On a phone the sidebar becomes a sheet, and a bar along the bottom of the screen holds:
 
 | Tab | Bar |
 | --- | --- |
-| **Home** | **New chat**, **Tasks**, **Search**, **More** |
-| **CMS** | **Queue**, **Appointments**, **Tasks**, **Search**, **More** |
+| **Home** | **Workstation**, **Notifications**, **Search**, **More** |
+| **AI** | **New chat**, **Search**, **More** |
 
 The bar shows only the pages your role may open. **More** opens a sheet with the tab's other pages, grouped as in the sidebar, plus **Open Medbot web** and **Help and support**.
 

@@ -4,18 +4,21 @@ import { ImageZoom } from "nextra/components";
 
 The **Workstation** is a service's working view of the day. It shows who needs attention, where each patient is in their visit, and what needs doing next. From it, staff move patients through the visit journey and run the consult.
 
-What the Workstation shows depends on the service's **Mode of care**. This page covers an **Outpatient** service, where it shows **today's clinic queue**. A **Hybrid** service has the same queue plus a caseload. For ward rounds see [Inpatient](/cms/services/modes-of-care#inpatient), for remote follow-up see [Remote](/cms/services/modes-of-care#remote), and for the two together see [Hybrid](/cms/services/modes-of-care#hybrid).
+What the Workstation shows depends on the service's **Mode of care** and on whether it runs a queue. This page covers an **Outpatient** service, where it shows **today's clinic queue**. A **Hybrid** service has the same queue plus a caseload. For ward rounds see [Inpatient](/cms/services/modes-of-care#inpatient), for remote follow-up see [Remote](/cms/services/modes-of-care#remote), and for the two together see [Hybrid](/cms/services/modes-of-care#hybrid).
 
-Open it from **Workstation** in the CMS sidebar, under the service's name. For doctors and nurses it is their home page in the service, so **Home** opens it, with quick access to the service's patients and referrals above the board (see [Role home pages](/cms/services/getting-started#role-home-pages)). A strip of **Workstation views** at the top switches between boards:
+Open it from **Home** in the sidebar, under the service's name. The Workstation is every role's home page in a service, so it is not listed again under its own name (see [Role home pages](/cms/services/getting-started#role-home-pages)). A row of tabs at the top switches between its views. **Home** always comes first:
 
-| Mode of care | Views |
+| Service | Tabs |
 | --- | --- |
-| **Outpatient** | **Queue**, **Progress**, **Pre-visit**, **Escalations**, **Health plans** |
-| **Inpatient** | **Census**, **Rounds**, **Escalations**, **Health plans** |
-| **Remote** | **Caseload**, **Escalations**, **Health plans** |
-| **Hybrid** | **Queue**, **Progress**, **Pre-visit**, **Caseload**, **Escalations**, **Health plans** |
+| **Outpatient** | **Home**, **Appointments**, **Referrals**, **Session**, **Progress**, **AI encounters**, **Escalations**, **Health plans** |
+| **Hybrid** | **Home**, **Appointments**, **Referrals**, **Session**, **Progress**, **AI encounters**, **Caseload**, **Escalations**, **Health plans** |
+| **Outpatient** or **Hybrid** with its queue turned off | **Home**, **Appointments**, **Referrals**, **AI encounters**, then **Caseload** for a Hybrid service, **Escalations**, **Health plans** |
+| **Inpatient** | **Home** (the census), **Referrals**, **Rounds**, **Escalations**, **Health plans** |
+| **Remote** | **Home** (the caseload), **Appointments**, **Referrals**, **Escalations**, **Health plans** |
 
-The **Pre-visit** and **Escalations** views are described in [Pre-visit History & Escalations](/cms/services/pre-visit-and-escalations). **Health plans** holds plans patients sent for review: see [Health Plans](/cms/services/health-plans). A service with IVF cycles turned on also has a **Cycles** view: see [IVF Cycles](/cms/services/ivf-cycles).
+**AI encounters** holds today's AI encounters and the pre-visit histories patients answer before a booked visit; it and **Escalations** are described in [Pre-visit History & Escalations](/cms/services/pre-visit-and-escalations). **Health plans** holds plans patients sent for review: see [Health Plans](/cms/services/health-plans). A service with IVF cycles turned on also has a **Cycles** tab, before **Escalations**: see [IVF Cycles](/cms/services/ivf-cycles).
+
+There is no **Patients** or **Queue** tab: **Home** holds both. An old link to the Workstation's patients opens **Home**.
 
 ## How it connects to the clinic
 
@@ -37,7 +40,11 @@ On the day of the visit, patients follow the same journey on the patient portal:
 
 In the CMS, the front desk can **Arrange session** for a patient and **Complete visit** with findings, medicines started and next steps (pre-drafted by AI). See [Reception Queue](/cms/front-desk/reception-queue).
 
-## The board (Queue)
+## Home
+
+**Home** puts the service's patients in one table. Today's queue comes first. Below it, **Not in today's queue** lists the service's other patients (**Not admitted** under an Inpatient census). A clinic whose queue is turned off has no queue: **Home** lists its patients.
+
+What the queue part looks like depends on your role. The front desk (Clinic Admins, Receptionists and Patient service associates) gets the reception queue for the service, with **Add to queue** ("Check in, or add a walk-in, to issue the next &lt;service&gt; queue number."); see [Reception Queue](/cms/front-desk/reception-queue). Allied health professionals see the queue read-only. Doctors and nurses get the board described below.
 
 The board refreshes itself every few seconds, and shows how fresh it is. **Refresh** reloads it immediately.
 
@@ -69,8 +76,39 @@ Row actions:
 
 - **Mark arrived** checks in a patient who is booked but not yet here.
 - **Add to service** enrols a patient from the queue into this service's cohort.
+- **Start consult**, on a patient waiting in the queue, starts their consult and opens the consult screen. **Resume consult** returns to one under way. Choose **My room** first to also call the patient in.
 - **Open visit** opens the patient panel.
 - **Call** (then **Call again**) calls the patient to your room. Choose **My room** first, otherwise the button explains "Choose "My room" above to call patients to it".
+
+### Starting an encounter
+
+A patient in today's queue has **Start consult**. Any other patient on **Home**, under **Not in today's queue**, has **Start Encounter**, next to **Start AI encounter**. What it starts depends on the service:
+
+| Service | **Start Encounter** |
+| --- | --- |
+| Runs a queue | Checks the patient in as a walk-in (to their appointment today, if they have one) and opens the visit's consult. |
+| Remote | Opens a review. |
+| Clinic with its queue turned off, or a ward patient who is not admitted | Opens a consult with no visit. |
+
+The usual start needs no dialog: select **Start Encounter** and the consult screen opens. The arrow beside it opens **More options** first ("Choose how this encounter is recorded. Anything left as it is uses the default."):
+
+- **Encounter class**: **Ambulatory** (the default), **Emergency**, **Virtual**, **Home health** or **Inpatient**.
+- **Priority**: **Routine** (the default), **Urgent**, **ASAP** or **STAT**.
+- **Reason (optional)**, for example "Wound review, results follow-up".
+
+Where the service runs a queue, **More options** offers only **Priority**: any priority other than **Routine** adds the walk-in as urgent. Select **Start Encounter** in the dialog, or **Cancel**.
+
+Clinic Admins, Doctors, Nurses, Patient service associates and Allied health professionals can start an encounter. A Patient service associate's is always manual financial counselling.
+
+### Financial counselling
+
+Clinic Admins and Patient service associates can start manual financial counselling for a patient. It has no **More options**, and opens the consult screen as **Financial counselling**, with no visit.
+
+- **Counsel** on a row of the front desk's queue that is not finished.
+- **Start financial counselling** in the header of the patient's page in the service.
+- For a Patient service associate, **Start financial counselling** also takes the place of **Start Encounter** on **Home**.
+
+If it cannot start, Medbot says "Could not start financial counselling" with the reason.
 
 ### The Progress view
 
@@ -89,6 +127,8 @@ Row actions:
 ## The clinical consult
 
 **Start clinical consult** opens the consult screen for the visit: Medbot's notes editor, with the patient's note for this visit, under the service's breadcrumb. Beside the note are the patient's chart and **Orders** and **Medications** tabs, where you draft and sign prescriptions, lab and imaging orders and service orders (see [Orders & Order Sets](/cms/clinical-care/orders-and-order-sets)). If the patient did a pre-visit history, a **Pre-visit history** section offers **Add to note** and **Open full note**, and a pre-visit check-in summary offers **Add to note**.
+
+A consult started with **Start Encounter** in a service without a queue, or for a ward patient who is not admitted, has no visit. The consult screen calls it **Clinical consult**, and financial counselling **Financial counselling**. Both end the way a review ends: Medbot proposes next steps, and you confirm them.
 
 - The note **saves automatically**.
 - **Record** the consult with the [encounter recorder](/cms/services/encounter-recording). On this screen it transcribes every 45 seconds, and a **Transcript** pane beside the note shows the conversation almost live. Pause and resume without losing the microphone.

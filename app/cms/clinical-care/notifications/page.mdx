@@ -1,0 +1,118 @@
+# Notifications
+
+**Notifications** is one list of the work waiting on you: staff pings, the care services' tasks, patient messages and, for a doctor, dosing rules to review. It replaces the old **Tasks** page, the clinic **Inbox** in the sidebar and the **Task Inbox**. It has two levels:
+
+- **Organisation** (`/notifications`): everything waiting on you across the organisation, from **Notifications** in the sidebar's **Whole organisation** group.
+- **Service** (`/services/<id>/notifications`): one service's notifications, from **Notifications** under the service's name in the sidebar.
+
+The header bell counts what needs you personally. See [The header bell](#the-header-bell).
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| Open Notifications | Yes | Yes | Yes | Yes |
+| Send, receive and finish [pings](/cms/clinical-care/tasks) | Yes | Yes | Yes | Yes |
+| See the care services' tasks and patient messages | Yes | Yes | Yes | Yes |
+| See clinic inbox threads | Yes | Yes | No | No |
+| See dosing rule reviews | No | No | Yes | No |
+
+Patient service associates and allied health professionals see the services' tasks and patient messages too, but not pings or the clinic inbox. Each kind of notification is shown only to the roles that can act on it.
+
+## What it lists
+
+| Kind | Where it comes from | Its action |
+| --- | --- | --- |
+| **Ping** | A colleague's [staff ping](/cms/clinical-care/tasks) to you | **Acknowledge** and **Done** |
+| **Task** | A care service's task, such as a plan approval, a draft waiting for approval or a follow-up call. Labelled **Task ·** and its type | **Review** |
+| **Patient message** | A patient's message that a service's agent passed to the care team, or an open thread in the [clinic inbox](/cms/clinical-care/messaging#the-clinic-inbox) | **Review** for a service's message, **Reply** for a clinic inbox thread |
+| **Task · Dosing rule review** | Your own version of a [dosing rule](/cms/pharmacy/dosing-rules) that the clinic has since revised | **Review rule** |
+
+Each row shows where it belongs (**General**, or the service's name), its kind, who it is addressed to, and badges such as **Redirected to you** and **Overdue**. A ping you acknowledged is marked **To-do**. A ping about a patient has **Open** followed by the patient's name. Overdue items come first, then the newest.
+
+If one source cannot be read, the page names it, for example "Service tasks could not be loaded, so they are missing from this list.", rather than showing an empty list. With nothing waiting, the list says "Nothing pending."
+
+## The organisation page
+
+**Notifications** in the sidebar opens `/notifications`: "Pings, tasks and patient messages waiting on you across the organisation."
+
+1. Choose a scope tab: **All** ("General notifications plus every service you work in."), **General** ("Pings and tasks that belong to the organisation, not to a service.") or a service ("Only this service's tasks and patient messages."). Each tab shows its count. A service's tab appears while it has something pending.
+2. Narrow by kind: **All kinds**, **Pings**, **Tasks** or **Patient messages**, each counted within the scope.
+
+Clinic inbox threads and dosing rule reviews belong to **General**. A ping belongs to the service it was sent under, or to **General**.
+
+Beside the list, **Sent** shows the pings you sent and how far each has got: **Waiting**, **Acknowledged** or **Done**, with how long ago. With none, it says "Nothing sent yet."
+
+**Ping staff**, at the top right, sends a ping. See [Sending a ping](/cms/clinical-care/tasks#sending-a-ping).
+
+## A service's notifications
+
+**Notifications** under a service's name opens `/services/<id>/notifications`: "&lt;service&gt; only: its tasks, pings and patient messages, including the ones addressed to you." It lists every pending task and patient message the service has, whoever on its care team it is for, and your own pings sent under the service. Only the service's care team and administrators can open it.
+
+Tabs say who each item is addressed to:
+
+| Tab | What it holds |
+| --- | --- |
+| **All** | "Everything the care team has open, whoever it is for." |
+| **To you** | "Assigned to you, or redirected to you by a colleague." |
+| A role, such as **Nurse** | "Assigned to this role, for whoever covers it." Shown while something is assigned to that role. |
+| **Care team** | "Not assigned to a role, so anyone on the care team can take it." |
+
+The same kind filter sits under the tabs. **See all of &lt;organisation&gt;** opens the organisation page, and **Ping staff** opens the ping window with the service already chosen under **Show under**.
+
+A service's **Overview** has a **Notifications** card with how many are pending for the care team, and **Open notifications**.
+
+## Acting on a notification
+
+- **A ping**: **Acknowledge** keeps it on your list as **To-do**; **Done** removes it. See [Receiving a ping](/cms/clinical-care/tasks#receiving-a-ping).
+- **A task or a service's patient message**: **Review** opens the task's card in place, with every decision it offers, for example **Complete**; **Hide** closes it. In the bell and the drawer, **Review** opens the service's notifications instead.
+- **A clinic inbox thread**: **Reply** opens the [clinic inbox](/cms/clinical-care/messaging#the-clinic-inbox) on that patient's thread.
+- **A dosing rule review**: **Review rule** opens the rule. See [Dosing Rules](/cms/pharmacy/dosing-rules).
+
+The tasks come from the services' own work, such as [referrals](/cms/services/referrals), [pre-visit check-ins and escalations](/cms/services/pre-visit-and-escalations) and the [patient agent](/cms/services/patient-agent). If a task disappears while the page is open, for example because a [demo reset](/cms/services/demo-services#remove-or-reset-the-demo) removed it, acting on it shows the server's reason.
+
+The page refreshes itself about every 30 seconds while it is in view. Pings refresh every five seconds.
+
+### Redirecting a task to a doctor
+
+A nurse can pass a patient's task to a doctor when it needs a doctor's decision.
+
+1. On the task, select **Redirect to doctor**.
+2. Choose the **Doctor**. Medbot suggests one when the service's care team makes it clear: the patient's assigned doctor, else whoever is covering the service today, else the only doctor on the care team, and says why ("Suggested: …"). If more than one could take it, it says "More than one doctor could take this. Choose who should answer." With no doctor on the care team: "No doctor is on this service's care team. Add one to the care team to redirect tasks."
+3. Say **Why does this need a doctor?**, for example "missed antagonist dose last night, lead follicle 16 mm. Needs a decision on timing."
+4. Select **Redirect to doctor**.
+
+The task moves to the doctor's **To you** list with a **Redirected to you** badge. Others see "Redirected to &lt;doctor&gt; by &lt;nurse&gt;" and the reason. The doctor sees who sent it and why, the latest messages with the patient, the latest results, and **Open the plan context** and **Full message history**. They can:
+
+- **Reply to the patient** and **Send reply**. The reply goes to the patient's portal thread (WhatsApp, SMS or email only tell them a message is waiting) and closes the task.
+- **Hand back**, with a **Note for** the nurse, for example "in theatre until 3 pm; Dr Ng is covering", then **Hand back to** the nurse. The nurse sees "Handed back by &lt;doctor&gt;:" with the note, and can redirect it again.
+
+## The header bell
+
+The bell at the top of every page counts what needs you personally: pings you have not acknowledged, anything addressed to you, and anything overdue. Above 99 it shows "99+". A new ping also shows a short notice and plays a quiet beep; when several arrive at once, one notice such as "3 new pings".
+
+Select the bell to see up to five of them ("&lt;N&gt; need you", or "Nothing needs you right now."). At the bottom, **See all &lt;N&gt; notifications** opens the organisation page.
+
+## The sidebar item and the drawer
+
+**Notifications** is in the **Whole organisation** group of the **Home** tab, before **Workstation** and **Patients**. Its badge counts everything pending for you in every kind your role reads, not only what the bell counts. On a phone, **Notifications** is on the bottom bar.
+
+At the bottom of the bell, **Open Notifications as a drawer** (or **Open Notifications as a page**) changes what the sidebar item does for you. As a drawer, Notifications slides over the page you are on ("Opens over the page you are on. Nothing behind it changes."), with **Open the full page** at the bottom. Your choice is remembered in this browser.
+
+## Old links
+
+The pages Notifications replaced still answer their old addresses:
+
+| Old page | Now |
+| --- | --- |
+| **Tasks** (`/tasks`), the pings page | Redirects to `/notifications` |
+| **Task Inbox** (`/services/inbox`) | Redirects to `/notifications`. Task emails sent before the change link here. |
+| **Inbox** in the Medbot web app (`/inbox`) | Forwards to Notifications in Medbot CMS |
+
+The clinic inbox itself is still at `/inbox` in Medbot CMS, opened from **Reply** on a thread. See [Clinic Messaging](/cms/clinical-care/messaging#the-clinic-inbox).
+
+## Related
+
+- [Staff Pings](/cms/clinical-care/tasks): sending and answering pings.
+- [Clinic Messaging](/cms/clinical-care/messaging): the clinic inbox and messages from a chart.
+- [Services](/cms/services): the care services whose tasks reach Notifications.

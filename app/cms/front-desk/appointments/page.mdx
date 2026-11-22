@@ -12,9 +12,9 @@ Appointments is the clinic's list of booked visits. Find it at **Appointments** 
 | Book a new appointment | Yes | Yes | No | No |
 | Book with the agent | Yes | Yes | No | No |
 | Edit or cancel an appointment | Yes | Yes | No | No |
-| Answer a booking request | Yes | Yes | No | No |
+| Answer a booking request | Yes | Yes | Find care requests sent to doctors | Find care requests sent to nurses |
 
-A doctor or nurse who opens a page for booking or booking requests sees a message that says which roles are allowed.
+A doctor or nurse who opens the booking page sees a message that says which roles are allowed. On **Booking requests** they see only the [requests from Find care](#new-patients-from-find-care) that the organisation sends to their role.
 
 ## Finding appointments
 
@@ -66,7 +66,7 @@ Select **Use agent** to book by describing the visit in words. The agent looks u
 
 Patients can ask for a visit from the [patient portal](/patient/visits). A request is not a booking. It waits in **Booking requests** until staff answer it.
 
-1. Select **Booking requests**. The page counts the requests waiting.
+1. Select **Booking requests** (`/workstation/appointments/requests`). The page counts the requests waiting.
 2. Read the **Requested date**, the **Time preference**, and the **Reason**.
 3. Under **Exact appointment time**, set the **Date**, **Time**, and **Duration**, and choose the **Assigned clinician**. Choose the **Service** too, unless the patient already asked about one (it is chosen for you) or your organisation has only one. A request to change the time of an existing appointment keeps that appointment's service. As when booking, a nurse is listed with **(nurse-led visit)**.
 4. Choose one of the answers below.
@@ -78,6 +78,20 @@ Patients can ask for a visit from the [patient portal](/patient/visits). A reque
 | **Reject** | Declines the request. A **Review note** is required. |
 
 What the patient sees: after **Counter-propose**, the patient's request shows **Clinic proposed a new time**, your note, and the buttons **Accept proposed time** and **Decline proposed time**. When the patient accepts, the appointment appears in your list as **Booked** and the request leaves **Booking requests**. The request card does not update by itself, so reload the page to see it go.
+
+### New patients from Find care
+
+A patient can also ask for an appointment from your organisation's page in the patient portal's [Find care](/patient/find-care#a-clinics-page), when [Public profile](/cms/administration/settings#public-profile) takes bookings from Find care. Such a request carries the badge **From Find care**.
+
+When the patient is not linked to your organisation yet, the badge reads **New patient, from Find care**, and the request has no patient record. Under **Find or add the patient record** ("This patient asked from Find care before your clinic knew them. Link their record to confirm a time; it connects their Medbot account to it, with the consent they gave when asking.") it shows what the patient gave: **Name**, **Date of birth**, **Phone** and **Email**.
+
+1. Under **Patient record**, search for the patient. Not in your records yet? **Register new patient** opens registration in a new tab; register them there, then come back and search for them.
+2. Select **Link record**. The patient's portal is connected to the record, under the consent they gave when asking.
+3. Answer the request as usual: **Accept and book** or **Counter-propose** a time.
+
+**Accept and book** and **Counter-propose** stay disabled until a record is linked. You can **Reject** the request, with a **Review note**, before linking a record.
+
+Who answers these requests is set in **Appointment requests go to** in [Public profile](/cms/administration/settings#public-profile). When it is **Nurse** or **Doctor**, people with that role get **Booking requests** on the Workstation's **Appointments** tab, and see and answer only these requests. Clinic Admins and Receptionists always see every request.
 
 > **Note:** An appointment made from an accepted counter-proposal currently shows **Your doctor** as its practitioner, not the doctor's name.
 

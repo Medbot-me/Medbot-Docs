@@ -1,0 +1,88 @@
+# Command Palette & Shortcuts
+
+The command palette is one box for finding things and doing things in Medbot CMS. It finds patients, records and pages, and it runs the frequent tasks of a clinic day, such as checking a patient in, starting a consult or issuing an MC. It only offers what your role may do.
+
+## Opening it
+
+| Shortcut on macOS | On Windows and Linux | Opens |
+| --- | --- | --- |
+| ⌘K | Ctrl+K | **Search**: patients, records, pages and your commands |
+| ⌘⇧P | Ctrl+Shift+P | **Commands**: the tasks your role can do here |
+| ⌘P | Ctrl+P | **Find patient**: today's queue, recently opened, then search |
+
+**Search** at the top of the sidebar, and **Search** on a phone's bottom bar, open it too. On a phone it fills the screen. You can change these shortcuts in [Preferences](#preferences-keyboard-shortcuts).
+
+In Search, a first character switches what the box does:
+
+| Type | To |
+| --- | --- |
+| `>` | Run a command. The same as ⌘⇧P. |
+| `@` | Jump to a section of the open chart, such as medications, allergies, results or documents. Open a patient's chart first. |
+| `?` | Show the prefixes and keys. |
+
+## Search
+
+With nothing typed, Search offers **Find patient** first, then your recent patients and searches. Type at least two characters to search. Results come in groups: patients, then the other records your tab and role can search (see [Search](/cms/overview#search)), then up to five of **your commands** that match. Below them:
+
+- **All commands matching "&lt;text&gt;"** opens Commands with your text kept.
+- **Search patients only for "&lt;text&gt;"** hands your text to Find patient.
+
+Search lists a command only when each word you type starts a word of the command's name or keywords, so "rec vit" finds **Record vitals**. A short surname does not bring up commands beside the patients.
+
+## Commands
+
+Commands lists the tasks your role can do, in three views. **Tab** switches between them:
+
+- **Suggested**: next steps that fit where you are, each with a short reason, for example "This patient is waiting: start the consult" or "The visit is finished and unpaid: take payment". Then your role's common commands, under a heading such as **Common at reception** or **Common for doctors**.
+- **A–Z**: every command, by name.
+- **By category**: categories such as **Queue**, **Consult**, **Orders**, **Chart** and **Documents**, with counts. Opening one narrows the search to it. Backspace in an empty box steps back.
+
+Examples of commands: **Check in patient**, **Take payment**, **Call patient**, **Assign doctor**, **Route to stage**, **Start consult**, **Resume consult**, **Complete visit**, **Prescribe medication**, **Order investigation**, **Issue MC**, **Write letter, memo or referral**, **Record vitals**, **Record allergy or NKDA**, **Record vaccination**, **Start encounter**, **Code diagnosis**, and commands that open pages, such as **Review booking requests**, **Open clinic inbox** or **Open roster**.
+
+### Which patient a command acts on
+
+On a patient's chart, a service's patient page or a consult, Commands shows **Acting on** and the patient's name, and patient, visit and encounter commands run for that patient. Elsewhere, such a command first asks you to choose the patient, or the visit from today's queue.
+
+A command opens the screen that owns the task, with its usual dialog or control ready, for example the queue row's payment control or the **Issue MC** window. Nothing is done until you confirm there. Going back does not open it again.
+
+### What your role sees
+
+Each command is shown only to the roles that may use the screen or action it opens, by the same rules. A receptionist never sees **Issue MC** or **Start consult**; a doctor never sees **Check in patient** or **Take payment**. While a Clinic Admin [previews another role](/cms/administration/switching#previewing-another-role), a command shows only when both roles may use it. The palette only hides commands: it never lets you do something your role cannot.
+
+## Find patient
+
+Find patient lists **In today's queue**, then **Recently opened**, then searches by name, NRIC/FIN, phone or date of birth. Rows show the patient's name, sex and date of birth. An NRIC, FIN or passport number is never shown in the list, even when you search by one.
+
+Select a patient to open their chart.
+
+## Keys inside the palette
+
+| Key | Does |
+| --- | --- |
+| ↑ ↓ | Move through results |
+| ↵ | Run or open |
+| Tab | Switch command views |
+| ⌫ | Back one step |
+| ⌘B or Ctrl+B | Toggle the sidebar |
+
+## Preferences: keyboard shortcuts
+
+Your shortcuts are personal and saved to your account, so they follow you to any computer you sign in on. Open **Preferences** from your account menu at the bottom of the sidebar, or run the **Keyboard shortcuts** command. It opens as a window over the page you are on; its address, `/preferences/shortcuts`, opens it as a page.
+
+**Keyboard shortcuts** lists **Open search**, **Open commands** and **Find patient**, each with its shortcut and **Default** beside an unchanged one.
+
+1. Select **Change** beside a shortcut.
+2. Press the new shortcut ("Press the new shortcut"). Hold ⌘ or ⌃ with a key on macOS, Ctrl with a key elsewhere.
+3. It is saved at once ("Shortcut saved"). A shortcut that cannot be used is refused with the reason, and the previous one stays.
+
+Press Escape, or select **Cancel**, to stop recording without closing Preferences.
+
+- **Toggle sidebar** (⌘B or Ctrl+B) is built in and cannot be changed.
+- Shortcuts Medbot already uses (⌘B, ⌘J and ⌘\\, or Ctrl on Windows and Linux) cannot be chosen.
+- While a shortcut is ⌘P or Ctrl+P, a note says it is your browser's Print shortcut: in Medbot it opens that palette instead, and you can still print from the browser menu. Select **Keep ⌘P** (or **Keep Ctrl+P**) to keep it, or **Choose another**.
+- **Reset to defaults** restores all three.
+
+## Related
+
+- [Staff App Overview](/cms/overview): the sidebar and Search.
+- [Roles & Permissions](/cms/roles-and-permissions): what each role may do.

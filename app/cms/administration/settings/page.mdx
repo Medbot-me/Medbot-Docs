@@ -22,14 +22,34 @@ Your own name and appearance are not here: they are under **Settings** in your a
 
 A Singapore organisation with SmartCMS modules cannot change its country until the modules are cleared: "Clear the SmartCMS modules under Integrations before changing the country."
 
-## Patient branding
+## Public profile
 
-How your patients see your organisation on the patient portal and in the notices they receive. Leave a field empty to use the default; "Powered by Medbot" stays under your name on the portal.
+How patients see your organisation on the patient portal, in Find care and in the notices they receive, at `#branding`. This section was called **Patient branding**. Leave a field empty to use the default; "Powered by Medbot" stays under your name on the portal.
 
+It starts with your branding:
+
+- **Logo**: PNG, JPEG or WebP, up to 512 KB and 4096 pixels a side; a square image works best. Choose a file to upload it ("Logo saved"), or **Remove logo**.
 - **Organisation display name**: shown on the portal and in notice text. Default: the organisation's name.
 - **Notification sender name**: opens every notice, before the service name, for example "Orchard Clinic · IVF". It does not change the phone number or WhatsApp sender.
-- **Save branding** saves both.
-- **Logo**: PNG, JPEG or WebP, up to 512 KB and 4096 pixels a side; a square image works best. Choose a file to upload it ("Logo saved"), or **Remove logo**.
+- **Save branding** saves both names.
+
+Then what the public sees on the organisation's page in the patient portal's [Find care](/patient/find-care#a-clinics-page):
+
+- **Photo**: PNG, JPEG or WebP, up to 2 MB, shown at the top of your Find care page; a wide image works best. Choose a file to upload it ("Photo saved"), or **Remove photo**.
+- **About**: up to 600 characters. "For the public. Say who you see and what you offer. Leave out patient details."
+- **Website**: optional, shown on your Find care page. A bare address such as `orchardclinic.sg` is saved with `https://` in front.
+- **Contact details**: the address and phone come from your main clinic location. **Edit in Clinic locations** goes there.
+
+Under **Patient portal**:
+
+| Setting | What it does |
+| --- | --- |
+| **Show in Find care** | Patients can find this profile in Find care ("Listed since" a date, once listed). Turned off: "Hidden from Find care. Your current patients keep their access." Patients who are not linked to the organisation then no longer find it in Find care or among nearby clinics, and cannot ask it to see them. |
+| **Take bookings from Find care** | Shown while the organisation is in Find care. "Patients can book an appointment from your listing, as they do in Appointments. Self-referrals with a history from Ask Medbot still arrive in Referrals." |
+| **Services patients can book from Find care** | Shown once bookings from Find care are saved as on. One box per published service, saved as soon as you tick or untick it. Under each: "Open times booked straight away for your patients; others ask and you confirm" for a service that takes appointments, "Patients ask and you confirm" for one that does not, and "By doctor's referral only" when unticked. An unticked service shows as **Doctor's referral** on your Find care page. With none published: "No published services yet." |
+| **Appointment requests go to** | **Receptionist**, **Nurse** or **Doctor**: "Who confirms or proposes a time for a request from a new patient. Admins and receptionists can always act on them." See [New patients from Find care](/cms/front-desk/appointments#new-patients-from-find-care). |
+
+Select **Save public profile** to save the description, website and switches ("Saved"). The photo and the service boxes save on their own. A description over 600 characters, or a website that is not a web address ("Enter a website address, for example orchardclinic.sg."), is refused with the reason.
 
 ## Patient appointments
 

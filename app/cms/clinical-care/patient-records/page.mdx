@@ -68,6 +68,14 @@ _The duplicate identifier message_
 
 ## The patient chart
 
+Opening a patient from **Patients** opens their workspace (`/patients/<id>`). Its header shows the patient's name and details, allergy alerts, **Encounter in progress** when there is one, and the buttons **Portal invite**, **Add note**, **Start Encounter** and **Ping staff**. **Start Encounter** starts in the patient's service, and asks for the **Service** first when the patient is in more than one. For a patient waiting in a service's queue it reads **Start consult**. See [Starting an encounter](/cms/services/workstation#starting-an-encounter). The centre shows the chart's overview. The left rail has:
+
+- **Patient**: the chart's lists, then vitals, vaccinations, documents, photos and contact and consent, each for the roles that may open the matching chart page. Each links to its page for recording and editing. A link with `?section=`, such as `?section=vitals`, opens it with that section expanded.
+- **Services**: the patient's services, each opening the patient's page in that service. See [A patient's page](/cms/services/patients#a-patients-page).
+- **More**: links to the chart's other section pages.
+
+The chart's section pages below are unchanged.
+
 A chart opens in the **CMS** tab, with the patient as a card at the top of the sidebar listing the chart's sections: **Overview**, **Medications**, **Accounts**, **Encounters**, **AI encounters**, **Notes**, **Results**, **Photos**, **Vaccinations**, **Documents** and **Messages**, and for some roles **Shared by patient** and **Audit log**. **Medications** is for clinical staff: see [Prescribing & Medications](/cms/clinical-care/prescribing). **AI encounters** lists the patient's [AI encounters across services](/cms/clinical-care/encounters#ai-encounters-across-services). **Notes** appears only when your deployment has turned the [notes workspace](/cms/clinical-care/patient-notes) on. **Photos** holds [clinical photos](/cms/clinical-care/clinical-photos). **Accounts** is visible to Clinic Admins and Receptionists only. **Audit log** is visible to Clinic Admins only (see [Audit log](#audit-log)). Select the cross on the card (**Close patient**) to leave the chart. On a phone the sections are a row of tabs under the patient's name.
 
 ### The chart header

@@ -2,7 +2,9 @@ import { ImageZoom } from "nextra/components";
 
 # Find Care
 
-**Find a clinic or service** helps you find clinics, ask the ones on Medbot to see you, or ask one that is not on Medbot to contact you.
+**Find a clinic or service** helps you find clinics, see what a clinic on Medbot offers and book an appointment there, or ask one that is not on Medbot to contact you.
+
+> **Booking or Ask Medbot?** Book an appointment when you already know what you need and where. If you have a new symptom, or are not sure what you need, use [Ask Medbot](/patient/ask-medbot#concerns-from-ask-medbot) instead: it takes your history and sends a referral, with your health record, to the right service. A clinic's own page offers both.
 
 Open it from the menu, under **Care**, or from **Profile**, then **Preferences**, then **Find a clinic or service**. Only the patient can use it, not a caregiver.
 
@@ -12,17 +14,55 @@ Medbot offers you real clinics only. Demo organisations are never listed.
 
 The page lists clinics on Medbot first, then others Medbot knows of. Search by name, area or specialty and select **Search**.
 
-Each result shows the name, address and up to three specialties, with a badge: **Connected**, **On Medbot** or **Not on Medbot yet**. The button depends on the badge:
+Each result shows the name, address and up to three specialties, with a badge: **Connected**, **On Medbot** or **Not on Medbot yet**. Select **View**:
 
-| Button | When | What it does |
-| --- | --- | --- |
-| **Connect** | A clinic on Medbot | Asks the clinic to see you. See [Ask a clinic to see you](/patient/connected-clinics#ask-a-clinic-to-see-you) |
-| **Request an appointment** | A clinic you are connected to | Opens the [appointment form](/patient/visits#booking-or-asking-for-an-appointment) |
-| **View** | A clinic not on Medbot yet | Opens its details |
+- for a clinic on Medbot, it opens [the clinic's page](#a-clinics-page)
+- for a clinic not on Medbot yet, it opens [Ask them to contact you](#ask-them-to-contact-you)
 
 If nothing matches, you see "No clinics match your search."
 
-**Connect** is a request, not a link. It goes to the clinic's reception, who accept it by naming your chart there, and offer you a time, or decline it. You are told either way. Until the clinic accepts, nothing of yours is connected.
+## A clinic's page
+
+A clinic on Medbot has its own page in Find care. It shows:
+
+- the clinic's photo, logo, name and address, with the badges **On Medbot**, **Book online** when it takes bookings through Medbot, and **Connected** when you are linked to it
+- what the clinic says about itself
+- **What they offer**: each service, tagged with how you can book it (see below)
+- **Call** with the clinic's phone number, and **Their website**, where the clinic gives them
+
+| Tag | What it means |
+| --- | --- |
+| **Open times** | You pick an open time and it is booked straight away. Only for a clinic you are linked to. |
+| **Clinic confirms** | You say when suits you, and the clinic confirms a time or proposes another. |
+| **Doctor's referral** | The service does not take bookings from Find care. |
+
+### Book an appointment
+
+Under **Book an appointment**, select **Book an appointment**:
+
+- **A clinic you are linked to**: "Pick an open time with one of their services, or tell &lt;clinic&gt; when you prefer to attend and they will confirm." It opens the [appointment form](/patient/visits#booking-or-asking-for-an-appointment) with the clinic already chosen.
+- **A clinic you are not linked to**: "Tell &lt;clinic&gt; which service and when suits you. They confirm a time with you here." It opens [an appointment request](#asking-a-new-clinic-for-an-appointment).
+
+A clinic that does not take bookings through Medbot says so: "&lt;clinic&gt; does not take bookings through Medbot. Contact them directly." In an emergency, call 995.
+
+### Not sure what you need?
+
+The page ends with **Not sure what you need?** "Tell Ask Medbot about your symptoms. It takes your history and sends a referral to the right service, with your health record attached." Select **Ask Medbot** to start.
+
+### Asking a new clinic for an appointment
+
+From the page of a clinic you are not linked to yet, **Book an appointment** opens **Book an appointment at &lt;clinic&gt;**: "Tell &lt;clinic&gt; which service and when suits you. They check your details, then confirm a time or propose another, and reply here."
+
+1. Choose a **Service**. Services the clinic takes only by a doctor's referral are not offered.
+2. Choose a **Preferred date**.
+3. Choose a **Time of day**: **Morning**, **Afternoon** or **Evening**.
+4. Say the **Reason for the visit**.
+5. Tick the box to agree to share your name, date of birth and contact details with the clinic so they can arrange your care, and to connect your Medbot account to your record there once they accept.
+6. Select **Send request**.
+
+"This is a request, not a confirmed booking." The clinic finds or adds your record, which connects your account to it, then confirms a time or proposes another. You see "Request sent. &lt;clinic&gt; will confirm a time with you here.", and **Go to Appointments** to follow it. Only the patient can send it, not a caregiver.
+
+If none of the clinic's services can be booked from Find care, the page asks the clinic to see you instead. See [Ask a clinic to see you](/patient/connected-clinics#ask-a-clinic-to-see-you).
 
 ## Find care near you
 
