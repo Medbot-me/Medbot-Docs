@@ -1,6 +1,6 @@
 # Notifications
 
-**Notifications** is one list of the work waiting on you: staff pings, the care services' tasks, patient messages and, for a doctor, dosing rules to review. It replaces the old **Tasks** page, the clinic **Inbox** in the sidebar and the **Task Inbox**. It has two levels:
+**Notifications** is one list of the work waiting on you: staff pings, the care services' tasks, patient messages, for a doctor dosing rules to review and, for a Clinic Admin, booking requests that need a service. It replaces the old **Tasks** page, the clinic **Inbox** in the sidebar and the **Task Inbox**. It has two levels:
 
 - **Organisation** (`/notifications`): everything waiting on you across the organisation, from **Notifications** in the sidebar's **Whole organisation** group.
 - **Service** (`/services/<id>/notifications`): one service's notifications, from **Notifications** under the service's name in the sidebar.
@@ -16,6 +16,7 @@ The header bell counts what needs you personally. See [The header bell](#the-hea
 | See the care services' tasks and patient messages | Yes | Yes | Yes | Yes |
 | See clinic inbox threads | Yes | Yes | No | No |
 | See dosing rule reviews | No | No | Yes | No |
+| See booking requests that need a service | Yes | No | No | No |
 
 Patient service associates and allied health professionals see the services' tasks and patient messages too, but not pings or the clinic inbox. Each kind of notification is shown only to the roles that can act on it.
 
@@ -27,6 +28,7 @@ Patient service associates and allied health professionals see the services' tas
 | **Task** | A care service's task, such as a plan approval, a draft waiting for approval or a follow-up call. Labelled **Task ·** and its type | **Review** |
 | **Patient message** | A patient's message that a service's agent passed to the care team, or an open thread in the [clinic inbox](/cms/clinical-care/messaging#the-clinic-inbox) | **Review** for a service's message, **Reply** for a clinic inbox thread |
 | **Task · Dosing rule review** | Your own version of a [dosing rule](/cms/pharmacy/dosing-rules) that the clinic has since revised | **Review rule** |
+| **Task · Request needs a service** | A patient's [booking request](/cms/front-desk/appointments#responding-to-portal-booking-requests) sent without choosing a service | **Assign a service** |
 
 Each row shows where it belongs (**General**, or the service's name), its kind, who it is addressed to, and badges such as **Redirected to you** and **Overdue**. A ping you acknowledged is marked **To-do**. A ping about a patient has **Open** followed by the patient's name. Overdue items come first, then the newest.
 
@@ -39,7 +41,7 @@ If one source cannot be read, the page names it, for example "Service tasks coul
 1. Choose a scope tab: **All** ("General notifications plus every service you work in."), **General** ("Pings and tasks that belong to the organisation, not to a service.") or a service ("Only this service's tasks and patient messages."). Each tab shows its count. A service's tab appears while it has something pending.
 2. Narrow by kind: **All kinds**, **Pings**, **Tasks** or **Patient messages**, each counted within the scope.
 
-Clinic inbox threads and dosing rule reviews belong to **General**. A ping belongs to the service it was sent under, or to **General**.
+Clinic inbox threads, dosing rule reviews and booking requests that need a service belong to **General**. A ping belongs to the service it was sent under, or to **General**.
 
 Beside the list, **Sent** shows the pings you sent and how far each has got: **Waiting**, **Acknowledged** or **Done**, with how long ago. With none, it says "Nothing sent yet."
 
@@ -68,6 +70,7 @@ A service's **Overview** has a **Notifications** card with how many are pending 
 - **A task or a service's patient message**: **Review** opens the task's card in place, with every decision it offers, for example **Complete**; **Hide** closes it. In the bell and the drawer, **Review** opens the service's notifications instead.
 - **A clinic inbox thread**: **Reply** opens the [clinic inbox](/cms/clinical-care/messaging#the-clinic-inbox) on that patient's thread.
 - **A dosing rule review**: **Review rule** opens the rule. See [Dosing Rules](/cms/pharmacy/dosing-rules).
+- **A booking request that needs a service**: **Assign a service** opens the **Needs a service** tab of **Booking requests**, where you choose the service and offer a time.
 
 The tasks come from the services' own work, such as [referrals](/cms/services/referrals), [pre-visit check-ins and escalations](/cms/services/pre-visit-and-escalations) and the [patient agent](/cms/services/patient-agent). If a task disappears while the page is open, for example because a [demo reset](/cms/services/demo-services#remove-or-reset-the-demo) removed it, acting on it shows the server's reason.
 

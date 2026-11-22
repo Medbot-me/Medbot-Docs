@@ -141,7 +141,7 @@ Select **Change time** on a card. The page, **Change appointment time**, shows t
 - **At a clinic.** Tell the clinic when suits you better: choose a **Preferred date** and **Time of day**, add a reason if you like, and select **Send request**. Your current appointment stays booked until the clinic confirms the new time. The card says "You asked to move this appointment. It stays booked until the clinic confirms a new time." The clinic can confirm, suggest another time, or decline. If it suggests one, you accept or decline it, as for any [proposed time](#responding-to-a-proposed-time).
 - **With a service.** Pick a new time from its open times, then select **Move appointment**. It moves as soon as you confirm.
 
-Under **Other options**, **Cancel this appointment instead** lets you [cancel](#cancelling-an-appointment) it, while it can still be cancelled online. "Feeling worse or have a new symptom?" links to **Ask Medbot**.
+Below the form, **Cancel this appointment instead** has a button to [cancel](#cancelling-an-appointment) it. It shows only while the appointment can still be cancelled online. "Feeling worse or have a new symptom?" links to **Ask Medbot**.
 
 You can have one open change request for an appointment. If you cancel the appointment, or the clinic cancels it or marks it as missed, the request closes.
 
@@ -153,7 +153,7 @@ You can have one open change request for an appointment. If you cancel the appoi
 
 Select **Book again** on a past or cancelled appointment to ask for another one like it. The **Book again** page shows the **Previous appointment**.
 
-- **At a clinic**, it is a request like a [general appointment](#booking-or-asking-for-an-appointment): choose a preferred date and time of day, and the clinic confirms or suggests another time.
+- **At a clinic**, it is a [request to the clinic](#booking-or-asking-for-an-appointment): choose a preferred date and time of day, and the clinic confirms or suggests another time.
 - **With a service**, pick a time from its open times.
 
 Before booking again after a visit that was completed, Medbot checks whether you already have a follow-up. If you do, the page says **You may already have a follow-up booked** and names it: the follow-up linked to that visit, another appointment at the same clinic booked after it, or a request still waiting on the clinic. Choose **Change that appointment instead**, **Yes, I need another appointment**, or **Back to appointments**. If the check itself fails, the page says so, offers **Check again**, and still lets you ask for another appointment.
@@ -176,24 +176,24 @@ A caregiver does not see the person's contact requests here, because they are th
 
 Select **Request an appointment** (or **New request**). The **Request an appointment** form starts with **Clinic**. Pick one of your connected clinics ("Select a clinic").
 
-If you are enrolled in services at that clinic, a **Book with** choice appears. Pick **General appointment (clinic confirms)** or one of your services.
+If you are enrolled in services at that clinic, **What do you need?** lists one card for each of your services, then **I'm not sure** ("Send your request to the clinic. Their team will choose the right service and offer you a time."). With no services there, the form goes straight to the request below.
 
-**Book with a service.** Medbot shows "Finding open times…", then **Pick a time**. Open times are grouped by day, and hovering a time shows who you will see. Add a **Reason for the visit (optional)**, then select **Book appointment**. Your appointment is confirmed as soon as you book it. You can cancel it later from your appointments. If the service has nothing free in the next two weeks, the form says "This service has no open times in the next two weeks. Ask the clinic for a general appointment instead."
+**A service.** Pick its card. Medbot shows "Finding open times…", then **Pick a time**. Open times are grouped by day, and hovering a time shows who you will see. Add a **Reason for the visit (optional)**, then select **Book appointment**. Your appointment is confirmed as soon as you book it. You can cancel it later from your appointments. If the service has nothing free in the next two weeks, the form says "This service has no open times in the next two weeks. Ask the clinic for a general appointment instead."
 
-**General appointment.** Fill in:
+**I'm not sure.** Fill in:
 
 1. **Location**, if the clinic has more than one
 2. **Preferred date**
 3. **Time of day**: **Morning**, **Afternoon** or **Evening**
 4. **Reason for the visit**
 
-Select **Submit request**. This is a request, not a confirmed booking. The clinic will answer in the portal.
+Select **Send to &lt;clinic&gt;**. "No time is held yet. The clinic's team reads your note, chooses the service and offers you a time to accept."
 
 You can also ask [Ask Medbot](/patient/ask-medbot#book-change-or-cancel-an-appointment) to take you to this form.
 
 #### Booking when you know what and where
 
-Book an appointment when you already know what you need and where. If you have a new symptom, or are not sure what you need, tell [Ask Medbot](/patient/ask-medbot#concerns-from-ask-medbot) instead: it takes your history and sends a referral, with your health record, to the right service.
+Book an appointment when you already know what you need and where. If you have a new symptom, or are not sure what you need, tell [Ask Medbot](/patient/ask-medbot#concerns-from-ask-medbot) instead: it takes a history from you and sends it to the right service.
 
 #### A form that is already filled in
 
@@ -202,7 +202,7 @@ Some links open this form with the clinic, and sometimes the service, already ch
 - **Book an appointment** on a [clinic's page in Find care](/patient/find-care#book-an-appointment), for a clinic you are linked to.
 - **Book an appointment** on a concern you sent from Ask Medbot, when the clinic replied "Book an appointment at this clinic". See [Following a concern](/patient/ask-medbot#following-a-concern).
 
-When the link names a service you are enrolled in, the form opens on its open times. Any other service becomes a general request that the clinic confirms, for that service. A clinic or service you cannot book with is ignored, and the form starts as usual.
+When the link names a service you are enrolled in, the form opens on its open times. Any other service at that clinic becomes a request for that service, which the clinic confirms: fill in the date, time of day and reason as above, then select **Submit request**. A clinic or service you cannot book with is ignored, and the form starts as usual.
 
 To ask a clinic you are not linked to yet, see [Asking a new clinic for an appointment](/patient/find-care#asking-a-new-clinic-for-an-appointment).
 

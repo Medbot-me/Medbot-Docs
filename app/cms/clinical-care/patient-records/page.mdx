@@ -2,7 +2,7 @@ import { ImageZoom } from "nextra/components";
 
 # Patient Records & Consent
 
-Patient records are the list of everyone registered at your clinic and each person's chart. The patient list is in the **Home** tab at **Organisation → Patients** (`/patients`), and you can find a patient from **Search** (⌘K) in either tab. A chart opens in the **CMS** tab. All four roles can open a chart. Front desk staff register patients.
+Patient records are the list of everyone registered at your clinic and each person's chart. The patient list is **Patients** in the **Home** tab (`/patients`), and you can find a patient from **Search** (⌘K) in either tab. A chart opens in the **Home** tab too. All four roles can open a chart. Front desk staff register patients.
 
 ## Who can do this
 
@@ -68,24 +68,24 @@ _The duplicate identifier message_
 
 ## The patient chart
 
-Opening a patient from **Patients** opens their workspace (`/patients/<id>`). Its header shows the patient's name and details, allergy alerts, **Encounter in progress** when there is one, and the buttons **Portal invite**, **Add note**, **Start Encounter** and **Ping staff**. **Start Encounter** starts in the patient's service, and asks for the **Service** first when the patient is in more than one. For a patient waiting in a service's queue it reads **Start consult**. See [Starting an encounter](/cms/services/workstation#starting-an-encounter). The centre shows the chart's overview. The left rail has:
+Opening a patient from **Patients** opens their workspace (`/patients/<id>`). Its header shows the patient's name and details, allergy alerts, **Encounter in progress** when there is one, and the buttons **Portal invite**, **Add note**, **Start Encounter** and **Ping staff**. **Start Encounter** starts in the patient's service, and asks for the **Service** first when the patient is in more than one. For a patient in only one service who is waiting in its queue it reads **Start consult**. For a patient in no service it opens the chart's own encounter dialog. See [Starting an encounter](/cms/services/workstation#starting-an-encounter). The centre shows the chart's overview. The left rail has:
 
 - **Patient**: the chart's lists, then vitals, vaccinations, documents, photos and contact and consent, each for the roles that may open the matching chart page. Each links to its page for recording and editing. A link with `?section=`, such as `?section=vitals`, opens it with that section expanded.
 - **Services**: the patient's services, each opening the patient's page in that service. See [A patient's page](/cms/services/patients#a-patients-page).
 - **More**: links to the chart's other section pages.
 
-The chart's section pages below are unchanged.
+The chart's other section pages are described below.
 
-A chart opens in the **CMS** tab, with the patient as a card at the top of the sidebar listing the chart's sections: **Overview**, **Medications**, **Accounts**, **Encounters**, **AI encounters**, **Notes**, **Results**, **Photos**, **Vaccinations**, **Documents** and **Messages**, and for some roles **Shared by patient** and **Audit log**. **Medications** is for clinical staff: see [Prescribing & Medications](/cms/clinical-care/prescribing). **AI encounters** lists the patient's [AI encounters across services](/cms/clinical-care/encounters#ai-encounters-across-services). **Notes** appears only when your deployment has turned the [notes workspace](/cms/clinical-care/patient-notes) on. **Photos** holds [clinical photos](/cms/clinical-care/clinical-photos). **Accounts** is visible to Clinic Admins and Receptionists only. **Audit log** is visible to Clinic Admins only (see [Audit log](#audit-log)). Select the cross on the card (**Close patient**) to leave the chart. On a phone the sections are a row of tabs under the patient's name.
+A chart opens in the **Home** tab, with the patient as a card at the top of the sidebar listing the chart's sections: **Overview**, **Medications**, **Accounts**, **Encounters**, **AI encounters**, **Notes**, **Results**, **Photos**, **Vaccinations**, **Documents** and **Messages**, and for some roles **Shared by patient** and **Audit log**. **Medications** is for clinical staff: see [Prescribing & Medications](/cms/clinical-care/prescribing). **AI encounters** lists the patient's [AI encounters across services](/cms/clinical-care/encounters#ai-encounters-across-services). **Notes** appears only when your deployment has turned the [notes workspace](/cms/clinical-care/patient-notes) on. **Photos** holds [clinical photos](/cms/clinical-care/clinical-photos). **Accounts** is visible to Clinic Admins and Receptionists only. **Audit log** is visible to Clinic Admins only (see [Audit log](#audit-log)). Select the cross on the card (**Close patient**) to leave the chart. On a phone the sections are a row of tabs under the patient's name.
 
 ### The chart header
 
-On **Overview** the header shows the patient in full:
+On **Overview** (the workspace) the header shows the patient in full:
 
-- their initials and name, and below it their sex, age, birth date, MRN and phone number, each where recorded
+- their name, and beside it their sex, age, birth date, MRN and phone number, each where recorded
 - up to two allergy chips, such as "Allergy: Penicillin", then how many more
 - the patient's status when it is not active, and any other names ("Also known as")
-- **Encounter in progress**, when the patient has one: what it is for, when it started, its class and clinician, with **Open** to go to [Encounters](/cms/clinical-care/encounters)
+- **Encounter in progress** and what it is for, when the patient has one, linking to [Encounters](/cms/clinical-care/encounters)
 - **Ping staff**, to send a [staff ping](/cms/clinical-care/tasks) about the patient
 
 On the other sections the header leads with the section's name, with the patient's name and details beside it.
@@ -95,8 +95,8 @@ Each section's own buttons sit at the top right. On a phone they are a bar along
 | Button | What it does | Who sees it |
 | --- | --- | --- |
 | **Portal invite** | Makes a one-time link that, once the patient signs in to the patient app, links their account to this chart. See [Patient Portal](/cms/clinical-care/patient-portal). | Everyone |
-| **New note** | Opens the [notes workspace](/cms/clinical-care/patient-notes). | Clinic Admins, Doctors and Nurses |
-| **Start Encounter** | Starts a visit. See [Encounters & Clinical Notes](/cms/clinical-care/encounters#starting-an-encounter). | Clinic Admins, Doctors and Nurses, while no encounter is in progress |
+| **Add note** | Opens the [notes workspace](/cms/clinical-care/patient-notes). | Clinic Admins, Doctors and Nurses |
+| **Start Encounter** | Starts an encounter in the patient's service (see [Starting an encounter](/cms/services/workstation#starting-an-encounter)). For a patient in no service, starts a visit from the chart; see [Encounters & Clinical Notes](/cms/clinical-care/encounters#starting-an-encounter). | Clinic Admins, Doctors and Nurses; for a patient in no service, only while no encounter is in progress |
 
 ### The Overview
 

@@ -2,7 +2,7 @@ import { ImageZoom } from "nextra/components";
 
 # Appointments
 
-Appointments is the clinic's list of booked visits. Find it at **Appointments** (`/appointments`). Receptionists and Clinic Admins book, edit, and cancel appointments and answer booking requests from the patient portal. Every appointment is for one [service](/cms/services/appointments): the booking form and booking requests ask which. Doctors and nurses can look at the list but not change it.
+Appointments is the clinic's list of booked visits. Find it on the **Appointments** tab of the organisation's **Workstation** (`/workstation/appointments`), from **Workstation** in the sidebar's **Home** tab. Old `/appointments` links open it. Receptionists and Clinic Admins book, edit, and cancel appointments and answer booking requests from the patient portal. Every appointment is for one [service](/cms/services/appointments): the booking form and booking requests ask which. Doctors and nurses can look at the list but not change it.
 
 ## Who can do this
 
@@ -32,7 +32,7 @@ Times are always shown in Singapore time, whatever the time zone of your compute
 
 ## Booking an appointment
 
-1. Select **New Appointment**.
+1. Select **Book appointment**.
 2. Search for the patient and select them. Their details appear below the search box.
 3. Choose the **Service**: one of your organisation's services that takes appointments (an inpatient service does not). With only one, it is chosen for you; with none, the form says "No service takes appointments yet".
 4. Choose the **Clinic location**, the **Date**, and the **Time**. Times run from 8:00 AM to 5:30 PM in half hour steps.
@@ -68,7 +68,7 @@ Patients can ask for a visit from the [patient portal](/patient/visits). A reque
 
 1. Select **Booking requests** (`/workstation/appointments/requests`). The page counts the requests waiting.
 2. Read the **Requested date**, the **Time preference**, and the **Reason**.
-3. Under **Exact appointment time**, set the **Date**, **Time**, and **Duration**, and choose the **Assigned clinician**. Choose the **Service** too, unless the patient already asked about one (it is chosen for you) or your organisation has only one. A request to change the time of an existing appointment keeps that appointment's service. As when booking, a nurse is listed with **(nurse-led visit)**.
+3. Under **Exact appointment time**, set the **Date**, **Time**, and **Duration**, and choose the **Assigned clinician**. Choose the **Service** too (only services seen in person, Outpatient or Hybrid, are offered), unless the patient already asked about one (it is chosen for you) or your organisation has only one. A request to change the time of an existing appointment keeps that appointment's service. As when booking, a nurse is listed with **(nurse-led visit)**.
 4. Choose one of the answers below.
 
 | Answer | What it does |
@@ -92,6 +92,17 @@ When the patient is not linked to your organisation yet, the badge reads **New p
 **Accept and book** and **Counter-propose** stay disabled until a record is linked. You can **Reject** the request, with a **Review note**, before linking a record.
 
 Who answers these requests is set in **Appointment requests go to** in [Public profile](/cms/administration/settings#public-profile). When it is **Nurse** or **Doctor**, people with that role get **Booking requests** on the Workstation's **Appointments** tab, and see and answer only these requests. Clinic Admins and Receptionists always see every request.
+
+### Requests that need a service
+
+In the patient portal, a patient can book with **I'm not sure** instead of choosing a service. Their request has no service, and a Clinic Admin places it. Each active Clinic Admin is emailed about it once, and it appears in their [Notifications](/cms/clinical-care/notifications) with **Assign a service**. The email names the clinic and links to the requests, but leaves out the patient's name and note.
+
+Clinic Admins see **Booking requests** as two tabs, each with a count:
+
+- **By service**: requests that name a service, or change the time of an appointment that has one.
+- **Needs a service** (`?queue=needs-service`): "These patients weren't sure which service they needed. Choose the service and offer a time: the appointment is booked once they accept it, and the request then sits with that service." With none waiting: **Every request has a service**.
+
+To place one, choose the **Service**, the time and the clinician, then **Counter-propose**. The request moves to **By service**. Receptionists keep one list, with these requests in it.
 
 > **Note:** An appointment made from an accepted counter-proposal currently shows **Your doctor** as its practitioner, not the doctor's name.
 
