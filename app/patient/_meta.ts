@@ -9,7 +9,7 @@ export default {
   "health-log": "Health Log",
   "health-plan": "Health Plan",
   devices: "Connected Devices",
-  visits: "Visits & Appointments",
+  visits: "Appointments & Visits",
   "pre-visit-history": "Pre-visit History",
   results: "Results & Records",
   "health-records": "Health Records",

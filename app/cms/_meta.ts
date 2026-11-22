@@ -2,7 +2,7 @@ export default {
   index: "Introduction",
   overview: "Staff App Overview",
   "getting-started": "Getting Started",
-  "home-assistant": "Home Assistant",
+  "home-assistant": "AI Chat",
   "roles-and-permissions": "Roles & Permissions",
   "use-cases": "Use Cases",
   guides: "Guides by Role",

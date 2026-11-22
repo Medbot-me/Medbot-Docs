@@ -75,20 +75,15 @@ When you sign in again, the welcome screen shows **Welcome back** and **Choose t
 
 1. Select **Enter as** followed by your role on the card, for example **Enter as Receptionist**.
 2. If the organisation has more than one care service you can open, **Where are you working today?** (`/choose-service`) asks which one: "Choose a service. The CMS opens on the home page for your role there." The service you used last is selected and marked **Last used**. Select **Open &lt;service&gt;**.
-3. The CMS opens on your role's home page in that service (see [Your home page](#your-home-page)). With one service the choice is skipped; with none, the CMS opens on the **Queue**.
+3. The CMS opens on your role's home page in that service (see [Your home page](#your-home-page)). With one service the choice is skipped; with none, the CMS opens on the whole organisation's **Workstation**.
 
-The welcome screen has **Join with code**, **Create organisation**, **Manage organisations**, and **Sign out**. The service screen has **Switch organisation** and **Skip and open the queue**. You see the welcome screen once each time you sign in. To change organisation, service or role later, see [Choosing & Switching](/cms/administration/switching).
+The welcome screen has **Join with code**, **Create organisation**, **Manage organisations**, and **Sign out**. The service screen has **Open whole organisation** and **Switch organisation**. You see the welcome screen once each time you sign in. To change organisation, service or role later, see [Choosing & Switching](/cms/administration/switching).
 
 > **Note:** You work as one role at a time. If you belong to two organisations, you can be a Doctor in one and a Nurse in the other. If you hold more than one role in the same organisation, for example Doctor and Clinic Admin, you enter as one of them and switch from the sidebar switcher or the **Working as** menu (see step 3).
 
 ### Your home page
 
-Each role has one home page in a service, whatever kind of service it is:
-
-| Role | Home page |
-| --- | --- |
-| Doctor, Nurse, Patient service associate, Allied health professional | The service's **Workstation** |
-| Clinic Admin, Receptionist | The service's **Referrals** |
+Every role's home page in a service is the service's **Workstation**, whatever kind of service it is. With no service, it is the whole organisation's **Workstation** (`/workstation`).
 
 A badge at the top reads, for example, **Doctor home**, with shortcuts under it, each shown only when your role can open its page:
 
@@ -97,7 +92,6 @@ A badge at the top reads, for example, **Doctor home**, with shortcuts under it,
 | **Add patient** | Clinic Admin, Receptionist | Registering a patient, to add them to the service |
 | **Add staff** | Clinic Admin | The **Add staff member** dialog on [Staff](/cms/administration/staff) (`/staff?add=1`) |
 | **Book appointment** | Receptionist | A new appointment |
-| **Service patients** and **Referrals** | Doctor, Nurse | Everyone enrolled in the service, and the patients referred to it |
 
 The service pages themselves are described in [Services](/cms/services).
 
@@ -107,34 +101,14 @@ At the top of the sidebar is the **switcher**: the organisation's name and, unde
 
 Under the switcher, two tabs split the CMS:
 
-- **Home**: the Home assistant (**New chat**), **Notifications** (pings, the care services' tasks and patient messages), your saved **Chats**, and the **Organisation** group (Patients, Staff, Agents, Settings, AI policy).
-- **CMS**: the clinic's work. In the general clinic, **All services** sits under the clinic's name, followed by the clinic's own pages (Inbox, Tasks, Queue, Session, Appointments, Roster, Results, Content library, Templates), the **Ask Medbot** group, then **Pharmacy**, **Billing** and **Claims**. Inside a care service, the service's own pages come first, with your home page at the top.
+- **Home**: the clinic's work. Inside a care service, the service's own pages come first, with your home page at the top. With no service, the organisation's name heads the list with **All services** under it, then **Notifications**, **Workstation**, **Patients**, **Roster**, **Results**, **Identity changes**, **AI content library**, **Templates** and **Agents**, the **Ask Medbot** group, then **Pharmacy**, **Billing** and **Claims**.
+- **AI**: **New chat**, a chat that answers from the organisation's records (see [AI Chat](/cms/home-assistant)), your saved **Chats**, and the **Organisation** group (**Staff**, **Settings**, **AI policy**, and **Downtime recovery** for roles other than Clinic Admin).
 
-Both tabs have **Search**. A patient you have open shows as a card under it. You only see items your role may use:
+Both tabs have **Search**. A patient you have open shows as a card under it. You only see items your role may open. Each item is described in [Staff App Overview](/cms/overview#the-sidebar), and what each role may do in [Roles & Permissions](/cms/roles-and-permissions).
 
-| Tab and group | Clinic Admin | Receptionist | Doctor | Nurse |
-| --- | --- | --- | --- | --- |
-| Home: New chat, Tasks | Yes | Yes | Yes | Yes |
-| Home › Organisation: Patients, Agents | Yes | Yes | Yes | Yes |
-| Home › Organisation: Staff, Settings, AI policy | Yes | No | No | No |
-| Home › Organisation: Downtime recovery | No (in Settings) | Yes | Yes | Yes |
-| CMS: Results, Templates, Tasks, Queue, Appointments, Roster | Yes | Yes | Yes | Yes |
-| CMS: Inbox | Yes | Yes | No | No |
-| CMS: Session | Yes | Yes | No | No |
-| CMS › Ask Medbot: Approved answers, Patient questions | Yes | No | Yes | Yes |
-| CMS › Ask Medbot: Answer reports, Patient concerns | No | No | Yes | Yes |
-| CMS › Pharmacy: Formulary, Inventory, Stock, Order sets | Yes | No | Yes | Yes |
-| CMS › Pharmacy: Medication safety | Yes | No | No | No |
-| CMS › Pharmacy: Dosing rules | Yes | No | Yes | No |
-| CMS › Pharmacy: Dose overrides | Yes | No | No | No |
-| CMS › Billing: Billing, Catalog | Yes | Yes | No | No |
-| CMS › Billing: Billable services, Devices & substances | Yes | No | Yes | Yes |
-| CMS › Claims: Claims (Singapore) | Yes | Yes | Yes | No |
-| Home › Platform: Platform admin (the [platform admin panel](/cms/administration/platform-administration)) | Medbot platform admins and superadmins only, whatever their clinic role | | | |
+**Claims → Reports** shows to the roles that work on at least one of the organisation's reports; see [Reports](/cms/smartcms/reports). Downtime devices and System status are linked from **Downtime and status** in the organisation's [Settings](/cms/administration/settings). Medbot platform admins also see a **Platform** group, with **Platform admin** (the [platform admin panel](/cms/administration/platform-administration)).
 
-**Claims → Reports** shows to the roles that work on at least one of the organisation's reports; see [Reports](/cms/smartcms/reports). Downtime devices and System status are linked from **Downtime and status** in the organisation's [Settings](/cms/administration/settings).
-
-On a phone the **Home** and **CMS** tabs sit under the top bar, and a bar at the bottom holds the tab's main pages, **Search** and **More**.
+On a phone the sidebar becomes a sheet, and a bar at the bottom holds the tab's main pages, **Search** and **More**. See [On a phone](/cms/overview#on-a-phone).
 
 At the bottom of the sidebar you see your name, which opens your account menu.
 

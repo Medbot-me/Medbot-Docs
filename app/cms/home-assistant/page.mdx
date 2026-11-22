@@ -1,12 +1,12 @@
-# Home Assistant
+# AI Chat
 
-The Home assistant is a chat on the **Home** tab. Ask it about the organisation's patients, today's queue, appointments or billing, and it answers from the records, drawing what it found as cards. In an ordinary chat it can only read: it never books, checks in, bills, signs, orders or changes anything. Where your deployment turns on [running a clinic day](#running-a-clinic-day), a doctor or nurse can also have it propose steps of the day, which only they can confirm.
+The AI chat is the chat on the **AI** tab. In the sidebar it is **New chat**, and in the chat itself it is called Medbot. Ask it about the organisation's patients, today's queue, appointments or billing, and it answers from the records, drawing what it found as cards. In an ordinary chat it can only read: it never books, checks in, bills, signs, orders or changes anything. Where your deployment turns on [running a clinic day](#running-a-clinic-day), a doctor or nurse can also have it propose steps of the day, which only they can confirm.
 
-Selecting **Home** opens it on a new chat (`/home`). Each conversation you start gets its own address, `/home/chats/<id>`, and is listed under **Chats** in the sidebar.
+Selecting **AI** opens it on a new chat (`/ai`). Each conversation you start gets its own address, `/ai/chats/<id>`, and is listed under **Chats** in the sidebar. Old `/home` links, saved conversations included, open the same page under `/ai`.
 
 ## Who can do this
 
-Every role can use the Home assistant. What it can look up follows your role, the same way the matching pages do:
+Every role can use the AI chat. What it can look up follows your role, the same way the matching pages do:
 
 | What it can look up | Clinic Admin | Receptionist | Doctor | Nurse |
 | --- | --- | --- | --- | --- |
@@ -21,7 +21,7 @@ A Patient service associate can look up unpaid invoices, as a Receptionist can. 
 
 ## Starting a chat
 
-1. Select **Home**, or **New chat** in the sidebar.
+1. Select **AI**, or **New chat** in the sidebar.
 2. Type your question in the box ("Ask about a patient, the queue, appointments or billing") and send it, or select one of the suggestions:
    - "Who is waiting in the queue?"
    - "What appointments do we have today?"
@@ -55,14 +55,14 @@ The assistant always runs on the organisation's default model. The box shows **O
 
 ## Running a clinic day
 
-> **Note:** Running a clinic day is available only when your deployment has turned it on. If it is off, the Home tab has only the read-only assistant described above.
+> **Note:** Running a clinic day is available only when your deployment has turned it on. If it is off, the AI tab has only the read-only chat described above.
 
-A doctor or nurse can run a day of clinic from a Home chat: call the next patient, record the consult and add its summary to the note, draft orders and prescribe, end the consult and move on to the next patient, and send follow-ups after clinic. Medbot's assistant proposes each step as a card in the chat, and nothing happens until you press the button on the card. It never calls a patient, signs, sends or ends a consult by itself.
+A doctor or nurse can run a day of clinic from an AI chat: call the next patient, record the consult and add its summary to the note, draft orders and prescribe, end the consult and move on to the next patient, and send follow-ups after clinic. Medbot's assistant proposes each step as a card in the chat, and nothing happens until you press the button on the card. It never calls a patient, signs, sends or ends a consult by itself.
 
 ### Starting
 
 1. Set the CMS to a service that runs a queue, a clinic or a hybrid service. See [Choosing & Switching](/cms/administration/switching#choosing-a-service).
-2. On a new chat on **Home**, select **Start my clinic**. It is offered to a Doctor or Nurse, and to a Clinic Admin covering for support. Without a service set, it is not offered, and the ordinary assistant works as before.
+2. On a new chat on **AI**, select **Start my clinic**. It is offered to a Doctor or Nurse, and to a Clinic Admin covering for support. Without a service set, it is not offered, and the ordinary assistant works as before.
 
 This opens a conversation for that service, you and today. Starting your clinic again the same day reopens it. It appears under **Chats** like any other conversation. The suggestions in it are "Who is waiting?", "Who is next?", "Show any red flags" and "What appointments do we have today?"
 
@@ -88,16 +88,16 @@ A panel beside the chat has two tabs. On a narrow screen it opens from a button 
 
 Select **Close the clinic** in the panel. Medbot then stops proposing calls, recordings, orders and follow-ups for the day. You can still ask it questions, and starting your clinic again reopens it.
 
-If someone else saved the consult note while you were working, for example from the Home chat, the consult screen refuses to save over it: "This note was changed elsewhere, for example added to from the Home clinic run. Reload it to see the changes."
+If someone else saved the consult note while you were working, for example from the AI chat, the consult screen refuses to save over it: "This note was changed elsewhere, for example added to from the Home clinic run. Reload it to see the changes."
 
 ## Your conversations
 
-**Chats** in the Home sidebar lists your 20 most recent conversations, newest first, under **Today**, **Previous 7 days** and **Older**. A new conversation appears there as soon as you send its first message. Select one to carry on where you left off.
+**Chats** in the AI tab's sidebar lists your 20 most recent conversations, newest first, under **Today**, **Previous 7 days** and **Older**. A new conversation appears there as soon as you send its first message. Select one to carry on where you left off.
 
 Conversations are yours alone, in that organisation. Nobody else sees them, and they are not listed when you work in another organisation. Opening a conversation that is not yours, or that belongs to another organisation, shows "This conversation is not here", with **Start a new chat**.
 
 ## Related
 
-- [Staff App Overview](/cms/overview): the Home and CMS tabs.
+- [Staff App Overview](/cms/overview): the Home and AI tabs.
 - [AI Policy](/cms/administration/ai-policy): which AI providers and regions the organisation's AI may use, and its default model.
 - [Patient Records & Consent](/cms/clinical-care/patient-records), [Reception Queue](/cms/front-desk/reception-queue), [Appointments](/cms/front-desk/appointments) and [Billing](/cms/billing): the pages the cards link to.
