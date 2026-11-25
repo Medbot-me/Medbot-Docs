@@ -2,7 +2,7 @@ import { ImageZoom } from "nextra/components";
 
 # Service Agents
 
-Service agents are AI agents you author for one service, on its **Agents** page (under the service's name in the CMS sidebar, for admins). An agent is never a person: it works for, or alongside, the care team, and it always receives the [service context](/cms/services/context-and-content), the relevant care team and patient context, the tools you give it, and any subagents you link to it.
+Service agents are AI agents you author for one service, on its **Agents** page (`/services/<service>/agents`, under the service's name in the sidebar, for Clinic Admins). An agent is never a person: it works for, or alongside, the care team, and it always receives the [service context](/cms/services/context-and-content), the relevant care team and patient context, the tools you give it, and any subagents you link to it.
 
 ## Audiences
 
@@ -56,7 +56,7 @@ The table shows each agent's name, audience, status, tools, model and **Subagent
 | **Send Twilio message** | Message the patient over SMS or WhatsApp. |
 | **Send email** | Send an email notification. |
 | **Clinical resources** | Search, browse and read the service's content library. |
-| **Request human task** | Hand off to a human when it needs input, review or approval. The task appears in the Task Inbox of everyone on the care team, and on the service page. |
+| **Request human task** | Hand off to a human when it needs input, review or approval. The task appears in [Notifications](/cms/notifications) for everyone on the service's staff, and on the service page. |
 | **Notify patient** | Send the patient a short message from the care team. It appears in the service's chat in their patient portal; WhatsApp, SMS or email only tell them something is waiting. |
 | **Email staff** | Email whoever covers a care team role today, falling back to the service owner. |
 | **Hand over a session** | Offer the patient a health education or counselling session in their patient portal, with the content it should cover. |
@@ -65,7 +65,7 @@ Tasks raised with **Request human task** are not assigned to a role: the whole c
 
 #### Review before sending
 
-When you tick **Notify patient**, **Email staff** or **Hand over a session**, a section appears with a **Review before sending** switch. With it on, patient notices, staff emails and session handovers wait in the Task Inbox until the care team approves them. Each review task is assigned (an email to staff goes to the role it targets), shows an editable draft, and can be approved with **Approve and send** or rejected. Rejecting sends nothing.
+When you tick **Notify patient**, **Email staff** or **Hand over a session**, a section appears with a **Review before sending** switch. With it on, patient notices, staff emails and session handovers wait in [Notifications](/cms/notifications) until the service's staff approve them. Each review task is assigned (an email to staff goes to the role it targets), shows an editable draft, and can be approved with **Approve and send** or rejected. Rejecting sends nothing.
 
 For **Email staff**, choose which roles the agent may email under **Staff it may email**.
 
@@ -123,4 +123,4 @@ Above the agent list on the Agents page:
 
 ## Service agents and the Agents library
 
-Service agents belong to one service. They are separate from the organisation's **Agents** (**Home** › **Organisation** › **Agents** in Medbot CMS) and from your personal agents in the Medbot web app. Agents there can be personal or shared with the whole organisation, and a personal, public or default agent can be copied into the organisation.
+Service agents belong to one service. They are separate from the organisation's **Agents** (**Agents** at Org Level in Medbot CMS, `/agents`), the agent library where agents are built, validated and refined before a service agent calls them as subagents, and from your personal agents in the Medbot web app. Agents there can be personal or shared with the whole organisation, and a personal, public or default agent can be copied into the organisation.

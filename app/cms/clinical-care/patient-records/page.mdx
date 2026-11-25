@@ -2,7 +2,7 @@ import { ImageZoom } from "nextra/components";
 
 # Patient Records & Consent
 
-Patient records are the list of everyone registered at your clinic and each person's chart. The patient list is in the **Home** tab at **Organisation → Patients** (`/patients`), and you can find a patient from **Search** (⌘K) in either tab. A chart opens in the **CMS** tab. All four roles can open a chart. Front desk staff register patients.
+Patient records are the list of everyone registered at your clinic and each person's chart. At Org Level, the list is the **Patient list** tab of **Patients** in the **Home** tab (`/patients/lists`; the old `/patients` address opens it), and you can find a patient from **Search** (⌘K). A chart opens in the **Home** tab too. Every role can open a chart: Clinic Admins, receptionists, doctors, nurses, patient service associates and allied health professionals. Front desk staff register patients.
 
 ## Who can do this
 
@@ -14,6 +14,11 @@ Patient records are the list of everyone registered at your clinic and each pers
 | Deactivate a patient | Yes | Yes | No | No |
 | Edit contact details | Yes | Yes | Yes | Yes |
 | Record or change communication consent | Yes | Yes | Yes | Yes |
+| Add, change or remove a problem on the problem list | No | No | Yes | No |
+| Reveal a masked NRIC, FIN or passport number | Yes | Yes | Yes | Yes |
+| Verify a patient's identity | Yes | Yes | No | Yes |
+
+Patient service associates and allied health professionals also open charts and reveal identity documents. A patient service associate can verify identity too. Sections such as vitals, coverage and medications are shown to them only where their role may read them.
 
 Doctors and nurses who open `/patients/new` or `/patients/invite` see the message "This action requires one of the following roles: admin, receptionist."
 
@@ -68,31 +73,29 @@ _The duplicate identifier message_
 
 ## The patient chart
 
-A chart opens in the **CMS** tab, with the patient as a card at the top of the sidebar listing the chart's sections: **Overview**, **Medications**, **Accounts**, **Encounters**, **AI encounters**, **Notes**, **Results**, **Photos**, **Vaccinations**, **Documents** and **Messages**, and for some roles **Shared by patient** and **Audit log**. **Medications** is for clinical staff: see [Prescribing & Medications](/cms/clinical-care/prescribing). **AI encounters** lists the patient's [AI encounters across services](/cms/clinical-care/encounters#ai-encounters-across-services). **Notes** appears only when your deployment has turned the [notes workspace](/cms/clinical-care/patient-notes) on. **Photos** holds [clinical photos](/cms/clinical-care/clinical-photos). **Accounts** is visible to Clinic Admins and Receptionists only. **Audit log** is visible to Clinic Admins only (see [Audit log](#audit-log)). Select the cross on the card (**Close patient**) to leave the chart. On a phone the sections are a row of tabs under the patient's name.
+A chart opens in the **Home** tab, with the patient as a card at the top of the sidebar listing the chart's sections: **Overview**, **Problem list**, **Medications**, **Accounts**, **Encounters**, **AI encounters**, **Notes**, **Results**, **Photos**, **Vaccinations**, **Documents** and **Messages**, and for some roles **Shared by patient** and **Audit log**. **Problem list** and **Medications** are for clinical staff: see [The problem list](#the-problem-list) and [Prescribing & Medications](/cms/clinical-care/prescribing). **AI encounters** lists the patient's [AI encounters across services](/cms/clinical-care/encounters#ai-encounters-across-services). **Notes** appears only when your deployment has turned the [notes workspace](/cms/clinical-care/patient-notes) on. **Photos** holds [clinical photos](/cms/clinical-care/clinical-photos). **Accounts** is visible to Clinic Admins and Receptionists only. **Audit log** is visible to Clinic Admins only (see [Audit log](#audit-log)). Select the cross on the card (**Close patient**) to leave the chart. On a phone the sections are a row of tabs under the patient's name.
 
-### The chart header
+### The patient workspace
 
-On **Overview** the header shows the patient in full:
+**Overview** (`/patients/<id>`) opens the patient workspace:
 
-- their initials and name, and below it their sex, age, birth date, MRN and phone number, each where recorded
-- up to two allergy chips, such as "Allergy: Penicillin", then how many more
-- the patient's status when it is not active, and any other names ("Also known as")
-- **Encounter in progress**, when the patient has one: what it is for, when it started, its class and clinician, with **Open** to go to [Encounters](/cms/clinical-care/encounters)
-- **Ping staff**, to send a [staff ping](/cms/clinical-care/tasks) about the patient
+- **The header** names the patient, with their sex, age, birth date, MRN and phone number where recorded, the identity document (masked, see [National ID numbers on the chart](#national-id-numbers-on-the-chart)), the patient's status when it is not active, up to two allergy chips such as "Allergy: Penicillin", and **Encounter in progress** with a link when one is under way. Its buttons are **Portal invite**, **New note**, **Start Encounter**, **Ping staff** (a [staff ping](/cms/clinical-care/tasks)) and, for the front desk and nurses, **Verify identity** (see [Verifying a patient's identity](#verifying-a-patients-identity)).
+- **The left rail** holds the **Patient** section, open by default: the patient's allergies, problems, medications, results and earlier encounters, then **Vitals** (the latest of each measure), **Vaccinations**, **Documents**, **Photos** and **Contact and consent**, each expanding in place. A section is shown only to the roles its chart page admits, and one that fails to load says so. Below it are the patient's **Services**, each opening the patient's page in that service, and **More**, linking to what the Patient section does not show: the problem list, accounts, records the patient shared and the audit log, each for the roles its page admits. A link with `?section=vitals` (or vaccinations, documents, photos, contact) opens the workspace with that section expanded.
+- **The centre** shows the chart Overview described below.
 
-On the other sections the header leads with the section's name, with the patient's name and details beside it.
-
-Each section's own buttons sit at the top right. On a phone they are a bar along the bottom of the screen, in place of the app's bottom bar. On **Overview** they are:
+The chart's own section pages stay for recording and editing, and each section in the rail links to its page. On the other sections the header leads with the section's name, with the patient's name and details beside it. Each section's own buttons sit at the top right; on a phone they are a bar along the bottom of the screen, in place of the app's bottom bar.
 
 | Button | What it does | Who sees it |
 | --- | --- | --- |
 | **Portal invite** | Makes a one-time link that, once the patient signs in to the patient app, links their account to this chart. See [Patient Portal](/cms/clinical-care/patient-portal). | Everyone |
 | **New note** | Opens the [notes workspace](/cms/clinical-care/patient-notes). | Clinic Admins, Doctors and Nurses |
-| **Start Encounter** | Starts a visit. See [Encounters & Clinical Notes](/cms/clinical-care/encounters#starting-an-encounter). | Clinic Admins, Doctors and Nurses, while no encounter is in progress |
+| **Start Encounter** | Starts an encounter in the patient's service (see below), or a visit for a patient in no service. See [Encounters & Clinical Notes](/cms/clinical-care/encounters#starting-an-encounter). | Clinic Admins, Doctors, Nurses and Allied health professionals, while no encounter is in progress |
+
+**Start Encounter** belongs to a service. With one service it starts there straight away; with several it asks which (**Service**), listing only the patient's services that you may open. If the patient waits in a service's queue today, the button reads **Start consult** and opens that visit's consult instead of a second encounter. A patient in no service keeps the chart's own encounter dialog.
 
 ### The Overview
 
-**Allergies** comes first, across the full width. Below it are two columns (one on a narrow screen):
+A **Services** card lists the patient's services, each with **Open**. **Allergies** comes next, across the full width. Below it are two columns (one on a narrow screen):
 
 | Left column | Right column |
 | --- | --- |
@@ -102,19 +105,66 @@ Each section's own buttons sit at the top right. On a phone they are a bar along
 | --- | --- |
 | **Allergies** | Drug allergies and intolerances, or "No known drug allergies". Not shown to Receptionists. See [Allergies & Medication Safety](/cms/clinical-care/allergies-and-medication-safety) |
 | **Patient-reported intake** | Answers from a self-registration, only for patients who registered themselves. Shown under **Allergies** |
-| **Problem list** and **Medications** | The patient's conditions, with a count of active ones, and their medicines, with a filter between active and all. Shown to doctors, nurses, Clinic Admins and clinical staff in the other roles. Each medicine has a menu to amend, stop or repeat it, which opens the [Medications page](/cms/clinical-care/prescribing) with the form filled in, where your deployment lets you write orders. If a list cannot be loaded, the card says so ("Do not assume this patient has no problems.") with **Try again**, never an empty list |
-| **Vitals** | See [Vitals](/cms/clinical-care/vitals) |
+| **Problem list** and **Medications** | The patient's problems, with a count of active ones (see [The problem list](#the-problem-list)), and their medicines, with a filter between active and all. Shown to doctors, nurses, Clinic Admins and clinical staff in the other roles. Each medicine has a menu to amend, stop or repeat it, which opens the [Medications page](/cms/clinical-care/prescribing) with the form filled in, where your deployment lets you write orders. If a list cannot be loaded, the card says so ("Do not assume this patient has no problems.") with **Try again**, never an empty list |
+| **Vitals** | See [Vitals](/cms/clinical-care/vitals). Shown only to the roles that may read vitals |
 | **Diagnoses (ICD-10-AM)** | Singapore only. See [Coding the visit's diagnoses](/cms/clinical-care/encounters#coding-the-visits-diagnoses-singapore) |
 | **Recent results** | The patient's three latest results, each with when it was received and **Awaiting review** or who reviewed it. Select one to open it on **Results**, or **All results**. See [Diagnostic Results](/cms/clinical-care/diagnostic-results) |
 | **Clinical notes** | See [Encounters & Clinical Notes](/cms/clinical-care/encounters#clinical-notes) |
 | **Contact** | Phone and email with a **Preferred** badge, and the addresses on file, plus **Caregivers**, **Messaging numbers** and **Edit contact**. See [Caregiver access](/cms/clinical-care/patient-portal#caregiver-access) |
 | **Communication consent** | Consent by purpose and channel, plus **Edit consent** |
-| **Demographics and identifiers** | Birth date, gender, and marital status, preferred language and date of death when recorded, then each identifier and its number |
+| **Demographics and identifiers** | Birth date, gender, and marital status, preferred language and date of death when recorded, the masked **Identity document** when the patient has an NRIC, FIN or passport, then the clinic's own identifiers, such as the MRN, in full |
 
 **Messaging numbers** shows the numbers the patient's care services message them on, their own and any guardian's.
 
 <ImageZoom src="/images/cms/patient-records/04-chart-overview.png" alt="A patient chart overview with demographics, contact, address, identifiers, consent, vitals and clinical notes cards" />
 _A patient chart overview_
+
+## The problem list
+
+The **Problem list** section of a chart (`/patients/<id>/problems`) is the clinic's list of the patient's problems. It stays on this clinic's chart for the patient's future visits.
+
+- **Active** and **Past** problems. Each shows its name, its code (for example "ICD-10-AM J44.9 · Since 2019"), any comment, and who added or confirmed it and when.
+- **Diagnosed at visits**: the diagnoses coded at this clinic's visits, one row each, marked **On problem list** when they are already there. A doctor can **Add &lt;diagnosis&gt; to the problem list**.
+
+Doctors add, edit and remove problems; the other clinical roles read the list. The notes workspace's **Chart** tab and the consult screen's Patient section show the same list.
+
+To add a problem, select **Add problem**:
+
+1. Search **Diagnosis code (ICD-10-AM)** ("Code or name, e.g. J44 or asthma") and choose a match, or describe the problem in your own words under **Problem, in your words**. A code not on MOH's lists is offered as **Not on MOH's lists** ("Use this code and name the problem."), and one on MOH's lists with no title held as **On MOH's lists, no title held**.
+2. Check the **Name on the chart** (the code's title unless you change it).
+3. Choose the **Status**: **Active**, **Inactive** or **Resolved**.
+4. Optionally enter **Started (optional)** and, for a problem that is not active, **Resolved (optional)** or **Inactive since (optional)**: a year, with or without a month. A date first recorded as free text (such as "since childhood") stays unless you enter a year.
+5. Optionally add a **Comment (optional)**.
+6. Select **Add to problem list**.
+
+To change a problem, open its menu (**Actions for &lt;problem&gt;**) and select **Edit or mark resolved** (**Edit or reactivate** for a past problem), then **Save changes**. Changes are kept in the record's history; saving a different code replaces the old one. If someone else changed the problem since you opened it, the save is refused ("This problem was changed by someone else since you opened it.").
+
+**Remove (entered in error)** asks **What was wrong**, for example "Recorded on the wrong patient", then **Remove**. Use it only for a problem that should never have been recorded; mark a problem that has gone as **Resolved** instead.
+
+A condition the patient reported and shared with the clinic joins the list once a doctor codes or confirms it on **Shared by patient**: see [Reported conditions](/cms/clinical-care/patient-concerns#reported-conditions).
+
+## National ID numbers on the chart
+
+A patient's NRIC, FIN or passport number is masked everywhere on the chart, for example `S••••345D`: in the header, the identity line and the Overview's **Demographics and identifiers** card. The patient list, the pickers and search show the same masked value. A number shorter than an NRIC is masked whole.
+
+To see it, click the masked value or the eye button. One reveal shows the identity documents in all three places, and is written to the patient's audit log. Hiding and showing it again adds no new entry. Opening another patient, or leaving the chart, masks it again.
+
+Every role that opens a chart can reveal: Clinic Admins, receptionists, doctors, nurses, patient service associates and allied health professionals, who confirm a patient's identity before a procedure, a test or a referral. The MRN and the clinic's other identifiers are never masked.
+
+A medical certificate downloaded or printed from **Documents** names the patient by NRIC or FIN, else passport. See [Documents & Certificates](/cms/clinical-care/documents-and-certificates).
+
+## Verifying a patient's identity
+
+Patients edit their own name and date of birth in their Medbot account. Until someone checks them against an identity document, they are shown as not verified. Identity change requests are retired.
+
+For a patient whose chart is linked to a Medbot account, Clinic Admins, receptionists, patient service associates and nurses see **Verify identity** in the workspace header (**Identity verified** once done):
+
+1. Check the patient's original NRIC, FIN card or passport against **Their Medbot account** (shown beside **This chart**). If the chart differs from their account, verifying confirms the account; correct the chart separately.
+2. Choose the **Document**.
+3. Tick **The name matches the document**, **The date of birth matches the document** and **I kept no copy of the document**.
+4. Select **Verify identity**.
+
+Scanning a patient's clinic card at the desk also verifies them. A Medbot platform superadmin can verify a patient from the admin panel: see [Platform Administration](/cms/administration/platform-administration#identity-verification).
 
 ## Editing contact details
 
@@ -143,7 +193,7 @@ Saving needs your account to be linked to a clinical profile. Otherwise you see 
 
 Use this for a person who asked for an appointment but is not registered yet.
 
-1. Select **Invite to self-register** on the Patients page. The **Invite to self-register** page opens.
+1. Select **Invite to self-register** on the Patient list. The **Invite to self-register** page opens.
 2. Select **Invite to self-register** again, optionally enter a given and family name, choose **SMS** or **Email**, and enter the phone number or email address.
 3. Select **Send link**.
 
@@ -161,7 +211,7 @@ _The Patient-reported intake card_
 
 ## Deactivating a patient
 
-1. On the Patients page, select the actions menu (three dots) on the patient's row.
+1. On the Patient list, select the actions menu (three dots) on the patient's row.
 2. Select **Deactivate patient**, then **Deactivate**.
 
 The patient's history stays intact and the status becomes **Inactive**. An inactive patient can no longer be selected for care: **Start Encounter** is disabled. Use the **Inactive** filter to find them. The CMS has no button to reactivate a patient; if someone was deactivated in error, restore the record in the clinic's medical record system rather than registering them again (which the app refuses as a duplicate).

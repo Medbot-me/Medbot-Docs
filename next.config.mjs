@@ -9,6 +9,13 @@ const withNextra = nextra({
 export default withNextra({
   async redirects() {
     return [
+      // Session Setup retired: each service's session is a tab of its
+      // Workstation, and locations and rooms are in Organisation Settings.
+      {
+        source: '/cms/front-desk/session-setup',
+        destination: '/cms/services/workstation',
+        permanent: true,
+      },
       // Medbot CMS pages grouped into collapsible sidebar folders.
       {
         source: '/cms/patient-records',
@@ -97,7 +104,7 @@ export default withNextra({
       },
       {
         source: '/cms/session-setup',
-        destination: '/cms/front-desk/session-setup',
+        destination: '/cms/services/workstation',
         permanent: true,
       },
       {
@@ -271,7 +278,7 @@ export default withNextra({
       },
       {
         source: '/docs/medbot-cms/session-setup',
-        destination: '/cms/front-desk/session-setup',
+        destination: '/cms/services/workstation',
         permanent: true,
       },
       {
@@ -405,6 +412,17 @@ export default withNextra({
         source: '/docs/deep-research/default_agents',
         destination: '/docs/deep-research',
         permanent: true,
+      },
+      // Help links in the Medbot app point at these paths.
+      {
+        source: '/docs/bug-report',
+        destination: '/docs/advanced#report-a-problem',
+        permanent: false,
+      },
+      {
+        source: '/docs/account',
+        destination: '/docs/advanced#account-settings',
+        permanent: false,
       },
     ]
   },

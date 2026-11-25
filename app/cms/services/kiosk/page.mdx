@@ -1,6 +1,6 @@
 # Kiosk Self-Service
 
-A **kiosk** is a clinic device, such as a tablet in the waiting area, that patients use themselves to check in and to complete the sessions arranged for their visit. It is separate from handing a device to one patient during a consult, which is covered in [AI Encounters](/cms/services/encounters#in-the-clinic-the-kiosk).
+A **kiosk**, the self check-in kiosk, is a clinic device, such as a tablet in the waiting area, that patients use themselves to check in and to complete the sessions arranged for their visit. It serves patients with the Medbot app and without it: it shows the counter check-in QR code, reads clinic cards, and takes an ID number and date of birth. It is separate from handing a device to one patient during a consult, which is covered in [AI Encounters](/cms/services/encounters#in-the-clinic-the-kiosk).
 
 Who does what: a member of staff signs in on the device and sets it up. After that, patients use it without signing in to anything.
 
@@ -26,9 +26,18 @@ The kiosk home has two choices:
 - **Check in for today**: "Get your queue number — appointments and walk-ins".
 - **Start a session**: "One your doctor arranged for you today".
 
+Below them, the home screen offers two quicker ways to check in:
+
+- **Have the Medbot app?** The rotating counter check-in QR code of the service's clinic location. The patient scans it with their phone camera and taps **Check in** in the app. The code changes every minute and is taken down if the kiosk stops getting new ones. See [Clinic Card & Check-in](/cms/front-desk/clinic-card-check-in#checking-in-with-the-medbot-app).
+- **Or show your Medbot card here**: the patient holds their [clinic card](/cms/front-desk/clinic-card-check-in) up to the kiosk's barcode scanner, if it has one, or selects **Use the camera** to read it with the kiosk's camera.
+
+A clinic card at the kiosk only checks the patient in: nobody compares their photo, so it is accepted only for a patient the clinic has linked and whose identity was checked. Anyone else is asked to show their card at the front desk ("We could not check you in here. Please show your card at the front desk."), and the code stays unused so the desk can scan it. An expired code asks the patient to open their card again.
+
 ### Checking in
 
-On **Check in for today** the patient enters their NRIC, FIN or passport number and their date of birth, then clicks **Check in and get my queue number**. The kiosk shows their queue number and asks them to take a seat and watch the screen. They then appear on the [Workstation](/cms/services/workstation) queue.
+On **Check in for today** the patient enters their NRIC, FIN or passport number and their date of birth, then clicks **Check in and get my queue number**. A patient with no appointment today is checked in as a walk-in.
+
+Whichever way they checked in, the kiosk then says "You're registered, &lt;first name&gt;." with their queue number, and prints a ticket where the kiosk has a printer ("Your ticket is printing", **Print again**). If it cannot print, it says "This kiosk cannot print a ticket right now" and asks them to remember the number or take a photo of the screen. It asks them to take a seat and watch the screen. A walk-in is told they may wait a little longer than booked patients. They then appear on the [Workstation](/cms/services/workstation) queue, with **Self check-in** under their ticket.
 
 ### Starting a session
 

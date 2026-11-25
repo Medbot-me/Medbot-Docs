@@ -1,0 +1,74 @@
+# Notifications
+
+**Notifications** is one list of everything waiting on you across the organisation: [staff pings](/cms/clinical-care/tasks), care services' tasks and patient messages, the [clinic inbox](/cms/clinical-care/messaging) for the front desk, dosing rules for a doctor to review, and booking requests that need a service. It replaces the separate Tasks page, Task Inbox, clinic inbox list and ping list. Open it from the bell at the top of the screen, or at `/notifications`. The old addresses `/tasks` and `/services/inbox`, and links in task emails sent before the change, open it.
+
+## Who sees what
+
+Each part of the list shows only to the roles that can act on it:
+
+| Source | Shown to |
+| --- | --- |
+| **Pings** | Every role that sends and receives pings |
+| **Service tasks** and patient messages to a service | Every clinic role, for the services they work in |
+| **Patient messages from the clinic inbox** | The front desk: Clinic Admins and Receptionists |
+| **Dosing rule reviews** | Doctors whose own version of a clinic dosing rule is out of date |
+| **Booking requests that need a service** | Clinic Admins |
+
+If one source cannot be read just now, the page names it instead of showing an empty list.
+
+## The bell
+
+The bell in the header counts what needs you: open pings, items addressed to you, and overdue items. Select it to see the first five, with "&lt;number&gt; need you" or "Nothing needs you", and **See all &lt;number&gt; notifications** to open the rest. New pings still arrive within about five seconds, with a toast and a sound. The rest of the list refreshes on its own.
+
+**See all** opens the Notifications page, or a drawer over the page you are on. Switch between them with **Show all notifications in a drawer** or **on a page** in the bell.
+
+## The Notifications page
+
+Tabs across the top choose the scope:
+
+- **All**: "General notifications plus every service you work in."
+- **General**: "Pings and tasks that belong to the organisation, not to a service."
+- One tab per service you work in: "Only this service's tasks and patient messages."
+
+Each tab shows its count. The kind filter narrows the list further: **All kinds**, **Pings**, **Tasks** or **Patient messages**.
+
+Each row says what it is (for example **Task · Dosing rule review**, **Patient message** or **Patient concern**), when it is due, and badges such as **To you**, **General**, **Redirected to you** or **Overdue**. A row keeps its own actions:
+
+- A ping: **Acknowledge**, then **Done**.
+- A service task: **Review** opens the task card in place, with its own actions, such as redirecting it to a doctor. See [Tasks & Staff Pings](/cms/clinical-care/tasks).
+- A clinic inbox thread: **Open thread with &lt;patient&gt;** opens it in the clinic inbox.
+- A dosing rule review: it says which clinic version your rule was made from and opens the rule. See [Dosing Rules](/cms/pharmacy/dosing-rules).
+- A booking request that needs a service: **Assign a service** opens the request. See [Requests that need a service](/cms/front-desk/appointments#requests-that-need-a-service).
+
+**Sent** lists the pings you sent, each **Waiting**, **Acknowledged** or **Done**.
+
+## Pinging staff
+
+Select **Ping staff** on the Notifications page.
+
+1. Under **To**, choose who to ping.
+2. Under **Show under**, choose **General** ("The organisation as a whole, not one service.") or one of your services. A ping filed under a service "shows in that service's notifications, and under All for the whole organisation."
+3. Write the **Message** ("What do you need?") and select **Send**.
+
+A ping sent from a patient's chart or an order links to that patient's chart. See [Tasks & Staff Pings](/cms/clinical-care/tasks).
+
+## A service's notifications
+
+Every care service has a notifications page (`/services/<service>/notifications`), for its staff and administrators. Open it from the Tasks card on the service's overview, from a task row's link in Notifications, or from an organisation's attention list. It lists every pending task and patient message of the service, and the pings filed under it, with tabs for who each is addressed to:
+
+- **All**: "Everything staff have open, whoever it is for."
+- **To you**: "Assigned to you, or redirected to you by a colleague."
+- One tab per role something is addressed to: "Assigned to this role, for whoever covers it."
+- **Staff**: "Not assigned to a role, so anyone on staff can take it."
+
+The same kind filter applies. **Ping staff** here starts with the service chosen under **Show under**.
+
+## On a phone
+
+On a phone the tabs and the kind filter scroll in one row, and each row's actions span the row, with large touch targets.
+
+## Related
+
+- [Tasks & Staff Pings](/cms/clinical-care/tasks)
+- [Clinic Messaging](/cms/clinical-care/messaging)
+- [Appointments](/cms/front-desk/appointments): booking requests.

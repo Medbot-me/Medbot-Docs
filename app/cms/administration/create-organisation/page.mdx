@@ -4,7 +4,7 @@ Any signed-in user can create an organisation. The creator becomes its first **a
 
 Reach the form from `/organisations/new`: from **Set up a new healthcare organisation** on the [first-sign-in screen](/cms/getting-started#if-you-have-no-organisation-yet), or from **Create organisation** on the [organisations screen](/cms/administration/switching#the-organisations-screen), the [welcome screen](/cms/administration/switching#the-welcome-screen) or the [sidebar switcher](/cms/administration/switching#the-sidebar-switcher).
 
-Setting up an organisation is part of the first-sign-in flow: the form, and the services and team steps after it, fill the screen with your setup progress on a panel beside them (**Organisation details**, **Singapore integrations** for Singapore only, **Set up services**, **Add your team**). Only trying Medbot out? The first step links to **Create a demo organisation**, with synthetic data, instead; see [A demo organisation instead](#a-demo-organisation-instead).
+Setting up an organisation is part of the first-sign-in flow: the form, and the services and team steps after it, fill the screen with your setup progress on a panel beside them (**Organisation details**, **Singapore integrations** for Singapore only, **Public profile**, **Set up services**, **Add your team**). Only trying Medbot out? The first step links to **Create a demo organisation**, with synthetic data, instead; see [A demo organisation instead](#a-demo-organisation-instead).
 
 > **Nothing to connect.** Medbot makes the organisation's own patient records store as it creates the organisation. The form asks for no server, client ID or secret, and there is no choice between hosting it with Medbot or bringing your own. If this Medbot deployment cannot make organisations just now, the page says **New organisations cannot be set up right now** with the reason, and a **Back** button.
 
@@ -25,17 +25,17 @@ A doctor who wants a CMS only for themselves and their family can use a [physici
 
 ## The wizard
 
-The form is a short wizard, headed "Set up a new healthcare organisation · step N of M" above the step's name. The number of steps depends on the country: two for Singapore, one elsewhere. **Back** returns to the step before, or from the first step to the first-sign-in screen.
+The form is a short wizard, headed "Set up a new healthcare organisation · step N of M" above the step's name. The number of steps depends on the country: three for Singapore, two elsewhere. **Back** returns to the step before, or from the first step to the first-sign-in screen.
 
 ### Step 1: Organisation details
 
-"A clinic, hospital or remote care service. You become its first administrator. Country and time zone are guessed from your browser."
+"A clinic, hospital or remote care service. You become its first administrator. The time zone is taken from your device."
 
 | Field | Required | Notes |
 | --- | --- | --- |
 | **Organisation name** | Yes | The clinic's name, e.g. "Orchard Clinic". |
-| **Country** | Yes | Guessed from your browser, falling back to Singapore. Decides which [country-specific integrations](/cms/administration/settings#integrations) are offered. |
-| **Time zone** | No | Guessed from your browser. |
+| **Country** | Yes | Starts on Singapore. Decides which [country-specific integrations](/cms/administration/settings#integrations) are offered. |
+| **Time zone** | No | Taken from your device. |
 
 **Continue** stays disabled until the name and country are set.
 
@@ -45,9 +45,20 @@ Shown only when the country is Singapore: "Choose the national services this org
 
 Choosing a module does not connect anything by itself: each clinic location still needs its HE code and Synapxe's approval.
 
+### Last step: Public profile
+
+"What patients see about &lt;organisation&gt;. Nothing here is required, and you can change it later in Organisation settings."
+
+- **Photo of your organisation** and **Logo**.
+- **About &lt;organisation&gt;**: a description for the public.
+- The main location's **Address**, **Postal code** and **Phone**, and a **Website**.
+- **Connect to the patient portal**: list the organisation in Find care so patients can see this profile. With it on, **Take bookings from Find care** ("Services with open times confirm straight away; other requests go to your team to confirm or propose a time.") and **Appointment requests go to** (who confirms a request from a new patient).
+
+The same settings are under [Public profile](/cms/administration/settings#public-profile) in Organisation Settings.
+
 ### Creating it
 
-On the last step (**Organisation details**, or **Singapore integrations** for a Singapore organisation) the button reads **Create &lt;organisation name&gt;**. If the server refuses, for example because you are past your limit, the form shows **Could not create organisation** with the reason.
+On the last step the button reads **Create &lt;organisation name&gt;**. **Skip for now** creates the organisation without a public profile. If the server refuses, for example because you are past your limit, the form shows **Could not create organisation** with the reason.
 
 ## What happens on submit
 
@@ -56,7 +67,9 @@ Medbot first makes the organisation's patient records store, then, in one go:
 - the **organisation** itself, with a generated slug and join code, its country, time zone and any SmartCMS modules
 - the creator's **membership** as `admin`, with their name and email
 - the admin's own Practitioner record in the organisation's records, so they can act clinically from their first sign-in
-- a default **clinic location**, "Main Clinic"
+- a default **clinic location**, "Main Clinic", with the address and phone from the public profile step
+
+The photo and logo upload once the organisation exists. If either fails, the services step says so: "The photo or logo could not be uploaded", with a link to add them in settings.
 
 If any step fails, everything made so far is removed again, the records store included, and the form shows the reason instead of leaving a half-built organisation or an admin who cannot act clinically.
 
@@ -72,7 +85,8 @@ The new organisation becomes the current one, and two optional steps follow. Bot
 
 1. Under **Start from**, choose **Basic service** ("Only the essentials. You choose the care setting, specialty and everything after.") or one of the specialised templates.
 2. Under **Service details**, enter or check the **Service name**, the **Care setting** (Outpatient, Inpatient, Remote or Hybrid), the **Specialty**, and **Where care happens** (optional). A template fills these in ("Filled from the &lt;template&gt; template. You can change any of it."), and your changes are saved onto the service it makes.
-3. Select **Create service**, or **Skip for now**.
+3. **AI settings** is optional and starts closed, marked **Recommended defaults**: "Medbot applies these unless you change them, here or later in the service's settings." Open it to change the **Patient agent in the portal** and who it **Hands over to**, **Pre-visit history**, **Education and counselling**, the **Fit check when a patient is added**, and **Agent messages to patients** (whether routine replies are sent as drafted, or staff approve each). Once changed it reads **Changed**.
+4. Select **Create service**, or **Skip for now**.
 
 The service starts as a draft you can finish before patients see it, and you can add more from Services. See [Getting Started with Services](/cms/services/getting-started) and [Modes of Care](/cms/services/modes-of-care).
 
@@ -93,10 +107,10 @@ The team step ends with **Choose where to start**, once the organisation has a s
 
 | Role | Badge | Home | What it opens on |
 | --- | --- | --- | --- |
-| **Clinic Admin** | Your role | Referrals | "Referrals, adding patients and staff, and service setup." |
-| **Doctor** | Preview | Workstation | "Today's visits, escalations and unsigned notes." |
-| **Nurse** | Preview | Workstation | "Pre-visit check-ins, caseload and escalations." |
-| **Receptionist** | Preview | Referrals | "New referrals, bookings and arrivals." |
+| **Clinic Admin** | Your role | Patients | "Referrals, adding patients and staff, and service setup." |
+| **Doctor** | Preview | Patients | "Today's visits, escalations and unsigned notes." |
+| **Nurse** | Preview | Patients | "Pre-visit check-ins, caseload and escalations." |
+| **Receptionist** | Preview | Patients | "New referrals, bookings and arrivals." |
 
 3. Select **Open &lt;service&gt;**, or **Preview &lt;service&gt; as &lt;role&gt;**.
 
@@ -108,10 +122,10 @@ With no service yet, the step ends with **Enter &lt;organisation&gt;** instead.
 
 - add the rest of the staff from `/staff`: see [Members & Roles](/cms/administration/members-and-roles)
 - hand out the join code to new hires: see [Join an Organisation](/cms/administration/join-an-organisation)
-- configure locations, rooms and everything else exactly as [Getting Started](/cms/getting-started) describes
+- add clinic locations and rooms under [Clinic locations](/cms/administration/settings#clinic-locations), and everything else as [Getting Started](/cms/getting-started) describes
 
 There is no separate "make me an admin" step. The first admin is whoever created the organisation; every admin after that is one an existing admin added.
 
 ## A demo organisation instead
 
-On the first-sign-in screen, where you may make one, **Set up a new healthcare organisation** offers **A real organisation** or **A demo organisation**: "Your own organisation for trying Medbot or showing it to others, with synthetic data only. Medbot hosts it in Singapore and you're its administrator. Delete it whenever you're done." Select **Create demo organisation** (or **Open demo organisation** if you have one). It goes straight to **Set up a demo service**, with **Create demo service** or **Skip for now**, and then to Home. See [Demo Services](/cms/services/demo-services#your-demo-organisation).
+On the first-sign-in screen, where you may make one, **Set up a new healthcare organisation** offers **A real organisation** or **A demo organisation**: "Your own organisation for trying Medbot or showing it to others, with synthetic data only. Medbot hosts it in Singapore and you're its administrator. Delete it whenever you're done." Select **Create demo organisation** (or **Open demo organisation** if you have one). It goes straight to **Set up a demo service**, with **Create demo service** or **Skip for now**, and then to Home. The IVF template there has a **Step-by-step guide** card that opens the [IVF use-case guide](/cms/use-cases/ivf). See [Demo Services](/cms/services/demo-services#your-demo-organisation).

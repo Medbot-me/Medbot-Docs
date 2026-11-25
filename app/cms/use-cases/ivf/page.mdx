@@ -138,12 +138,12 @@ Each section below follows one feature, using the patient whose story shows it b
 | [The cycles board](#the-cycles-board) | Dr Lim or Siti | Workstation → **Cycles** |
 | [Protocols](#protocols) | Dr Lim, then Dr Ruth Tan | The service's **Protocols** page |
 | [A patient's cycle](#a-patients-cycle) | Dr Lim | Mei Lin Tan → **Cycle** |
-| [Change the plan](#change-the-plan) | Dr Lim, then Siti | Mei Lin Tan → **Cycle**, then the **Task Inbox** |
-| [Doses at home](#doses-at-home) | Mei Lin Tan (patient app), then Siti | **My cycle**, then Sarah Goh in the **Task Inbox** |
+| [Change the plan](#change-the-plan) | Dr Lim, then Siti | Mei Lin Tan → **Cycle**, then **Notifications** |
+| [Doses at home](#doses-at-home) | Mei Lin Tan (patient app), then Siti | **My cycle**, then Sarah Goh in **Notifications** |
 | [A new cycle starts](#a-new-cycle-starts) | Amanda Wong (patient app), then Siti and Dr Lim | **My cycle**, then Amanda Wong → **Cycle** |
 | [Monitoring scans and results](#monitoring-scans-and-results) | Siti | Mei Lin Tan → **Photos** and **Results** |
 | [The patient's My cycle](#the-patients-my-cycle) | Mei Lin Tan (patient app) | **My cycle** |
-| [Red flags and escalations](#red-flags-and-escalations) | Hui Min Koh (patient app), then Siti and Dr Lim | **Log** → **Log a symptom**, then the board and the **Task Inbox** |
+| [Red flags and escalations](#red-flags-and-escalations) | Hui Min Koh (patient app), then Siti and Dr Lim | **Log** → **Log a symptom**, then the board and **Notifications** |
 | [The cycle summary](#the-cycle-summary) | Dr Lim or Siti | Mei Lin Tan → **Cycle** |
 | [Oversight: AI policy, data and audit](#oversight-ai-policy-data-and-audit) | Grace Ho | **AI policy**, organisation settings, a patient's **Audit log** |
 
@@ -264,9 +264,9 @@ Only a doctor can confirm a plan. AI reads the dictation; nothing changes until 
 
 ### Sign the medication orders
 
-Open the **Task Inbox** as **Dr Lim**. **Treatment plan version 2: sign the medication orders** lists the drafted orders: cetrorelix 0.25 mg, and follitropin alfa 150 IU, which replaces the current order.
+As **Dr Lim**, open **Notifications** (the bell at the top of the screen). **Treatment plan version 2: sign the medication orders** lists the drafted orders: cetrorelix 0.25 mg, and follitropin alfa 150 IU, which replaces the current order.
 
-<ImageZoom src="/images/cms/use-cases/ivf/16-task-inbox-doctor.png" alt="Dr Lim's Task Inbox with the message to the patient, the medication orders to sign, and Hui Min Koh's OHSS watch" />
+<ImageZoom src="/images/cms/use-cases/ivf/16-task-inbox-doctor.png" alt="Dr Lim's tasks (earlier Task Inbox layout) with the message to the patient, the medication orders to sign, and Hui Min Koh's OHSS watch" />
 
 1. Click **Open the orders to review and sign**. The consult opens with the orders panel listing the **Unsigned medications**.
 2. Click **Review and sign**. **Sign 2 orders?** shows each order with its safety checks, for example "Already taking Follitropin alfa 300 IU pre-filled pen" and the allergy status not being recorded.
@@ -278,7 +278,7 @@ Signing is the one place an order becomes active, so the safety checks run there
 
 ### Approve the message to the patient
 
-The same change drafts a message to Mei Lin. With the demo's approval policy, a nurse approves it first. As **Siti**, open the **Task Inbox**. **Treatment plan: Message the patient in the patient portal** shows the draft:
+The same change drafts a message to Mei Lin. With the demo's approval policy, a nurse approves it first. As **Siti**, open **Notifications**. **Treatment plan: Message the patient in the patient portal** shows the draft:
 
 > Hello Mei, Dr Lim has updated your treatment plan (version 2). What changed: Cetrorelix starts on Sat 21 Nov; Follitropin alfa dose: 225 IU to 150 IU; Scan on cycle day 8. Your reminders and visits in My cycle are updated. If anything does not look right, reply here and the clinic will help.
 
@@ -292,7 +292,7 @@ Patients confirm each dose in the patient app, and Medbot follows up any that ar
 
 <ImageZoom src="/images/cms/use-cases/ivf/28-portal-doses-done.png" width={360} alt="My cycle on a phone: tonight's cetrorelix and follitropin alfa confirmed, and plan version 2" />
 
-**A missed dose.** **Sarah Goh** never confirmed last night's follitropin. An hour after the window closed, the **Dose not confirmed** rule raised **Dose unconfirmed** on the board and a task for the nurse. As **Siti**, find **Dose not confirmed: Follitropin alfa 75 IU** in the **Task Inbox**: "The patient was reminded and has not tapped "I've done it". Call to check whether the dose was taken, and record what happened." After calling, click **Patient took the dose** or **Dose missed**. **Open the patient's cycle** goes to her chart.
+**A missed dose.** **Sarah Goh** never confirmed last night's follitropin. An hour after the window closed, the **Dose not confirmed** rule raised **Dose unconfirmed** on the board and a task for the nurse. As **Siti**, find **Dose not confirmed: Follitropin alfa 75 IU** in **Notifications**: "The patient was reminded and has not tapped "I've done it". Call to check whether the dose was taken, and record what happened." After calling, click **Patient took the dose** or **Dose missed**. **Open the patient's cycle** goes to her chart.
 
 ## A new cycle starts
 
@@ -312,7 +312,7 @@ A patient can also phone it in. On her **Cycle** in the CMS, a nurse or doctor e
 
 ### Confirm the proposed schedule
 
-Medbot projects the cycle's visits from the protocol and the clinic calendar, and asks the nurse to check them. As **Siti**, the **Task Inbox** has **Period reported: CD1 Sat 21 Nov. Confirm the schedule.** with **Confirm as proposed**, or **Open the schedule to adjust dates**, which opens Amanda's **Proposed schedule**.
+Medbot projects the cycle's visits from the protocol and the clinic calendar, and asks the nurse to check them. As **Siti**, **Notifications** has **Period reported: CD1 Sat 21 Nov. Confirm the schedule.** with **Confirm as proposed**, or **Open the schedule to adjust dates**, which opens Amanda's **Proposed schedule**.
 
 <ImageZoom src="/images/cms/use-cases/ivf/19-proposed-schedule.png" alt="The Proposed schedule for Amanda Wong, with visits moved for a Sunday closure and Dr Lim's leave, estimates and Confirm schedule" />
 
@@ -376,7 +376,7 @@ Her care team's assistant in **Chats** and **Ask Medbot** answers dose and visit
 On the care team's side:
 
 - The board's **Open escalations** tile turns to 1, and Hui Min's row moves to the top with **Escalation open**.
-- The nurse's **Task Inbox** has **EMERGENCY — Red flag for Hui Min Koh**, with the rule it matched and her words.
+- The nurse's **Notifications** has **EMERGENCY — Red flag for Hui Min Koh**, with the rule it matched and her words.
 - Her page's **In this service** part has an **Escalations** card, with **Acknowledge** and **Resolve**. Resolving asks for a **Resolution note (optional)**: what was done, and what happens next. Resolving either the task or the escalation resolves both.
 
 <ImageZoom src="/images/cms/use-cases/ivf/24-board-escalation.png" alt="The cycles board with one open escalation and Hui Min Koh's row at the top marked Escalation open and OHSS watch" />

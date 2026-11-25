@@ -73,7 +73,7 @@ When generating fails, the dialog keeps your choices and shows the reason above 
 
 The generated invoice, its PDF, and the **Invoices** tab show the same bill.
 
-- **Receipt number.** An issued bill gets a receipt number such as `MAIN-RC-2026-000123`: the clinic location's code, `RC`, the year of the visit, and a running number for that location. The code is the location's **Code** from [Session Setup](/cms/front-desk/session-setup), in capitals. If the visit's location cannot be found, the bill shows its invoice number instead.
+- **Receipt number.** An issued bill gets a receipt number such as `MAIN-RC-2026-000123`: the clinic location's code, `RC`, the year of the visit, and a running number for that location. The code is the location's **Code** from [Clinic locations](/cms/administration/settings#clinic-locations) in Organisation Settings, in capitals. If the visit's location cannot be found, the bill shows its invoice number instead.
 - **Category totals.** The bill totals its lines under **Consultation**, **Prescription**, **Investigation** and **Others**, from each charge's bill category. In Singapore these are also the CHAS claim buckets.
 - **Net** and **Total.** Catalog prices include GST. **Total** is the sum of the lines. **Net** is the total without the GST it contains.
 - **GST.** When the organisation is GST-registered on the visit date, the bill shows a line such as "GST 9% included" with the GST amount. The rate follows the visit date (9% from 2024). The PDF also prints the GST registration number. Set the registration under [Singapore Registration](/cms/smartcms/registration). A visit before the **Registered from** date has no GST line.

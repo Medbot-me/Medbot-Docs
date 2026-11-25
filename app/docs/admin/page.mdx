@@ -23,13 +23,19 @@ Sections marked (superadmin) are shown to superadmins only.
 | | **Teams** | Every research team, for support. See [Teams](#teams). |
 | Accounts | **Billing accounts** (superadmin) | Who pays, and on which plan. See [Billing & Support](/docs/admin/billing-and-support#billing-accounts). |
 | AI & content | **Templates**, **Tools**, **Agents** | Shared templates, tools and agents. |
-| | **Models**, **Audio Models**, **Realtime Models** | Which AI models are available to everyone. The platform administrator chooses these; users pick from what is listed. Models that can read images show an **Images** badge. The default audio or realtime model cannot be deleted: set another model as the default first. Each page checks prices against the providers' published ones: see [Checking model prices](#checking-model-prices). |
+| | **Models**, **Audio Models**, **Realtime Models** | Which AI models are available to everyone. The platform administrator chooses these; users pick from what is listed. Models that can read images show an **Images** badge. The default audio or realtime model cannot be deleted: set another model as the default first. Each page checks prices against the providers' published ones: see [Checking model prices](#checking-model-prices). On **Models**, **Use for food search** chooses the model for the food nutrition web search: see [The food search model](#the-food-search-model). |
 | | **Vision Tasks** | Which model reads photos and files for each image task, such as health-log photos and uploaded documents. See [Vision Tasks](/docs/admin/vision-tasks). |
 | | **Care Context Prompts**, **Sample Notes** | Prompts and sample notes used by care features. |
 | Support | **Support Requests** | Requests sent from **Contact support**. See [Billing & Support](/docs/admin/billing-and-support#support-requests). |
 | | **Bug Reports** | Reports sent with **Report a problem**, with triage statuses. See [Billing & Support](/docs/admin/billing-and-support#bug-reports). |
 
 Patient channels, caregiver access, organisations, services, the directory, referral requests, claims and physician verifications are in the [platform admin panel in Medbot CMS](/cms/administration/platform-administration). The old addresses for them in the Medbot app redirect there. An organisation's **Features** card, for per-organisation switches, is on its page in that panel: see [Billing & Support](/docs/admin/billing-and-support#organisation-features).
+
+## The food search model
+
+When a patient logs a meal or a drink, Medbot looks up food and drink values before estimating them, and searches trusted sites on the web for an item it does not know. On **Models**, the row menu of an active, priced AI Gateway model has **Use for food search**, which runs that web search on it. The chosen model shows a **Food search** badge, and **Stop using for food search** turns it off. Other providers' models say "AI Gateway models only". With no model chosen there is no web search: the platform default model is not used for it.
+
+The search runs in the background, so a patient's meal draft never waits for it; an item it has not found yet keeps Medbot's estimate. Values found on the web wait for review in the platform admin panel's **Food nutrition** page in Medbot CMS: see [Platform Administration](/cms/administration/platform-administration).
 
 ## Teams
 

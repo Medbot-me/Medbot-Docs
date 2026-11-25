@@ -8,9 +8,9 @@ This page is the master list. Every **Who can do this** table on a feature page 
 
 ## The four clinic roles
 
-**Clinic Admin** is the clinic's operational lead. A Clinic Admin manages staff, registers patients, books and edits appointments, manages locations and session setup, operates the reception queue, records and corrects vitals, records vaccinations, manages the formulary and catalog, composes documents, files and manages diagnostic results, manages the results review rota, publishes the roster, and manages attendance. In short, a Clinic Admin can act as a backstop for most workflows another role primarily owns.
+**Clinic Admin** is the clinic's operational lead. A Clinic Admin manages staff, registers patients, books and edits appointments, manages clinic locations and rooms, runs a service's session, operates the reception queue, records and corrects vitals, records vaccinations, manages the formulary and catalog, composes documents, files and manages diagnostic results, manages the results review rota, publishes the roster, and manages attendance. In short, a Clinic Admin can act as a backstop for most workflows another role primarily owns.
 
-**Receptionist** runs the front desk. A Receptionist registers patients, updates contact details and communication consent, books and edits appointments, manages today's session setup, operates the reception queue, files and views diagnostic results, and views and prints existing patient documents. A Receptionist can build and adjust roster drafts, but only a Clinic Admin can publish a week.
+**Receptionist** runs the front desk. A Receptionist registers patients, updates contact details and communication consent, books and edits appointments, runs a service's session for the day, operates the reception queue, files and views diagnostic results, and views and prints existing patient documents. A Receptionist can build and adjust roster drafts, but only a Clinic Admin can publish a week.
 
 **Doctor** and **Nurse** read patient, practitioner, and appointment data through their clinical workflows. Both record and correct vitals, record vaccinations, view the formulary, and view and print patient documents. Both compose letters and memos, file and view diagnostic results, and draft result explanations for patients. A Doctor can additionally compose referrals, issue medical certificates, sign off, reassign, or withdraw results, and approve, send, or withdraw result explanations. A Nurse cannot. Neither role registers patients, books appointments, nor manages staff, sessions, the queue, the formulary, the results rota, or roster publishing.
 
@@ -20,25 +20,25 @@ Two further roles can be given to staff from the [Staff](/cms/administration/sta
 
 **Patient service associate** counsels patients, for example on their costs, and works the front desk's queue. A Patient service associate:
 
-- works the [reception queue](/cms/front-desk/reception-queue) as a Receptionist does: checks patients in, adds walk-ins, calls patients, routes them, takes payments, and cancels and reopens appointments. They cannot open [Session Setup](/cms/front-desk/session-setup) or mark a visit **Completed**
+- works the [reception queue](/cms/front-desk/reception-queue) as a Receptionist does: checks patients in, adds walk-ins, calls patients, routes them, takes payments, and cancels and reopens appointments. They can also run a service's [Session tab](/cms/services/workstation#the-session-tab). They cannot mark a visit **Completed**
 - reads accounts and invoices on [Billing](/cms/billing), but does not create or change them, and does not see the catalog
 - opens and reads patient charts, starts and closes encounters, and writes and claims progress notes
 - leads **Financial counselling** consults
-- sees results, and reviews patients' requests to change their name or date of birth
+- sees results, and can [verify a patient's identity](/cms/clinical-care/patient-records#verifying-a-patients-identity)
 - does not register patients. That stays with Receptionists and Clinic Admins.
 
 **Allied health professional** is a dietitian, physiotherapist, pharmacist or health educator. The profession is chosen when the role is given, and shown beside it, for example "Allied health professional · Dietitian". An Allied health professional:
 
-- sees the whole location's queue, read-only, and can leave remarks on it
+- sees the service's queue, read-only, and can leave remarks on it
 - opens and reads patient charts, starts and closes encounters, and writes and claims progress notes
 - leads **Health education** consults, and the consult their profession names: **Diet counselling** for a dietitian, **Physiotherapy** for a physiotherapist and **Pharmacy counselling** for a pharmacist
 - sees results.
 
-A Doctor or Nurse can lead every consult kind. Both further roles can see the roster, and both open on a service's **Workstation**. They cannot write a consultation note, nurse note, referral, certificate, order or prescription, or dispense.
+A Doctor or Nurse can lead every consult kind. Both further roles can see the roster, and, like every role, open on a service's **Workstation**. Both can reveal a masked NRIC on the chart. They cannot write a consultation note, nurse note, referral, certificate, order or prescription, or dispense.
 
 ## The Superuser account
 
-Superuser is not a real clinic role. It is an internal and testing account that passes every role check, so one login can exercise every role's work without swapping accounts. It is not offered on the staff form; it is set directly on an account. Because it bypasses the role list rather than being granted the sum of every role's permissions, a few controls that look for one specific role stay hidden to it. Signing off a result, composing on a patient's Documents, issuing a medical certificate, and the Displays panel on Session setup all require signing in as the role that owns them. Approving a result explanation also needs a linked clinician profile, which a Superuser account usually lacks.
+Superuser is not a real clinic role. It is an internal and testing account that passes every role check, so one login can exercise every role's work without swapping accounts. It is not offered on the staff form; it is set directly on an account. Because it bypasses the role list rather than being granted the sum of every role's permissions, a few controls that look for one specific role stay hidden to it. Signing off a result, composing on a patient's Documents, issuing a medical certificate, and verifying a patient's identity all require signing in as the role that owns them. Approving a result explanation also needs a linked clinician profile, which a Superuser account usually lacks.
 
 > **Note:** Platform administration screens are seen only by Medbot platform superadmins, a Medbot staff identity that is not a clinic role. No clinic role, including Clinic Admin, gives access. See [Platform Administration](/cms/administration/platform-administration).
 
@@ -56,6 +56,8 @@ Each row is one task. A cell reads **Yes**, **View only**, or **No**. Notes belo
 | [Deactivate a patient](/cms/clinical-care/patient-records) | Yes | Yes | No | No |
 | [Edit contact details](/cms/clinical-care/patient-records) | Yes | Yes | Yes | Yes |
 | [Record or change communication consent](/cms/clinical-care/patient-records) | Yes | Yes | Yes | Yes |
+| [Reveal a masked NRIC, FIN or passport number on the chart](/cms/clinical-care/patient-records#national-id-numbers-on-the-chart) | Yes | Yes | Yes | Yes |
+| [Verify a patient's identity](/cms/clinical-care/patient-records#verifying-a-patients-identity) | Yes | Yes | No | Yes |
 | [Invite, review or revoke a patient's caregivers](/cms/clinical-care/patient-portal#caregiver-access) | Yes | Yes | Yes | Yes |
 | [See a patient's encounters](/cms/clinical-care/encounters) | Yes | Yes | Yes | Yes |
 | [Start an encounter](/cms/clinical-care/encounters) | Yes | No | Yes | Yes |
@@ -109,7 +111,9 @@ Each row is one task. A cell reads **Yes**, **View only**, or **No**. Notes belo
 | [Open a Sensitive photo, or turn Sensitive off](/cms/clinical-care/clinical-photos#sensitive-photos) | No | No | Yes | Yes |
 | [File ultrasound measurements, or release an ultrasound image to the patient](/cms/clinical-care/clinical-photos#ultrasound-photos) | No | No | Yes | Yes |
 | [Import prior history from outside records](/cms/clinical-care/diagnostic-results#prior-history-from-outside-records) | No | No | Yes | Yes |
-| [See a patient's problem list and medications on the chart](/cms/clinical-care/patient-records#the-patient-chart) | Yes | No | Yes | Yes |
+| [See a patient's problem list and medications on the chart](/cms/clinical-care/patient-records#the-problem-list) | Yes | No | Yes | Yes |
+| [Add, change or remove a problem on the problem list](/cms/clinical-care/patient-records#the-problem-list) | No | No | Yes | No |
+| [Code or confirm a condition the patient shared](/cms/clinical-care/patient-concerns#reported-conditions) | No | No | Yes | No |
 | [See a patient's audit log](/cms/clinical-care/patient-records#audit-log) | Yes | No | No | No |
 | [Edit or void a clinical photo](/cms/clinical-care/clinical-photos) | Yes | Own photos | Yes | Yes |
 | [File a photographed paper report as a result](/cms/clinical-care/clinical-photos#filing-a-paper-report-as-a-result) | Yes | Yes | Yes | Yes |
@@ -132,7 +136,6 @@ Each row is one task. A cell reads **Yes**, **View only**, or **No**. Notes belo
 | [Read answer reports](/cms/clinical-care/patient-concerns#answer-reports) | No | No | Yes | Yes |
 | [See and draft approved answers](/cms/clinical-care/patient-concerns#approved-answers) | Yes | No | Yes | Yes |
 | [Approve or retire an approved answer](/cms/clinical-care/patient-concerns#approved-answers) | No | No | Yes | Yes |
-| [Read the patient questions report and common questions](/cms/clinical-care/patient-concerns#patient-questions-and-common-questions) | Yes | No | Yes | Yes |
 
 A medical certificate prints the issuing doctor's MCR number, so only the Doctor role issues one. A Clinic Admin who is also a doctor switches to their Doctor role to issue it. A Clinic Admin can still void one.
 
@@ -162,11 +165,12 @@ A Doctor sees only the patients assigned to them in the queue; a Nurse sees ever
 | [Add or edit a queue remark](/cms/front-desk/reception-queue#remarks) | Yes | Yes | Yes | Yes |
 | [Start an AI encounter from the queue](/cms/front-desk/reception-queue#starting-an-ai-encounter-and-completing-the-visit) | No | No | Yes | Nurse-led visits they lead |
 | [Complete the visit and send the outcome](/cms/front-desk/reception-queue#starting-an-ai-encounter-and-completing-the-visit) | No | No | Yes | Nurse-led visits they lead |
-| [Open today's session](/cms/front-desk/session-setup) | Yes | Yes | No | No |
-| [Mark who is working today](/cms/front-desk/session-setup) | Yes | Yes | No | No |
-| [Add and assign rooms](/cms/front-desk/session-setup) | Yes | Yes | No | No |
-| [Add a clinic location](/cms/front-desk/session-setup) | Yes | No | No | No |
-| [Add, view, and revoke displays](/cms/front-desk/session-setup) | Yes | No | No | No |
+| [Start, close or reopen a service's session](/cms/services/workstation#the-session-tab) | Yes | Yes | View only | View only |
+| [Put staff on or off duty, and choose who takes check-ins](/cms/services/workstation#the-session-tab) | Yes | Yes | No | No |
+| [Give a clinician a room, or mark a room unavailable](/cms/services/workstation#the-session-tab) | Yes | Yes | Own room | Own room |
+| [Change a service's queue and sessions settings](/cms/services/workstation#queue-and-sessions-settings) | Yes | No | No | No |
+| [Add a clinic location](/cms/administration/settings) | Yes | No | No | No |
+| [Add or deactivate a room](/cms/administration/settings) | Yes | Yes | No | No |
 | [Add a display](/cms/front-desk/display-boards) | Yes | No | No | No |
 | [See the list of displays](/cms/front-desk/display-boards) | Yes | No | No | No |
 | [Revoke a display](/cms/front-desk/display-boards) | Yes | No | No | No |
@@ -253,7 +257,7 @@ The **Patient Care Summary** button is in the patient header for a Doctor only, 
 | [Give a staff member another role](/cms/administration/staff#giving-someone-another-role) | Yes | No | No | No |
 | [Deactivate or reactivate a staff member or one of their roles](/cms/administration/staff#deactivating-and-reactivating) | Yes | No | No | No |
 | [See a staff member's audit log](/cms/administration/staff#a-staff-members-audit-log) | Yes | No | No | No |
-| [Change patient branding, or see where the organisation's data lives](/cms/administration/settings#patient-branding) | Yes | No | No | No |
+| [Change the public profile, or see where the organisation's data lives](/cms/administration/settings#public-profile) | Yes | No | No | No |
 | [Switch between your own roles](/cms/administration/switching#switching-role) | Yes | Yes | Yes | Yes |
 | [Preview another role's view](/cms/administration/switching#previewing-another-role) | Yes | No | No | No |
 

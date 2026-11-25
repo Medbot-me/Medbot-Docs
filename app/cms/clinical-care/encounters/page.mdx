@@ -19,13 +19,21 @@ An encounter is the record of one visit. Doctors and nurses attach vitals, notes
 | Order a Screen for Life screening (Singapore) | Yes | No | Yes | Yes |
 | Record a developmental screening (Singapore) | Yes | No | Yes | No |
 
-On the chart, **Start Encounter** is shown to Clinic Admins, Doctors and Nurses, and only while the patient has no encounter in progress. A Patient service associate and an Allied health professional can also start encounters, through the consult kinds they lead (see [Starting a consult from the patient list](#starting-a-consult-from-the-patient-list)). The Patients page's actions menu offers consults only to the roles that lead one: a Receptionist has none. A Receptionist who reaches the form some other way sees "Something went wrong while starting the encounter." Ask a Doctor, Nurse or Clinic Admin to start it.
+On the chart, **Start Encounter** is shown to Clinic Admins, Doctors and Nurses, and only while the patient has no encounter in progress. A Patient service associate and an Allied health professional can also start encounters, through the consult kinds they lead (see [Starting a consult from the patient list](#starting-a-consult-from-the-patient-list)). The Patient list's actions menu offers consults only to the roles that lead one: a Receptionist has none. A Receptionist who reaches the form some other way sees "Something went wrong while starting the encounter." Ask a Doctor, Nurse or Clinic Admin to start it.
 
 Staff-led consults and assistant-led AI encounters are different things. A **consult** is an encounter a member of staff leads. An **AI encounter** is a conversation an assistant has with the patient, for a history before a visit, health education, or financial counselling.
 
 ## Starting an encounter
 
-1. On the chart's **Overview** or **Encounters**, select **Start Encounter** (on a phone, in the bar at the bottom of the screen). Or start a [consult from the Patients page](#starting-a-consult-from-the-patient-list).
+**Start Encounter** on a chart belongs to a service. For a patient in one or more care services:
+
+- With one service, it starts the encounter there straight away, as the service's mode calls for (see [Starting an encounter from the Workstation](/cms/services/workstation#starting-an-encounter-from-the-workstation)).
+- With several, it asks which **Service**, listing only the patient's services that you may open.
+- If the patient waits in a service's queue today, the button reads **Start consult** and opens that visit's consult instead of a second encounter.
+
+For a patient in no service, **Start Encounter** opens the chart's own dialog:
+
+1. On the chart's **Overview** or **Encounters**, select **Start Encounter** (on a phone, in the bar at the bottom of the screen). Or start a [consult from the Patient list](#starting-a-consult-from-the-patient-list).
 2. Choose the **Encounter class**: **Ambulatory** (the default), **Emergency**, **Virtual**, **Home Health** or **Inpatient**.
 3. Choose the **Status**: **Planned**, **Arrived**, **Triaged** or **In Progress** (the default).
 4. Choose the **Priority**: **Routine** (the default), **Urgent**, **ASAP** or **STAT**.
@@ -43,7 +51,7 @@ You cannot start an encounter for an inactive patient. The button is disabled an
 
 ### Starting a consult from the patient list
 
-The actions menu on each row of the Patients page leads with **Consult, led by you**: the consult kinds your role leads. Choosing one starts a consult in one click, as an ambulatory encounter that is in progress with routine priority, and opens the patient's [notes workspace](/cms/clinical-care/patient-notes) to write in. The kinds are:
+The actions menu on each row of the **Patient list** leads with **Consult, led by you**: the consult kinds your role leads. Choosing one starts a consult in one click, as an ambulatory encounter that is in progress with routine priority, and opens the patient's [notes workspace](/cms/clinical-care/patient-notes) to write in. The kinds are:
 
 | Role | Consult kinds it can lead |
 | --- | --- |
@@ -94,7 +102,7 @@ A journey step of an AI encounter kind in a service's visit can also be started 
 
 ### AI encounters across services
 
-A patient's chart has an **AI encounters** section (`/patients/[id]/ai-encounters`) listing every AI encounter the organisation started for the patient: from the general clinic and from each care service. Filter by source with the buttons above the list: **All sources**, **Whole organisation** or a service, each with its count. It opens on the service the sidebar is set to. Each row shows the kind and its state. The list shows the reason and a summary, never the transcript. The patient list's **Latest AI encounter** column shows the most recent one for each patient, or **None**.
+A patient's chart has an **AI encounters** section (`/patients/[id]/ai-encounters`) listing every AI encounter the organisation started for the patient: from the general clinic and from each care service. Filter by source with the buttons above the list: **All sources**, **Org Level** or a service, each with its count. It opens on the service the sidebar is set to. Each row shows the kind and its state. The list shows the reason and a summary, never the transcript. The patient list's **Latest AI encounter** column shows the most recent one for each patient, or **None**.
 
 ## The Encounters page
 
@@ -158,7 +166,7 @@ Receptionists can read notes but cannot write, amend or retract them.
 
 The **Diagnoses (ICD-10-AM)** card sits in the left-hand column of the chart **Overview**, under **Vitals**. It covers the current encounter only. It appears for a Singapore organisation that subscribes to CHAS, CDMP, SFL, DEROM, CIDC or MW_HEALTH. Without a current encounter it is not shown. It says: "This visit's coded diagnoses. Claims and MOH reports take them from here."
 
-1. Under **Add a diagnosis**, type in **Search by code or name, e.g. J06.9 or diabetes** and choose a match. A well-formed code that is not on MOH's lists is offered as **Not on MOH's lists**.
+1. Under **Add a diagnosis**, type in **Search by code or name, e.g. J06.9 or diabetes** and choose a match. A well-formed code that is not on MOH's lists is offered as **Not on MOH's lists**, and a code on MOH's lists that has no title held as **On MOH's lists, no title held**.
 2. Medbot fills in the CDMP conditions the diagnosis suggests. Remove any that do not apply, or choose **Add** beside **CDMP:** to add one.
 3. To add a complication, type in **Add a complication of …** under that diagnosis.
 4. Select **Save diagnoses**. You see "Diagnoses saved." **Discard** drops your unsaved changes.

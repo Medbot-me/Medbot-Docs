@@ -2,14 +2,9 @@ import { ImageZoom } from "nextra/components";
 
 # Visits & Appointments
 
-The **Visits** tab covers your visits from start to finish:
+The **Appointments** tab is the fourth tab, on a phone and on a computer. It covers every appointment and request, and today's visit:
 
-- [past visits and their summaries](#visit-list-and-summaries)
-- [today's visit](#todays-visit): registering when you arrive and following the queue
-- [after your visit](#after-your-visit): the summary your clinician sends and the steps they arranged
-
-Your appointments are on their own page, [Appointments](#appointments), which the Visits tab links to. It is also in the menu, under **Care**:
-
+- [today's visit](#todays-visit): registering when you arrive and following the queue, at the top of the tab on the day
 - [upcoming appointments](#upcoming-appointments), with [cancel](#cancelling-an-appointment) and [change time](#changing-the-time)
 - [requests you send to the clinic](#booking-or-asking-for-an-appointment), and [where every request stands](#your-requests)
 - [appointments your clinic offers you](#offers-from-your-clinic)
@@ -17,14 +12,18 @@ Your appointments are on their own page, [Appointments](#appointments), which th
 - [telling Medbot about your visit](#telling-medbot-about-your-visit) before a booked one
 - [past and cancelled appointments](#past-and-cancelled-appointments), and [booking again](#book-again)
 
+**Visits**, your record of past visits, is in the menu, under **Care**, with a stethoscope icon:
+
+- [past visits and their summaries](#visit-list-and-summaries)
+- [after your visit](#after-your-visit): the summary your clinician sends and the steps they arranged
+
+To check in by scanning a QR code, or to show the front desk who you are, see [Clinic Card](/patient/clinic-card).
+
 ## Visit list and summaries
 
-The **Visits** screen lists your completed visits, newest first. Each row shows **Clinic visit** and the date. With no visits yet, it says "No visits recorded".
+Open **Visits** from the menu, under **Care**. It lists your completed visits, newest first. Each row shows **Clinic visit** and the date. With no visits yet, it says "No visits recorded".
 
-Above the list are two cards:
-
-- **Today's visit**, only on a day you have an appointment. See [Today's visit](#todays-visit).
-- **Appointments** ("Upcoming appointments and your requests"). See [Appointments](#appointments).
+Above the list, an **Appointments** card ("Upcoming appointments and your requests") opens the [Appointments](#appointments) tab. Today's visit is no longer on this screen. It is at the top of **Appointments**.
 
 Opening a visit shows its **Visit summary**:
 
@@ -37,7 +36,7 @@ Nothing here can be edited. If something on a visit looks wrong, [message the cl
 
 ## Today's visit
 
-On the day of an appointment, the **Today's visit** card appears at the top of **Visits**. Its second line tells you what to do next:
+On the day of an appointment, the **Today's visit** card appears at the top of **Appointments**, and on **Home**. Its second line tells you what to do next:
 
 | Card says | Where you are |
 | --- | --- |
@@ -46,16 +45,23 @@ On the day of an appointment, the **Today's visit** card appears at the top of *
 | **It is your turn** | Reception has called you to a room. |
 | **View your visit summary** | Your visit is complete. |
 
-The card shows your earliest appointment of the day (Singapore time) at any connected clinic. Teleconsults are not included. If you open the screen with no appointment today, it says "No appointment today", with a link to **Request an appointment**.
+The card shows your earliest appointment of the day (Singapore time) at any connected clinic, and names its location. Teleconsults are not included. If you open the screen with no appointment today, it says "No appointment today", with a link to **Request an appointment**.
+
+The card also opens your [clinic card](/patient/clinic-card), which you can show at the front desk instead of registering here.
 
 ### Registering your arrival
 
-When you reach the clinic, open **Today's visit**. It is on **Home** and at the top of **Visits**. The card says "Your appointment today at" and the time. Under it you see your doctor, the clinic and the location.
+When you reach the clinic, open **Today's visit**. The card says "Your appointment today at" and the time. Under it you see your doctor, the clinic and the location.
 
-1. Under **Paying with**, choose how you expect to pay: **Pay at the counter**, **Insurance / MediSave on file**, **Subsidy scheme** or **Company / corporate account**. The first is already chosen.
-2. Select **Register and get my queue number**.
+1. Under **Paying with**, you can choose how you expect to pay: **Pay at the counter**, **Insurance / MediSave on file**, **Subsidy scheme** or **Company / corporate account**. The first is already chosen.
+2. Register, as your clinic allows:
+   - **One tap.** Select **Register and get my queue number**. Only at a clinic that lets you register from anywhere.
+   - **Your location.** Select **Register my arrival**. Medbot asks for your location ("Location found (accurate to about" a distance) and checks you are at the clinic. Then select **Register and get my queue number**. This is what most clinics ask for.
+   - **The code at the counter.** Select **Scan or enter the code at the counter instead**, enter the 6-digit **Code from the counter**, and select **Register and get my queue number**. Select **Use my location instead** to go back.
 
-That is all. You do not need to scan anything, share your location or enter a code. If something goes wrong, the screen shows the clinic's message. If it does not work, register at the counter.
+One step checks you in for this appointment and registers today's visit. If the clinic shows a check-in QR code at the counter, the card also says "You can also scan the QR code at the counter with your phone's camera." See [Check in at the clinic](/patient/clinic-card#check-in-at-the-clinic).
+
+If Medbot could not get your location, it says "Could not get your location. Use the code at the counter instead.", or asks you to allow location for Medbot in your settings. If the clinic has not set up self check-in, the card says "Self check-in is not set up for this clinic yet. Please register at the counter." If you are too far away or the code is wrong, the screen shows the clinic's message. If it does not work, register at the counter.
 
 ### Following the queue
 
@@ -108,15 +114,16 @@ The card disappears once nothing is left to do.
 
 ## Appointments
 
-**Appointments** is one place for every appointment and every request. Open it from the menu, under **Care**, or from the **Appointments** card on **Visits**. On **Home**, an **Appointments** card shows your next appointment and how many requests need your reply or are waiting on the clinic. It appears only when there is something to show. The **Visits** tab is not highlighted while you are on Appointments.
+**Appointments** is one place for every appointment and every request. It is the fourth tab. You can also open it from the **Appointments** card on **Visits**. On **Home**, an **Appointments** card shows your next appointment and how many requests need your reply or are waiting on the clinic. It appears only when there is something to show.
 
 The page has, in this order:
 
-1. **From your clinic**: links waiting for you to confirm, and appointments the clinic has offered. See [Offers from your clinic](#offers-from-your-clinic).
-2. **Upcoming**: your next appointments.
-3. **Before your visit**: questions to answer first. See [Before your visit](#before-your-visit).
-4. **Your requests**: every request you have made.
-5. **Past and cancelled**: the last year.
+1. **Today's visit**, only on a day you have an appointment. See [Today's visit](#todays-visit).
+2. **From your clinic**: links waiting for you to confirm, and appointments the clinic has offered. See [Offers from your clinic](#offers-from-your-clinic).
+3. **Upcoming**: your next appointments.
+4. **Before your visit**: questions to answer first. See [Before your visit](#before-your-visit).
+5. **Your requests**: every request you have made.
+6. **Past and cancelled**: the last year.
 
 The **Request an appointment** button at the top starts a new request.
 
@@ -140,6 +147,8 @@ Select **Change time** on a card. The page, **Change appointment time**, shows t
 
 - **At a clinic.** Tell the clinic when suits you better: choose a **Preferred date** and **Time of day**, add a reason if you like, and select **Send request**. Your current appointment stays booked until the clinic confirms the new time. The card says "You asked to move this appointment. It stays booked until the clinic confirms a new time." The clinic can confirm, suggest another time, or decline. If it suggests one, you accept or decline it, as for any [proposed time](#responding-to-a-proposed-time).
 - **With a service.** Pick a new time from its open times, then select **Move appointment**. It moves as soon as you confirm.
+
+Under **Other options**, **Cancel this appointment instead** cancels it, and "Feeling worse or have a new symptom?" links to **Ask Medbot**.
 
 You can have one open change request for an appointment. If you cancel the appointment, or the clinic cancels it or marks it as missed, the request closes.
 
@@ -174,18 +183,20 @@ A caregiver does not see the person's contact requests here, because they are th
 
 Select **Request an appointment** (or **New request**). The **Request an appointment** form starts with **Clinic**. Pick one of your connected clinics ("Select a clinic").
 
-If you are enrolled in services at that clinic, a **Book with** choice appears. Pick **General appointment (clinic confirms)** or one of your services.
+If the clinic has services you can book, **What do you need?** lists one card for each service, and **I'm not sure** ("Send your request to the clinic. Their team will choose the right service and offer you a time.").
 
-**Book with a service.** Medbot shows "Finding open times…", then **Pick a time**. Open times are grouped by day, and hovering a time shows who you will see. Add a **Reason for the visit (optional)**, then select **Book appointment**. Your appointment is confirmed as soon as you book it. You can cancel it later from your appointments. If the service has nothing free in the next two weeks, the form says "This service has no open times in the next two weeks. Ask the clinic for a general appointment instead."
+**Book with a service** you are enrolled in. Medbot shows "Finding open times…", then **Pick a time**. Open times are grouped by day, and hovering a time shows who you will see. Add a **Reason for the visit (optional)**, then select **Book appointment**. Your appointment is confirmed as soon as you book it. You can cancel it later from your appointments. If the service has nothing free in the next two weeks, the form says so and suggests asking the clinic instead.
 
-**General appointment.** Fill in:
+**I'm not sure**, or a clinic with no services to pick. Fill in:
 
 1. **Location**, if the clinic has more than one
 2. **Preferred date**
 3. **Time of day**: **Morning**, **Afternoon** or **Evening**
 4. **Reason for the visit**
 
-Select **Submit request**. This is a request, not a confirmed booking. The clinic will answer in the portal.
+Select **Send to** the clinic (or **Submit request**). This is a request, not a confirmed booking: "No time is held yet. The clinic's team reads your note, chooses the service and offers you a time to accept." The clinic answers in the portal.
+
+A link from Medbot can open the form with the clinic and service already chosen, for example **Book an appointment** on a clinic's [Find Care](/patient/find-care#a-clinics-page) page, or on a clinic's reply to a [concern](/patient/ask-medbot#following-a-concern). A service you are not enrolled in becomes a request for that service, which the clinic confirms.
 
 You can also ask [Ask Medbot](/patient/ask-medbot#book-change-or-cancel-an-appointment) to take you to this form.
 
@@ -294,7 +305,7 @@ When you book a visit with a service that asks for it, Medbot invites you to ans
 
 ## Caregivers
 
-A [caregiver](/patient/caregivers) sees the same Visits screens for the person they care for.
+A [caregiver](/patient/caregivers) sees the same Appointments and Visits screens for the person they care for.
 
 | | Read-only | Can make changes |
 | --- | --- | --- |
@@ -302,6 +313,7 @@ A [caregiver](/patient/caregivers) sees the same Visits screens for the person t
 | See the queue tracker | Yes | Yes |
 | Turn on **Notify me when it is my turn** | No | Yes |
 | Register when you arrive | No | Yes |
+| Show the person's [clinic card](/patient/clinic-card#show-a-family-members-card) | No | Yes |
 | Book with a service, or cancel a booking or appointment | No | Yes |
 | Make an appointment request, ask to change a time or book again, or accept or decline a proposed time | No | Yes |
 | Answer an offer from the clinic | No | Yes |

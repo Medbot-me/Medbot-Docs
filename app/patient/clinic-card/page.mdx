@@ -1,0 +1,98 @@
+# Clinic Card
+
+Your **clinic card** is a QR code in Medbot Health that you show at the front desk of any clinic on Medbot. Staff scan it to find your record and check you in, instead of asking for your details. The same app also checks you in from the QR code at the counter, without queuing at the desk.
+
+The card is in the web app and the [mobile app](/patient/mobile-app). It never shows your health information, only your name and photo.
+
+## Open your card
+
+- On **Home**, select **Card** at the top of the screen ("Show my card").
+- On **Profile**, select **My clinic card** ("Show it at any Medbot clinic's front desk").
+- On the [Today's visit](/patient/visits#todays-visit) card on the day of an appointment.
+
+The card opens full screen under **Show to front desk**. It shows your photo, your name and a QR code. On a phone, the screen gets brighter while the card is open ("Screen brightness raised").
+
+### The code
+
+- Each code **works once** and is valid for a short time. The card counts down: "Valid for" and the time left, or "Valid until" a time.
+- A new code appears automatically while the screen is open. When one expires, the card says "This code has expired. Getting a new one…".
+- Under the QR code, "Code:" shows the same code as characters, so you can read it out or staff can type it if the scanner cannot read your screen.
+- A code only works for the session that fetched it. Signing out, or [signing a device out](#signed-in-devices), stops that device's codes working.
+
+If you ask for a lot of new codes in a short time, the card says "You've asked for a lot of new codes. Wait a few minutes, then try again." If it cannot load, select **Try again**. If you have been signed out, select **Sign in again**.
+
+## Your photo
+
+Clinic staff use your photo to recognise you when you show your card. It is checked once at the front desk.
+
+1. On the card, select **Add a photo**. Or on **Profile**, under **My clinic card**, select the photo row.
+2. Select **Take a photo now**. Face the camera with your face centered, remove a mask, glasses and hat, and use a plain background with good light. Select **Retake** if you need to.
+3. Tick "I agree that Medbot clinics I visit may see this photo to confirm who I am. I can remove it any time."
+4. Select **Use this photo**. You see "Photo saved. A clinic will check it at your next visit."
+
+If your device has no camera, select **Choose a photo** and pick a recent photo of your face (JPEG, PNG or WebP). If camera access was refused, allow the camera in your settings, or choose a photo instead.
+
+The photo row on Profile shows its status:
+
+| Status | What it means |
+| --- | --- |
+| **No photo yet** | Add one so the front desk can check you faster. |
+| **Photo not yet checked** | You added it, and a clinic will check it at your next visit. |
+| **Photo verified at clinic** | Staff compared it with you in person. |
+| "A clinic said this photo does not match you. Please take a new one." | Take a new photo. |
+
+Select **Remove photo** to delete it at any time. Medbot removes the photo's hidden details, such as location, when you save it.
+
+## Verify who you are
+
+Until a clinic has checked your ID once, your card shows **Not verified yet** and **One quick check at the front desk**:
+
+1. Bring your NRIC, FIN card or passport.
+2. Show this code at the front desk.
+3. Staff confirm it's you. Medbot does not keep a copy of your ID.
+
+Adding a photo first makes the check faster. Once staff have checked, your name and date of birth show as **Verified** on [Profile](/patient/profile#personal-details).
+
+## Check in at the clinic
+
+How you check in depends on the clinic. You can:
+
+- **Show your card at the front desk.** Staff scan it and check you in for today's appointment, or register you as a walk-in.
+- **Scan the counter's QR code with your phone.** Some clinics show a check-in QR code at the counter, on a display or on the self check-in kiosk. Scan it with your phone's camera. Medbot opens **Check in for today**, which says "You're at" the clinic, "Counter code scanned just now". Select **Check in**. You see **You're checked in** and **Your number**, with your appointment time and doctor. The counter code changes often, so scan it at the clinic, not from a photo.
+- **Show your card to the self check-in kiosk.** Hold the QR code up to the kiosk's camera or scanner. The kiosk accepts a card only once a clinic has verified who you are, and only shows your first name and queue number. Otherwise, check in at the front desk.
+- **Register from Today's visit** in the app. See [Registering your arrival](/patient/visits#registering-your-arrival).
+
+If you scan the counter code with no appointment at that clinic today, Medbot says "You have no appointment at this clinic today. To join the queue as a walk-in, check in at the kiosk or the front desk." If the code is from another clinic or has changed, scan the code at the counter again.
+
+Once you are checked in, follow your place in the queue from [Today's visit](/patient/visits#following-the-queue).
+
+## A clinic with no record of you
+
+If you show your card at a clinic on Medbot that has no record of you yet, the clinic can ask you to share your details. You get a notification, "&lt;clinic&gt; asks you to share your details". It opens **Share your details?**, which lists **What &lt;clinic&gt; gets**: your name, date of birth, sex, phone number, email address and home address.
+
+- The clinic registers you with these details and connects your Medbot account to that record. Your queue number and visits there then show in the app.
+- Your ID document is not shared. The front desk checks it at the counter.
+- You can disconnect the clinic from your Medbot account later. See [Connected Clinics](/patient/connected-clinics).
+
+Select **Share and connect**, or **Not now**. After you share, "The front desk will finish registering you." Your queue number shows once they add you to the queue. A request expires if you do not answer it, and scanning your card again does not ask you twice.
+
+## Add to Apple Wallet or Google Wallet
+
+Where Medbot offers it, Profile has **Add to Apple Wallet** and **Add to Google Wallet** under **My clinic card**. In the mobile app you see the one for your phone. The Wallet pass shows your name and opens your card in Medbot Health. It never holds a check-in code: "Check-in codes only appear in the app."
+
+## Show a family member's card
+
+If you manage a child's or relative's care, a switch over the card, **Me** and their name, shows their card instead. The card says "You're showing &lt;name&gt;'s card. The clinic will see that you presented it." Only someone who can manage that person's care (a caregiver with "Can make changes" access) can show their card. See [Caregivers & Family Access](/patient/caregivers).
+
+## Signed-in devices
+
+**Profile**, then **Preferences**, then **Signed-in devices** lists where you are signed in to Medbot, with **This device** marked **Current** and when each was last active.
+
+- Select **Sign out** next to a device to sign it out.
+- Select **Sign out of all other devices** to sign out everywhere else.
+
+Lost your phone? Signing it out here stops it showing your card straight away.
+
+## When you delete your account
+
+[Deleting your account](/patient/profile#delete-your-account) erases your card photo, your card codes and any share requests, and stops your Wallet passes working.

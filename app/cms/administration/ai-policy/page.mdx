@@ -1,6 +1,6 @@
 # AI Policy
 
-The AI policy decides which AI providers and regions the organisation's AI work may use: its agents, assistants such as the [Home assistant](/cms/home-assistant), and drafting tools. It also sets the organisation's default model. Find it in the **Home** tab at **Organisation → AI policy** (`/ai-policy`).
+The AI policy decides which AI providers and regions the organisation's AI work may use: its agents, assistants such as the [Home assistant](/cms/home-assistant), and drafting tools. It also sets the organisation's default model. Clinic Admins open it from the **AI policy** section of [Organisation Settings](/cms/administration/settings) (the gear beside the organisation's name in the sidebar), with **Open AI policy** (`/ai-policy`).
 
 Until an administrator saves a policy, the organisation has none and its AI calls follow the platform defaults.
 
@@ -10,7 +10,7 @@ Until an administrator saves a policy, the organisation has none and its AI call
 | --- | --- | --- | --- | --- |
 | See and change the AI policy | Yes | No | No | No |
 
-Only Clinic Admins have **AI policy** in the sidebar. Anyone else who opens `/ai-policy` sees "Only organisation admins can see or change the AI policy." The server refuses them too.
+Only Clinic Admins can open Organisation Settings. Anyone else who opens `/ai-policy` sees "Only organisation admins can see or change the AI policy." The server refuses them too.
 
 The page works on the organisation you are signed in to. To change another organisation's policy, [switch](/cms/administration/switching) to it first.
 
@@ -36,6 +36,6 @@ If something in your choices does not fit together, the page lists the problems 
 
 ## Related
 
-- [Home Assistant](/cms/home-assistant): the Home tab's chat, which runs on the default model.
+- [Home Assistant](/cms/home-assistant): the AI tab's chat, which runs on the default model.
 - [Organisation Settings](/cms/administration/settings): the organisation's other settings, including its AI credits.
 - [Agents](/docs/agents): how agents work in Medbot.

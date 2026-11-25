@@ -6,20 +6,20 @@ import { ImageZoom } from "nextra/components";
 
 A service's patients come from **the organisation's own patient directory**, the same patients the clinic sees in the CMS. They are not owned by any one service, and the same patient can be in several services' cohorts.
 
-New patients are added to the organisation, not to a service. An organisation admin or receptionist registers them in Medbot CMS (see [Registering a patient](/cms/clinical-care/patient-records#registering-a-patient)), or an admin adds them in bulk by [seeding from a CSV file](/cms/administration/seed-data). On their home page in a service, admins and receptionists have an **Add patient** shortcut: "Register a patient, then add them to &lt;service&gt;".
+New patients are registered in the organisation, not in a service: a Clinic Admin or receptionist registers them (see [Registering a patient](/cms/clinical-care/patient-records#registering-a-patient)), or an admin adds them in bulk by [seeding from a CSV file](/cms/administration/seed-data). The service's **Add patient** can register a new patient on the way, for a role that may register patients.
 
-## Adding a patient to the cohort
+## Adding a patient to the service
 
-From **Patients** under the service's name in the CMS sidebar (or the wizard's last step, **Patients and publish**), click **Add patient to cohort**. In **Add patient to cohort**:
+On the service's [Workstation](/cms/services/workstation), open the **Patient list** tab and click **Add patient** (or use the wizard's last step, **Patients and publish**). **Add patient to &lt;service&gt;** says "Find the patient in your organisation, or register a new one. Medbot tells them they have joined this service."
 
-1. **Search by name…** among the organisation's patients. Patients already in this cohort are not offered.
+1. Find the patient among the organisation's patients, the same way as on the [Patient list](/cms/clinical-care/patient-records#finding-a-patient). Patients already in the service are marked **Already in this service**. If they are not registered yet, register them from the dialog.
 2. Check the enrolment preview (below), which shows how Medbot will tell the patient.
-3. Optionally add **Clinical notes**: referral letters, consult notes, discharge summaries. They are saved as the patient's **first encounter note** for this service, and their **patient context** is generated from it.
-4. Click **Add to cohort**.
+3. Optionally add **Clinical notes**: referral letters, consult notes, discharge summaries. They are saved as the patient's **first encounter note** in the service, and their **patient context** is generated from it.
+4. Click **Add to service**.
 
-A toast says "Patient added to service" and "Medbot is sending them the enrolment notice."
+A toast says "Medbot is sending them the enrolment notice."
 
-To take a patient out of the cohort, use the **X** on their row and confirm. They stay in the organisation's directory and in any other service.
+To take a patient out of the service, open their row's menu on the Patient list, select **Remove from service** and confirm. They stay in the organisation's patients and in any other service.
 
 ### The enrolment preview
 
@@ -41,33 +41,39 @@ Configured on **Settings → On patient added**:
 - **A note from the care team** (**Add a note from the care team to the enrolment notice**). Turn this on and type the **Message**; it is added to the notice. You can use `{{firstName}}`.
 - **Onboarding agent** (**Assess the patient with the onboarding agent**). Runs the chosen **Onboarding agent** against the new patient. The default one raises a task only when the patient clearly does not belong in the service. It no longer messages the patient itself. See [Service Agents](/cms/services/agents#the-onboarding-agent).
 
-## The cohort roster
+## The Patient list
 
-The roster shows, per patient: **Patient**, **Pending tasks**, **Notes**, **Messages** and **Last message**, so you can see who needs attention without leaving the page. Click a name (or the eye icon) to open the patient's page. Made-up patients in a [demo service](/cms/services/demo-services) carry a **Demo** chip.
+The Workstation's **Patient list** tab lists the service's patients with **Patient**, **Contact**, **Birth Date**, **Gender**, **Pending tasks**, **Latest AI encounter** and **Status**, with search, a status filter and **View** to choose the columns. Each row has what your role can do from here (add to today's queue, book, start an AI encounter or an encounter); see [The Patient list tab](/cms/services/workstation#the-patient-list-tab). **View patient** in the row's menu opens the patient's page. Made-up patients in a [demo service](/cms/services/demo-services) carry a **Demo** chip.
 
 ### Patient identifiers
 
-Each patient's ID number (such as NRIC) is masked everywhere it appears. Click the eye button (**Show patient identifiers**) to reveal it; click again (**Hide patient identifiers**) to mask it. The full view lists each identifier and the **Patient ID** Medbot uses internally, each with a copy button. The same control appears on the patient page, the Workstation boards, the visit panel and the referrals list. It is available to anyone who can open the service.
+Each patient's ID number (such as NRIC) is masked everywhere it appears. Click the eye button (**Show patient identifiers**) to reveal it; click again (**Hide patient identifiers**) to mask it. The full view lists each identifier and the **Patient ID** Medbot uses internally, each with a copy button. The same control appears on the patient page, the Workstation boards, the visit panel and the referrals list. It is available to anyone who can open the service. On the organisation's chart, the number is revealed with one audited reveal: see [The patient chart](/cms/clinical-care/patient-records#national-id-numbers-on-the-chart).
 
 ## A patient's page
 
-Each patient has a page per service:
+Each patient has a page in each of their services (`/services/<service>/patients/<id>`), the patient workspace for that service. It opens from **View patient** on the Workstation, from a queued patient's name, and from the **Services** card on the patient's chart.
 
-- **Header**: name, gender, phone, age and address, with the masked **NRIC / ID** and the **Patient ID** (use the eye button to reveal), and a **Demo** chip for demo patients.
-- **Draft awaiting review**: pinned above the tabs if the patient has a stored reply waiting for approval. See [Patient Agent](/cms/services/patient-agent#drafts-awaiting-review).
+- **Header**: the patient's name, a **Demo** chip for demo patients, the masked **NRIC / ID** and the **Patient ID** (use the eye button to reveal), the service's name and today's queue ticket. **Add note** opens the service's notes. The header starts the encounter: **Resume consult** while one is under way, **Start consult** when the patient waits in today's queue, otherwise **Start Encounter** (see [Starting an encounter from the Workstation](/cms/services/workstation#starting-an-encounter-from-the-workstation)).
+- **The left rail**: first the **Patient** section, the same one the consult screen shows: the patient card, allergies, problems, medications, results, earlier encounters and notes, then **Vitals**, **Vaccinations**, **Documents**, **Photos** and **Contact and consent**, each expanding in place and shown only to the roles that may read it. Then the parts that belong to the service:
 
-| Tab | What it holds |
+| Part | What it holds |
 | --- | --- |
-| **General** | **Escalations** from the patient agent, **AI encounters** (see [AI Encounters](/cms/services/encounters)), **Encounter notes**, and for [Inpatient services](/cms/services/modes-of-care#inpatient) an **Admission** card. |
-| **Patient Context** | The AI-maintained **agent context** for this patient, which can be edited or regenerated. |
+| **In this service** | **Escalations** from the patient agent (with a count of open ones), and for [Inpatient services](/cms/services/modes-of-care#inpatient) an **Admission** card. |
+| **AI encounters** | The patient's AI encounters in this service. See [AI Encounters](/cms/services/encounters). |
+| **Cycle** | For a service with IVF cycles. See [IVF Cycles](/cms/services/ivf-cycles). |
 | **Messages** | The message thread, and a box to send a message. |
 | **Appointments** | Upcoming and past bookings, and **Book for this patient**. See [Appointments](/cms/services/appointments). |
 | **Health plan** | The plan the patient shares with this service, and **Start a health plan** to propose one. See [Health Plans](/cms/services/health-plans#proposing-a-plan-after-a-visit). |
-| **Settings** | **Messaging settings**: who shares this patient's phone number and how their replies are routed. |
+| **Service** | The AI-maintained **agent context** for this patient, which can be edited or regenerated, and **Messaging settings**: who shares this patient's phone number and how their replies are routed. |
+| **More** | Links to the rest of the patient's record. |
+
+- **The centre**: the chart **Overview** beside the service's **Notes**.
+
+A stored reply waiting for approval shows as a draft awaiting review. See [Patient Agent](/cms/services/patient-agent#drafts-awaiting-review).
 
 ### Encounter notes
 
-Encounter notes are the patient's running clinical record in this service. Click **New encounter note**, write it, and **Save note** (or **Update note** when editing). Every save **folds the note into the patient context**. Notes can be deleted individually.
+Encounter notes are the patient's running clinical record in this service, under **Notes** in the centre (or **Add note** in the header). Click **New encounter note**, write it, and **Save note** (or **Update note** when editing). Every save **folds the note into the patient context**. Notes can be deleted individually.
 
 ### Messages
 

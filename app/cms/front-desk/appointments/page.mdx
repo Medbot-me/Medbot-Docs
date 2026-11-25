@@ -2,7 +2,7 @@ import { ImageZoom } from "nextra/components";
 
 # Appointments
 
-Appointments is the clinic's list of booked visits. Find it at **Appointments** (`/appointments`). Receptionists and Clinic Admins book, edit, and cancel appointments and answer booking requests from the patient portal. Every appointment is for one [service](/cms/services/appointments): the booking form and booking requests ask which. Doctors and nurses can look at the list but not change it.
+Appointments is the organisation's list of booked visits. Find it on the **Appointments** tab of **Patients** (`/patients/appointments`) in the **Home** tab, beside the [Queue](/cms/front-desk/reception-queue) and **Patient list**. The old addresses `/appointments` and `/workstation/appointments` open it. Receptionists and Clinic Admins book, edit, and cancel appointments and answer booking requests from the patient portal and Find care. Every appointment is for one [service](/cms/services/appointments): the booking form and booking requests ask which. Doctors and nurses can look at the list but not change it. A service's own appointments are on its [Workstation](/cms/services/workstation).
 
 ## Who can do this
 
@@ -12,9 +12,10 @@ Appointments is the clinic's list of booked visits. Find it at **Appointments** 
 | Book a new appointment | Yes | Yes | No | No |
 | Book with the agent | Yes | Yes | No | No |
 | Edit or cancel an appointment | Yes | Yes | No | No |
-| Answer a booking request | Yes | Yes | No | No |
+| Answer a booking request | Yes | Yes | Find care requests sent to doctors | Find care requests sent to nurses |
+| Place a request that needs a service | Yes | No | No | No |
 
-A doctor or nurse who opens a page for booking or booking requests sees a message that says which roles are allowed.
+A doctor or nurse who opens the booking page sees a message that says which roles are allowed. A doctor or nurse sees **Booking requests** only when the organisation sends Find care appointment requests to their role (see [Requests from Find care](#requests-from-find-care)).
 
 ## Finding appointments
 
@@ -37,7 +38,7 @@ Times are always shown in Singapore time, whatever the time zone of your compute
 3. Choose the **Service**: one of your organisation's services that takes appointments (an inpatient service does not). With only one, it is chosen for you; with none, the form says "No service takes appointments yet".
 4. Choose the **Clinic location**, the **Date**, and the **Time**. Times run from 8:00 AM to 5:30 PM in half hour steps.
 5. Choose the **Duration**: 15, 30, 45, 60, or 90 minutes.
-6. Choose the **Practitioner**. Only doctors and nurses who can work at the chosen location are listed, doctors first. A nurse is shown with **(nurse-led visit)** after their name. See [Session Setup](/cms/front-desk/session-setup) and [Nurse-led visits](#nurse-led-visits).
+6. Choose the **Practitioner**. Only doctors and nurses who can work at the chosen location are listed, doctors first. A nurse is shown with **(nurse-led visit)** after their name. See [the Session tab](/cms/services/workstation#the-session-tab) and [Nurse-led visits](#nurse-led-visits).
 7. Choose the **Service type**. You can also choose a **Reason** and add **Notes**.
 8. Select **Book appointment**.
 
@@ -64,7 +65,7 @@ Select **Use agent** to book by describing the visit in words. The agent looks u
 
 ## Responding to portal booking requests
 
-Patients can ask for a visit from the [patient portal](/patient/visits). A request is not a booking. It waits in **Booking requests** until staff answer it.
+Patients can ask for a visit from the [patient portal](/patient/visits) and from a clinic's page in [Find care](/patient/find-care). A request is not a booking. It waits in **Booking requests** (`/patients/appointments/requests`) until staff answer it. A request to change an existing appointment is marked **Change of time**, and one to book a past visit again **Book again**.
 
 1. Select **Booking requests**. The page counts the requests waiting.
 2. Read the **Requested date**, the **Time preference**, and the **Reason**.
@@ -80,6 +81,22 @@ Patients can ask for a visit from the [patient portal](/patient/visits). A reque
 What the patient sees: after **Counter-propose**, the patient's request shows **Clinic proposed a new time**, your note, and the buttons **Accept proposed time** and **Decline proposed time**. When the patient accepts, the appointment appears in your list as **Booked** and the request leaves **Booking requests**. The request card does not update by itself, so reload the page to see it go.
 
 > **Note:** An appointment made from an accepted counter-proposal currently shows **Your doctor** as its practitioner, not the doctor's name.
+
+### Requests that need a service
+
+When booking, a patient chooses what they need: one of the services the clinic offers, or **I'm not sure**. A request sent with **I'm not sure** reaches the organisation without a service, and an administrator places it.
+
+- A Clinic Admin's **Booking requests** has two tabs: **By service** and **Needs a service** (`?queue=needs-service`). Other roles see one list.
+- Each active Clinic Admin is emailed once when such a request arrives. The email names the clinic and links to the tab; it never names the patient or repeats their note. The request also shows in [Notifications](/cms/notifications) as **Task · Request needs a service**, with **Assign a service**.
+- To place it, choose the **Service** and the time, and select **Counter-propose**. The request then carries the service and moves to **By service**.
+
+### Requests from Find care
+
+An organisation listed in Find care can take bookings there (see [Public profile](/cms/administration/settings#public-profile)). A patient the clinic already knows books as from the portal. A patient the clinic does not know sends an appointment request with the service, a preferred date and time of day, and a reason, and agrees to share their details.
+
+Such a request is marked **New patient, from Find care**, with what the patient told Medbot. Before you can confirm a time, **Find or add the patient record**: "This patient asked from Find care before your clinic knew them. Link their record to confirm a time; it connects their Medbot account to it, with the consent they gave when asking." The patient's **Name**, **Date of birth**, **Phone** and **Email** are shown. Find their record, or add one, and select **Link record**. Then accept or propose a time as for any request. You can reject the request before linking.
+
+Who answers these requests is set in **Appointment requests go to**, under the Public profile: Receptionists, Nurses or Doctors. Admins and receptionists can always act on them. Self-referrals with a history from Ask Medbot still arrive in Referrals, not here.
 
 ## Editing and cancelling
 
@@ -97,5 +114,5 @@ Cancelled, no-show, and fulfilled appointments have no menu, so they cannot be e
 ## Related
 
 - [Reception Queue](/cms/front-desk/reception-queue): check in the patients booked for today.
-- [Session Setup](/cms/front-desk/session-setup): choose which doctors work at a location.
+- [Workstation: Session tab](/cms/services/workstation#the-session-tab): who is on duty in each service today.
 - [Patient Portal](/cms/clinical-care/patient-portal): how the portal connects to the clinic.

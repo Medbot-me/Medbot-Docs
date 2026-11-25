@@ -40,6 +40,8 @@ Clinics recognise staff by email, so joining an organisation (claiming an invita
 
 You then go on to the page you were heading for. Any invitation sent to that address is claimed the moment it is verified, in any Medbot app.
 
+Where your Medbot deployment sends them, a welcome email follows within a few minutes of joining: one for Medbot CMS, naming a few of its headline features with links to these docs. You get one per product you join, and only in your first week in it.
+
 Until you verify, an amber banner at the top of the CMS also says "**Verify your email.** We sent a code to &lt;your email&gt;. Verifying it lets you join organisations that invited you." Select **Enter code**, type the code and select **Verify email**.
 
 ## 2. Choose your organisation and service
@@ -74,32 +76,18 @@ A join code that matches an invitation for your address links you straight away 
 When you sign in again, the welcome screen shows **Welcome back** and **Choose the organisation and role to continue as.** Each organisation you belong to appears once, as a card with its name and the role you will enter it as.
 
 1. Select **Enter as** followed by your role on the card, for example **Enter as Receptionist**.
-2. If the organisation has more than one care service you can open, **Where are you working today?** (`/choose-service`) asks which one: "Choose a service. The CMS opens on the home page for your role there." The service you used last is selected and marked **Last used**. Select **Open &lt;service&gt;**.
-3. The CMS opens on your role's home page in that service (see [Your home page](#your-home-page)). With one service the choice is skipped; with none, the CMS opens on the **Queue**.
+2. If the organisation has more than one care service you can open, **Where are you working today?** (`/choose-service`) asks which one: "Choose a service, and the CMS opens on the home page for your role there. Org Level has the queue, billing, claims and pharmacy, with no service in context." The service you used last is selected and marked **Last used**. Select **Open &lt;service&gt;**, or **Open Org Level**.
+3. The CMS opens on your home page in that service (see [Your home page](#your-home-page)). With one service the choice is skipped; with none, the CMS opens on the organisation's **Patients** page.
 
-The welcome screen has **Join with code**, **Create organisation**, **Manage organisations**, and **Sign out**. The service screen has **Switch organisation** and **Skip and open the queue**. You see the welcome screen once each time you sign in. To change organisation, service or role later, see [Choosing & Switching](/cms/administration/switching).
+The welcome screen has **Join with code**, **Create organisation**, **Manage organisations**, and **Sign out**. The service screen has **Switch organisation**. You see the welcome screen once each time you sign in. To change organisation, service or role later, see [Choosing & Switching](/cms/administration/switching).
 
 > **Note:** You work as one role at a time. If you belong to two organisations, you can be a Doctor in one and a Nurse in the other. If you hold more than one role in the same organisation, for example Doctor and Clinic Admin, you enter as one of them and switch from the sidebar switcher or the **Working as** menu (see step 3).
 
 ### Your home page
 
-Each role has one home page in a service, whatever kind of service it is:
+Every role opens a service on its **Workstation**, shown in the sidebar as **Patients**: today's queue, then the service's other patients, with tabs for the rest of the service's work, such as its appointments and referrals. See [Workstation](/cms/services/workstation). The service pages themselves are described in [Services](/cms/services).
 
-| Role | Home page |
-| --- | --- |
-| Doctor, Nurse, Patient service associate, Allied health professional | The service's **Workstation** |
-| Clinic Admin, Receptionist | The service's **Referrals** |
-
-A badge at the top reads, for example, **Doctor home**, with shortcuts under it, each shown only when your role can open its page:
-
-| Shortcut | Shown to | Opens |
-| --- | --- | --- |
-| **Add patient** | Clinic Admin, Receptionist | Registering a patient, to add them to the service |
-| **Add staff** | Clinic Admin | The **Add staff member** dialog on [Staff](/cms/administration/staff) (`/staff?add=1`) |
-| **Book appointment** | Receptionist | A new appointment |
-| **Service patients** and **Referrals** | Doctor, Nurse | Everyone enrolled in the service, and the patients referred to it |
-
-The service pages themselves are described in [Services](/cms/services).
+With no service set (Org Level), the CMS opens on the organisation's **Patients** page: today's queue across every service. See [Reception Queue](/cms/front-desk/reception-queue).
 
 ## 3. Learn the sidebar
 
@@ -107,34 +95,34 @@ At the top of the sidebar is the **switcher**: the organisation's name and, unde
 
 Under the switcher, two tabs split the CMS:
 
-- **Home**: the Home assistant (**New chat**), **Tasks** for the care services, your saved **Chats**, and the **Organisation** group (Patients, Staff, Agents, Settings, AI policy).
-- **CMS**: the clinic's work. In the general clinic, **All services** sits under the clinic's name, followed by the clinic's own pages (Inbox, Tasks, Queue, Session, Appointments, Roster, Results, Content library, Templates), the **Ask Medbot** group, then **Pharmacy**, **Billing** and **Claims**. Inside a care service, the service's own pages come first, with your home page at the top.
+- **Home**: the clinic's work. Inside a care service, **Back to Org Level** ("Workstation, billing, claims, pharmacy") comes first, then the service's own pages: **Patients** (your home page), **Overview**, **Workstation**, **Staff**, **Roster**, **Agents** and **AI content library**, as your role allows. At Org Level, the organisation's name heads the organisation's pages: **Patients**, **Staff**, **Roster**, **Results**, **Agents**, **AI content library** and **Templates**. A Clinic Admin opens the organisation's [settings](/cms/administration/settings) from the gear beside its name. Under **Admin** follow the **Pharmacy**, **Billing** and **Claims** sections, which open and close.
+- **AI**: the assistant (**New chat**) and your saved **Chats**. See [Home Assistant](/cms/home-assistant). Medbot platform admins also find **Platform admin** here.
 
-Both tabs have **Search**. A patient you have open shows as a card under it. You only see items your role may use:
+Both tabs have **Search**, which also runs commands: see [Search](/cms/overview#search). A patient you have open shows as a card under it. The bell at the top of the screen is [Notifications](/cms/notifications): your pings, your services' tasks and patient messages, and, for the front desk, the clinic inbox.
+
+You only see items your role may use:
 
 | Tab and group | Clinic Admin | Receptionist | Doctor | Nurse |
 | --- | --- | --- | --- | --- |
-| Home: New chat, Tasks | Yes | Yes | Yes | Yes |
-| Home › Organisation: Patients, Agents | Yes | Yes | Yes | Yes |
-| Home › Organisation: Staff, Settings, AI policy | Yes | No | No | No |
-| Home › Organisation: Downtime recovery | No (in Settings) | Yes | Yes | Yes |
-| CMS: Results, Templates, Tasks, Queue, Appointments, Roster | Yes | Yes | Yes | Yes |
-| CMS: Inbox | Yes | Yes | No | No |
-| CMS: Session | Yes | Yes | No | No |
-| CMS › Ask Medbot: Approved answers, Patient questions | Yes | No | Yes | Yes |
-| CMS › Ask Medbot: Answer reports, Patient concerns | No | No | Yes | Yes |
-| CMS › Pharmacy: Formulary, Inventory, Stock, Order sets | Yes | No | Yes | Yes |
-| CMS › Pharmacy: Medication safety | Yes | No | No | No |
-| CMS › Pharmacy: Dosing rules | Yes | No | Yes | No |
-| CMS › Pharmacy: Dose overrides | Yes | No | No | No |
-| CMS › Billing: Billing, Catalog | Yes | Yes | No | No |
-| CMS › Billing: Billable services, Devices & substances | Yes | No | Yes | Yes |
-| CMS › Claims: Claims (Singapore) | Yes | Yes | Yes | No |
-| Home › Platform: Platform admin (the [platform admin panel](/cms/administration/platform-administration)) | Medbot platform admins and superadmins only, whatever their clinic role | | | |
+| AI: New chat, Chats | Yes | Yes | Yes | Yes |
+| Home › Org Level: Patients, Results, Agents, Templates | Yes | Yes | Yes | Yes |
+| Home › Org Level: Roster | Yes | Yes | Yes | Yes |
+| Home › Org Level: AI content library | Yes | No | Yes | Yes |
+| Home › Org Level: Staff, settings (the gear) | Yes | No | No | No |
+| Home › Admin › Pharmacy: Formulary, Inventory, Stock, Order sets | Yes | No | Yes | Yes |
+| Home › Admin › Pharmacy: Medication safety | Yes | No | No | No |
+| Home › Admin › Pharmacy: Dosing rules | Yes | No | Yes | No |
+| Home › Admin › Pharmacy: Dose overrides | Yes | No | No | No |
+| Home › Admin › Billing: Billing, Catalog | Yes | Yes | No | No |
+| Home › Admin › Billing: Billable services, Devices & substances | Yes | No | Yes | Yes |
+| Home › Admin › Claims: Claims (Singapore) | Yes | Yes | Yes | No |
+| AI › Platform: Platform admin (the [platform admin panel](/cms/administration/platform-administration)) | Medbot platform admins and superadmins only, whatever their clinic role | | | |
 
-**Claims → Reports** shows to the roles that work on at least one of the organisation's reports; see [Reports](/cms/smartcms/reports). Downtime devices and System status are linked from **Downtime and status** in the organisation's [Settings](/cms/administration/settings).
+The organisation's **Patients** page has tabs: **Queue**, **Patient list** and **Appointments**, each for the roles that may open it. Doctors and nurses find **Answer reports** under their queue. A Patient service associate and an Allied health professional see **Patients**, **Results**, **Agents** and **Templates**.
 
-On a phone the **Home** and **CMS** tabs sit under the top bar, and a bar at the bottom holds the tab's main pages, **Search** and **More**.
+**Claims → Reports** shows to the roles that work on at least one of the organisation's reports; see [Reports](/cms/smartcms/reports). Downtime devices, Downtime recovery and System status are linked from **Downtime and status** in the organisation's [Settings](/cms/administration/settings); other roles open Downtime recovery with its command in Search.
+
+On a phone the **Home** and **AI** tabs sit under the top bar, and a bar at the bottom holds **Patients** (or **New chat**), **Search** and **More**.
 
 At the bottom of the sidebar you see your name, which opens your account menu.
 
@@ -149,6 +137,8 @@ Open **Settings** from your account menu. Both sections apply to you only and do
 - **Profile**: your **Full name**, "How your name appears on organisations you create or join." Change it and select **Save name** ("Name saved"). If your account has no name yet, the section says "Your account has no name yet. Add one so organisations you create or join can show it."
 - **Queue** (doctors and nurses only): **Requeue places**, how far back your own patients go when you requeue a called patient who did not come. Turn on **Use my own number**, enter 1 to 20 and select **Save**. With it off, your patients follow the service's number or the organisation's. See [When a called patient does not come](/cms/front-desk/reception-queue#when-a-called-patient-does-not-come).
 - **Appearance**: how the CMS looks for you.
+
+**Preferences** in the account menu holds your **Keyboard shortcuts** for search, commands and Find patient. See [Keyboard shortcuts](/cms/overview#keyboard-shortcuts).
 
 The account menu also has **Contact support**, which opens Medbot's [support page](/docs/plans-and-billing#contact-support) in a new tab.
 

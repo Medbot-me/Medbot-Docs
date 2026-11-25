@@ -2,42 +2,55 @@ import { ImageZoom } from "nextra/components";
 
 # Workstation
 
-The **Workstation** is a service's working view of the day. It shows who needs attention, where each patient is in their visit, and what needs doing next. From it, staff move patients through the visit journey and run the consult.
+The **Workstation** is a service's **Patients** page and every role's home in the service: Clinic Admins, receptionists, doctors, nurses, patient service associates and allied health professionals all land here when they choose the service. It holds the service's day (today's queue, the ward census or the remote caseload), its patient list, appointments, referrals and session, and the consult screen. Staff move patients through their visit from here.
 
-What the Workstation shows depends on the service's **Mode of care**. This page covers an **Outpatient** service, where it shows **today's clinic queue**. A **Hybrid** service has the same queue plus a caseload. For ward rounds see [Inpatient](/cms/services/modes-of-care#inpatient), for remote follow-up see [Remote](/cms/services/modes-of-care#remote), and for the two together see [Hybrid](/cms/services/modes-of-care#hybrid).
+Open it from **Patients**, the first item under the service's name in the sidebar (`/services/<service>/workstation`). The page is titled **Patients**, with a row of tabs (**Workstation views**) and, at the end of the row, a gear that opens **Workstation settings** over the page.
 
-Open it from **Workstation** in the CMS sidebar, under the service's name. For doctors and nurses it is their home page in the service, so **Home** opens it, with quick access to the service's patients and referrals above the board (see [Role home pages](/cms/services/getting-started#role-home-pages)). A strip of **Workstation views** at the top switches between boards:
+## The tabs
 
-| Mode of care | Views |
+Which tabs a service has depends on its **Mode of care** and on whether it runs a queue (**Run a queue**, in the service's [Queue and sessions settings](#queue-and-sessions-settings)):
+
+| Service | Tabs |
 | --- | --- |
-| **Outpatient** | **Queue**, **Progress**, **Pre-visit**, **Escalations**, **Health plans** |
-| **Inpatient** | **Census**, **Rounds**, **Escalations**, **Health plans** |
-| **Remote** | **Caseload**, **Escalations**, **Health plans** |
-| **Hybrid** | **Queue**, **Progress**, **Pre-visit**, **Caseload**, **Escalations**, **Health plans** |
+| **Outpatient** or **Hybrid** that runs a queue | **Queue**, **Patient list**, **Appointments**, **Referrals**, **Session**, **AI encounters**, then **Caseload** (Hybrid only), **Escalations**, **Health plans** |
+| **Outpatient** or **Hybrid** with its queue off | **Patient list**, **Appointments**, **Referrals**, **AI encounters**, then **Caseload** (Hybrid only), **Escalations**, **Health plans** |
+| **Inpatient** | **Census**, **Patient list**, **Referrals**, **Rounds**, **Escalations**, **Health plans** |
+| **Remote** | **Caseload**, **Patient list**, **Appointments**, **Referrals**, **Escalations**, **Health plans** |
 
-The **Pre-visit** and **Escalations** views are described in [Pre-visit History & Escalations](/cms/services/pre-visit-and-escalations). **Health plans** holds plans patients sent for review: see [Health Plans](/cms/services/health-plans). A service with IVF cycles turned on also has a **Cycles** view: see [IVF Cycles](/cms/services/ivf-cycles).
+A service with IVF cycles turned on also has a **Cycles** tab: see [IVF Cycles](/cms/services/ivf-cycles). **Escalations** is described in [Pre-visit History & Escalations](/cms/services/pre-visit-and-escalations), **Health plans** in [Health Plans](/cms/services/health-plans), **Appointments** in [Appointments](/cms/services/appointments) and **Referrals** in [Referrals](/cms/services/referrals). For the census, rounds and caseload see [Modes of Care](/cms/services/modes-of-care).
 
-## How it connects to the clinic
+The first tab is where the page opens. Older addresses for the service's queue, appointments, referrals and patients open the matching tab.
 
-The Workstation does not keep its own queue. It reads the **Medbot CMS queue** for the service's clinic location, the same queue the front desk runs, so:
+## How the queue works
 
-- a patient checked in at reception, who **checked themselves in** on the patient portal, or who checked in at the [self-service kiosk](/cms/services/kiosk), appears here
-- a patient with a booked appointment (including one booked by the patient in the portal) appears as **Not yet arrived**
-- starting a step that maps to a CMS queue stage (nurse, doctor, dispensary) moves the patient to that stage in the CMS
-- completing every step of the journey completes the visit in the CMS
+Only a service has a queue. A service that runs one has its own **clinic location**, a **queue prefix** for its numbers (for example `GP001`, `GP002`, restarting each day) and **one session a day** with its own staff on duty, rooms and displays. The front desk, the patient portal and the [self-service kiosk](/cms/services/kiosk) all check patients into the service's open session:
+
+- a patient checked in at reception, who **checked themselves in** on the patient portal, or who checked in at the kiosk joins the queue
+- a patient with a booked appointment (including one booked by the patient in the portal) shows as **Not yet arrived** until they arrive
+- check-in is refused while the service's session has not started ("Today's session for &lt;service&gt; hasn't started") or after it has closed ("&lt;service&gt; has closed for today")
+- starting a step that maps to a queue stage (nurse, doctor, investigations, dispensary) moves the patient to that stage
+- finishing the visit takes the patient's number off the queue and the waiting-room screen
 
 ### The patient's side
 
-On the day of the visit, patients follow the same journey on the patient portal:
+On the day of the visit, patients follow the same visit on the patient portal:
 
-- **Self check-in** ("Register your arrival"), either by location when they are at the clinic or with the 6-digit arrival code shown at the counter. They get a **queue number**.
+- **Self check-in**, by scanning the counter QR code or entering the location's code and choosing the service, while its session is open and it takes self check-in. They get a **queue number**.
 - A **live queue tracker** that tells them where to go next.
 - **Sessions your clinician arranged**: AI financial counselling or health education sessions that staff arrange for this visit.
 - A **visit outcome** screen at the end: what was found, medicines started, next steps and billing.
 
-In the CMS, the front desk can **Arrange session** for a patient and **Complete visit** with findings, medicines started and next steps (pre-drafted by AI). See [Reception Queue](/cms/front-desk/reception-queue).
+## The Queue tab
 
-## The board (Queue)
+The **Queue** tab shows today's queue under a line about **today's session**: **Session open** (with who the next check-in goes to), **Not started** (with **Start today's session** for the front desk, or "Today's session starts at the first check-in, with the staff rostered today." when the service starts its day by itself), or **Session closed**. **Manage session** (**View session** for other roles) opens the [Session tab](#the-session-tab).
+
+What the tab shows depends on your role:
+
+- **The front desk** (Clinic Admins, receptionists and patient service associates) runs the service's queue here: check-in, **Add to queue**, handing over tickets, payment, routing, changing the lead clinician, remarks, **Did not come** and the **Missed Queue**. See [Reception Queue](/cms/front-desk/reception-queue). **Call** reads **Call to &lt;room&gt;** and preselects the room the lead clinician has in today's session.
+- **Doctors and nurses** work the queue from the board described below, with the **Missed Queue** under it.
+- **Allied health professionals** read the queue.
+
+### The board
 
 The board refreshes itself every few seconds, and shows how fresh it is. **Refresh** reloads it immediately.
 
@@ -46,19 +59,21 @@ The board refreshes itself every few seconds, and shows how fresh it is. **Refre
 | **Day** | **Today** or **Tomorrow**. Tomorrow is a read-only list of who is booked, with their appointment, doctor and pre-visit status. |
 | **Show** | **This service's patients** (the cohort) or **Everyone in today's queue** (**Everyone booked tomorrow** on the Tomorrow view) |
 | **Filter** | **All patients**, **Waiting**, **In progress**, **Escalated**, **Completed**, **Not arrived**, each with a count |
-| **My room** | Appears when the clinic has rooms. Choose the room you are working in. |
+| **I am running** | Choose the step you are running today, for example **Running Vitals**. Patients waiting for it are marked **Waiting for you** and listed first, and a line says how many are waiting. **Not running a step** turns it off. |
+| **My room** | Choose the room you are working in. The room today's session gives you is chosen for you. |
 
 Click the **Queue** or **Appointment** column header to sort.
 
 | Column | Shows |
 | --- | --- |
 | **Queue** | The patient's queue number. |
-| **Patient** | Name, with the masked ID and a **Demo** chip for demo patients. |
+| **Patient** | Name, with sex and age under it, the masked ID and a **Demo** chip for demo patients. |
+| **Remarks** | The front desk's remarks for the visit. |
 | **Appointment** | The booked time. |
 | **Notifications** | An **Urgent** or **Acknowledged** escalation, and unanswered portal **Message**s. |
-| **Pre-visit** | The state of the patient's pre-visit history. |
-| **Progress** | How many journey steps are left, of how many. Hover for the breakdown. |
-| **Now and next** | The current and next step. |
+| **AI encounters** | The patient's AI encounters for this visit. |
+| **Progress** | How many steps are left, of how many. Hover for the breakdown. |
+| **Now and suggested next** | The current step, and the steps that usually come next. |
 
 Banners at the top say when:
 
@@ -69,22 +84,79 @@ Row actions:
 
 - **Mark arrived** checks in a patient who is booked but not yet here.
 - **Add to service** enrols a patient from the queue into this service's cohort.
-- **Open visit** opens the patient panel.
 - **Call** (then **Call again**) calls the patient to your room. Choose **My room** first, otherwise the button explains "Choose "My room" above to call patients to it".
+- **Start consult** opens the consult, and also calls the patient in when you have chosen **My room**.
+- **Open visit** opens the visit panel. The row's menu also has **View patient**, which opens the [patient's page in the service](/cms/services/patients#a-patients-page).
 
-### The Progress view
+**Call**, **Did not come** and **Return to queue** follow one rule, here and at the front desk: the front desk may move anyone; a doctor or nurse may move a patient whose visit they lead (a doctor also one booked with them), or any patient of a service they work on whom nobody leads. Allied health may move no one. A patient who was called and did not come goes to the **Missed Queue**, where a clinician returns only the patients they lead; calling a missed patient also returns them to the queue.
 
-**Progress** shows each of today's patients against the service's journey steps, one column per step, including education and counselling sessions running on the portal or the kiosk. Tiles count **Needs a person**, **Session in progress**, **Steps left** and **Visit complete**; click a session cell to open its details and step in.
+## The visit panel
 
-## The patient panel
+**Open visit** opens a side panel for the patient's visit:
 
-**Open visit** opens a side panel for that patient's visit:
-
+- the queue number and appointment time, and whether the patient is **Waiting to be called**, **Called to &lt;room&gt;**, or **Called, did not come: in the Missed Queue**, with **Call**, **Call again** and **Did not come**
 - **Escalation**, if there is one, with **Acknowledge** and **Resolve**. Resolving asks for an optional resolution note.
 - **Unanswered portal message**, if the patient is waiting on a reply.
-- **Today's journey**: every step of the visit with its status. For each step: **Start** followed by the step name in lower case (for example **Start vitals**), **Mark complete** or **Skip**.
-  - A step that runs as an **AI encounter** (history taking, health education, financial counselling) opens the in-clinic encounter dialog, so the patient can do it on a clinic device. See [AI Encounters & Kiosk](/cms/services/encounters#in-the-clinic-the-kiosk).
+- **Today's steps**: every step of the visit with its status and who started or completed it. For a step not yet started: **Start** followed by the step name in lower case (for example **Start vitals**), or for a step the patient can do with the AI assistant, **Start AI encounter** (on a clinic device, see [AI Encounters & Kiosk](/cms/services/encounters#in-the-clinic-the-kiosk)) or **Start with staff**. A step under way has **Skip**, and an AI session has **View session**.
   - The consult step has **Start clinical consult**, or **Resume clinical consult** once started. If you have chosen **My room** and the consult has not started, **Start consult and call in** also calls the patient.
+- **Add next steps**: the steps to add to the visit, grouped as **Already planned**, **Usually next** (the usual next steps of the step just completed and of the steps done) and **Other steps** from the service's catalogue. Tick them and select **Add step** (or **Add &lt;N&gt; steps**). Nothing is added until you confirm.
+- **Finish visit**: finishes the visit even if some steps have not started. The dialog names the steps that will be skipped, and "Finishing takes the patient's number off the queue and the waiting-room screen, and shows them their visit summary."
+- **Record that the patient left**, with a reason, for a patient who left before the visit was finished.
+
+## The Patient list tab
+
+**Patient list** lists the service's patients, laid out like the organisation's [Patient list](/cms/clinical-care/patient-records#finding-a-patient): search by name, NRIC, phone or date of birth, a status filter, **View** to choose the columns, and the columns **Patient**, **Contact**, **Birth Date**, **Gender**, **Pending tasks**, **Latest AI encounter** and **Status**.
+
+Each row offers what your role can do from here:
+
+- **In today's queue**, or **Add to queue** (for the front desk, in a service that runs a queue)
+- **Book appointment**
+- **Start AI encounter** and **Start Encounter** (see [Starting an encounter from the Workstation](#starting-an-encounter-from-the-workstation))
+- in the row's menu, **View patient** and **Remove from service**
+
+**Add patient** finds a patient in the organisation, or registers a new one, and adds them to the service. See [Adding a patient to the service](/cms/services/patients#adding-a-patient-to-the-service).
+
+### Starting an encounter from the Workstation
+
+**Start Encounter** opens the record the service's mode calls for: in a service that runs a queue, it checks the patient in as a walk-in and opens the consult (the patient's appointment today, if they have one); in a clinic with its queue off, a consult with no visit; in a Remote service, a review. An inpatient's encounter stays a ward round. The button starts the common case straight away; the chevron beside it opens **More options**: **Encounter class**, **Priority** (only a priority where the service runs a queue) and **Reason (optional)**.
+
+Clinic Admins, doctors, nurses and allied health professionals start encounters. A patient service associate's button reads **Start financial counselling** and starts manual financial counselling, recorded on the consult screen.
+
+## The Session tab
+
+A service that runs a queue has a **Session** tab: its day, from start to close. The front desk (Clinic Admins, receptionists and patient service associates) runs it. Everyone on the queue can read it, and a doctor or nurse can change their own room.
+
+- **Start today's session**: puts the staff rostered today for the service on duty and opens check-in. If the service starts its day by itself, the first check-in or booking starts it instead.
+- **At a glance**: **Waiting**, **With a clinician**, **Seen**, **Missed Queue** and **Booked, not arrived**.
+- **Who is on duty** (**On duty now** once open): each person's **Room**, what they are doing **Now** (with a patient, **Free** or **Off duty**), **Seen today**, an **On duty** switch, and for doctors **Takes check-ins**, with **Next check-in** beside the doctor the next patient goes to. Add someone who is not on the roster from **Someone not on the roster**. "Changes apply straight away: the next check-in skips anyone off duty or not taking check-ins. Each clinician's room is where their Call sends patients."
+- **Rooms at &lt;location&gt;**: each room, who has it, and a switch to mark it unavailable, with a note ("Why it can't be used, e.g. Doppler out for repair"). A room another service is using today shows who has it. Rooms are added in [Organisation Settings](/cms/administration/settings).
+- **Displays**: the waiting-room screens, room-door screens and check-in QR codes at the location that show this service, with whether each is **Online**, **Offline** or **Never connected**. A Clinic Admin adds a display, chooses the services a waiting-room screen shows, and revokes one. See [Display Boards](/cms/front-desk/display-boards).
+- **Self check-in**: "One code for the location. Patients scan the counter QR or enter the code, then choose &lt;service&gt; from the services open now."
+- **Close today's session**: lists each patient still in the queue (**Booked, not arrived**, **Waiting**, **With a clinician** or **In the Missed Queue**) with a choice of **Keep the visit open**, **Mark as left** or **Book for tomorrow**. **Reopen session** opens it again the same day. A session also closes by itself at the time set in the service's settings, or at midnight.
+
+### Patient steps
+
+Under the session is **Patient steps**: the service's catalogue of the steps a visit can go through, such as Registration, Vitals, Investigations, Consult, Financial counselling, Health education, Medications collection and Follow-up appointment. It replaces the visit journeys and the **Progress** tab.
+
+| Field | Meaning |
+| --- | --- |
+| **Name** | Shown to staff, e.g. "Vaccination". |
+| **Order** | Position in the list. |
+| **Key** | A short identifier, e.g. `vaccination`. Every step needs one. |
+| **Queue stage** | **None**, **Nurse queue**, **Doctor queue**, **Investigations**, **Dispensary queue** or **Completed**. Starting the step moves the patient to that stage. |
+| **AI encounter** | For a step the patient can do with the AI assistant: **History taking**, **Health education** or **Financial counselling**. |
+| **At check-in** | Whether every visit starts with this step at check-in. |
+| **Usually next** | The steps that usually follow this one. They are suggested first under **Add next steps**. |
+
+**Add step** adds a step; each row has **Edit** and **Delete**. Changes apply to new visits. A visit already under way keeps its steps.
+
+## The AI encounters tab
+
+**AI encounters** gathers the AI encounters of the service's visits:
+
+- **Today's visits**: patients in today's queue with an AI encounter, and its state.
+- Health education and financial counselling: those **Open**, and those **Ended, last 30 days**, with **Patient**, **Encounter**, **Status** and **Started**. "No health education or financial counselling is open. Start one from a patient in the Patient list or the queue."
+- **History taking before the visit**: the pre-visit history board, for today or tomorrow. See [Pre-visit History & Escalations](/cms/services/pre-visit-and-escalations).
 
 ## The clinical consult
 
@@ -110,42 +182,27 @@ Click **Confirm &lt;N&gt; step(s) and end consult** (or **End consult with no ne
 
 ## Settings
 
-**Workstation settings** (from the Workstation):
+### Workstation settings
 
-- **Clinic location**: whose queue to show (for an Inpatient service, whose wards the census reads from), or **Organisation default**.
-- For an Outpatient or Hybrid service: **Default to only my assigned patients** and **When ending a consult, tell the patient about new steps by default**.
-- For an Inpatient service: **Wards this service rounds on** and **Census order**.
+The gear at the end of the tab row opens **Workstation settings** over the page:
+
+- For a service that runs a queue: **Default to only my assigned patients**, **When ending a consult, tell the patient about new steps by default**, and **Set this service's requeue places** (**Requeue places**, 1 to 20: "A requeued patient of this service goes after this many patients who are ready to be seen"). Otherwise requeue follows the organisation's default. A doctor's own setting still applies to their patients.
+- For an Inpatient service: **Wards this service rounds on**, **Census order**, and the **Wards** at the service's clinic location.
 - For a Remote or Hybrid service: **Unanswered message needs attention after (hours)**.
 
-See [Modes of Care](/cms/services/modes-of-care).
+Click **Save settings**. The service's clinic location is set in the service's settings, under **General**.
 
-Click **Save settings**.
+### Queue and sessions settings
 
-### The visit journey
+A Clinic Admin sets how the service runs its queue in the service's settings (the gear beside the service's name), under **Queue and sessions**:
 
-For an Outpatient or Hybrid service, the same page defines the service's **visit journey**: the steps a visit can go through. The standard steps are:
-
-1. Registration (included by default)
-2. Vitals (included by default)
-3. Investigations
-4. Consult (included by default)
-5. Financial counselling
-6. Health education
-7. Medications collection
-8. Follow-up appointment
-
-Only the steps marked **Included by default** start every visit. The others are added when needed, for example by **End consult**.
-
-For each step:
-
-| Field | Meaning |
+| Setting | What it does |
 | --- | --- |
-| **Name** | Shown to staff, e.g. "Vitals". |
-| **Key** | A short identifier, e.g. `vitals`. Every step needs one. |
-| **Order** | Position in the journey. |
-| **CMS queue stage** | **None**, **Nurse queue**, **Doctor queue**, **Investigations**, **Dispensary queue** or **Completed**. Starting the step moves the patient to that stage in the CMS. |
-| **AI encounter kind** | For a step the patient does with the AI assistant: **History taking (AI)**, **Health education (AI)** or **Financial counselling (AI)**. |
-| **Included by default** | Whether every visit starts with this step, or it is only added when needed. |
-| **Active** | Turn a step off without deleting it. |
+| **Run a queue** | "Checked-in patients get a queue number and are called from the Workstation. A queue service runs one session a day, with its own staff on duty, rooms and displays." Off, an Outpatient or Hybrid service has no Queue or Session tab and opens on its Patient list. |
+| **Queue prefix** | Up to six characters. Numbers read &lt;prefix&gt;001, &lt;prefix&gt;002 and restart each day. It must differ from the other services at the service's clinic location. |
+| **Close the session automatically at** | **Midnight** or a time. Anyone still waiting keeps their visit, and the session can be reopened until midnight. |
+| **Start the session at the first check-in** | Uses today's roster for who is on duty. Off: check-in stays closed until the front desk starts the session. |
+| **Share new patients among doctors on duty** | Check-in assigns doctors who take check-ins in turn. Off: the front desk picks a doctor for each patient. |
+| **Self check-in** | Patients can check in with the counter QR or code while the session is open. |
 
-**Add step** adds a custom step; **Save steps** saves the journey ("Steps saved."). Changes apply to new visits. A visit already under way keeps the steps it started with.
+Click **Save queue settings**. See [Modes of Care](/cms/services/modes-of-care).
