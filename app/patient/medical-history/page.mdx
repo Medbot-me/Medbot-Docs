@@ -19,7 +19,19 @@ If you would rather have someone do it, see [Record Services](/patient/record-se
 
 **Medical history** lists your conditions and your past surgeries and hospital stays, in one place. It says "Diagnoses from your clinic and the history you added. Update it whenever something changes."
 
-Conditions are under **Long-term conditions**, **Current illness or injury** and **Past diagnoses**, then **Surgery and hospital stays**. Each row says when it started, how it is now, and who it came from: **From your clinic**, **From your document**, **Reported by you**, **Reported by a caregiver** or **Added by the Medbot team**. A condition a clinic's doctor added says "Added by" their name, the clinic and the date.
+Conditions are under **Long-term conditions**, **Current illness or injury** and **Past diagnoses**, then **Surgery and hospital stays**, then **Ruled out**. Each row says when it started, how it is now, and who it came from: **From your clinic**, **From your document**, **Reported by you**, **Reported by a caregiver** or **Added by the Medbot team**. A condition a clinic's doctor added says "Added by" their name, the clinic and the date.
+
+Each condition also says how far a clinician has assessed it:
+
+| Status | What it means |
+| --- | --- |
+| **Not confirmed by a clinician** | Nobody has reviewed it yet. |
+| **Confirmed by a clinician** | A clinician confirmed it. |
+| **Provisional assessment** | A clinician thinks it is likely, but has not confirmed it. |
+| **Being considered** | A clinician is considering it among other possibilities. |
+| **Ruled out by a clinician** | A clinician decided you do not have it. It moves to **Ruled out**. |
+
+Where a clinician coded a condition you reported, "Your words:" shows how you described it. A note a clinician wrote on a condition you reported shows as "Clinician's note:". A clinic's own notes on its records are not shown here.
 
 From here you can:
 
@@ -113,6 +125,8 @@ When a doctor has reviewed something, you get a notification, **Your medical his
 - A **Reviewed** badge, and a banner: "&lt;clinic&gt; reviewed the entries marked Reviewed. Check they look right, and edit anything that does not."
 - "Confirmed by" or "Coded by" the doctor, the clinic and the date, and "Official name:" with the name and code. If the doctor reworded it, "Also reported as:" shows your own words.
 - Any files you attached, and your own note.
+
+A condition a doctor confirms or adds is also kept in that clinic's own records, on its problem list. You still see it once in your medical history.
 
 If you change what a condition is, the doctor's review is removed and it goes back to unconfirmed: "Changing what the condition is removes the review by" the doctor. Changing only the dates, kind or how it is now keeps the review.
 

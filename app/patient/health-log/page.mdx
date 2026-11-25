@@ -1,20 +1,70 @@
 import { ImageZoom } from "nextra/components";
 
-# Health Log
+# Health Status & Log
 
-The **Log** tab is your own diary. Write down how you feel, your readings, your meals and your exercise. Your clinic can see what you log, but nobody watches it as it happens.
+The **Health** tab shows your **Health status**: today's food, activity and goals, from what you and your devices log. It is also where you log symptoms, readings, meals and exercise. Your clinic can see what you log, but nobody watches it as it happens.
 
 **In an emergency, call 995.** Do not use the log to ask for help.
 
 ## What you see
 
-At the top is **Log something**, one button. It opens in place, so you do not leave the page. See [Log something](#log-something). Below it are your **Recent entries**: the latest 15, newest first. An entry from a photo has a **From photo** badge. A meal Medbot estimated from your words has an **Estimated** badge. One added by a family member has **Entered by a caregiver**. One synced from a connected watch or scale has a **Garmin** badge. Select the link under the list to see your log next to your clinic's own measurements. With nothing logged yet, you see "Nothing logged yet" and a hint to start, and **Log something** is already open.
+**Health status** has, from the top:
 
-Under your entries is **Your health plan**: your active goals with their progress, with **Add a goal** and **See your plan**, or **Set a goal** if you have no plan yet. See [Health Plan](/patient/health-plan).
+- **Log something**, one button. It opens in place, so you do not leave the page. See [Log something](#log-something).
+- The day, for example "Today, 25 Nov". Use the arrows for the **Previous day** and **Next day**, and **Back to today** to return.
+- **Calories**: see [Calories in and out](#calories-in-and-out).
+- **Protein** and **Carbohydrate**: see [Protein and carbohydrate](#protein-and-carbohydrate).
+- **Recent entries**: your **Latest 5** entries, newest first, with **View all logs**. See [All your logs](#all-your-logs).
+- **Your health plan**: your active goals with their progress, with **Add a goal** and **See your plan**, or **Set a goal** if you have no plan yet. See [Health Plan](/patient/health-plan).
+
+An entry from a photo has a **From photo** badge. A meal Medbot estimated from your words has an **Estimated** badge. One added by a family member has **Entered by a caregiver**. One synced from a connected watch or scale has a **Garmin** badge. With nothing logged yet, you see "Nothing logged yet" and a hint to start.
 
 After you save, a banner says "Vitals saved.", "Symptom saved.", "Meal saved." or "Exercise saved." After you change an entry, it says "Your changes are saved."
 
-<ImageZoom src="/images/patient/health-log/01-log-hub.png" alt="The Log tab with the Log something panel open: a box to describe an entry, the four kinds, and Photograph a reading" />
+**Logs** and **Health plan** are also in the menu, under **My health record**.
+
+<ImageZoom src="/images/patient/health-log/01-log-hub.png" alt="The Log something panel open: a box to describe an entry, the four kinds, and Photograph a reading" />
+
+## Calories in and out
+
+The **Calories** card compares what you ate with what you burned that day:
+
+- **Calories in**: from the meals you logged with calories, for example "From 3 meals". If some meals had no calories, it says how many did, for example "2 of 3 meals had calories".
+- **Calories burned**: Medbot's estimate of what your body burns at rest and with everyday movement, plus the workouts you logged or your watch synced, for example "1,650 resting and everyday · 320 workouts".
+- **Net balance**: **Deficit** ("You burned 400 kcal more than you ate"), **Surplus** ("You ate 200 kcal more than you burned") or **Even**. Today's says **So far today**.
+
+The resting and everyday burn is an estimate from your age, height, sex and latest weight. To see it and your net balance, Medbot needs your [body details](#body-details). Until you add them, the card says **See your net balance** with **Add your details**, and calories burned counts your workouts only ("Workouts only · resting burn not included").
+
+If a workout you typed is the same as one your watch synced, it is counted once, and the card says so.
+
+For some people, calorie numbers or a net balance are not helpful. When your record suggests that, Health status leaves them out without saying why, and calories burned counts your workouts only.
+
+Every number here is an estimate, not a measurement.
+
+## Protein and carbohydrate
+
+Each card shows the grams in today's meals, for example "45 g today", against the goal in your [health plan](/patient/health-plan): "Your goal: at least 60 g" or "Your goal: under 150 g", or "Clinic goal" for one a clinic set. It then says how you are doing: "15 g below your goal so far", "20 g above your goal", **Goal met** or **Within your goal**. With no goal, it says "No goal in your plan".
+
+## All your logs
+
+Select **View all logs**, or **Logs** in the menu. **Logs** lists "Everything you, your caregivers and your devices have logged, newest first", grouped by day, with the calories eaten and burned in workouts for each day.
+
+- Under **Days**, choose **Today**, **Last 7 days**, **Last 30 days** or **All time**, or **Or pick a day**.
+- Under **Type**, choose **All types**, **Diet**, **Exercise**, **Vitals** or **Symptoms**.
+- Select **Clear filters** to start again.
+
+Fifty entries show at a time. Select **Show older entries** for more. With nothing for your filters, it says "Nothing logged for these filters". Select **See this day** on a day to open its Health status.
+
+## Body details
+
+Medbot uses your height, weight and sex to estimate the calories your body burns at rest, so Health status can show your net calories for the day.
+
+Medbot asks for them once, when you set up your account (**About your body**). Select **Skip for now** if you prefer. You can add or change them later from **Add your details** on Health status, or from **Profile**, then **Preferences**, then **Body details**.
+
+- **Height** in cm and **Weight** in kg.
+- **Sex for this estimate**: **Female** or **Male**. "Bodies at rest burn energy at different rates. Medbot uses this only for the estimate."
+
+Your age comes from your date of birth. Your weight is saved to your health log, and later weigh-ins update the estimate. Select **Save details**.
 
 ## Log something
 
@@ -50,7 +100,7 @@ If a number looks wrong, the screen tells you. For example, the top blood pressu
 ## Log a meal
 
 1. Select **Diet**. The meal page opens on **Describe what you ate**. Write what you had, for example "Chicken rice with an extra egg, and a teh tarik", and select **Estimate calories**.
-2. Medbot shows "Medbot estimated these from your description": one line for each food or drink, each number marked **Estimate**, with the totals as "about" a number. Estimates, not measurements. Select an item to change its portion, carbohydrate or protein, and change any number you know better. Select **Edit your description** to start again.
+2. Medbot shows "Medbot estimated these from your description": one line for each food or drink, each number marked **Estimate**, with the totals as "about" a number. Estimates, not measurements. Medbot looks each item up in food composition references, such as the Health Promotion Board's data and Open Food Facts, before it estimates, and scales the values to your portion. An item says where its values came from: "Values from" the source, or "Values found on the web (" the site "), not yet checked by Medbot" for a value Medbot found on a trusted nutrition site that its team has not reviewed yet. An item with no reference keeps Medbot's own estimate. Select an item to change its portion, carbohydrate or protein, and change any number you know better. Select **Edit your description** to start again.
 3. Choose **Breakfast**, **Lunch**, **Dinner** or **Snack**, and **When you ate**, then save. Nothing is saved until you do.
 
 Other ways in, under the box:
@@ -90,7 +140,7 @@ If a photo cannot be read or is too large, the screen says so and suggests typin
 
 ## Log from Home or Ask Medbot
 
-You can also log without opening the **Log** tab. On [Home](/patient/ask-medbot#home-screen), type what you ate, felt, measured or did into the Ask Medbot box. Medbot drafts the entry in a card under the box for you to check, then **Save to health log**. See [Log something by telling Medbot](/patient/ask-medbot#log-something-by-telling-medbot). **Log something** on Home also opens the **Vitals**, **Meal**, **Symptom** and **Exercise** forms, and its **Photograph your monitor** and **Photo of your plate** items open your camera. See [Log something](/patient/ask-medbot#log-something). In Ask Medbot, the paper clip sends a photo of a reading or a meal.
+You can also log without opening the **Health** tab. On [Home](/patient/ask-medbot#home-screen), type what you ate, drank, felt, measured or did into the Ask Medbot box. Ask Medbot answers with a draft entry for you to check, then **Save to health log**. See [Log something by telling Medbot](/patient/ask-medbot#log-something-by-telling-medbot). **Log something** on Home also opens the **Vitals**, **Meal**, **Symptom** and **Exercise** forms, and its **Photograph your monitor** and **Photo of your plate** items open your camera. See [Log something](/patient/ask-medbot#log-something). In Ask Medbot, the paper clip sends a photo of a reading or a meal.
 
 Medbot reads a photo into a card in the conversation, with the same form as here, already filled in. Check the numbers, then save. Nothing is saved until you do, and your photo is not kept. The entry then appears here with **From photo**. See [Send a photo or a file](/patient/ask-medbot#send-a-photo-or-a-file).
 
@@ -99,6 +149,8 @@ Home also shows your logging streak and your latest entries. See [Your readings]
 ## Readings from a connected device
 
 If you [connect Garmin](/patient/devices), readings arrive in your log on their own, marked **Garmin**: resting heart rate, steps, sleep, stress level, and blood pressure, SpO2 and weight when your Garmin devices record them. One reading is kept per measure per day, and a newer one for the same day replaces it.
+
+With **Workouts** turned on, each run, walk, ride or other workout your watch records arrives as an exercise entry, with the calories it burned. A workout you change later in Garmin Connect™ is updated here. Health status counts synced workouts in **Calories burned**, and a workout you also typed in yourself is counted once.
 
 Synced readings show on Home and to your care team like the ones you log. They do not count towards your streak, and Medbot does not check them for warning signs. When you disconnect, you choose whether to keep them.
 
