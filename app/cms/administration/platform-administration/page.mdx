@@ -80,16 +80,6 @@ Open **Caregiver access** (`/admin/caregivers`) to look up [caregiver access](/c
 - **Revoke** ends a grant at once, after the confirmation "Revoke this caregiver?".
 - **Invite** a caregiver on a patient's behalf. A platform invite requires a written **basis** for the access, and the caregiver still has to accept it. The patient sees the grant as added by **Medbot support**.
 
-### Identity verification
-
-A superadmin opens **Identity verification** (`/admin/identity-verification`) to verify a patient's name and date of birth, for example when they have no clinic that can check them in person. Patients can edit their own name and date of birth in the Medbot app; the details stay unverified until a linked clinic checks them (with a [clinic card scan](/cms/front-desk/clinic-card-check-in#checking-an-identity-document) or the chart's **Verify identity**), a superadmin checks them here, or Singpass confirms them.
-
-1. **Search** by email, user id or PHR patient id. Each patient shows **Verified** or **Unverified**.
-2. Select **Verify identity**. "Check their original identity document, on a video call or in person, against the details below. Only the document type is recorded."
-3. Choose the **Document**, tick **The name matches the document**, **The date of birth matches the document** and **I kept no copy of the document**, and select **Verify identity**.
-
-This replaces the old identity change requests, which patients no longer send.
-
 ### Record services
 
 Open **Record services** (`/admin/record-services`). Patients can pay the Medbot team to upload their documents or reconcile their history into their health record. This queue is where that work is done. The page explains: claiming a request opens that patient's record to you until you mark it ready, and every view is shown to the patient.

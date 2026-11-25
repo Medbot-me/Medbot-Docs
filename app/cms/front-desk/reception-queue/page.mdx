@@ -26,13 +26,13 @@ The reception queue is today's list of booked and checked-in patients across the
 | Complete the visit and send the outcome | No | No | Yes | Nurse-led visits they lead |
 | See the CHAS badge and select **Verify now** (Singapore) | Yes | Yes | Yes | Yes |
 
-A Patient service associate does the front desk's work on this page, as a Receptionist does, and runs a service's [session](/cms/front-desk/session-setup) too. An Allied health professional sees every patient at the location, with sex, age, status and the Missed Queue, but has no check-in, calling, routing or payment controls. They can add remarks.
+A Patient service associate does the front desk's work on this page, as a Receptionist does, and runs a service's [session](/cms/services/workstation#the-session-tab) too. An Allied health professional sees every patient at the location, with sex, age, status and the Missed Queue, but has no check-in, calling, routing or payment controls. They can add remarks.
 
 Doctors see only the patients assigned to them. Nurses see every patient at the location and open the vitals form from their own view. Doctors and nurses do not see the **Bill** column or any payments. The **Start AI encounter** and **Complete visit** buttons appear on a doctor's row only after a consultation has been started for that appointment. A nurse sees them only on a [nurse-led visit](#nurse-led-visits) that has been started.
 
 ## Reading the queue
 
-When the organisation has more than one service with a queue, the **Service** list above the table narrows the board to one service, or shows **All services**. Each service's session, staff on duty, rooms and check-in code are on its Workstation's **Session** tab: see [Session Setup](/cms/front-desk/session-setup). Checking in a service's first patient of the day opens its session if nobody has.
+When the organisation has more than one service with a queue, the **Service** list above the table narrows the board to one service, or shows **All services**. Each service's session, staff on duty, rooms and check-in code are on its Workstation's **Session** tab: see [Session tab](/cms/services/workstation#the-session-tab). Checking in a service's first patient of the day opens its session if nobody has.
 
 The table lists patients in this order:
 
@@ -69,7 +69,7 @@ Four filters narrow the list: the location, the doctor (**All doctors**, **Unass
 
 A message such as "Kamala Perera checked in" appears, with the ticket number and the doctor, for example "Ticket DIA001 · Marcus Lim". The row now shows the ticket and the status **Waiting**, and a **Give the patient their number** window opens (see [Giving the patient their number](#giving-the-patient-their-number)).
 
-Check-in records the arrival time and gives the patient a queue ticket from the location's open session, in the queue of the patient's service. The service is the one the appointment was booked into, or the patient's only clinic service. If check-in cannot tell, a window asks **Which service is &lt;patient&gt; here for?** Choose one. Check-in then assigns the next doctor of that service who is on duty and takes check-ins on its [Session tab](/cms/front-desk/session-setup#who-is-on-duty). Doctors take turns, and each service rotates among its own doctors. If no doctor takes check-ins, the patient still gets a ticket but no doctor. Checking in a patient who already has a ticket keeps the same ticket and does not move the rotation on. A visit booked to a nurse is [nurse-led](#nurse-led-visits): it keeps that nurse, no doctor is assigned, and the rotation does not move on.
+Check-in records the arrival time and gives the patient a queue ticket from the location's open session, in the queue of the patient's service. The service is the one the appointment was booked into, or the patient's only clinic service. If check-in cannot tell, a window asks **Which service is &lt;patient&gt; here for?** Choose one. Check-in then assigns the next doctor of that service who is on duty and takes check-ins on its [Session tab](/cms/services/workstation#the-session-tab). Doctors take turns, and each service rotates among its own doctors. If no doctor takes check-ins, the patient still gets a ticket but no doctor. Checking in a patient who already has a ticket keeps the same ticket and does not move the rotation on. A visit booked to a nurse is [nurse-led](#nurse-led-visits): it keeps that nurse, no doctor is assigned, and the rotation does not move on.
 
 Check-in has no time window. A patient booked for later in the day can be checked in as soon as they arrive.
 
@@ -311,6 +311,6 @@ The outcome goes to the patient's portal, and the row leaves the active list. Se
 
 ## Related
 
-- [Session Setup](/cms/front-desk/session-setup): open the session and choose which doctors take patients.
+- [Workstation: Session tab](/cms/services/workstation#the-session-tab): open the session and choose which doctors take patients.
 - [Patient-Facing Displays](/cms/front-desk/display-boards): what the waiting room board shows.
 - [Appointments](/cms/front-desk/appointments): book the visits that appear here.
