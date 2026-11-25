@@ -2,7 +2,7 @@ import { ImageZoom } from "nextra/components";
 
 # Service Agents
 
-Service agents are AI agents you author for one service, on its **Agents** page (under the service's name in the CMS sidebar, for admins). An agent is never a person: it works for, or alongside, the care team, and it always receives the [service context](/cms/services/context-and-content), the relevant care team and patient context, the tools you give it, and any subagents you link to it.
+Service agents are AI agents you author for one service, on its **Agents** page (`/services/<service>/agents`, under the service's name in the sidebar, for Clinic Admins). An agent is never a person: it works for, or alongside, the care team, and it always receives the [service context](/cms/services/context-and-content), the relevant care team and patient context, the tools you give it, and any subagents you link to it.
 
 ## Audiences
 
@@ -123,4 +123,4 @@ Above the agent list on the Agents page:
 
 ## Service agents and the Agents library
 
-Service agents belong to one service. They are separate from the organisation's **Agents** (**Home** › **Organisation** › **Agents** in Medbot CMS) and from your personal agents in the Medbot web app. Agents there can be personal or shared with the whole organisation, and a personal, public or default agent can be copied into the organisation.
+Service agents belong to one service. They are separate from the organisation's **Agents** (**Agents** at Org Level in Medbot CMS, `/agents`), the agent library where agents are built, validated and refined before a service agent calls them as subagents, and from your personal agents in the Medbot web app. Agents there can be personal or shared with the whole organisation, and a personal, public or default agent can be copied into the organisation.

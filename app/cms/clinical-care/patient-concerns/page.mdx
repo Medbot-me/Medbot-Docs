@@ -24,7 +24,6 @@ Nobody monitors patients' chats in real time, and patients are told so. None of 
 | **Answer reports** | No | No | Yes | Yes |
 | **Approved answers**: see and write drafts | Yes | No | Yes | Yes |
 | **Approved answers**: approve and retire | No | No | Yes | Yes |
-| **Patient questions** report and **Common questions** | Yes | No | Yes | Yes |
 
 Concerns, shared chats and answer reports hold the patient's own words, so only doctors and nurses read them, as the patient was told. The API refuses everyone else, including a superuser: "A superuser account cannot open this. Patients share with named staff at their clinic." Every read is recorded in the [audit log](/cms/clinical-care/patient-records#audit-log), naming the patients shown.
 
@@ -61,6 +60,7 @@ If the patient raises the same concern again within 7 days, Medbot adds what the
 
 The **Shared by patient** tab on a patient's chart shows what that patient shared with your clinic:
 
+- **Reported conditions**: the conditions the patient recorded in their medical history and shared. See [Reported conditions](#reported-conditions).
 - **Forwarded concerns**, as in the inbox. With none: "No open concerns for this patient."
 - **Chats**, at the level the patient chose. Each chat shows its summary and topics. Select **Open the chat** to read it, if the patient shared chats and not only summaries. Each message says whether the patient, a caregiver (with their relationship) or **Medbot (AI)** wrote it. When the patient shares no chats with your clinic, the section reads only **Not shared**. A chat the patient kept out does not appear.
 - **Scanned results**, each marked **Scanned result**. Values the patient added or changed are marked **Added by patient** or **Changed by patient, read as** the value first read from the paper. Select **View the original** or **Open the PDF** to see the document.
@@ -69,9 +69,26 @@ You only ever see messages from the date the patient's current choice started. I
 
 A summary is written about thirty minutes after a shared chat goes quiet. "Not summarized yet. Open the chat to read it." means none is ready. "No summary could be written for this chat." means the summary failed its checks and none is kept.
 
+### Reported conditions
+
+Each condition shows the patient's own words, who reported it (marked **Patient-reported**, or "Added by &lt;clinician&gt;, &lt;clinic&gt;, &lt;date&gt;"), and **On problem list** once it is on the clinic's [problem list](/cms/clinical-care/patient-records#the-problem-list).
+
+A doctor selects **Code / confirm** on a condition (**Code or confirm a reported condition**):
+
+1. Search **Search ICD-10-CM** ("A diagnosis or a code, for example diabetes or E11") and choose a code, or keep the patient's **Wording**.
+2. Set the **Status** (**Active** or **Resolved**), the course, **Started** and, for a resolved condition, **Got better**.
+3. Tick **Confirm this diagnosis**. "A confirmed diagnosis is also added to this clinic's problem list, where it stays if the patient stops sharing."
+4. Select **Save**.
+
+A doctor can also **Add a condition** the patient did not report. It is put on the problem list too, marked not confirmed until a doctor confirms it. **Remove a reported condition** asks **Why remove it** (for example a duplicate, with **Duplicate of**) and an optional note.
+
+A confirmed condition keeps its ICD-10-CM code on the problem list. The patient sees once, in their own medical history, that a clinician has reviewed it; the clinic's copy is not sent back to them a second time. See [Medical History](/patient/medical-history).
+
+Nurses read reported conditions; only doctors code, confirm, add or remove them.
+
 ## Approved answers
 
-**Approved answers** (`/explanation-library/answers`) are answers Ask Medbot quotes word for word when a patient asks the same question, labelled with who approved them and when.
+**Approved answers** are a tab of the organisation's **AI content library** (`/content-library?tab=answers`; the old `/explanation-library/answers` address opens it). They are answers Ask Medbot quotes word for word when a patient asks the same question, labelled with who approved them and when.
 
 > A question that adds pregnancy, a child, kidney or liver disease, another medicine or a dose never gets this answer.
 
@@ -94,18 +111,11 @@ Your clinic's answers are served to your patients first. Medbot's clinical team 
 
 ## Answer reports
 
-**Answer reports** (`/answer-reports`) lists answers your patients reported. Each shows the reason (**Wrong**, **Could be unsafe**, **Confusing** or **Something else**), how the answer was made (**From the record**, **Approved answer**, **General information** or **Fixed text**), the question and answer, **What the patient added**, and any **Checks that replaced a model answer**. Select **Open the chart** to go to the patient.
+**Answer reports** lists answers your patients reported. It is a section of the **Queue** tab of the organisation's **Patients** page, for doctors and nurses (`/patients/queue#answer-reports`; the old `/answer-reports` address opens it). Each shows the reason (**Wrong**, **Could be unsafe**, **Confusing** or **Something else**), how the answer was made (**From the record**, **Approved answer**, **General information** or **Fixed text**), the question and answer, **What the patient added**, and any **Checks that replaced a model answer**. Select **Open the chart** to go to the patient.
 
 Write **What was done** and select **Close report**.
 
 A caregiver's report goes only to Medbot's clinical team, never to a clinic. When the patient deletes the chat, the report's question, answer and notes are deleted too. Only the reason and how the answer was made are kept.
-
-## Patient questions and common questions
-
-These pages count only patients who turned on **Count my chats in** your clinic's **report**.
-
-- **Patient questions** (`/reports/patient-questions`): "What patients who opted in asked Ask Medbot about, by month." Counts by topic, in bands, from a fixed list of topics. A cell under 10 patients, or one almost every patient shares, reads **Hidden**. A month with too few patients is hidden whole. It shows the last closed months, because chats are deleted after 180 days, and a month does not change once first shown.
-- **Common questions** (`/reports/patient-questions/common-questions`): "Questions asked by at least 10 patients who opted in, rewritten so they point at nobody." Select **Write an answer**, write the **Answer, as patients will read it**, and **Save draft**. It then goes to [Approved answers](#approved-answers) for a doctor or nurse to approve. Or select **Dismiss**.
 
 ## Related
 

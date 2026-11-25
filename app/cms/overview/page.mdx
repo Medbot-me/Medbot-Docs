@@ -14,26 +14,28 @@ Medbot web, the other staff-facing app, is for your personal work only: your own
 | --- | --- |
 | **Organization** | A clinic's account: its staff, locations, and patients. Roles are set per organization, so someone can be a Clinic Admin at one clinic and a Nurse at another. See [Roles & Permissions](/cms/roles-and-permissions). |
 | **Role** | Clinic Admin, Receptionist, Doctor, Nurse, Patient service associate, or Allied health professional. A person can hold more than one role in the same organization, such as Doctor and Clinic Admin, and works as one at a time, switching from the [sidebar switcher](/cms/administration/switching#the-sidebar-switcher) or the **Working as** menu. See [Switching role](/cms/administration/switching#switching-role). |
-| **Care service** | A programme of care the organisation runs, such as a chronic disease or IVF service, with its own referrals, workstation and care team. You work in one service at a time, chosen after sign-in and changed from the sidebar switcher. See [Services](/cms/services) and [Choosing a service](/cms/administration/switching#choosing-a-service). |
-| **Home page** | Where the CMS tab opens for your role in the current service: the **Workstation** for doctors, nurses, Patient service associates and Allied health professionals, **Referrals** for Clinic Admins and receptionists. With no service, the queue. See [Where the CMS opens](/cms/administration/switching#where-the-cms-opens). |
-| **Home and CMS tabs** | The two halves of the sidebar: **Home** for the Home assistant, tasks and the organisation's administration, **CMS** for the care service and clinic operations. See [Home and CMS](#home-and-cms). |
-| **Clinic location** | A physical site. Sessions, rooms, staff assignments, and the queue are all scoped to one location at a time. |
-| **Clinic session** | A location's working day: which staff and rooms are active. Opened from [Session Setup](/cms/front-desk/session-setup). |
-| **Reception queue** | The live, location-scoped list of today's booked and checked-in patients. See [Reception Queue](/cms/front-desk/reception-queue). |
+| **Care service** | A programme of care the organisation runs, such as a general practice clinic, a chronic disease or an IVF service, with its own patients, queue, staff and settings. You work in one service at a time, or at **Org Level** across all of them, chosen after sign-in and changed from the sidebar switcher. See [Services](/cms/services) and [Choosing a service](/cms/administration/switching#choosing-a-service). |
+| **Home page** | Where the CMS opens: in a service, its **Patients** page (the service's [Workstation](/cms/services/workstation)), for every role. At Org Level, the organisation's **Patients** page (`/patients/queue`). See [Where the CMS opens](/cms/administration/switching#where-the-cms-opens). |
+| **Home and AI tabs** | The two halves of the sidebar: **Home** for patients, care services and clinic operations, **AI** for the assistant. See [Home and AI](#home-and-ai). |
+| **Clinic location** | A physical site with its rooms. Each care service has its own clinic location, and one service is the organisation's **default clinic**. Locations and rooms are kept in [Organisation Settings](/cms/administration/settings). |
+| **Clinic session** | A service's working day: who is on duty, their rooms, and whether check-in is open. Each service that runs a queue has one session a day, on its Workstation's **Session** tab. See [The Session tab](/cms/services/workstation#the-session-tab). |
+| **Reception queue** | The live list of today's booked and checked-in patients of a service, run by the front desk on its Workstation's **Queue** tab. See [Reception Queue](/cms/front-desk/reception-queue). |
 | **Roster** | The staff schedule: draft shifts, recurring patterns, and a publish step that starts each day's session and attendance tracking. See [Rostering](/cms/front-desk/rostering). |
-| **Home assistant** | A chat on the Home tab that answers questions about the organisation's patients, queue, appointments and unpaid invoices from the records, and, where your deployment turns it on, helps a doctor or nurse run a clinic day. See [Home Assistant](/cms/home-assistant). |
+| **Home assistant** | A chat on the AI tab that answers questions about the organisation's patients, queue, appointments and unpaid invoices from the records, and, where your deployment turns it on, helps a doctor or nurse run a clinic day. See [Home Assistant](/cms/home-assistant). |
 | **Patient portal** | A separate, patient-facing app where a clinic's patients sign in to manage their care. Staff connect a patient to it from the chart. See [Patient Portal](/cms/clinical-care/patient-portal). |
 
-## Home and CMS
+## Home and AI
 
-Under the switcher at the top of the sidebar are two tabs, **Home** and **CMS**. Each page belongs to one of them, and the tab follows the page you are on, so a link from one tab into a page of the other switches the tab too.
+Under the switcher at the top of the sidebar are two tabs, **Home** and **AI**. Each page belongs to one of them, and the tab follows the page you are on, so a link from one tab into a page of the other switches the tab too.
 
 | Tab | What it holds |
 | --- | --- |
-| **Home** | The [Home assistant](/cms/home-assistant), your care-service [Tasks](/cms/clinical-care/tasks#the-task-inbox), and the organisation's administration: **Patients**, **Staff**, **Agents**, **Settings** and **AI policy**. Selecting **Home** opens a new chat (`/home`). |
-| **CMS** | The pages of the care service you are working in, then clinic operations: results, notes and messages, the queue, sessions, appointments, the roster, pharmacy, billing and claims. A patient's chart opens here. Selecting **CMS** opens your home page in the current service, or the queue when no service is set. |
+| **Home** | Where the CMS opens (`/`). The care service you are working in, the open patient, and the organisation's pages: patients, staff, the roster, results, agents, the AI content library, templates, pharmacy, billing and claims. A patient's chart and every care service page open here. |
+| **AI** | The [Home assistant](/cms/home-assistant) (`/ai`), your saved chats, and for Medbot platform administrators the **Platform admin** panel. Selecting **AI** opens a new chat. |
 
-The switcher above the tabs changes the organisation, the care service and the role you work as. See [Choosing & Switching](/cms/administration/switching).
+The switcher above the tabs changes the organisation, the care service (or **Org Level**, for no service) and the role you work as. See [Choosing & Switching](/cms/administration/switching).
+
+Older addresses still work: `/home` and `/home/chats/<id>` open the assistant at `/ai`, `/queue` and `/workstation` open the organisation's **Patients** page, `/patients` opens its **Patient list**, and `/appointments` opens its **Appointments** tab.
 
 ## The sidebar
 
@@ -44,36 +46,34 @@ The sidebar shows the current tab's pages, and only those your role may open. Gr
 | Item or group | What is in it |
 | --- | --- |
 | **Search** | The search palette. See [Search](#search). |
-| **New chat** | A new conversation with the [Home assistant](/cms/home-assistant). |
-| **Tasks** | The care services' [Task Inbox](/cms/clinical-care/tasks#the-task-inbox) (`/services/inbox`), with the number of tasks waiting for you. |
-| **Chats** | Your recent conversations with the Home assistant, under **Today**, **Previous 7 days** and **Older**. |
-| **Organisation** | **Patients** (the [patient list](/cms/clinical-care/patient-records)), **Staff** ([Staff](/cms/administration/staff), Clinic Admins), **Agents** (the organisation's agents, `/agents`), **Settings** ([Organisation Settings](/cms/administration/settings), Clinic Admins), **AI policy** ([AI Policy](/cms/administration/ai-policy), Clinic Admins), and for doctors, nurses and receptionists **Downtime recovery** ([Recovery After an Outage](/cms/downtime/recovery)). |
-
-Medbot platform administrators also see a **Platform** group. See [Platform Administration](/cms/administration/platform-administration).
-
-### CMS tab
-
-| Item or group | What is in it |
-| --- | --- |
-| **Search** | The search palette. See [Search](#search). |
 | The open patient | When a chart is open, a card with the patient's name and their chart sections. See [The open patient](#the-open-patient). |
-| The care service | When you are working inside a service: its name, with its pages for your role, starting with **Home**, and a link back to the general clinic. See [Services](/cms/services). |
-| The clinic's name | In the general clinic, the organisation's name heads the list, with a settings button for Clinic Admins, and **All services** sits directly under it. The services themselves are not listed in the sidebar: reach one from **All services**, from the switcher at the top, or from search. |
-| The clinic's pages | One group: **Inbox**, **Tasks** (staff pings), **Queue**, **Session** (with **Rooms**, **Displays** and **Create session**), **Appointments**, **Roster** (with **Attendance**), **Results**, **Identity changes**, **Content library** and **Templates**. |
-| **Ask Medbot** | A group that opens and closes: **Approved answers**, **Answer reports**, **Patient concerns** and **Patient questions**. |
+| **Back to Org Level** | Inside a service: leaves the service for the organisation's own pages ("Workstation, billing, claims, pharmacy"). |
+| The care service | Inside a service: its name (with **Draft** while it is a draft, and a settings button for Clinic Admins), then its pages for your role: **Patients** (its [Workstation](/cms/services/workstation)), **Overview**, **Staff**, **Roster**, **Agents** and **AI content library**. See [The service's pages](/cms/services/getting-started#4-the-service-page). |
+| The organisation | At Org Level: the organisation's name, with a settings button for Clinic Admins that opens [Organisation Settings](/cms/administration/settings) over the page, then **Patients** (today's queue across every service, the **Patient list** and **Appointments**), **Staff** (Clinic Admins), **Roster**, **Results**, **Agents** (the organisation's agent library, `/agents`), **AI content library** and **Templates**. |
 | **Pharmacy** | **Formulary**, **Inventory**, **Stock**, **Order sets**, **Medication safety**, **Dosing rules** and **Dose overrides**. |
 | **Billing** | **Billing**, **Catalog**, **Billable services** and **Devices & substances**. |
 | **Claims** | **Claims**, **Messages** and **Reports**: Singapore organisations with a SmartCMS module only. |
 
-Downtime devices, downtime recovery and system status are not in the sidebar for Clinic Admins. Open them from the **Downtime and status** section of [Organisation Settings](/cms/administration/settings#downtime-and-status).
+Notifications, including care-service tasks and staff pings, are under the bell at the top of the page.
+
+Downtime devices, downtime recovery, system status and the [AI policy](/cms/administration/ai-policy) are not in the sidebar. Clinic Admins open them from [Organisation Settings](/cms/administration/settings#downtime-and-status).
+
+### AI tab
+
+| Item or group | What is in it |
+| --- | --- |
+| **Search** | The search palette. |
+| **New chat** | A new conversation with the [Home assistant](/cms/home-assistant). |
+| **Chats** | Your recent conversations with the assistant, under **Today**, **Previous 7 days** and **Older**. |
+| **Platform** | **Platform admin**, for Medbot platform administrators only. See [Platform Administration](/cms/administration/platform-administration). |
 
 ### The open patient
 
-Opening a patient's chart adds a card under **Search** with the patient's initials and name and the chart sections your role may open: **Overview**, **Medications**, **Accounts**, **Encounters**, **AI encounters**, **Notes**, **Results**, **Photos**, **Vaccinations**, **Documents**, **Messages**, **Shared by patient** and **Audit log**. **Medications** is for clinical staff: see [Prescribing & Medications](/cms/clinical-care/prescribing). **AI encounters** lists every AI encounter the organisation started for the patient: see [AI encounters across services](/cms/clinical-care/encounters#ai-encounters-across-services). Select the name to go to **Overview**, or the cross (**Close patient**) to leave the chart. See [The patient chart](/cms/clinical-care/patient-records#the-patient-chart).
+Opening a patient adds a card under **Search** with the patient's initials and name and the chart sections your role may open: **Overview**, **Problem list**, **Medications**, **Accounts**, **Encounters**, **AI encounters**, **Notes**, **Results**, **Photos**, **Vaccinations**, **Documents**, **Messages**, **Shared by patient** and **Audit log**. **Overview** is the [patient workspace](/cms/clinical-care/patient-records#the-patient-workspace). **Problem list** and **Medications** are for clinical staff: see [The problem list](/cms/clinical-care/patient-records#the-problem-list) and [Prescribing & Medications](/cms/clinical-care/prescribing). **AI encounters** lists every AI encounter the organisation started for the patient: see [AI encounters across services](/cms/clinical-care/encounters#ai-encounters-across-services). Select the name to go to **Overview**, or the cross (**Close patient**) to leave the chart. See [The patient chart](/cms/clinical-care/patient-records#the-patient-chart).
 
 ### Going back, and pages that are not found
 
-**Back**, and the chart's **Back to …** link, return you to the page you opened the chart from: the queue, the patient list, appointments, tasks, search, a result and so on. Medbot remembers this for each browser tab, and for each patient you have open. With nothing remembered, for example after opening a pasted link in a new tab, Back goes to the chart's usual parent page. The patient's name on a queue row and on an appointment row opens their chart.
+**Back**, and the chart's **Back to …** link, return you to the page you opened the chart from: the queue, the patient list, appointments, notifications, search, a result and so on. Medbot remembers this for each browser tab, and for each patient you have open. With nothing remembered, for example after opening a pasted link in a new tab, Back goes to the chart's usual parent page. The patient's name on a queue row and on an appointment row opens their chart.
 
 A page that does not exist shows **This page could not be found**, with **Go to Home**. A patient who is not found shows **Patient not found** ("This patient may have been removed, or the link may be wrong.") with **Go to Patients**. A part of a chart that is missing, that you may not open, or that was linked wrongly says "This part of the chart may have moved, you may not have access to it, or the link may be wrong." with **Go to the patient's overview**.
 
@@ -94,23 +94,23 @@ With nothing typed, the box offers your **Recent searches**. They are kept only 
 
 ## On a phone
 
-On a phone the sidebar becomes a sheet, the **Home** and **CMS** tabs sit under the header, and a bar along the bottom of the screen holds:
+On a phone the sidebar becomes a sheet, the **Home** and **AI** tabs sit under the header, and a bar along the bottom of the screen holds:
 
 | Tab | Bar |
 | --- | --- |
-| **Home** | **New chat**, **Tasks**, **Search**, **More** |
-| **CMS** | **Queue**, **Appointments**, **Tasks**, **Search**, **More** |
+| **Home** | **Patients**, **Search**, **More** |
+| **AI** | **New chat**, **Search**, **More** |
 
 The bar shows only the pages your role may open. **More** opens a sheet with the tab's other pages, grouped as in the sidebar, plus **Open Medbot web** and **Help and support**.
 
-The bar is hidden where a page needs the bottom of the screen: the notes workspace, a care service's consult editor and the kiosk. On a chart's **Overview**, **Encounters** and **Results**, the section's own buttons take its place.
+The bar is hidden where a page needs the bottom of the screen: the notes workspace, a care service's consult editor and the kiosk. On a chart's **Encounters** and **Results**, the section's own buttons take its place. Pages are laid out for phone widths: headers stack their buttons under the title, and wide tables keep their key columns and move the rest into the row.
 
 ## What you can do with Medbot CMS
 
 1. **Run the front desk** by registering patients, booking appointments, operating the [reception queue](/cms/front-desk/reception-queue), and replying to portal messages.
 2. **Roster and track staff** by planning shifts, publishing the week, and letting [attendance](/cms/front-desk/attendance) derive from what staff actually do in the app.
 3. **Deliver clinical care** by starting encounters, recording vitals and vaccinations, placing orders, reviewing results, and issuing [documents and certificates](/cms/clinical-care/documents-and-certificates).
-4. **Run care services** with referrals, a workstation and a care team: [Services](/cms/services).
+4. **Run care services**, each with its own patients, queue, session, staff and referrals: [Services](/cms/services).
 5. **Run the back office** by managing [staff accounts](/cms/administration/staff), maintaining the [formulary](/cms/pharmacy/formulary) and [inventory](/cms/pharmacy/inventory-and-stock), and handling [billing](/cms/billing).
 6. **Ask about the day** in the [Home assistant](/cms/home-assistant): who is waiting, who is booked, a patient's latest results, what is unpaid.
 7. **Give patients self-service access** by inviting them to the [patient portal](/cms/clinical-care/patient-portal).
@@ -120,5 +120,5 @@ The bar is hidden where a page needs the bottom of the screen: the notes workspa
 - New to the app? Start with [Getting Started](/cms/getting-started).
 - Understand who can do what in [Roles & Permissions](/cms/roles-and-permissions).
 - Follow your role's working day in the Guides by Role: [Receptionist](/cms/guides/receptionist), [Nurse](/cms/guides/nurse), [Doctor](/cms/guides/doctor), or [Admin](/cms/guides/admin).
-- Running a clinic day: [Session Setup](/cms/front-desk/session-setup), [Reception Queue](/cms/front-desk/reception-queue), and [Appointments](/cms/front-desk/appointments).
+- Running a clinic day: [The Workstation](/cms/services/workstation), [Reception Queue](/cms/front-desk/reception-queue), and [Appointments](/cms/front-desk/appointments).
 - Look up a term in the [Glossary](/cms/reference/glossary), or fix a problem in [Troubleshooting](/cms/reference/troubleshooting).

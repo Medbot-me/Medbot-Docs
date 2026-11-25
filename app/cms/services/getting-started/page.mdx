@@ -6,7 +6,7 @@ In Medbot CMS, open the context switcher at the top of the sidebar and select **
 
 Click **New Service**. Administrators can also select **New service** in the context switcher. Under **How to start this service**, choose:
 
-- **Blank service**: start empty and set up your care team, protocols, agents and settings step by step.
+- **Blank service**: start empty and set up your staff, protocols, agents and settings step by step.
 - **A template** (Chronic disease management, Joint replacement and recovery, Medical retina clinic, or IVF and assisted reproduction): comes fully configured for one clinical area. In a demo organisation it is a demo service, which can be filled with made-up patients; elsewhere it is an ordinary service with a configured starting point. See [Demo Services](/cms/services/demo-services).
 
 For a blank service, fill in:
@@ -15,13 +15,15 @@ For a blank service, fill in:
 - **Specialty**: optional, e.g. "Colorectal Surgery".
 - **Mode of care**: **Outpatient**, **Inpatient**, **Remote** or **Hybrid**. This sets what the Workstation shows. See [Modes of Care](/cms/services/modes-of-care).
 - **Setting**: optional, e.g. "SOC, inpatient, primary care".
+- **Clinic location**: where this service sees patients: its queue, rooms, displays and bookings. Choose one of the organisation's locations, or **New location…** and give it a **Location name**. Only a Clinic Admin can add a location here.
+- **Run a queue**: for an **Outpatient** or **Hybrid** service, on by default. Checked-in patients get a queue number and are called from the Workstation. Optionally set a **Queue prefix** for its numbers; Medbot suggests one from the service's name. The prefix must be unique at the location.
 
 Click **Create Service**. Any member of the organisation can create one. The service is created as a `draft`, with:
 
 - four default agents: **Onboarding**, **Health education**, **Financial counselling** and **Patient agent** (see [Service Agents](/cms/services/agents#default-agents))
 - default AI encounter settings
 
-and you go straight into the setup wizard. A service created from a template skips the wizard and opens its page as a draft, with a **Finish setting up** card listing what is left; see [Demo Services](/cms/services/demo-services#finish-setting-up).
+and you go straight into the setup wizard. The organisation's first service becomes its **default clinic** (see [Organisation Settings](/cms/administration/settings)). A service created from a template skips the wizard and opens its page as a draft, with a **Finish setting up** card listing what is left; see [Demo Services](/cms/services/demo-services#finish-setting-up).
 
 ### Your organisation's first service
 
@@ -35,11 +37,11 @@ The service starts as a draft. A real organisation then goes on to its team step
 
 ## 2. Walk through the setup wizard
 
-The wizard has four steps, shown as a list you can jump between freely, each with a one-line status such as "Just you so far" or "Using defaults". Medbot has filled in a working default for each, so you can publish at any point and come back; select **Finish later** to leave. Only the service's owner (or a Medbot platform administrator) can open the wizard. A service made from a template is further along: its wizard says the template filled in how the service runs and its patient agent, and what is left is the care team and the patients.
+The wizard has four steps, shown as a list you can jump between freely, each with a one-line status such as "Just you so far" or "Using defaults". Medbot has filled in a working default for each, so you can publish at any point and come back; select **Finish later** to leave. Only the service's owner (or a Medbot platform administrator) can open the wizard. A service made from a template is further along: its wizard says the template filled in how the service runs and its patient agent, and what is left is the staff and the patients.
 
-### Step 1: Care team
+### Step 1: Staff
 
-Add people from your organisation to the service. Each joins with the role or roles they already hold in the organisation; there is no role to choose. See [Care Team](/cms/services/care-team).
+Add people from your organisation to the service. Each joins with the role or roles they already hold in the organisation; there is no role to choose. See [Staff](/cms/services/care-team).
 
 ### Step 2: How the service runs
 
@@ -60,7 +62,7 @@ Agent instructions, models and subagents are on the service's **Agents** page; s
 
 ### Step 4: Patients and publish
 
-**What patients will get** summarises the care team, protocols, patient agent, education, pre-visit history and the notice sent when a patient is added, so you can check it before anyone is enrolled. **Add patients** adds them to the cohort from the organisation's patient directory; each gets the enrolment notice as soon as they are added. This step is deliberately **last**, so everything else is in place before real patients start receiving notices. See [Patients & Cohort](/cms/services/patients). In a demo organisation, the step also has the **Demo patients** panel.
+**What patients will get** summarises the staff, protocols, patient agent, education, pre-visit history and the notice sent when a patient is added, so you can check it before anyone is enrolled. **Add patients** adds them to the cohort from the organisation's patient directory; each gets the enrolment notice as soon as they are added. This step is deliberately **last**, so everything else is in place before real patients start receiving notices. See [Patients & Cohort](/cms/services/patients). In a demo organisation, the step also has the **Demo patients** panel.
 
 Select **Publish service** to publish (from `draft` to `published`), or **Keep as draft**. Every step remains editable afterwards. Earlier links to the seven-step wizard's steps open the step that now holds their content.
 
@@ -70,48 +72,51 @@ If you left the wizard, the **Services** list shows a **Continue setup** link ne
 
 ## 4. The service page
 
-Every page of a service is on the **CMS** tab. A service's page has no tab bar: the pages of the service you chose in the context switcher sit at the top of the CMS sidebar, under the service's name (with **Draft** beside it while it is a draft). Opening a service's page from a link shows that service's pages instead. The page also shows the service's status and **Mode of care** as badges.
+Every page of a service is on the **Home** tab. The pages of the service you chose in the context switcher sit at the top of the sidebar, under the service's name (with **Draft** beside it while it is a draft), below **Back to Org Level**. Opening a service's page from a link shows that service's pages instead.
 
-The sidebar lists only the pages your role uses. **Home** comes first and opens your role's home page (see [Role home pages](#role-home-pages)), which is not listed again under its own name.
+The sidebar lists only the pages your role uses. **Patients** comes first: it is every role's home page in the service (see [Role home pages](#role-home-pages)).
 
 | Sidebar item | Shown to | What it holds |
 | --- | --- | --- |
-| **Home** | Everyone | The **Workstation** for doctors and nurses, **Referrals** for admins and receptionists. |
-| **Overview** | Admins | Open **Tasks** for this service, the **Patient agent** summary card, then the **Demo patients** panel (demo services only). **SOP and instructions** and **Referral intake criteria** sit side by side, closed until you select **Open** (**Hide** closes them again), each with a one-line summary such as "3 sections · 412 words." or "Nothing written yet." When the patient agent is on, the summary card shows **Turns (7 days)**, **Pending drafts**, **Open escalations**, **Upcoming appointments** and **Waiting on a patient's choice**. |
-| **Patients** | Everyone | The cohort roster. See [Patients & Cohort](/cms/services/patients). |
-| **Referrals** | Everyone | Incoming referrals for the service. See [Referrals](/cms/services/referrals). |
-| **Workstation** | Admins, doctors and nurses | The day's working board and consult screen. See [Workstation](/cms/services/workstation). |
-| **Board** | Admins, doctors and nurses | The cohort roster on a page of its own (**Cohort board**). |
-| **Agents** | Admins | **Agent runs**, **Daily agent schedules**, the **Default agents** cards and the **Agents** table. |
-| **Content library** | Admins, doctors and nurses | The service's documents and pictures. See [Service Context & Content](/cms/services/context-and-content#content-library). |
-| **Care team** | Everyone | **Care team**, **Coverage / rota** and **Availability**. |
-| **Patient notifications** | Admins | Which events alert patients, and over which channel, on a page of its own. See [Patient Notifications](/cms/services/patient-notifications). |
-| **Settings** | Admins | **Concerns from patients not booked here**, **Patient agent**, **Message approval policy** and **Configuration history** (see [Patient Agent](/cms/services/patient-agent#message-approval-policy)), **AI encounters**, **Red-flag rules**, **Channel**, **On patient added**, a **Demo patients** panel (non-demo services, owner or admin) and the **Danger zone** (owner). |
+| **Setup** | The owner, while the service is a draft | The setup wizard. |
+| **Patients** | Everyone on the service | The service's [Workstation](/cms/services/workstation): today's queue (or census, or caseload), the **Patient list**, **Appointments**, **Referrals**, the **Session** and the other views for its mode of care. |
+| **Overview** | Clinic Admins | A **Notifications** card for this service, the **Patient agent** summary card, then the **Demo patients** panel (demo services only). **SOP and instructions** and **Referral intake criteria** sit side by side, closed until you select **Open** (**Hide** closes them again), each with a one-line summary such as "3 sections · 412 words." or "Nothing written yet." When the patient agent is on, the summary card shows **Turns (7 days)**, **Pending drafts**, **Open escalations**, **Upcoming appointments** and **Waiting on a patient's choice**. |
+| **Staff** | Clinic Admins, Doctors, Nurses and Receptionists | The service's staff, **Coverage / rota** and **Availability**. See [Staff](/cms/services/care-team). |
+| **Roster** | Clinic Admins, Doctors, Nurses and Receptionists | The service's roster. See [Rostering](/cms/front-desk/rostering). |
+| **Agents** | Clinic Admins | **Agent runs**, **Daily agent schedules**, the **Default agents** cards and the **Agents** table. See [Service Agents](/cms/services/agents). |
+| **AI content library** | Clinic Admins, Doctors and Nurses | The service's documents and pictures, with **Add content**. See [Service Context & Content](/cms/services/context-and-content#content-library). |
 
-The owner can change the name, specialty, mode of care and setting with **Edit service details**.
+### Service settings
+
+Clinic Admins open the service's settings from the gear beside its name in the sidebar. They open as a dialog over the page you are on (`/services/<service>/settings`). The sections are:
+
+| Section | What it holds |
+| --- | --- |
+| **General** | The name, specialty, setting and mode of care (the owner edits them), and the service's **Clinic location**. |
+| **Queue and sessions** | For an Outpatient or Hybrid service: **Run a queue**, the queue prefix, when the session starts and closes, how new patients are shared among doctors, and **Self check-in**. See [Queue and sessions settings](/cms/services/workstation#queue-and-sessions-settings). |
+| **Patient agent** | The assistant enrolled patients talk to in the patient portal, and which of its messages wait for staff. See [Patient Agent](/cms/services/patient-agent). |
+| **Education and counselling** | What the patient agent teaches and explains, from the AI content library. See [AI Encounters](/cms/services/encounters#settings). |
+| **Pre-visit history** | The questions patients answer before a booked visit, and the warning signs checked on every answer. See [Pre-visit History & Escalations](/cms/services/pre-visit-and-escalations). |
+| **Patient notifications** | Which events tell patients, over which channel, and the **Channel** for invitations and appointment reminders. See [Patient Notifications](/cms/services/patient-notifications). |
+| **When a patient is added** | The note from staff in the enrolment notice, and the onboarding agent. See [Patients & Cohort](/cms/services/patients#what-happens-when-a-patient-is-added). |
+| **What this service looks after** | The conditions and symptoms that decide which red-flag alerts and Ask Medbot referrals reach the service. |
+| **Configuration history** | Every change to the service's agent prompts, approval policy, red-flag rules and content, with who made it and when. |
+| **Delete service** | The owner only. See [Deleting a service](#5-deleting-a-service). |
 
 An administrator previewing the CMS as another role sees that role's sidebar. See [Choosing & Switching](/cms/administration/switching).
 
 ### Role home pages
 
-Each role has one home page in a service, whatever template the service was made from:
+Every role's home page in a service is its **Patients** page, the [Workstation](/cms/services/workstation) (`/services/<service>/workstation`), whatever template the service was made from. Choosing a service in the context switcher, or on **Where are you working today?** after signing in, opens it. What it opens on depends on the service:
 
-| Role | Home page |
-| --- | --- |
-| Doctor, Nurse | **Workstation** (`/services/<id>/workstation`) |
-| Admin, Receptionist | **Referrals** (`/services/<id>/referrals`) |
+- a service that runs a queue opens on its **Queue** tab, which the front desk, clinicians and allied health each see in their own way (see [The Queue tab](/cms/services/workstation#the-queue-tab))
+- an Outpatient service with its queue off opens on its **Patient list**
+- an Inpatient service opens on its **Census**, and a Remote service on its **Caseload**
 
-Choosing a service in the context switcher, or on **Where are you working today?** after signing in, opens this page. The top of the page carries a "&lt;Role&gt; home" badge and quick access to what the role starts from:
-
-- **Add patient**: "Register a patient, then add them to &lt;service&gt;" (admins and receptionists).
-- **Add staff**: "Invite someone to the organisation" (admins).
-- **Book appointment**: "Find a slot and book a patient in" (receptionists).
-- **Service patients** and **Referrals** (doctors and nurses).
-
-A quick action appears only when both your role and the role you are previewing may open its page.
+Older addresses (`/services/<service>/queue`, `/services/<service>/appointments`, `/services/<service>/referrals` and the service's old Patients tab) open the matching Workstation tab.
 
 ## 5. Deleting a service
 
-The owner can delete a service from **Settings → Danger zone**. This permanently removes it with its care team, agents, cohort membership, encounter notes and message history. It cannot be undone. Patients stay in the organisation's patient directory.
+The owner can delete a service from the **Delete service** section of its settings. This permanently removes it with its staff, roles, agents, cohort membership, encounter notes and message history. It cannot be undone. Patients stay in the organisation's patient directory.
 
 A service that still has demo patients cannot be deleted until you remove them first. See [Demo Services](/cms/services/demo-services#remove-or-reset-the-demo).
