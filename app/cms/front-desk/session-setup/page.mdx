@@ -2,60 +2,65 @@ import { ImageZoom } from "nextra/components";
 
 # Session Setup
 
-Session setup is where the front desk prepares a clinic location for the day: who is working, which rooms are open, and, for a Clinic Admin, which public displays are live. Find it at **Session** (`/session`). A session is one clinic location's working day.
+Each care service that runs a queue has its own session for the day: when check-in opens, who is on duty, which room each clinician works in, and the screens that show the service's numbers. Find it on the **Session** tab of the service's **Workstation** (`/services/<service>/workstation/session`). A session is one service's working day at its clinic location.
+
+The organisation no longer has one session page for a whole location. `/session` opens the Session tab of the service the CMS is set to, or the organisation's **Patients** page when no service is set. Clinic locations and their rooms are set up in [Organisation Settings](/cms/administration/settings#clinic-locations).
 
 ## Who can do this
 
 | Task | Clinic Admin | Receptionist | Doctor | Nurse |
 | --- | --- | --- | --- | --- |
-| Open today's session | Yes | Yes | No | No |
-| Mark who is working today | Yes | Yes | No | No |
-| Add and assign rooms | Yes | Yes | No | No |
-| Add a clinic location | Yes | No | No | No |
-| Add, view, and revoke displays | Yes | No | No | No |
+| See the Session tab | Yes | Yes | Yes | Yes |
+| Start, close, or reopen today's session | Yes | Yes | No | No |
+| Put staff on or off duty, and choose who takes check-ins | Yes | Yes | No | No |
+| Set a clinician's room, and rooms' availability | Yes | Yes | Own room | Own room |
+| Add, change, or revoke displays | Yes | No | No | No |
 
-A doctor or nurse who opens the page sees a message that says which roles are allowed. In the sidebar, **Displays** appears under **Session** only for a Clinic Admin.
+A Patient service associate runs the session as a Receptionist does. An Allied health professional sees it without controls.
 
-## 1. Choose the location and open today's session
+## Starting today's session
 
-The page opens on your default location. Use **Clinic location** to switch. The header shows today's date and whether the session is **Open** or **Closed**.
+The **Today's session** card shows the service's session with **Not started**, **Open** or **Closed**, and what starting it does: "Starting opens check-in for &lt;service&gt; and turns on its displays. If no one starts it, the first check-in will." A service set not to start by itself says instead that check-in stays closed until the session is started.
 
-Opening the page for a location with no session for today opens one for you. You can also select **Create session** in the sidebar, or on the queue page, choose the location, add an optional **Label**, and select **Open session**. A message says "Session opened for today." If one is already open, it says "A session is already open here today." A location has at most one open session a day.
+Select **Start today's session**. Starting puts the staff rostered today for the service on duty (see [Rostering](/cms/front-desk/rostering)). Once open, the card says who opened it, or that it opened at the first check-in, and when it closes by itself, for example "Closes by itself at midnight."
 
-When a roster has been published for today, opening the session also marks the rostered doctors, nurses, and receptionists as working. See [Rostering](/cms/front-desk/rostering).
+**At a glance** counts the day so far: **Booked, not arrived**, **Waiting**, **With a clinician**, **Seen** and **Missed Queue**.
 
-A Clinic Admin can add a location with **Add location**: enter a **Name**, a **Code**, and optionally an **Address**, then save. A message says "Clinic location created". Codes are lower case, and a code already in use is refused.
+## Closing and reopening
 
-## 2. Mark who is working today
+Select **Close today's session** at the end of the day. **Close today's session** shows how many were seen and lists each patient still in the queue, with a choice for each: **Keep the visit open**, **Mark as left** or **Book for tomorrow**. A patient in the Missed Queue starts on **Mark as left**, everyone else on **Keep the visit open**. Select **Close session**, or **Keep session open**.
 
-Under **Who is working today**, tick each doctor, nurse, and receptionist on duty and select **Save working staff**. The line beside the button lists the active doctors, for example "2 active doctors: Marcus Lim, Priya Nair".
+A closed session says "Closed at &lt;time&gt;. Patients still in the queue keep their visits." **Reopen session** opens it again.
 
-<ImageZoom src="/images/cms/session-setup/01-working-today.png" alt="The Session setup page showing today's open session, and tick boxes for doctors, nurses, and reception staff, with one doctor marked as working" />
-_Marking who is working today_
+## Who is on duty
 
-Only the doctors ticked here take turns receiving patients when reception checks them in. If no doctor is ticked, a patient still gets a queue ticket, but no doctor is assigned. See [Reception Queue](/cms/front-desk/reception-queue). Only active staff appear in the lists. By default every staff member can work at every active location.
+The **Who is on duty** card (**On duty now** once the session is open) lists the service's staff for today: their **Name**, **Room**, what they are doing **Now** (for example "With DIA014", or **Off duty**), how many they have **Seen today**, an **On duty** switch, and, for a doctor, **Takes check-ins**.
 
-## 3. Assign rooms
+- "Changes apply straight away: the next check-in skips anyone off duty or not taking check-ins. Each clinician's room is where their Call sends patients."
+- Doctors who take check-ins share new patients in turn. The one the next check-in goes to is marked **Next check-in**. See [Checking a patient in](/cms/front-desk/reception-queue#checking-a-patient-in).
+- To add someone who is not rostered, choose them in **Someone not on the roster** and select **Add to today**.
+- With nobody rostered, the card says "No one is rostered for &lt;service&gt; today. Add the roster first, or add staff after starting."
 
-Under **Rooms**, add a room with a **Name** and a **Code**, for example "Consult 1" and "c1", then select **Add room**. A message says "Room created".
+Choose a clinician's **Room** from the location's rooms, or **No room**. If another service at the location uses the same room today, the room is flagged with "&lt;room&gt; is also used by &lt;service&gt; today". A doctor or nurse can change their own room.
 
-For each room you can:
+## Rooms
 
-- tick or untick **Available**, for a room that cannot be used today
-- choose the **Assigned staff**, a doctor or nurse who is marked as working today
-- add a note, for example "equipment down"
+The **Rooms** card lists the location's rooms. Untick **Available** for a room that cannot be used today, and add a note, for example "Doppler out for repair". Rooms are added in [Organisation Settings → Clinic locations](/cms/administration/settings#clinic-locations). With none, the card says "This location has no rooms yet. An administrator adds them in Organisation settings."
 
-Select **Save rooms** to save every change at once, or **Discard changes** to go back. A message says "Room assignment saved". Rooms cannot be changed once the session is closed. Rooms you set up here are the ones reception can call patients to. See [Reception Queue](/cms/front-desk/reception-queue).
+## Displays
 
-<ImageZoom src="/images/cms/session-setup/02-rooms.png" alt="The Rooms section with one room named Consult 1 assigned to a doctor, and the Add room fields below it" />
-_A room with its assigned doctor_
+The **Displays** card lists the screens at the location that show the service's numbers, each with its type (**Waiting room**, **Room door** with its room, or **Check-in QR code**) and whether it is online. A Clinic Admin adds and manages them here. See [Patient-Facing Displays](/cms/front-desk/display-boards).
 
-## 4. Manage displays (Clinic Admin only)
+## Self check-in
 
-The **Displays** section, below the rooms, lists the public boards for the location. Only a Clinic Admin sees it. See [Patient-Facing Displays](/cms/front-desk/display-boards).
+The **Self check-in** card shows the location's check-in code: "One code for the location. Patients scan the counter QR or enter the code, then choose &lt;service&gt; from the services open now." See [Checking in with the Medbot app](/cms/front-desk/clinic-card-check-in#checking-in-with-the-medbot-app).
+
+## Patient steps
+
+For a service whose visits carry steps, the tab ends with the service's **Patient steps**. See [Workstation](/cms/services/workstation).
 
 ## Related
 
 - [Reception Queue](/cms/front-desk/reception-queue): check patients in once the session is open.
 - [Rostering](/cms/front-desk/rostering): plan the week so sessions start with the right staff.
-- [Appointments](/cms/front-desk/appointments): the doctor list for booking follows the same location rule.
+- [Appointments](/cms/front-desk/appointments): the clinician list for booking follows the same location rule.

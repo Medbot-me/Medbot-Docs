@@ -2,7 +2,7 @@ import { ImageZoom } from "nextra/components";
 
 # Reception Queue
 
-The reception queue is today's list of booked and checked-in patients at one clinic location. Find it at **Queue** (`/queue`) in the **CMS** tab. Receptionists, Patient service associates and Clinic Admins run it. Doctors and nurses see a shorter view of their own work, and an Allied health professional sees the whole queue read-only. Each [service](/cms/services) keeps its own queue and numbers its own tickets. This page shows every service's queue at the location, and you can narrow it to one.
+The reception queue is today's list of booked and checked-in patients across the organisation. Find it at **Patients** (`/patients/queue`) in the **Home** tab, under the organisation's name: the **Queue** tab of the organisation's Patients page, beside **Patient list** and [Appointments](/cms/front-desk/appointments). The old addresses `/queue` and `/workstation` open it. Receptionists, Patient service associates and Clinic Admins run it. Doctors and nurses see a shorter view of their own work, and an Allied health professional sees the whole queue read-only. Each [service](/cms/services) keeps its own queue at its own clinic location and numbers its own tickets. This page shows every service's queue, and you can narrow it to one. A service's own queue is on its [Workstation](/cms/services/workstation).
 
 ## Who can do this
 
@@ -11,6 +11,7 @@ The reception queue is today's list of booked and checked-in patients at one cli
 | See today's queue | Yes | Yes | Own patients | Yes |
 | Check a patient in | Yes | Yes | No | No |
 | Add a walk-in to the queue | Yes | Yes | No | No |
+| Scan a clinic card and check the patient in | Yes | Yes | No | Yes |
 | Call a patient to a room | Yes | Yes | Own patients | Nurse-led visits they lead |
 | Move a called patient who did not come to the Missed Queue, requeue them, or return them | Yes | Yes | Own patients | Nurse-led visits they lead |
 | Record that a patient left before finishing | Yes | Yes | No | No |
@@ -25,13 +26,13 @@ The reception queue is today's list of booked and checked-in patients at one cli
 | Complete the visit and send the outcome | No | No | Yes | Nurse-led visits they lead |
 | See the CHAS badge and select **Verify now** (Singapore) | Yes | Yes | Yes | Yes |
 
-A Patient service associate does the front desk's work on this page, as a Receptionist does, except that they cannot open [Session Setup](/cms/front-desk/session-setup). An Allied health professional sees every patient at the location, with sex, age, status and the Missed Queue, but has no check-in, calling, routing or payment controls. They can add remarks.
+A Patient service associate does the front desk's work on this page, as a Receptionist does, and runs a service's [session](/cms/front-desk/session-setup) too. An Allied health professional sees every patient at the location, with sex, age, status and the Missed Queue, but has no check-in, calling, routing or payment controls. They can add remarks.
 
 Doctors see only the patients assigned to them. Nurses see every patient at the location and open the vitals form from their own view. Doctors and nurses do not see the **Bill** column or any payments. The **Start AI encounter** and **Complete visit** buttons appear on a doctor's row only after a consultation has been started for that appointment. A nurse sees them only on a [nurse-led visit](#nurse-led-visits) that has been started.
 
 ## Reading the queue
 
-The page header shows the location, today's session with an **Open** or **Closed** badge, how many doctors are on duty, and sometimes a **Self check-in code**. When the location has more than one service with a queue, a service list beside the location list narrows the board to one service. Patients no longer need that code: they register from the portal with one button. If nobody has opened a session yet, it says **No session yet today**. Select **Create session** to open one, or see [Session Setup](/cms/front-desk/session-setup).
+When the organisation has more than one service with a queue, the **Service** list above the table narrows the board to one service, or shows **All services**. Each service's session, staff on duty, rooms and check-in code are on its Workstation's **Session** tab: see [Session Setup](/cms/front-desk/session-setup). Checking in a service's first patient of the day opens its session if nobody has.
 
 The table lists patients in this order:
 
@@ -42,11 +43,12 @@ The table lists patients in this order:
 
 Each row shows the **Ticket**, the time, the **Patient**, **Sex**, **Age**, the NRIC or passport, the reason, **Remarks**, the **Clinician** (the doctor, or the nurse who leads a nurse-led visit), the workflow controls, the **Bill**, and the status. Select the patient's name to open their chart. Every role sees the **Ticket** column.
 
-- **Ticket.** A ticket carries its service's prefix and a number, for example `DIA014`. Each service numbers its own patients within the day's session, so two services can each have a patient number 14. When more than one service shows, the service's name sits under the number.
+- **Ticket.** A ticket carries its service's prefix and a number, for example `DIA014`. Each service numbers its own patients within the day's session, so two services can each have a patient number 14. When more than one service shows, the service's name sits under the number. A note under the ticket says how the patient checked in when it was not at the desk: **Card scan**, **Counter QR** or **Self check-in**. Once called, it reads, for example, "Called → Consultation Room 2".
+- **Patient.** A long name takes up to two lines; the whole name shows when you point at it.
 - **Sex and Age.** Age is the patient's age on the day of the visit: whole years from 18, and years and months below that, for example `81y` or `2y5m`. Below the widest screens these two columns are hidden and appear on one line under the patient's name, for example `M · 45y`.
 - **Remarks.** See [Remarks](#remarks).
 
-On a narrow screen some columns, including **Bill**, are hidden. Turn columns on or off from the **View** menu. On the reception board **NRIC / Passport** and **Reason** start hidden, and your **View** choices are remembered in this browser.
+The board takes the width of the window, so every column and the row's actions fit from a 1280-pixel window up. The **Clinician** list wraps a long name instead of cutting it off. On a narrow screen some columns, including **Bill**, are hidden. Turn columns on or off from the **View** menu. On the reception board **NRIC / Passport** and **Reason** start hidden, and your **View** choices are remembered in this browser.
 
 | Status | What it means |
 | --- | --- |
@@ -62,16 +64,20 @@ Four filters narrow the list: the location, the doctor (**All doctors**, **Unass
 
 ## Checking a patient in
 
-1. Choose the location at the top of the page.
-2. Find the patient's row and select **Check in**.
+1. Optionally narrow the board to one service with the **Service** list.
+2. Find the patient's row and select **Check in**, or scan their [clinic card](#scanning-a-clinic-card).
 
 A message such as "Kamala Perera checked in" appears, with the ticket number and the doctor, for example "Ticket DIA001 · Marcus Lim". The row now shows the ticket and the status **Waiting**, and a **Give the patient their number** window opens (see [Giving the patient their number](#giving-the-patient-their-number)).
 
-Check-in records the arrival time and gives the patient a queue ticket from the location's open session, in the queue of the patient's service. The service is the one the appointment was booked into, or the patient's only clinic service. If check-in cannot tell, a window asks **Which service is &lt;patient&gt; here for?** Choose one. Check-in then assigns the next doctor of that service marked active in [Session Setup](/cms/front-desk/session-setup). Doctors take turns in the order they were marked active, and each service rotates among its own doctors. If no doctor is marked active, the patient still gets a ticket but no doctor. Checking in a patient who already has a ticket keeps the same ticket and does not move the rotation on. A visit booked to a nurse is [nurse-led](#nurse-led-visits): it keeps that nurse, no doctor is assigned, and the rotation does not move on.
+Check-in records the arrival time and gives the patient a queue ticket from the location's open session, in the queue of the patient's service. The service is the one the appointment was booked into, or the patient's only clinic service. If check-in cannot tell, a window asks **Which service is &lt;patient&gt; here for?** Choose one. Check-in then assigns the next doctor of that service who is on duty and takes check-ins on its [Session tab](/cms/front-desk/session-setup#who-is-on-duty). Doctors take turns, and each service rotates among its own doctors. If no doctor takes check-ins, the patient still gets a ticket but no doctor. Checking in a patient who already has a ticket keeps the same ticket and does not move the rotation on. A visit booked to a nurse is [nurse-led](#nurse-led-visits): it keeps that nurse, no doctor is assigned, and the rotation does not move on.
 
 Check-in has no time window. A patient booked for later in the day can be checked in as soon as they arrive.
 
-Patients can also register themselves from the [patient portal](/patient/visits). On the day of the appointment they choose how they expect to pay under **Paying with** and select **Register and get my queue number**. They do not share their location or type a code. A self check-in works like a staff check-in, and the row appears in the queue with a ticket.
+Patients can also check themselves in: with one tap or the counter QR code in the Medbot app, at the [self check-in kiosk](/cms/services/kiosk), or from the [patient portal](/patient/visits), where on the day of the appointment they choose how they expect to pay under **Paying with** and select **Register and get my queue number**. A self check-in works like a staff check-in, and the row appears in the queue with a ticket. See [Clinic Card & Check-in](/cms/front-desk/clinic-card-check-in).
+
+### Scanning a clinic card
+
+Scan the patient's [clinic card](/cms/front-desk/clinic-card-check-in) from their Medbot app with a USB barcode scanner, anywhere on the page: **Add to queue** opens with the card's result. It shows the patient's photo and asks **Is this the person in front of you?** Select **Yes, check in** to check them in for today's appointment, or **Add to queue** if they have none. See [Scanning at the desk](/cms/front-desk/clinic-card-check-in#scanning-at-the-desk).
 
 ### Giving the patient their number
 
@@ -86,7 +92,7 @@ The window reminds you that patients can also see their number in the patient po
 
 Select **Add to queue** above the table for a patient who arrived without an appointment.
 
-1. Search for the patient by name or NRIC. A patient already in today's queue is greyed out. If they are not registered yet, choose **Register new patient**.
+1. Scan their clinic card into the field at the top ("Scan the card, or type its code"), or search for the patient by name or NRIC. A patient already in today's queue is greyed out. If they are not registered yet, choose **Register new patient**.
 2. Choose the **Visit type**: **Walk-in** (joins the end of the queue) or **Urgent** (seen next, flagged **Urgent**, for patients who cannot wait). **Send to** starts on **Nurse** for a walk-in and **Doctor** for an urgent case.
 3. When the board shows every service, choose the **Service** the patient is here for. The walk-in joins that service's queue.
 4. Optionally enter a **Reason for visit**, choose the **Clinician** (**Next in rotation** or a doctor) and **Send to** a stage: **Nurse**, **Doctor**, **Investigations** or **Dispensary**.
@@ -164,7 +170,7 @@ Use the doctor menu on the row to change the doctor. A doctor chosen by hand sho
 
 ## Routing a patient
 
-The **Route…** menu on a checked-in row moves the patient through the clinic: **Nurse**, **Doctor**, **Investigations**, **Dispensary**, **Completed**. Use it to show where the patient is.
+The **Workflow** list on a checked-in row shows where the patient is, or **Not yet routed**, and moves them through the clinic: **Nurse**, **Doctor**, **Investigations**, **Dispensary**, **Completed**.
 
 Marking a visit **Completed** closes it, so only a Clinic Admin sees **Completed** in the menu. A receptionist routes the patient between the other stages, and the doctor, or the lead nurse of a nurse-led visit, closes the visit with **Complete visit**. The nurse's own view shows a patient routed to the nurse as **Vitals now**, and a patient routed on to the doctor as **Ready for doctor**.
 
@@ -267,7 +273,7 @@ A visit booked to a nurse is nurse-led. See [Appointments](/cms/front-desk/appoi
 - **The lead nurse starts it** with **Start nurse visit**, and closes it with **Complete visit**, as a doctor would.
 - **Whether a visit is nurse-led follows who took part.** If a doctor sees the patient, for example by opening the visit's encounter, signing an order or writing a note, the visit becomes doctor-led, and the nurse's row no longer offers **Complete visit**.
 - **Who can close it.** The lead nurse or any doctor closes a nurse-led visit, and a Clinic Admin can close any visit. Other nurses cannot. On another nurse's visit, **Complete visit** is greyed out with "Led by &lt;name&gt;. Only the lead nurse or a doctor can close this visit." A nurse who tries to close a doctor-led visit is refused with "This visit is led by a doctor. A nurse closes only a visit that she leads; ask the doctor or an administrator to close it."
-- **Marking it Completed on the board** follows the same rule. Only a Clinic Admin sees **Completed** in the **Route…** menu, and a receptionist cannot mark a visit completed.
+- **Marking it Completed on the board** follows the same rule. Only a Clinic Admin sees **Completed** in the **Workflow** list, and a receptionist cannot mark a visit completed.
 
 In Singapore organisations, a scheme claim for a nurse-led visit is held for an administrator to review. See [Claims Workflow](/cms/smartcms/claims).
 

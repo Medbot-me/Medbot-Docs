@@ -1,6 +1,6 @@
 # Organisation Settings
 
-Settings for one organisation live at `/organisations/[id]/settings`. For the organisation you are signed in to, open **Organisation → Settings** in the **Home** tab sidebar. `/organisation-settings` also goes there, and old organisation settings links from Medbot web redirect to it. For any other organisation you administer, use the **Settings** link beside it on the [organisations screen](/cms#the-organisations-screen).
+Settings for one organisation live at `/organisations/[id]/settings`. For the organisation you are signed in to, select the gear beside the organisation's name in the **Home** tab sidebar (at Org Level), or the **Organisation settings** command in [Search](/cms/overview#commands). `/organisation-settings` also goes there, and old organisation settings links from Medbot web redirect to it. For any other organisation you administer, use the **Settings** link beside it on the [organisations screen](/cms#the-organisations-screen).
 
 Only an **administrator of that organisation** can open it. A non-admin member sees "Only an administrator of &lt;name&gt; can manage its settings"; a non-member gets a plain "not found". The app does not distinguish an organisation you cannot see from one that does not exist.
 
@@ -22,18 +22,38 @@ Your own name and appearance are not here: they are under **Settings** in your a
 
 A Singapore organisation with SmartCMS modules cannot change its country until the modules are cleared: "Clear the SmartCMS modules under Integrations before changing the country."
 
-## Patient branding
+## Public profile
 
-How your patients see your organisation on the patient portal and in the notices they receive. Leave a field empty to use the default; "Powered by Medbot" stays under your name on the portal.
+"How patients see your organisation on the patient portal, in Find care and in the notices they receive. Leave a field empty to use the default." "Powered by Medbot" stays under your name on the portal. This section, at `#branding`, was called **Patient branding**.
 
+- **Logo**: PNG, JPEG or WebP, up to 512 KB and 4096 pixels a side; a square image works best. Choose a file to upload it ("Logo saved"), or **Remove logo**.
 - **Organisation display name**: shown on the portal and in notice text. Default: the organisation's name.
 - **Notification sender name**: opens every notice, before the service name, for example "Orchard Clinic · IVF". It does not change the phone number or WhatsApp sender.
-- **Save branding** saves both.
-- **Logo**: PNG, JPEG or WebP, up to 512 KB and 4096 pixels a side; a square image works best. Choose a file to upload it ("Logo saved"), or **Remove logo**.
+- **Save branding** saves both names.
+
+Your page in Find care:
+
+- **Photo**: PNG, JPEG or WebP, up to 2 MB, shown at the top of your Find care page. A wide image works best. **Remove photo** takes it down.
+- **About**: for the public. Say who you see and what you offer, and leave out patient details.
+- **Website**: optional, shown on your Find care page.
+- **Contact details**: the address and phone of your main clinic location. **Edit in Clinic locations** changes them.
+
+Under **Patient portal**:
+
+- **Show in Find care**: "Patients can find this profile in Find care", with when it was listed. Turned off: "Hidden from Find care. Your current patients keep their access." An organisation that leaves Find care is hidden from patients who are not linked to it, in Find care, nearby clinics and connect requests.
+- **Take bookings from Find care**: "Patients can book an appointment from your listing, as they do in Appointments. Self-referrals with a history from Ask Medbot still arrive in Referrals."
+- **Appointment requests go to**: "Who confirms or proposes a time for a request from a new patient. Admins and receptionists can always act on them." Choose **Receptionist**, **Nurse** or **Doctor**. See [Requests from Find care](/cms/front-desk/appointments#requests-from-find-care).
+- **Services patients can book from Find care**: tick each published service patients may book there. A service left unticked shows on your Find care page as needing a doctor's referral. Each tick saves on its own.
+
+Select **Save public profile**. Every switch starts at what organisations did before Find care listings, so nothing changes until you change it.
 
 ## Patient appointments
 
 What patients may do with their appointments on the patient portal. **Online cancellation closes** sets how many hours before the start a patient can still cancel on their own (0 to 168, a week; empty uses the default of 24). After that, the portal asks them to call the clinic. Changes of time are always requests your staff confirm. Select **Save**.
+
+## Patient check-in
+
+"How patients check themselves in when they arrive. They can always scan the code at the counter or type the six-digit code, and your staff can always scan their clinic card." **One-tap check-in** sets when a patient with an appointment today can check in with one tap in the Medbot app: **Inside the clinic only (default)**, **Always** or **Never**. Select **Save**. See [When patients may check in with one tap](/cms/front-desk/clinic-card-check-in#when-patients-may-check-in-with-one-tap).
 
 ## Integrations
 
@@ -53,6 +73,15 @@ Under **Clinic locations**, one location is shown at a time. If the organisation
 Each location has its **HE code**, **Hospital Code**, **Contact email** and **Contact phone**, saved together with its own **Save**. Replacing an HE code or Hospital Code that is already set asks for confirmation first, because it switches SmartCMS services at that location off. The dialog is titled, for example, "Change the HE code of Main Clinic?" and its button is **Change the code**. Setting a code for the first time needs no confirmation.
 
 See [Singapore Registration](/cms/smartcms/registration) for the formats and what to do after changing a code.
+
+## Clinic locations
+
+"Where your organisation sees patients: the default clinic, then each location with its services and rooms. A service's location is set in its own settings." Shown when the page is for the organisation you are signed in to.
+
+- **Default clinic**: choose one of the organisation's services. "Its location is the default location, used wherever nothing names one, such as bookings and check-ins made outside a service." The first service becomes the default clinic.
+- Each location lists its **Services** (with the **Default clinic** badge on the default one) and its **Rooms**. With no service there yet: "No service runs here yet. Choose this location in a service's settings."
+- Under **Rooms**, enter a **Name** (for example "Consult 1") and a **Code** (for example "c1"), and select **Add room** ("Room added"). **Deactivate** takes a room out of use, and **Reactivate** brings it back. Which rooms are available today, and who works in each, is set on a service's [Session tab](/cms/front-desk/session-setup#rooms).
+- **Add location** adds "another branch or outlet": a **Name**, a **Code** (made from the name if you leave it) and an optional **Address**. Select **Create location** ("Clinic location created"). Staff without location assignments can work at every location.
 
 ## Join code
 
@@ -103,7 +132,7 @@ On a plan with monthly credits, that page also shows the **Monthly allowance**: 
 | **Downtime recovery** | Reviewing and filing what was recorded while the clinic was offline (`/downtime-recovery`). See [Recovery After an Outage](/cms/downtime/recovery). |
 | **System status** | The health of the services the organisation depends on (`/status`). See [System Status](/cms/downtime/system-status). |
 
-These pages are no longer in the sidebar for Clinic Admins. When downtime entries are past their verification target, the **Settings** item in the sidebar shows the count. Doctors, nurses and receptionists, who cannot open Settings, have **Organisation → Downtime recovery** in the Home tab instead.
+These pages are not in the sidebar. When downtime entries are past their verification target, the settings gear beside the organisation's name shows a dot. Doctors, nurses and receptionists, who cannot open Settings, use the **Open downtime recovery** command in [Search](/cms/overview#commands) instead.
 
 ## Seed data
 

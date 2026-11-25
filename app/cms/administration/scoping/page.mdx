@@ -52,7 +52,7 @@ When you are not a member of an organisation, or your membership is inactive, re
 
 Two more choices are kept alongside the organisation: the care service you are working in, and, for a Clinic Admin, a role being previewed. Neither grants anything.
 
-- **The service** (`medbot_service`) decides which service's pages the CMS tab shows and where the CMS opens. It counts only when it names the current organisation and a service you may open; otherwise it is ignored. Every service page still checks your access.
+- **The service** (`medbot_service`) decides which service's pages the Home tab shows and where the CMS opens. It counts only when it names the current organisation and a service you may open; otherwise it is ignored. Every service page still checks your access.
 - **A previewed role** (`medbot_preview_role`) changes the sidebar, the phone's bar, search and the home page to another role's. It lasts the browser session and counts only for an administrator's own membership. Every page, every API check and every record of who did what still use the administrator's real role, so a preview never lets an administrator sign notes as a doctor.
 
 Signing out clears both. See [Choosing & Switching](/cms/administration/switching).

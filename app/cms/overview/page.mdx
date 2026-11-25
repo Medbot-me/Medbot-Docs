@@ -79,18 +79,42 @@ A page that does not exist shows **This page could not be found**, with **Go to 
 
 ## Search
 
-**Search** at the top of the sidebar opens one search box over the organisation. Press ⌘K or Ctrl+K to open it from anywhere, or select **Search** on a phone's bottom bar. Type at least two characters.
+**Search** at the top of the sidebar opens one box for finding anything and doing anything. Press ⌘K (Ctrl+K off a Mac) to open it from anywhere, or select **Search** on a phone's bottom bar. Type at least two characters. The same box has three more modes, each with its own shortcut: **Find patient**, **Commands** and the open chart's sections.
+
+### Searching
 
 What it finds depends on the tab you opened it from, and each source only for the roles whose page it comes from:
 
 | Tab | Filter chips | What is searched |
 | --- | --- | --- |
-| **Home** | **All**, **Patients**, **Services**, **Staff**, **Pages** | Patients, the Home tab's pages, and staff (Clinic Admins only) |
-| **CMS** | **All**, **Patients**, **Appointments**, **Results**, **Formulary**, **Pages** | Patients, care services, the CMS tab's pages, appointments, results, and formulary medicines (Clinic Admins, Doctors and Nurses) |
+| **Home** | **All**, **Patients**, **Appointments**, **Results**, **Formulary**, **Pages** | Patients, care services, the Home tab's pages, appointments, results, formulary medicines (Clinic Admins, Doctors and Nurses), and your commands |
+| **AI** | **All**, **Patients**, **Services**, **Staff**, **Pages** | Patients, the AI tab's pages, and staff (Clinic Admins only) |
 
-A chip narrows the list to one kind. Patients are found the same way as on the [patient list](/cms/clinical-care/patient-records#finding-a-patient). Appointments come from the most recent 200, and results from the last 180 days of the results inbox, so older ones are not found here.
+A chip narrows the list to one kind. Patients are found by name, NRIC or FIN, phone number or date of birth, as on the [patient list](/cms/clinical-care/patient-records#finding-a-patient). A patient row shows their sex and date of birth, never their identification number, even when you searched by it. Appointments come from the most recent 200, and results from the last 180 days of the results inbox, so older ones are not found here.
 
-With nothing typed, the box offers your **Recent searches**. They are kept only until the browser tab closes, because a search can be a patient's name.
+Under **All**, up to five of your own commands that match follow the patients, records and pages, with **All commands matching "&lt;text&gt;"** to see the rest. A command is listed when each word you typed starts a word of its name or keywords, so a surname does not bring up commands. **Search patients only for &lt;text&gt;** hands what you typed to Find patient.
+
+With nothing typed, the box offers **Find patient** first, then your **Recent patients** and **Recent searches**. They are kept only until the browser tab closes, only for you and this organisation, because a search can be a patient's name.
+
+### Find patient
+
+**Find patient** (⌘P, Ctrl+P) lists the patients **In today's queue** and those **Recently opened** first, then searches as you type a name, phone number or date of birth. Choose a patient to open their chart.
+
+### Commands
+
+Type `>` in the box, or press ⌘⇧P (Ctrl+Shift+P), to see **Commands**: the tasks your role can do, such as **Check in patient**, **Take payment**, **Call patient**, **Start consult**, **Prescribe medication**, **Issue MC**, **Record vitals**, **Book appointment**, **Scan clinic card**, **Register new patient** or **Open patient list**. A command your role cannot use is never listed.
+
+- **Tab** switches between **Suggested** (common for your role, and the ones you use most in this organisation), **A–Z** and **By category**.
+- A command that needs a patient or a visit asks for it next: **Choose patient**, or **Choose visit** from your own queue. With a patient's chart open, an **Acting on** strip names them, and the palette suggests starting or resuming that patient's consult.
+- Commands do what the page's own buttons do. **Take payment** opens the payment dialog on the board you work from, **Issue MC** opens the certificate dialog, and **Record vitals** with no encounter open asks to start one.
+
+### The open chart
+
+Type `@` to jump to a section of the open chart: medications, allergies, results, documents and the rest. Type `?` for the palette's help: the prefixes and the keys (↑ ↓ to move, ↵ to run, **Tab** to switch views, ⌫ to go back a step).
+
+### Keyboard shortcuts
+
+Change the shortcuts for search, Commands and Find patient under **Preferences → Keyboard shortcuts** in your account menu (`/preferences/shortcuts`), or the **Keyboard shortcuts** command. They are "Saved to your account, so they follow you to any computer you sign in on." Select a shortcut's change button and press the new keys. A shortcut that would break typing, or one the browser keeps, is refused; ⌘P replaces the browser's Print shortcut, and the page says so. **Reset to defaults** restores ⌘K, ⌘⇧P and ⌘P.
 
 ## On a phone
 

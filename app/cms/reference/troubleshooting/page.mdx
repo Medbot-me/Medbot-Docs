@@ -24,13 +24,15 @@ What you can do depends on your role in the current organization. For example, o
 
 ## A page I used is missing from the sidebar
 
-The sidebar shows one tab at a time. Patients, staff, agents, settings and the AI policy are in the **Home** tab under **Organisation**. Results, the queue, appointments, billing, claims and pharmacy are in the **CMS** tab. Or use **Search** (⌘K or Ctrl+K) and type the page's name. See [Staff App Overview](/cms/overview#the-sidebar).
+The sidebar shows one tab at a time. The clinic's work, including the queue, appointments, patients, staff, the roster, results, billing, claims and pharmacy, is in the **Home** tab; the assistant is in the **AI** tab. Inside a care service the **Home** tab shows that service's pages: select **Back to Org Level** for the organisation's. The queue and appointments are tabs of **Patients** (`/patients/queue`, `/patients/appointments`), and a service's session is a tab of its Workstation. Tasks, pings and the clinic inbox are in [Notifications](/cms/notifications), under the bell. Or use **Search** (⌘K or Ctrl+K) and type the page's name, or a command. See [Staff App Overview](/cms/overview#the-sidebar) and [Getting Started](/cms/getting-started#3-learn-the-sidebar).
 
-Downtime devices, downtime recovery and system status are no longer in the sidebar for Clinic Admins: open them from the **Downtime and status** section of [Organisation Settings](/cms/administration/settings#downtime-and-status). Billable services moved from `/services` to **Billing → Billable services** (`/billable-services`); `/services` is now the organisation's [care services](/cms/services).
+Old addresses keep working: `/queue` and `/workstation` open the organisation's Patients queue, `/appointments` its Appointments tab, `/session` the Session tab of your service, `/tasks` and `/services/inbox` Notifications, and `/roster/attendance` the roster's Attendance tab.
+
+Downtime devices, downtime recovery and system status are not in the sidebar: Clinic Admins open them from the **Downtime and status** section of [Organisation Settings](/cms/administration/settings#downtime-and-status). Billable services moved from `/services` to **Billing → Billable services** (`/billable-services`); `/services` is now the organisation's [care services](/cms/services).
 
 ## An organisation link from Medbot web opens Medbot CMS
 
-Organisation features moved from Medbot web to Medbot CMS: services, the Task Inbox, organisation patients and members, settings and the AI policy. Old links redirect to the matching CMS page. Medbot web is now for your personal work.
+Organisation features moved from Medbot web to Medbot CMS: services, service tasks (now in [Notifications](/cms/notifications)), organisation patients and members, settings and the AI policy. Old links redirect to the matching CMS page. Medbot web is now for your personal work.
 
 ## The Home assistant says it cannot look something up
 
@@ -40,17 +42,17 @@ What the [Home assistant](/cms/home-assistant) can read follows your role. For e
 
 The Home assistant always runs on the organisation's default model, which a Clinic Admin sets in the [AI policy](/cms/administration/ai-policy).
 
-## The reception queue is empty or says "No session yet today"
+## The reception queue is empty
 
-Nobody has opened a session for the location yet. Select **Create session**, or open one from [Session Setup](/cms/front-desk/session-setup). Also confirm you have chosen the right location at the top of the [Reception Queue](/cms/front-desk/reception-queue).
+Check the **Service** list at the top of the [Reception Queue](/cms/front-desk/reception-queue): it may be narrowed to one service. A service's session opens when someone starts it on the service's [Session tab](/cms/front-desk/session-setup), or at its first check-in. A service set not to start by itself keeps check-in closed until the session is started.
 
 ## A patient checked in but has no doctor
 
-Check-in assigns the next doctor marked active in the session. If no doctor is marked active, the patient still gets a ticket but no doctor. Mark a doctor active in [Session Setup](/cms/front-desk/session-setup), then assign the doctor on the row.
+Check-in assigns the next doctor of the service who is on duty and takes check-ins. If none does, the patient still gets a ticket but no doctor. Put a doctor on duty with **Takes check-ins** on the service's [Session tab](/cms/front-desk/session-setup#who-is-on-duty), then assign the doctor on the row.
 
 ## I cannot call a patient to a room
 
-Only rooms set up for today's session are listed. Add or assign rooms in [Session Setup](/cms/front-desk/session-setup) first.
+Only the location's available rooms are listed. A Clinic Admin adds rooms under [Clinic locations](/cms/administration/settings#clinic-locations) in Organisation Settings; mark a room available, or give a clinician their room, on the service's [Session tab](/cms/front-desk/session-setup#rooms).
 
 ## I cannot publish the roster
 

@@ -1,0 +1,100 @@
+# Clinic Card & Check-in
+
+Every patient with the Medbot app has a **clinic card**: a full-screen card in the app with their photo, name and a QR code that refreshes itself. Staff scan it to find the patient's record and check them in. Patients can also check themselves in, with one tap in the app, by scanning the QR code at the counter, or at the [self check-in kiosk](/cms/services/kiosk). This page covers the staff side. What the patient sees is in [Visits & Appointments](/patient/visits).
+
+## Who can do this
+
+| Task | Clinic Admin | Receptionist | Doctor | Nurse |
+| --- | --- | --- | --- | --- |
+| Scan a clinic card | Yes | Yes | No | Yes |
+| Check a patient in from a scan | Yes | Yes | No | Yes |
+| Add a scanned patient to the queue as a walk-in | Yes | Yes | No | No |
+| Check a patient's identity document and mark them verified | Yes | Yes | No | Yes |
+| Choose when patients may check in with one tap | Yes | No | No | No |
+
+A Patient service associate scans cards and works the desk as a Receptionist does.
+
+## How a card code works
+
+Each QR code on a card works **once**, and only for a few minutes. A scan finds only your clinic's own record of the person: a card never shows staff anything about someone the clinic has no record of. A card shown on a parent's or caregiver's phone works for the person it belongs to, and the result says who showed it ("Shown by &lt;name&gt;", with whether they can manage or only view).
+
+## Scanning at the desk
+
+On the [Patients page](/cms/front-desk/reception-queue), **Add to queue** opens with a field at the top: "Scan the card, or type its code". A USB barcode scanner works there, and anywhere on the page: scanning while the board is showing opens **Add to queue** with that card. You can also type or paste the code (it starts `MBC1:`), or select the camera button to read it with the computer's camera. The field shows **Scanner ready** or **Camera on**.
+
+A nurse's queue has the same scan field at the top, **Scan or type a card code**, with **Scan with the camera**. Its result opens in a panel beside the queue, without **Add to queue**.
+
+## Scanning with a phone or tablet
+
+**Scan patient card** (`/scan`) uses the device's camera. It is also one of the shortcuts of the installed CMS app, and the command palette's **Scan clinic card**. Point the camera at the patient's screen (turn the torch on if it is dark), or select **Type the card code**. **Scanned this session** lists your scans on this page, each marked **Checked in**, **Identity verified**, **Needs identity check**, **Not registered here** or **No record here**.
+
+If the camera cannot open, the page says why: the browser was refused the camera, the device has none, or the page is not on a secure (https) connection. Type the code instead, or use a USB scanner.
+
+## What a scan shows
+
+A scan shows the person's photo first, large, and asks **Is this the person in front of you?** With no photo on file it says "No photo: confirm their name and date of birth with them." Beside the photo are their name, date of birth and **Open chart**, and **Photo checked** or **Photo not yet checked**.
+
+- **Yes, check in**: checks them in for their appointment today and shows the queue number: "&lt;name&gt; is checked in". If they have more than one appointment today, choose which. A photo the patient added, and staff have not compared yet, is marked checked at the same time.
+- **Not them**: refuses the card. "Do not check this person in with this card. Ask for their identity document, or find their record by name." A photo the patient added is removed from their card.
+- **Already checked in**: shown instead when the patient is already in today's queue, with their ticket. Nothing needs confirming.
+- **No appointment today**: "Add them to the queue as a walk-in." Select **Add to queue**. (On a nurse's queue: "Ask the front desk to add them to the queue as a walk-in.")
+
+Select **Scan next** to clear the result for the next patient.
+
+The queue's **Ticket** column notes how a patient checked in: **Card scan**, **Counter QR**, or **Self check-in** (one tap in the app, the typed code, the patient portal, or the kiosk). A staff check-in has no note.
+
+### Checking an identity document
+
+A patient whose identity has not been checked yet shows "Not yet verified. Check their NRIC, FIN card or passport once before checking them in." Select **Check identity document**. **Verify &lt;name&gt;** shows the name, date of birth and the last characters of the ID number on the chart:
+
+1. Under **Document sighted**, tick **The ID number matches the chart** and **Face on the document matches the person**.
+2. Under **Patient photo**, confirm the patient's own photo with **Matches the person**, or **Remove, does not match**. With no photo, you can **Take a photo now (optional)**.
+3. Select **Mark verified**.
+
+The check is done once. Patients who change their name or date of birth in the app are unverified again until a linked clinic checks them, here or with **Verify identity** on the chart.
+
+### When a scan fails
+
+| Result | What it means |
+| --- | --- |
+| **Code already used** | "Each code works once." It says when and by whom it was scanned. If this is the patient, ask them to refresh their card. |
+| **Code expired** | Ask the patient to open their card in the Medbot app again. |
+| **Card no longer valid** | The phone that showed it was signed out, or the person showing it can no longer present this patient. Ask them to sign in again, or find the patient by name. |
+| **Not a Medbot card** | "This QR code isn't a patient card. It may be a payment or website code." |
+| **Not registered here** | "This person has a Medbot account but no record at this clinic. Their details stay private until they choose to share them." |
+
+Each result offers **Scan again** and **Find patient instead**.
+
+### A card holder with no record here
+
+For **Not registered here**, select **Ask them to share details**. Their Medbot app asks them whether to share their details with your clinic: "Request sent to their Medbot app." The result waits for their answer. Scanning the same card again before they answer sends nothing new.
+
+When they agree, the result says "They shared their details and agreed to be registered here. Check their identity document, add its number, then register them." The registration form opens with what they shared. The new record is linked to their app; if that link fails, the message is "Registered, but their app is not connected". A nurse sees only "They shared their details. Ask a receptionist or an administrator to register them."
+
+## Checking in with the Medbot app
+
+Patients with an appointment today can check themselves in from the Medbot app:
+
+- **One tap**, when the clinic allows it (see below).
+- **The counter QR code**: a QR code on the waiting room board, a counter tablet or the kiosk. The patient scans it with their phone camera and taps **Check in** in the app. The code changes every minute, so it only works at the clinic. See [Patient-Facing Displays](/cms/front-desk/display-boards).
+- **The six-digit code** shown under the QR code, for a phone without a camera.
+
+The check-in is the same as a staff check-in: the patient gets their ticket and appears in the queue. A patient with no appointment today is told to go to the kiosk or the front desk as a walk-in.
+
+### When patients may check in with one tap
+
+A Clinic Admin chooses this under **Patient check-in → One-tap check-in** in [Organisation Settings](/cms/administration/settings#patient-check-in):
+
+| Option | What patients can do |
+| --- | --- |
+| **Inside the clinic only (default)** | One tap only when the phone's location is inside the clinic. Otherwise the patient scans the code at the counter. A clinic location with no address coordinates allows one tap, since there is no fence to check. |
+| **Always** | One tap from anywhere, with no proof that the patient has arrived. "Patients could check in before they arrive, and be called while still on their way." |
+| **Never** | Patients always scan the code at the counter or type the six-digit code. |
+
+Whatever the setting, patients can always scan the counter code or type the six-digit code, and staff can always scan their card.
+
+## Related
+
+- [Reception Queue](/cms/front-desk/reception-queue): checking patients in and adding walk-ins.
+- [Kiosk Self-Service](/cms/services/kiosk): the self check-in kiosk, which shows the counter QR code and reads clinic cards.
+- [Organisation Settings](/cms/administration/settings#patient-check-in): the one-tap setting.
