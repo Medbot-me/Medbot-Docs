@@ -1,31 +1,26 @@
-# Care Team
+# Staff
 
-**Care team**, under the service's name in the CMS sidebar, brings together its members, coverage, and availability.
+**Staff**, under the service's name in the sidebar (`/services/<service>/staff`), brings together the people who work in the service, their coverage and their availability. It sits above **Roster**. Staff-facing pages used to call this the service's **care team**; some settings and dialogs still say care team.
 
 ## Roles come from the organisation
 
-A service has no roles of its own. Each care team member acts under **the role or roles they hold in the organisation**:
+A service has no roles of its own. Each staff member acts under **the role or roles they hold in the organisation**: Admin, Doctor, Nurse, Receptionist, Patient service associate or Allied health professional.
 
-| Role | Label |
-| --- | --- |
-| `admin` | Admin |
-| `doctor` | Doctor |
-| `nurse` | Nurse |
-| `receptionist` | Receptionist |
-
-A member can hold more than one organisation role. The care team table's **Role** column shows one badge for each. If someone's organisation roles change, their roles on every service change with them. The same four roles appear wherever a service asks for a role: coverage, the patient agent's escalation role, and the appointment role filter. Roles are managed in the organisation, not the service; see [Members & Roles](/cms/administration/members-and-roles).
+A member can hold more than one organisation role. The staff table's **Role** column shows one badge for each. If someone's organisation roles change, their roles on every service change with them. The same roles appear wherever a service asks for a role: coverage, the patient agent's escalation role, and the appointment role filter. Roles are managed in the organisation, not the service; see [Members & Roles](/cms/administration/members-and-roles).
 
 ## Members
 
-Click **Add care team member**:
+Click **Add staff**. The dialog says "Tick everyone to add. Each joins with the role they hold at the organisation."
 
-1. Pick an **Organisation member**. Only people who are already members of the service's organisation can be added. The dialog shows the role they will join with ("Joins this care team as &lt;Role&gt;") and where it comes from.
-2. Optionally add **Additional information on user preferences**, such as how they like to be contacted or what they handle. AI turns it into that member's **agent context**, which service agents are given when they work with or for this person.
-3. Click **Add &lt;name&gt; to care team**.
+1. Tick one or more organisation members. Only people who are already members of the service's organisation can be added, and people already on the service are marked as such.
+2. With exactly one person ticked, you can add **Additional information on &lt;name&gt;'s preferences**, such as their specialty or current focus on this service. AI turns it into that member's **agent context**, which service agents are given when they work with or for this person.
+3. Click **Add &lt;name&gt; to staff** (or **Add &lt;N&gt; to staff**).
 
-The members table lists **Name**, **Email**, **Role**, **Agent context** (which can be edited) and **Actions**. To take someone off the service, click **Remove** on their row and confirm in **Remove from care team?**.
+Someone who was invited to the organisation but has not signed up yet can be ticked too: **Keep a place for &lt;name&gt;** keeps their place on the service, shown as **Invited**, until they join.
 
-Staff are not invited to a service by email: add them to the organisation first, then to the care team.
+The table lists **Name**, **Email**, **Role**, **Agent context** (which can be edited) and **Actions**. To take someone off the service, click **Remove** on their row and confirm in **Remove from staff?**.
+
+Staff are not invited to a service by email: add them to the organisation first, then to the service.
 
 ## Coverage / rota
 
@@ -35,12 +30,12 @@ Add an entry from the **Coverage / rota** card: **Organisation member**, **Role*
 
 ## Availability
 
-The **Availability** card defines each care team member's **recurring weekly booking windows**. Staff booking, the patient agent and patients booking in the patient portal all read these to work out open slots. See [Appointments](/cms/services/appointments).
+The **Availability** card defines each staff member's **recurring weekly booking windows**. Staff booking, the patient agent and patients booking in the patient portal all read these to work out open slots. See [Appointments](/cms/services/appointments).
 
 Times are in **clinic time**: your organisation's timezone, or Singapore time if none is set.
 
 1. Click **Add availability**.
-2. Pick a **Care team member**.
+2. Pick a **Staff member**.
 3. Pick a **Day of week**, and set **Start (clinic time)** and **End (clinic time)**.
 4. Set the **Slot length (minutes)**, between 5 and 480, e.g. 30.
 5. Click **Add**.

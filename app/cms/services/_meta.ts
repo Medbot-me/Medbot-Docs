@@ -3,7 +3,7 @@ export default {
   "getting-started": "Creating a Service",
   "demo-services": "Demo Services",
   "modes-of-care": "Modes of Care",
-  "care-team": "Care Team",
+  "care-team": "Staff",
   referrals: "Referrals",
   patients: "Patients & Cohort",
   "context-and-content": "Service Context & Content",

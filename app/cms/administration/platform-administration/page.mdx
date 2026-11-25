@@ -6,7 +6,7 @@ The platform admin panel is where Medbot operations staff look after every organ
 
 A platform role (**admin** or **superadmin**) is held on the user account. It is separate from any organisation role and gives no access to a clinic's patients by itself. Platform roles are changed in the web console's **User Management**, not here. A clinic does not need a platform administrator to set itself up: see [Create an Organisation](/cms/administration/create-organisation).
 
-Open the panel from **Platform → Platform admin** in the Home tab's sidebar. The panel has its own sidebar with four sections, and **Back to clinic workspace** leaves it. If someone without a platform role opens these addresses, the page says **404 | This page could not be found.** The screens are hidden on purpose.
+Open the panel from **Platform → Platform admin** in the AI tab's sidebar. The panel has its own sidebar with four sections, and **Back to clinic workspace** leaves it. If someone without a platform role opens these addresses, the page says **404 | This page could not be found.** The screens are hidden on purpose.
 
 No patient data is shown anywhere in the panel, only counts and states.
 
@@ -80,6 +80,16 @@ Open **Caregiver access** (`/admin/caregivers`) to look up [caregiver access](/c
 - **Revoke** ends a grant at once, after the confirmation "Revoke this caregiver?".
 - **Invite** a caregiver on a patient's behalf. A platform invite requires a written **basis** for the access, and the caregiver still has to accept it. The patient sees the grant as added by **Medbot support**.
 
+### Identity verification
+
+Open **Identity verification** (`/admin/identity-verification`, superadmins only) to verify a patient's name and date of birth against their identity document, for example when they contact Medbot support. Patients edit their own name and date of birth; until a linked clinic, a superadmin or (later) Singpass checks them, their details show as not verified.
+
+1. **Search** by email, user id or PHR patient id. Each patient found shows **Verified** or **Unverified**, with their **Name** and **Date of birth**.
+2. Choose the **Document** and tick **The name matches the document**, **The date of birth matches the document** and **I kept no copy of the document**.
+3. Select **Verify identity**.
+
+A clinic verifies its own patients from the chart: see [Verifying a patient's identity](/cms/clinical-care/patient-records#verifying-a-patients-identity).
+
 ### Record services
 
 Open **Record services** (`/admin/record-services`). Patients can pay the Medbot team to upload their documents or reconcile their history into their health record. This queue is where that work is done. The page explains: claiming a request opens that patient's record to you until you mark it ready, and every view is shown to the patient.
@@ -104,6 +114,8 @@ Open **Patient channels** (`/admin/channels`) for patient messaging channels acr
 
 - **Emergency wording** (`/admin/patient-safety/wording`): the advice a patient sees in Ask Medbot when an answer matches one of Medbot's red flags. Each red flag shows its live version and its history of versions. A change goes live only after a second admin approves it. Built-in wording is machine-translated in languages other than English, and crisis wording for possible self-harm is fixed in code and cannot be edited.
 - **Care team alerts** (`/admin/patient-safety/alerts`): when a patient's answer matches a red flag, Medbot always shows emergency advice first. These rules decide whether a linked clinic is also told, checked in order, the first match deciding. The page also lists published services that have not yet said what they look after, which the second rule needs, and the recent red-flag answers (without patient names).
+
+- **Food nutrition** (`/admin/food-nutrition`): the food and drink values Medbot uses to estimate a patient's meal before showing the numbers. They come from Health Promotion Board food composition data, Open Food Facts and, for an item found in neither, a web search limited to trusted sites. A value found on the web starts under **Needs review**; it is used meanwhile, and patients are told it has not been checked yet. Open one to see its source page and citation, correct its values (per serving or per 100 g or ml), its serving size and the **Citation shown to patients**, add a **Note**, and approve or reject it. A rejected value is never used again; the item falls back to Medbot's own estimate. The **Approved** and **Rejected** tabs list what has been reviewed.
 
 ## Service notices
 
