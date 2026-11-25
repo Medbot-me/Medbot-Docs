@@ -413,6 +413,17 @@ export default withNextra({
         destination: '/docs/deep-research',
         permanent: true,
       },
+      // Help links in the Medbot app point at these paths.
+      {
+        source: '/docs/bug-report',
+        destination: '/docs/advanced#report-a-problem',
+        permanent: false,
+      },
+      {
+        source: '/docs/account',
+        destination: '/docs/advanced#account-settings',
+        permanent: false,
+      },
     ]
   },
 })
