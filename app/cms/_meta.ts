@@ -3,6 +3,7 @@ export default {
   overview: "Staff App Overview",
   "getting-started": "Getting Started",
   "home-assistant": "Home Assistant",
+  notifications: "Notifications",
   "roles-and-permissions": "Roles & Permissions",
   "use-cases": "Use Cases",
   guides: "Guides by Role",

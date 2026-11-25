@@ -4,16 +4,17 @@ This guide follows a Clinic Admin's work and links to the full page for each tas
 
 ## Your home page
 
-The CMS opens on the **Referrals** page of the service you are working in, with shortcuts to **Add patient** and **Add staff**. Change service, organisation or role from the switcher at the top of the sidebar. See [Choosing & Switching](/cms/administration/switching).
+The CMS opens on the **Patients** page (the Workstation) of the service you are working in, or on the organisation's **Patients** page at Org Level. Change service, organisation or role from the switcher at the top of the sidebar. See [Choosing & Switching](/cms/administration/switching).
 
 ## Setting up the clinic
 
-If you are creating the organisation, its setup steps let you set up the first service from a template and invite your colleagues or load them from a CSV file. See [Create an Organisation](/cms/administration/create-organisation#after-creating).
+If you are creating the organisation, its setup steps let you fill in its public profile, set up the first service from a template and invite your colleagues or load them from a CSV file. See [Create an Organisation](/cms/administration/create-organisation#after-creating).
 
 1. [Add staff members](/cms/administration/staff) and set each person's role and registration number, or profession for an Allied health professional. To give an existing member a second role (for example, a doctor who also helps run the clinic), use **Add another role** on their row. To let a nurse sign prescriptions, [authorise them to prescribe](/cms/administration/staff#authorising-a-nurse-to-prescribe).
-2. Add clinic locations, rooms, and public displays in [Session Setup](/cms/front-desk/session-setup) and [Patient-Facing Displays](/cms/front-desk/display-boards).
-3. Build the [billable catalog](/cms/billing/billable-catalog), [services and consumables](/cms/billing/services-and-consumables), and the [formulary](/cms/pharmacy/formulary). Publish [dosing rules](/cms/pharmacy/dosing-rules) for any oral liquid the clinic doses by weight.
-4. Under **Queue** in [Organisation Settings](/cms/administration/settings#queue), set how many places a requeued patient moves back and how long queue remarks are kept.
+2. Add clinic locations and their rooms, and choose the default clinic, under **Clinic locations** in [Organisation Settings](/cms/administration/settings#clinic-locations). Add public displays on a service's Session tab: see [Patient-Facing Displays](/cms/front-desk/display-boards).
+3. Fill in the organisation's [public profile](/cms/administration/settings#public-profile): what patients see in Find care, and whether they can book there. Choose when patients may [check in with one tap](/cms/administration/settings#patient-check-in).
+4. Build the [billable catalog](/cms/billing/billable-catalog), [services and consumables](/cms/billing/services-and-consumables), and the [formulary](/cms/pharmacy/formulary). Publish [dosing rules](/cms/pharmacy/dosing-rules) for any oral liquid the clinic doses by weight.
+5. Under **Queue** in [Organisation Settings](/cms/administration/settings#queue), set how many places a requeued patient moves back and how long queue remarks are kept.
 
 ### Singapore clinics (SmartCMS)
 
@@ -28,11 +29,13 @@ If you are creating the organisation, its setup steps let you set up the first s
 ## Running the week
 
 1. Draft and [publish the roster](/cms/front-desk/rostering#publishing-a-week-clinic-admin-only). Only a Clinic Admin can publish.
-2. Review and correct [attendance](/cms/front-desk/attendance), then finalize and export timesheets.
-3. Manage the [results review rota](/cms/clinical-care/diagnostic-results) so incoming results reach a doctor.
+2. Approve or reject staff [time off](/cms/front-desk/rostering#time-off), and fix what the roster's **Issues** tab lists.
+3. Review and correct [attendance](/cms/front-desk/attendance), then finalize and export timesheets.
+4. Manage the [results review rota](/cms/clinical-care/diagnostic-results) so incoming results reach a doctor.
 
 ## Oversight during the day
 
+- Place the booking requests patients sent without a service, on the **Needs a service** tab of [booking requests](/cms/front-desk/appointments#requests-that-need-a-service). You are emailed when one arrives, and it shows in [Notifications](/cms/notifications).
 - Step into any front-desk or clinical task as a backstop: [reception queue](/cms/front-desk/reception-queue), [appointments](/cms/front-desk/appointments), [vitals](/cms/clinical-care/vitals), and [documents](/cms/clinical-care/documents-and-certificates).
 - Manage [inventory and stock](/cms/pharmacy/inventory-and-stock), including reorder thresholds.
 - Read the [dose overrides log](/cms/pharmacy/dosing-rules#the-dose-overrides-log) (**Pharmacy → Dose overrides**).

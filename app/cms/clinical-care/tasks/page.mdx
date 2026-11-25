@@ -2,9 +2,9 @@ import { ImageZoom } from "nextra/components";
 
 # Tasks & Staff Pings
 
-A ping is a short message from one staff member to another, like a walkie-talkie. Staff use pings to ask a colleague to come to a room, clarify an order, or call back. Your pings appear in the bell at the top of the screen and on the **Tasks** page, in the **CMS** tab at **Tasks** (`/tasks`). On a phone, **Tasks** is on the CMS tab's bottom bar.
+A ping is a short message from one staff member to another, like a walkie-talkie. Staff use pings to ask a colleague to come to a room, clarify an order, or call back. Care services have tasks of their own, such as approving a plan or answering a patient's question.
 
-Care services have tasks of their own, such as approving a plan or answering a patient's question. Those are in the [Task Inbox](#the-task-inbox) on the **Home** tab, not here.
+Both are in [Notifications](/cms/notifications): the bell at the top of the screen, and its page at `/notifications`. Notifications replaced the separate Tasks page and Task Inbox; their old addresses, `/tasks` and `/services/inbox`, open it.
 
 ## Who can do this
 
@@ -18,15 +18,17 @@ Only the person a ping was sent to can acknowledge it or mark it done. Nobody ca
 
 ## Sending a ping
 
-There are two places to start:
+There are three places to start:
 
-- The **Ping staff** button at the top of a patient's chart. The ping links to that patient.
+- **Ping staff** on the [Notifications](/cms/notifications) page, or on a service's notifications page.
+- The **Ping staff** button on a patient's chart. The ping links to that patient.
 - The ping icon at the end of an order row in a patient's encounter. The ping names that order.
 
 1. Select **Ping staff**. From an order row, select the ping icon (**Ping about** the order).
-2. Under **Choose who to ping**, pick a person. The list shows their role and, if they are assigned to a room in today's open session, the room.
+2. Under **To** (**Choose who to ping**), pick a person. The list shows their role and, if they are assigned to a room in today's open session, the room.
 3. Type a message under **What do you need?**, or select a quick message: "Please come chaperone.", "Can you clarify this order?", "Patient would like to speak with you again.", or "Can we talk over a call?".
-4. Select **Send**.
+4. Under **Show under**, keep **General** ("The organisation as a whole, not one service.") or choose one of your services. A ping filed under a service shows in that service's tab of Notifications and on the service's notifications page, as well as under **All**.
+5. Select **Send**.
 
 <ImageZoom src="/images/cms/tasks/02-ping-dialog.png" alt="The Ping about a patient window with a staff member chosen, a quick message selected, and the Send button" />
 _Sending a ping from a patient's chart_
@@ -41,12 +43,12 @@ You can ping any active Clinic Admin, doctor, nurse, or receptionist who can wor
 
 ## Receiving a ping
 
-A new ping shows as a red number on the bell. Medbot also shows a short notice and plays a quiet beep. When several arrive at once, it shows one notice such as "3 new pings". The list updates about every five seconds, so you do not need to refresh.
+A new ping adds to the count on the bell, which counts everything that needs you. Medbot also shows a short notice and plays a quiet beep. When several arrive at once, it shows one notice such as "3 new pings". New pings arrive within about five seconds, so you do not need to refresh.
 
-Select the bell to see your pings. Each shows the message, who sent it, the room it was sent to, and how long ago. If it is about a patient, select **Open** followed by the patient's name to go to the chart.
+Select the bell to see the first five items that need you, pings among them, or open [Notifications](/cms/notifications) for all of them. Each shows the message, who sent it, the room it was sent to, and how long ago. If it is about a patient, select **Open** followed by the patient's name to go to the chart.
 
 <ImageZoom src="/images/cms/tasks/03-ping-bell.png" alt="The Pings list opened from the bell, showing one ping with Acknowledge and Done buttons, next to the My tasks page" />
-_A new ping in the bell and on the Tasks page_
+_A new ping in the bell (earlier layout, before Notifications)_
 
 Then choose one:
 
@@ -55,21 +57,17 @@ Then choose one:
 
 You can select **Done** straight away, without acknowledging.
 
-## The Tasks page
+## Pings you sent
 
-**My tasks** lists your open and acknowledged pings, newest first. Under **Sent** you see the last 20 pings you sent and how far each has gone: **Waiting**, **Acknowledged**, or **Done**. When nothing is waiting, the page says "Nothing pending." or "Nothing sent yet."
+The **Sent** list on the [Notifications](/cms/notifications) page shows the pings you sent and how far each has gone: **Waiting**, **Acknowledged**, or **Done**.
 
-At the bottom of the bell list, **Open Tasks as a drawer** or **Open Tasks as a page** changes what the **Tasks** menu item does for you. Your choice is remembered in your browser.
+## Service tasks
 
-## The Task Inbox
+The care services' tasks for you are in [Notifications](/cms/notifications), under **All** and under each service's tab: tasks assigned to you directly, and unclaimed tasks assigned to a role you hold in a service of this organisation. Each names its service and, when it is about one, the patient, and is marked **Overdue** once past its due date. Select **Review** to open the task card and act on it, for example **Complete**. A service's own notifications page lists all of its open tasks, whoever they are for.
 
-The **Task Inbox** (`/services/inbox`) is the care services' list of work for you: "Tasks assigned to you directly, or unclaimed tasks assigned to a role you hold in a service of this organisation." Open it with **Tasks** in the **Home** tab sidebar, which shows how many are waiting. On a phone, **Tasks** is on the Home tab's bottom bar.
+The tasks come from the services' own work, such as [referrals](/cms/services/referrals) and [pre-visit check-ins and escalations](/cms/services/pre-visit-and-escalations). Task emails link to Notifications; older ones link to `/services/inbox`, which opens it.
 
-Every role can open it. Each task under **Pending** names its service and, when it is about one, the patient, and is marked **Overdue** once past its due date. Act on it from the row, for example **Complete**. With nothing waiting, it says "No pending tasks."
-
-The tasks come from the services' own work, such as [referrals](/cms/services/referrals) and [pre-visit check-ins and escalations](/cms/services/pre-visit-and-escalations). Old Task Inbox links from Medbot web, including those in task emails, open this page.
-
-If a task disappears while the inbox is open, for example because a [demo reset](/cms/services/demo-services#remove-or-reset-the-demo) removed it, acting on it shows the server's reason, and the inbox refreshes and drops it.
+If a task disappears while the list is open, for example because a [demo reset](/cms/services/demo-services#remove-or-reset-the-demo) removed it, acting on it shows the server's reason, and the list refreshes and drops it.
 
 ### Redirecting a task to a doctor
 
@@ -80,7 +78,7 @@ A nurse can pass a patient's task to a doctor when it needs a doctor's decision.
 3. Say **Why does this need a doctor?**, for example "missed antagonist dose last night, lead follicle 16 mm. Needs a decision on timing."
 4. Select **Redirect to doctor**.
 
-The task moves to the doctor's Task Inbox with a **Redirected to you** badge. Others see "Redirected to &lt;doctor&gt; by &lt;nurse&gt;" and the reason. The doctor sees who sent it and why, the latest messages with the patient, the latest results, and **Open the plan context** and **Full message history**. They can:
+The task moves to the doctor's Notifications with a **Redirected to you** badge, under **To you** on the service's notifications page. Others see "Redirected to &lt;doctor&gt; by &lt;nurse&gt;" and the reason. The doctor sees who sent it and why, the latest messages with the patient, the latest results, and **Open the plan context** and **Full message history**. They can:
 
 - **Reply to the patient** and **Send reply**. The reply goes to the patient's portal thread (WhatsApp, SMS or email only tell them a message is waiting) and closes the task.
 - **Hand back**, with a **Note for** the nurse, for example "in theatre until 3 pm; Dr Ng is covering", then **Hand back to** the nurse. The nurse sees "Handed back by &lt;doctor&gt;:" with the note, and can redirect it again.
@@ -88,5 +86,6 @@ The task moves to the doctor's Task Inbox with a **Redirected to you** badge. Ot
 ## Related
 
 - [Encounters & Clinical Notes](/cms/clinical-care/encounters): orders you can ping about.
-- [Services](/cms/services): the care services whose tasks reach the Task Inbox.
+- [Notifications](/cms/notifications): pings, service tasks and patient messages in one list.
+- [Services](/cms/services): the care services whose tasks reach Notifications.
 - [Reception Queue](/cms/front-desk/reception-queue): who is in which room today.
