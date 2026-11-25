@@ -1,0 +1,54 @@
+# Feedback Inbox
+
+> **Note:** Only Medbot platform **admins** and **superadmins** see this screen. It is the Medbot team's own inbox, not a clinic's.
+
+Every **Send feedback** message, from the Medbot website, the web, desktop and CMS apps, the patient portal and both mobile apps, lands in one shared inbox in the platform admin panel at `/admin/feedback`. The team works them together there: who owns each one, notes to each other, and the replies, drafted and sent from the inbox. Each new message is also emailed to hello@medbot.me.
+
+## The inbox
+
+The tabs group messages by status, with a count on each: **To do** (New, Open and Waiting together, the starting tab), **New**, **Open**, **Waiting**, **Replied**, **Closed**, **Spam** and **All**. The list is sorted by latest activity.
+
+Narrow it by **Anyone**, **Mine** or **Unassigned**, by kind (Feedback, Enquiry, Complaint, Suggestion, Comment) and by where it came from, or search by reference (`FB-…`), name, email, phone or words in the message.
+
+Each row shows the kind, status, reference, subject, sender, where it came from, the screen they were on, who has it, and how many drafts, replies and notes it has. **No contact** marks a sender who didn't agree to be contacted.
+
+## Working on a message
+
+Select a message to open it beside the list.
+
+- **Status:** New, Open, Waiting (on the sender or another team), Replied, Closed or Spam. Starting a reply moves a New message to Open, and sending one moves it to Replied.
+- **Assigned to:** any platform admin. **Take it** assigns it to you. Whoever you assign it to is emailed a link.
+- **Sender:** name, organisation, how they'd like a reply, email and phone (each with **Copy**), and the signed-in account it came from, if any.
+- **Where they were:** the screen and path (record ids shown as `:id`), app version, language and time zone, window size, browser and the errors the app showed just before they wrote. Use it to reproduce a problem.
+
+A sender who unticked consent can't be replied to. Their message says so, holds no contact details, and has replies turned off.
+
+## Replying together
+
+Under **Replies**, **Start a reply** offers the channels the sender can be reached on, and marks the one they asked for.
+
+- **Email** sends from Medbot with replies coming back to hello@medbot.me. The subject starts as `Re: <subject> (FB-…)`.
+- **WhatsApp** sends through Medbot's WhatsApp number. WhatsApp only lets a business start a conversation with an approved template, so if a send fails, use **Open in WhatsApp** to send it from the WhatsApp app and then **Sent from WhatsApp, record it**.
+- **Phone call** is for a call you make: write what was agreed and select **Record call as done**.
+
+Drafts are shared. Any teammate can open, edit and send one, and the draft shows who started it and who last edited it. Leaving the text box saves it. If a teammate saved the draft since you opened it, Medbot doesn't overwrite their version: it says "A teammate changed this draft", and **Load their version** brings it in. Only one person's **Send** goes out.
+
+A failed send stays as **Failed** with the reason, ready to fix and send again. **Discard** deletes a draft.
+
+## Team notes
+
+**Team notes** are internal: the sender never sees them. Type `@` and a teammate's name, or tap their name under **Also tell**, to email them a link to the message. You can delete your own notes.
+
+## Activity
+
+**Activity** lists everything that happened to the message, oldest first: when it arrived and from where, status changes, assignments, notes, and each reply drafted, sent, failed, recorded or discarded, with who and when. The open message refreshes every 20 seconds, so teammates' changes appear while nobody has unsaved edits.
+
+## Downloading the data
+
+**Download CSV** saves every message that matches the current tab and filters, one row each: reference, dates, kind, product, source, status, assignee, consent, contact details, subject, message, screen, path, app version, recent errors, replies sent and their channels, first reply time and notes count. **JSON** saves the same messages with every reply and note in full.
+
+Use the downloads for analysis in a spreadsheet or your own tools. The data also lives in the `feedback_messages`, `feedback_replies`, `feedback_notes` and `feedback_events` tables in Medbot's Postgres database, for direct queries.
+
+## Retention
+
+Messages, with their replies, notes and activity, are deleted 24 months after they arrive. Messages marked **Spam** are deleted after 30 days.

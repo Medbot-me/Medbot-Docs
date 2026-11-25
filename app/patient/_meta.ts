@@ -24,5 +24,6 @@ export default {
   caregivers: "Caregivers & Family Access",
   invites: "Invites & Join Links",
   "report-a-problem": "Report a Problem",
+  "send-feedback": "Send Feedback",
   "mobile-app": "Mobile App",
 };

@@ -11,5 +11,6 @@ export default {
   "clinical_resources": "Clinical Resources",
   advanced: "Advanced",
   admin: "Platform Administration",
+  "send-feedback": "Send Feedback",
   "use-cases": "Use Cases",
 };
